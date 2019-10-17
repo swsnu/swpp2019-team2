@@ -84,3 +84,6 @@ _db.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#virtual env folder
+env/
