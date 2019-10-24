@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
-import './MainPage.css';
+import './BudgetSearch.css';
 import {connect} from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-import logo from "../image/LOGO.png";
+import logo from "../image/LOGO.png"
 
-class MainPage extends Component{
+class BudgetSearch extends Component {
     state = {
         id:'',
+        item_num:2,
+        budget:0,
     }
     componentDidMount(){
         this.props.onGETUSERS();
@@ -34,27 +36,21 @@ class MainPage extends Component{
         }
     }
 
-    searchHandler = () => {
-        this.props.history.replace('../search');
-    }
-
-    budgetHandler = () => {
-        this.props.history.replace('../budget');
-    }
-
-    toneHandler = () => {
-        this.props.history.replace('../skintone');
-    }
-
-    saleHandler = () => {
-        this.props.history.replace('../sale');
-    }
-
     mypageHandler = (id) => {
         this.props.history.replace('../mypage/' + id)
     }
-
-
+    set_budget = (event) => {
+        this.setState({budget:event.target.value})
+        this.setState({flag_budget:true})
+    }
+    set_itemnum = (event) => {
+        this.setState({item_num:event.target.value})
+    }
+    confirmHandler = () => {
+        if(this.state.budget==0){
+            alert("Please set the budget range");
+        }
+    }
     render(){
         let redirect = null;
         if(this.props.selectedUser){
@@ -63,28 +59,31 @@ class MainPage extends Component{
             }
         }
         return (
-            <div className = "MainPage">
+            <div className = "BudgetSearch">
                 {redirect}
                 <div id = "LOGO">
-                    <img src ={logo} alt="COSMOS" width="100" />
+                    <img src = {logo} alt = "COSMOS" width = "100" />
                 </div>
-                <h1>Menu</h1>
                 <div className = "buttons">
-                    <div className = "button1">
-                        <button id = "search-tag" onClick = {() => this.searchHandler()}>Search Tag</button>
-                        <button id = "budget-search" onClick = {() => this.budgetHandler()}>Budget Search</button>
-                    </div>
-                    <div className = "button2">
-                        <button id = "tone-analysis" onClick = {() => this.toneHandler()}>Tone Analysis</button>
-                        <button id = "sale-information" onClick = {()=>this.saleHandler()}>Sale Information</button>
-                    </div>
-                </div>
-                <div className = "buttons2">
                     <button id = "log-out-button" onClick = {()=>this.logoutHandler()}>Log-Out</button>
                     <button id= "my-page-button" onClick = {()=>this.mypageHandler(this.state.id)}>My Page</button>
                 </div>
-                
+                <div id= "Header">
+                    <h1>Budget Search</h1>
+                </div>
+                <div className = "item_input">
+                    <h5>Choose Number of Items</h5>
+                    <input type = "text" name = "item_val" value={this.state.item_num} />
+                    <input type="range" value="0" min="2" max="5" value = {this.state.item_num} onChange = {(event)=> this.set_itemnum(event)} />
+                </div>
+                <div className = "Budget_input">
+                    <h5>Choose Your Budget</h5>
+                    <input type = "text" name = "budget_val" value={this.state.budget} />
+                    <input type="range" value="0" min="0" max="150000" value = {this.state.budget} onChange = {(event)=> this.set_budget(event)} />
+                </div>
+                <button id= "combine-cosmetics-button" onClick={()=> this.confirmHandler()}>Combine Cosmetics</button>
             </div>
+
         )
     }
 }
@@ -108,4 +107,4 @@ const mapDispatchToProps = dispatch => {
 
     };
 };
-export default connect(mapStatetoProps, mapDispatchToProps)(MainPage);
+export default connect(mapStatetoProps, mapDispatchToProps)(BudgetSearch);
