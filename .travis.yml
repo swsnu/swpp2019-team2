@@ -10,8 +10,8 @@ matrix:
   install:
   - yarn install
   script:
-  - ./node_modules/.bin/eslint src
-  - yarn test --coverage --watchAll=false
+#  - ./node_modules/.bin/eslint src
+   - yarn test --coverage --watchAll=false
 # - language: python
 #   python: 3.6
 #   ...
