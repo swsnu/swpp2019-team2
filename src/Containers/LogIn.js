@@ -45,11 +45,11 @@ class LogIn extends Component {
             value = {this.state.password}
             onChange = {(event) => this.setState({ password: event.target.value})} />
     
-            <button id="login-button" onClick={() => this.postTodoHandler()}>Log-in</button>
+            <button id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
           </div>
         );
     }
-    postTodoHandler = () => {
+    LoginHandler = () => {
         if(this.state.email === "swpp@snu.ac.kr" && this.state.password === "iluvswpp"){
             this.setState({submitted:true, id:1, name:'Software Lover'})
             this.props.UserLogIn(this.state.id, this.state.password, this.state.email, this.state.name, true);
