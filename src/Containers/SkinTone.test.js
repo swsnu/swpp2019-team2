@@ -53,6 +53,50 @@ describe('<SkinTone />', () => {
     expect(spyGetUser).toBeCalledTimes(1);
   });
 
+  it('should call fileinputHandler',() => {
+    const fileContents = 'test_picture'
+    const readAsDataURL = jest.fn();
+    const onloadend = jest.fn();
+    const dummyFileReader = {onloadend, readAsDataURL, result: fileContents};
+    window.FileReader = jest.fn(()=> dummyFileReader);
+    const mock_file = new Blob([fileContents],{type : 'img/png'});
+    const component = mount(skintone);
+    const wrapper = component.find('#photo-input');
+    wrapper.simulate('change',{target:{files : [mock_file]}});
+    expect(FileReader).toHaveBeenCalled();
+    expect(readAsDataURL).toHaveBeenCalledWith(mock_file);
+  })
+  
+  it('should call submitHandler & flag = false',() => {
+    window.alert = jest.fn();
+    const component = mount(skintone);
+    const wrapper = component.find('#submit-button');
+    wrapper.simulate('click');
+    const newInstance = component.find(SkinTone.WrappedComponent).instance();
+    newInstance.setState({ flag: false });
+    expect(window.alert).toHaveBeenCalledWith('Please submit a picture with your face');
+  })
+
+  it('should call submitHandler & flag = true',() => {
+    window.alert = jest.fn();
+    const component = mount(skintone);
+    const newInstance = component.find(SkinTone.WrappedComponent).instance();
+    newInstance.setState({ flag: true });
+    const wrapper = component.find('#submit-button');
+    wrapper.simulate('click');
+    expect(window.alert).toBeCalledTimes(0);
+  })
+  
+  it('should call mypageHandler',() => {
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+    .mockImplementation(path => {});
+    const component = mount(skintone);
+    const wrapper = component.find('#my-page-button');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/1');
+
+  })
+
 
   it('should call logoutHandler',()=>{
     const spyHistoryPush = jest.spyOn(history, 'push')
