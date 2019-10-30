@@ -57,6 +57,64 @@ describe('<BudgetSearch />', () => {
       
   })
 
+  it('should call mypageHandler',() => {
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+    .mockImplementation(path => {});
+    const component = mount(budgetsearch);
+    const wrapper = component.find('#my-page-button');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/1');
+  })
+
+  it('should call confirmhandler && alert',() => {
+    window.alert = jest.fn();
+    const component = mount(budgetsearch);
+    const wrapper = component.find('#combine-cosmetics-button');
+    wrapper.simulate('click');
+    const newInstance = component.find(BudgetSearch.WrappedComponent).instance();
+    newInstance.setState({ budget_high:0});
+    expect(window.alert).toHaveBeenCalledWith('Please set the budget range')
+  })
+
+  it('should call confirmhandler && NOT alert',() => {
+    window.alert = jest.fn();
+    const component = mount(budgetsearch);
+    const newInstance = component.find(BudgetSearch.WrappedComponent).instance();
+    newInstance.setState({ budget_high:0});
+    const wrapper = component.find('#combine-cosmetics-button');
+    wrapper.simulate('click');
+    expect(window.alert).toHaveBeenCalledWith('Please set the budget range')
+  })
+
+  it('should call set_itemnum',() => {
+    const component = mount(budgetsearch);
+    const newInstance = component.find(BudgetSearch.WrappedComponent).instance();
+    const wrapper = component.find('#item_num');
+    wrapper.simulate('change',{target:{value:3}});
+    expect(newInstance.state.item_num).toEqual(3);
+
+
+  })
+  it('should call setbudget',() => {
+    window.alert = jest.fn();
+    const component = mount(budgetsearch);
+    const newInstance = component.find(BudgetSearch.WrappedComponent).instance();
+    const wrapper = component.find('#range2');
+    wrapper.simulate('change',{target:{checked:true}});
+    expect(window.alert).toBeCalledTimes(0);
+
+  })
+  it('shuld not select more than 1 checkbox',() => {
+    window.alert = jest.fn();
+    const component = mount(budgetsearch);
+    const newInstance = component.find(BudgetSearch.WrappedComponent).instance();
+    const wrapper = component.find({type:"checkbox"});
+    var i =0;
+    for(i=0;i<10;i++){
+      wrapper.at(i).simulate('click');
+    }
+  })
+
   it('should call logoutHandler',()=>{
     const spyHistoryPush = jest.spyOn(history, 'push')
     .mockImplementation(path => {});

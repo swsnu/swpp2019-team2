@@ -48,7 +48,7 @@ class BudgetSearch extends Component {
         this.setState({item_num:event.target.value})
     }
     confirmHandler = () => {
-        if(this.state.budget==0){
+        if(this.state.budget_high==0){
             alert("Please set the budget range");
         }
     }
@@ -70,10 +70,8 @@ class BudgetSearch extends Component {
         }
         for (i=0;i<checkbox.length;i++){
             if(checkbox[i].checked){
-                this.setState({budget_low: 5000*(i)})
-                this.setState({budget_high: 5000 * (i+1)})
-                console.log(this.state.budget_low)
-                console.log(this.state.budget_high)
+                this.setState({budget_low: 5000*(i)});
+                this.setState({budget_high: 5000 * (i+1)});
             }
         }
     }
@@ -99,49 +97,49 @@ class BudgetSearch extends Component {
                 </div>
                 <div className = "item_input">
                     <h5>Choose Number of Items</h5>
-                    <input type = "text" name = "item_val" value={this.state.item_num} />
-                    <input type="range" value="0" min="2" max="5" value = {this.state.item_num} onChange = {(event)=> this.set_itemnum(event)} />
+                    <input type = "text" name = "item_val" readOnly value={this.state.item_num} />
+                    <input type="range" id = "item_num" value="0" min="2" max="5" value = {this.state.item_num} onChange = {(event)=> this.set_itemnum(event)} />
                 </div>
                 <div className = "Budget_input">
                     <h5>Choose Your Budget</h5>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} /> 
+                            <input type = "checkbox" name="budget_range" id = "range1" onClick={() => this.setbudget()} /> 
                             <h6>0원 이상 ~ 5000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" id = "range2" onClick={() => this.setbudget()} />
                             <h6>5000원 이상 ~ 10000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
                             <h6>10000원 이상 ~ 15000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
                             <h6>15000원 이상 ~ 20000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
                             <h6>20000원 이상 ~ 25000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
                             <h6>25000원 이상 ~ 30000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
                             <h6>30000원 이상 ~ 35000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
                             <h6>35000원 이상  ~ 40000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
                             <h6>40000원 이상  ~ 45000원 미만</h6>
                         </ul>
                         <ul>
-                            <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
+                            <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
                             <h6>45000원 이상  ~ 50000원 미만</h6> 
                         </ul>
                 </div>
