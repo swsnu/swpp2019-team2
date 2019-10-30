@@ -106,43 +106,43 @@ class BudgetSearch extends Component {
                     <h5>Choose Your Budget</h5>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} /> 
-                            <h8>0원 이상 ~ 5000원 미만</h8>
+                            <h6>0원 이상 ~ 5000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>5000원 이상 ~ 10000원 미만</h8>
+                            <h6>5000원 이상 ~ 10000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>10000원 이상 ~ 15000원 미만</h8>
+                            <h6>10000원 이상 ~ 15000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>15000원 이상 ~ 20000원 미만</h8>
+                            <h6>15000원 이상 ~ 20000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>20000원 이상 ~ 25000원 미만</h8>
+                            <h6>20000원 이상 ~ 25000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>25000원 이상 ~ 30000원 미만</h8>
+                            <h6>25000원 이상 ~ 30000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>30000원 이상 ~ 35000원 미만</h8>
+                            <h6>30000원 이상 ~ 35000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>35000원 이상  ~ 40000원 미만</h8>
+                            <h6>35000원 이상  ~ 40000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>40000원 이상  ~ 45000원 미만</h8>
+                            <h6>40000원 이상  ~ 45000원 미만</h6>
                         </ul>
                         <ul>
                             <input type = "checkbox" name="budget_range" onClick={this.setbudget} />
-                            <h8>45000원 이상  ~ 50000원 미만</h8> 
+                            <h6>45000원 이상  ~ 50000원 미만</h6> 
                         </ul>
                 </div>
                 <button id= "combine-cosmetics-button" onClick={()=> this.confirmHandler()}>Combine Cosmetics</button>
