@@ -75,6 +75,9 @@ class BudgetSearch extends Component {
             }
         }
     }
+    menuHandler = () => {
+        this.props.history.replace('../main')
+    }
     render(){
         let redirect = null;
         if(this.props.selectedUser){
@@ -89,6 +92,7 @@ class BudgetSearch extends Component {
                     <img src = {logo} alt = "COSMOS" width = "100" />
                 </div>
                 <div className = "buttons">
+                    <button id = "back-to-menu-button" onClick = {()=> this.menuHandler()}>Back To Main Menu</button>
                     <button id = "log-out-button" onClick = {()=>this.logoutHandler()}>Log-Out</button>
                     <button id= "my-page-button" onClick = {()=>this.mypageHandler(this.state.id)}>My Page</button>
                 </div>
