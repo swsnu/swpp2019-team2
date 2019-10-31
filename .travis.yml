@@ -3,6 +3,12 @@ matrix:
     - language: node_js # Your language e.g. node_js, python
       node_js:
       - '10'
+      dist: trusty
+      addons:
+        sonarcloud:
+          organization: "swsnu"
+          token:
+            secure: "sxE41qgbb8mF6nJHlyE0vYn2tUoFlRWCw09fCG74B5KoOFBaFUNX3V/32gJ/hGvS6tC2e5wqFCsBikQgmClTq/p58hFJwKk2tIQAV8HJ/OAkWWPgNMe4+WSfw6s6NBAEV0bUzPUQcaPv/vuNn70YpUgWLHZjHFjQAR5LVIZVUa0s0OqX88ZtOh6ynLDLiPciD+snVP4vXvbmqVJcQTjuhcD/+p5f22fwfZGNf8MiPR1BxcUW3zWKqFlbgUGZiGTomiP73x576bfEskfc74IgNYsqdcydbKPFnjYRwj+vLjjY4V6Mb8Ikr7ggr4fUFWzj187s8UoOv6qx4Issg0G+GYU/Xq8L4TpKvUPcgCFg/5sahbn4tCVK0eb+Yg9ipmeeiUeB1GMYviXu/5mbaN5VxVDGT5widozxwOmFAEy6qT2vwr0pZjYh1AhW+AnbkMfgHoZ0miwPEOhN3en/N5R0ugyXydnOgjCGI3NR/14rFdWQM+m4bnei1liX69AkhajnzMi4YjR2cy4n4IcTLgd1Fv47yP3z9R51iARnKJ5tacPDdkZwPiSduVtH+/R7t+44g/0eaNPUeckOhDYwVFlVudT81zWHFbIVsR3nFPg19HIZTpSi6qeQGHHP3Q0QcH7C851ZadnIvneNI5/1sbGpAYLQZhIe1wHJMErSIiYg5A8="
       before_install:
       - cd frontend
       install:
@@ -10,6 +16,7 @@ matrix:
       script:
       - ./node_modules/.bin/eslint src
       - yarn test --coverage --watchAll=false
+      - sonar-scanner
 # - language: python
 #   python: 3.6
 #   ...
