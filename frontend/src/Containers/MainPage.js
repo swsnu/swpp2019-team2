@@ -39,15 +39,15 @@ class MainPage extends Component {
   };
 
   budgetHandler = () => {
-    this.props.history.replace("../budget_search");
+    this.props.history.replace("../budget");
   };
 
   toneHandler = () => {
-    this.props.history.replace("../tone-analysis");
+    this.props.history.replace("../skintone");
   };
 
   saleHandler = () => {
-    this.props.history.replace("../sale-information");
+    this.props.history.replace("../sale");
   };
 
   mypageHandler = id => {
