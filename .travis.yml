@@ -6,14 +6,12 @@ matrix:
     dist: trusty
     addons:
       sonarcloud:
-        organization: "swsnu"
-        token:
-          secure: "JPzM1oFF8m3QPCYoc7XWBUuMW67zlLz8BPgipVOBQ4VN1Y3AnjG+Bawfe+foUN1M/ff4dQU9SOdmZzRc8WeYKLb2DTIJYNAr8oXhLYkOA9Iv/q0aBYgUiUw4filqzEKGaNGtBUX97Z0oPeRb9VgtGBD2Aq0AGB7X38agDJnnSYd8mzNqpHCWYvrIrEwLl5E/y4hjMQcLqmH6ejHS6Nlhjtg3LhdjB86YKUbqPYyiOiZyCQ/fR+xsImenlsgT1aCSmgX6/1/C9ZruS3jb5mEhUaUoNmbJo0V8Kw/ordfBvjjh7thZ7yt1IoagmajYM0t6pQPG5pOmuMNEk8xDOEJhwuvrdMmi/7S/pJuwfvGaWBFR754m9WYYNLVcxPFWArWIJiIXvRQPQDu5JZoVA8hoWZhvkFUsAz8x9aoHnbnBfIuRjr6fO9Wcmh3RBvmwhXVoDLCbzWqOm389QereQcZY5AGSIT2UxXHbpG7ypEHbUqPj6ZA8DCLwp8FXVh45t6/k2vQJ7EbY+tgRpJr84NY9VypGPpahkH5VIaeJm2VDrwj/klfKhfDmXXojGJFm4LGawojf0rzeBtbL2DUMntGtFRA5+n3t+zDm+XMLyc6MKmQMAsUiir8rxoBJmRUtYiAtvydnFlur/y+1pXDbDCsegZnERf+csqxra7J0xyIS2CU="
+        organization: swsnu
     before_install:
     - cd frontend
     install:
     - npm install
     script:
-    - ./node_modules/.bin/eslint src/
+    - "./node_modules/.bin/eslint src/"
     - yarn test --coverage --watchAll=false
     - sonar-scanner
