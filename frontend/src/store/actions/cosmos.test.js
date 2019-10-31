@@ -71,4 +71,24 @@ describe("cosmos.js", () => {
       done();
     });
   });
+  it(`'putUser' should change User correctly`, (done) => {
+    const stubUserList = [stubLoggedOutUser1, stubLoggedOutUser2];
+
+    const spy = jest.spyOn(axios, 'patch')
+      .mockImplementation((url, td) => {
+        return new Promise((resolve, reject) => {
+          const result = {
+            status: 200,
+            data : stubLoggedOutUser1
+          };
+          resolve(result);
+        });
+      })
+
+    store.dispatch(cosmos.putUser(stubLoggedOutUser1)).then(() => {
+        expect(spy).toHaveBeenCalledTimes(1);
+        done();
+    });
+  });
+
 });
