@@ -1,22 +1,19 @@
 matrix:
   include:
-    - language: node_js # Your language e.g. node_js, python
-      node_js:
-      - '10'
-      dist: trusty
-      addons:
-        sonarcloud:
-          organization: "swsnu"
-          token:
-            secure: "IWGuRkddp6bWm3iPLn1x97fD1+csVFeu24JaFwqObKqS9aYqFmHWR4cE8LIaouUk5y2WIUUnNOdzTZhKOsivDVp1GdwGWGjDwJz4dprZgG7Ga5AVj36IpJp80GCujs5a7wrslC6EDOsvmwjJZ2s9au6++lG7tT65qbqNeLy5erXFFmP61udJPfT7+4NLlzXHP6RUsihDbIw2C27rVp8U9f+QWDElnkUub8MADd85VUPxWxkP84Rf0vtd7Z5vua10Oelzty8Vl0ARz86dnkbS5wXt7JzIbsDFGoESNN0TUoFWmH4d5nSY8Gf3taslCnr9MmS1BC4gxyZSfgNKFDnVqbAtxW7HF7R1aa2djwz1bUiKckZtO/km6IewY63xKgvCFfpzCymSbGqLvh0u07bD4eJgPG2RDyBY91FoQZAkEsX5dPolNmSBiaLLbmdyNwlfIAWAsnEMAzAtbOYMOkJFlTeN2X3YIpog/IRDv2OVRv+AgrbMIKMJ9oFZ8Q/w21F7i45c7A2xfEEZK011Ve1fKBK2goD/H1f4XSJA3kqY5f/sQoTvD+ZqlOHIFlOTOoRZ6HPcHV2o7C1QDDcH9fDbk69uRwA9dPaPSMHDl74TI92lbX/4P6oWMIa/0CGOHkuoBkhgyMgqpd+o7q985Be/Z3bfQQApRM6r7AFpckGowIg="
-      before_install:
-      - cd frontend
-      install:
-      - npm install
-      script:
-      - ./node_modules/.bin/eslint src
-      - yarn test --coverage --watchAll=false
-      - sonar-scanner
-# - language: python
-#   python: 3.6
-#   ...
+  - language: node_js
+    node_js:
+    - '10'
+    dist: trusty
+    addons:
+      sonarcloud:
+        organization: "swsnu"
+        token:
+          secure: "mw0+v+rIZSghcqBsCWZoLS7cNZUn14Y2imign1rwW91RbaSm3WSfIwBITGkNMu932rvJFlROwkQVzgmPWIZiXUFpU2EK6sU4OL7lAC+t7snIyPyWgTsJjdiAr9Bgp5v1QSJSBtMDc8AReG0bO/ApK/kcLp/V3hsrHYnAESWrH1U8UrUSbolcUXgmLWGrIVwbavnjL64ZAT+t1WSS/GeOcgedTvmqaPOG6Ii1waLzqTs6XVagT7Pt1GjGaxPg9BmoFVGvkOeoIa1xV+OxAKVwoRUQ3zxjxmfMtpr6EhnGtUNFz+yF72nUG9yPeYKYr2/SGQkN5gRgSGePJEazE+kEwTiGskC47w7rDyu3Rwum0iYExFWvEX/JE2Jr5bVRzu4s0prJIqfQtBtDxUZXAxeC9/2yrR6S7+oGMq/mMzIyCtRz20XsmosabXuuvUeb9zSVbzAb6hKq6ycqamP1IsRdcJZpqbKsvsik65VbLeEhLuBJnIawldQh4XcTHX8tiLxq8o9ifrEEZNJzKO0TPd7pW9n7YcXqA6WyslspRltNomBIce0wk2gBYLEs2TgD7SxFfFY4qLJjo4TioAzx7ugPdwEtgMahiNSb2H5bPq5EIP/FFCx714QnGX561JXOeq2c/G6yLMlGNqsO9t9QtxZyx6BJ0bx77k4yp+Fx4g9TcS4="
+    before_install:
+    - cd frontend
+    install:
+    - npm install
+    script:
+    - ./node_modules/.bin/eslint src/
+    - yarn test --coverage --watchAll=false
+    - sonar-scanner
