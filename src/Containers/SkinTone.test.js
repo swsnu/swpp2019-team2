@@ -10,6 +10,8 @@ import { getMockStore } from '../test-utils/mocks';
 import { history } from '../store/store';
 
 import * as actionCreators from '../store/actions/cosmos';
+import { italic } from 'ansi-colors';
+import expectExport from 'expect';
 
 const stubInitialState = {
     selectedUser:{id:1,email:'TEST_EMAIL',password:'TEST_PASS',name:'TEST',logged_in:false},
