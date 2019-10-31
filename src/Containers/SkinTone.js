@@ -68,6 +68,9 @@ class SkinTone extends Component {
         {/*file backend로 전송 */}
 
     }
+    mainmenuHandler = () => {
+        this.props.history.replace('../main')
+    }
 
     render(){
         let redirect = null;
@@ -83,6 +86,7 @@ class SkinTone extends Component {
                     <img src = {logo} alt = "COSMOS" width = "100" />
                 </div>
                 <div className = "buttons">
+                    <button id = "back-to-main-menu" onClick = {() => this.mainmenuHandler()}>Back To Main Menu</button>
                     <button id = "log-out-button" onClick = {()=>this.logoutHandler()}>Log-Out</button>
                     <button id= "my-page-button" onClick = {()=>this.mypageHandler(this.state.id)}>My Page</button>
                 </div>
