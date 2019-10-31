@@ -2,7 +2,13 @@ matrix:
   include:
     - language: node_js # Your language e.g. node_js, python
       node_js:
-      - '10'
+        - '10'
+      dist: trusty
+      addons:
+        sonarcloud:
+          organization: "swsnu"
+          token:
+            secure: "HYcPlggm3koHdLvZfO4ZZff9IqwpSvnum/DCL6+iP3dDJZarcr4aaynJBxq2QQEGcULFgzLG4a23vtQw4MLxRXb7w6GL0MEHf0dEX+lB1AhFxbFfDKqDFkKaCkSi4WHOGpX5mSnWyXD2DpjLpunzkj9tJacrKQaFXiSrMNhsi47ck/tfH6HZKT+AJf6MmvpDwPApft90fKozaJICwktuWuRlM73MGyAdt4P8VHU0Dk+9A5ey2Cb16EFyDBi0+EubgCul+R7OrhQdS4S6RouVwi62r1j14CLViC7GX6cDYYas83ZsY3UqA8zhxMevD9HcSWKdzA9wHTloQK10BkW5vglIEUsf6Qydu/bZqD1mqyMuY095ZjBjokevza4vpMxa2xT2s+0lrOUVglZ//cq9eY5b4Ll8tzGwTa/QlQaQj2RKT2hRSW6/yGVdqWhkMXyFWnlvs2101bWEza7jAPGkeslCAVlvdIQT7Ebnp/btff8nqSpfS1Dz6ZH0y8H4eS0V2yaQSFkb/1U4+7bIRkjejOegEA2iwXxSa5tpYB9JcWWSPbmwUY9zCfegR7FNRshORWHm87SXQPpYWBZFbmdZc/r3B1AflOLCwvZopi3Ul6awzgZh0jA1KBKdU+QvtyR60r8n2RjLNU7k+eTfdpSTHay8h54guFiJrpvO52TXZYw="
       before_install:
       - cd frontend
       install:
