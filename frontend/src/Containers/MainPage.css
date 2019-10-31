@@ -1,0 +1,53 @@
+.MainPage {
+    width : 80%;
+    position:absolute;
+    left:50%;
+    top:50%;
+    height : 300px;
+    width : 400px;
+    margin: -150px 0px 0px -200px;
+    box-shadow: 0 2px 3px rgb(231, 201, 235);
+    text-align : center;
+    background : rgb(255, 220, 226);
+}
+.MainPage .buttons{
+    display:table;
+}
+.MainPage .button1 {
+    display:inline-table;
+    vertical-align:middle;
+    padding : 10px;
+    height: 50px;
+    text-align: center;
+}
+
+.MainPage .button2 {
+    display:inline-table;
+    vertical-align:middle;
+    padding: 10px;
+    height: 50px;
+    text-align: center;
+
+}
+.MainPage .buttons2 {
+    display:inline-table;
+    vertical-align:middle;
+    padding: 10px;
+    height: 50px;
+    text-align: center;
+}
+
+.MainPage button {
+    background-color : transparent;
+    color : #9b45a7;
+    cursor : pointer;
+    border : 1px solid #9b45a7;
+    text-align: center;
+    margin : 5px;
+}
+  
+.MainPage button:hover,
+.MainPage button:active {
+    color:white;
+    background-color:#9b45a7;
+}
