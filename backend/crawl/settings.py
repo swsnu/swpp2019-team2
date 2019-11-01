@@ -9,6 +9,12 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+# enviroment variable
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
+# import django to use django in scrapy
+import django
+django.setup()
 
 
 BOT_NAME = 'crawl'
