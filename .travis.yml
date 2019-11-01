@@ -8,7 +8,7 @@ matrix:
       sonarcloud:
         organization: swsnu
         token:
-          secure: "O3GvCc+4PekeaLTuutp9Sx/PVsCnXyiAjLTKj29l6uHHqm5zi/ref0itbppkEttTZ8MxG7c8fc3Xz++CPqMLT8YOutlHt5qWh9s/k+co4JIC15dl9VI9hXfiO781//L/cpO3vkf/XjOhexK3lbfmy+VdlnmnElJRRvifxJMQGClvJC/9Gf/zvM14zZCkzPhbENU1zKG/BAUQgZcQ8KLbGWm0CBt8mXF4lidr9sN1XqX52QnVbD42cU/aKL57gsZvqyjhMehuaVPjwhA5FxSHOKybc8kyiWYhQSZkqJ7k4nRoTr/f0E0NnQZ9Ebzqlt1A23eUFQLz695EZVO2m+b1M9oa6RoFwSnZHIVQJa6MFuqBVOv3uQx13Fg1HIwdGphPj2p/AVEuwF6tWR4IfUhV+MMdCp8fVJrqUNcZWDNyDNLLsGXVotUCQZ3V3eCfxCnqyXf/XjlSEETMOs1NUW4HI1+TRe05e1qmpla0ELnF/vVG9YaftNlzeTj9/ycnA6mlqydXLlVGs7qPKJ1EGXUatGWeX0uGGi2fq8lStCCJz0aHvLUhLjpQXql6Shou+fty8dj/WSfYoRLg9Fn76q9bM+pKcKiB7vL1b+QEEG4XcfkjwdtGUQuUB5Ga1Joxv99rvFE3iIzyf+enElADK7e9IWMSgUDa8H6xHQcz3v6uT38="
+          secure: "Y/obIbLcfOb/v2zEoG3r6vDNERHsyn8mQ/GY+kL07aS9QreSZT8B5RQlms3piTigWTfYfm086UcMk/nqhhYgVXD1a6pm1DjkemP69wUnL2HCWHaN0XnZieGmUIbpTwVYo9EhBkK5+WYAj3xd++6mcU+NeNPmH+vXU06CSW5iPGCEhEbcqVYcGho1S2oRGwL+JZCOlbWmfvAqFFXe+0qny8bGQYc4vTjhbYeOBNoESABj01KW/xtBQTxrL5x/jUVd1tVwM0FhwqrW/78tED/s3wvaoMHJc9bL4ileRSc8XQ4soFpJwM7t9my8wo5KLGtVcaDNb/DIgUclYpjBnUcdXcCAlzmf2/6+JzRv7UEUQZqjTn5yPh4G6lTQeUZdeX5pK0HqCuV9T0bLAAXxA2GnIh75QuWmCNtfytkzJKgZB5lZ4c/yroMhjiENObEpjs/dOfvY8O2eFBM82hRVMmCJ+KqpB2e1wENnPdcV98OKSg4qgBp8MVWQMShqSCgb1in960MGO/uwe/piPGnyiKH4/ksfS4fZg8F9I+Fb9I9LpIxEI6RJFTBjC+tYUqKYHgYvHKZf+U4hohjH44OA/3q6Mr3JVv8e7Hna0U7KfbEcUq2471M+rCEk8Xow/ICJMQl8qPAl05WpvINEsTJ/+hEMataAlbsjL3tCX7/0Wd0ZN3s="
     before_install:
     - cd frontend
     install:
