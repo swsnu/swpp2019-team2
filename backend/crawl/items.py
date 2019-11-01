@@ -8,13 +8,12 @@
 import scrapy
 
 
-class CrawlingItem(scrapy.Item):
+class CrawlItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
 
-class CosmosItem(scrapy.Item):
+class ProductItem(scrapy.Item):
     name = scrapy.Field()
-    brand = scrapy.Field()
     price = scrapy.Field()
     pass
