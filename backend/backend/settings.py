@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lip.apps.LipConfig',
+    'brand.apps.BrandConfig',
 ]
 
 MIDDLEWARE = [
