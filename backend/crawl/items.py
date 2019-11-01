@@ -6,14 +6,16 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from scrapy_djangoitem import DjangoItem
+from lip.models import Lip
+from brand.models import Brand
 
 
-class CrawlItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+class LipProduct(DjangoItem):
+    django_model = Lip
+    color_list = scrapy.Field()
     pass
 
-class ProductItem(scrapy.Item):
-    name = scrapy.Field()
-    price = scrapy.Field()
+class Brand(DjangoItem):
+    django_model = Brand
     pass
