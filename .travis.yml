@@ -6,14 +6,17 @@ matrix:
     dist: trusty
     addons:
       sonarcloud:
-        organization: swsnu
+        organization: "swsnu"
         token:
-          secure: "O3GvCc+4PekeaLTuutp9Sx/PVsCnXyiAjLTKj29l6uHHqm5zi/ref0itbppkEttTZ8MxG7c8fc3Xz++CPqMLT8YOutlHt5qWh9s/k+co4JIC15dl9VI9hXfiO781//L/cpO3vkf/XjOhexK3lbfmy+VdlnmnElJRRvifxJMQGClvJC/9Gf/zvM14zZCkzPhbENU1zKG/BAUQgZcQ8KLbGWm0CBt8mXF4lidr9sN1XqX52QnVbD42cU/aKL57gsZvqyjhMehuaVPjwhA5FxSHOKybc8kyiWYhQSZkqJ7k4nRoTr/f0E0NnQZ9Ebzqlt1A23eUFQLz695EZVO2m+b1M9oa6RoFwSnZHIVQJa6MFuqBVOv3uQx13Fg1HIwdGphPj2p/AVEuwF6tWR4IfUhV+MMdCp8fVJrqUNcZWDNyDNLLsGXVotUCQZ3V3eCfxCnqyXf/XjlSEETMOs1NUW4HI1+TRe05e1qmpla0ELnF/vVG9YaftNlzeTj9/ycnA6mlqydXLlVGs7qPKJ1EGXUatGWeX0uGGi2fq8lStCCJz0aHvLUhLjpQXql6Shou+fty8dj/WSfYoRLg9Fn76q9bM+pKcKiB7vL1b+QEEG4XcfkjwdtGUQuUB5Ga1Joxv99rvFE3iIzyf+enElADK7e9IWMSgUDa8H6xHQcz3v6uT38="
+          secure: "NjT1ASH0bOVFV0fXGYcOm0mga6VzJmtt+cGlS2tcUbcHvU2FTWFwDYhvOiaynGyrInOaBekLdj1P3kSIGHlFuaX6nxjWW2QJHEHXioxjViKFQmcRAx/VFeeUtIoed2UguiYgkS/sz0qIN5CLJqgnsaf4Ympw8poG3YugdBP+9rd+4As9talJMdtixMw2r1/Bwtf4m9WvRYWpFF0LYi62/8QKCmLyAvoeRHJqAQoQcvHaj9Ix/qOutiOU1t/QVUE/dr3o4WiXuCv045cyrZGK31wzR0KzU1PdJAZinrvV+jh29nl6hjt8n4MqwRL7qa35zrLSvLcMl4Plh+7NIQcqO0jUk3wkhkPSfLWL4PTL/gn+mIeMzt+pLCmh8Yxn9ukXcpw+7hGe3YfDV2NO+o4zeqepIhY3OqeFUe9HymHDUL5gsNFo80NUcLpVJi+NFQhCRF6ZcQCNJ82wTSVAEDCuifxeJ5EfhtXyXoo29fxK8JXuzj/abCwjJyl5jJ76jS3X5A1L7+jZnCbo7o5G25mPV6OtCMx/axFThekYDNn1yqRbCKvHI/iwGf9z/qPgwyzKlOlbc+B+uphNm5sNmfqONuNKVA9Uz4V839duv3AwiKjEO3wE4G8JzGAs6/H6y38+8UJM24l7tANyBtjWDD7W27Uj/nfSlsmG+PPyhtmIiII="
     before_install:
     - cd frontend
     install:
     - npm install
+    - npm install coveralls
     script:
     - "./node_modules/.bin/eslint src/"
     - yarn test --coverage --watchAll=false
     - sonar-scanner
+    after_success:
+    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
