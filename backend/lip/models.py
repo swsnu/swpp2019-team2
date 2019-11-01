@@ -42,6 +42,7 @@ class LipOption(models.Model):
         max_length=2,
         choices=COLOR
     )
+    optionName = models.CharField(max_length = 30)
     product = models.ForeignKey(
         Lip,
         on_delete=models.CASCADE
