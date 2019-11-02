@@ -91,7 +91,7 @@ class SkinTone extends Component {
                     <img src = {this.state.fileurl} alt = "Please select image" />  
                 </div>
                 <div className = "photo_input">
-                    <input id = "photo-input" type="file" name="file" onChange={event => this.fileinputHandler(event)}/>
+                    <input id = "photo-input" type="file" name="file" accept = "image/*" onChange={event => this.fileinputHandler(event)}/>
                     <button id = "submit-button" onClick = {(event)=>this.submitHandler(event)}>Submit</button>
                 </div>
             </div>
