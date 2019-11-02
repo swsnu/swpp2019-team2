@@ -1,5 +1,5 @@
 dev/master
-[2019/11/2] Frontend Implementation uploaded
+- [2019/11/2] Frontend Implementation uploaded
 
 ##### How to run
 - Go to frontend folder
