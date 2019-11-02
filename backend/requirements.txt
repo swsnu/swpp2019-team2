@@ -3,3 +3,4 @@ Scrapy==1.8.0
 scrapy-djangoitem==1.1.1
 pylint==2.4.3
 pylint-django==2.0.11
+selenium==3.141.0
