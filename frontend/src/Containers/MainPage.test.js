@@ -106,7 +106,7 @@ describe("<MainPage/>", () => {
     const component = shallow(<MainPage.WrappedComponent history={history} />);
     const button = component.find("#budget-search");
     button.simulate("click");
-    expect(spyHistoryReplace).toHaveBeenCalledWith("../budget_search");
+    expect(spyHistoryReplace).toHaveBeenCalledWith("../budget");
   });
   it("should call toneHandler when clicking tone analysis button", () => {
     const spyHistoryReplace = jest
@@ -115,7 +115,7 @@ describe("<MainPage/>", () => {
     const component = shallow(<MainPage.WrappedComponent history={history} />);
     const button = component.find("#tone-analysis");
     button.simulate("click");
-    expect(spyHistoryReplace).toHaveBeenCalledWith("../tone-analysis");
+    expect(spyHistoryReplace).toHaveBeenCalledWith("../skintone");
   });
   it("should call saleHandler when clicking sale information button", () => {
     const spyHistoryReplace = jest
@@ -124,7 +124,7 @@ describe("<MainPage/>", () => {
     const component = shallow(<MainPage.WrappedComponent history={history} />);
     const button = component.find("#sale-information");
     button.simulate("click");
-    expect(spyHistoryReplace).toHaveBeenCalledWith("../sale-information");
+    expect(spyHistoryReplace).toHaveBeenCalledWith("../sale");
   });
   it("should call mypageHandler when clicking mypage button", () => {
     const mockStore = getMockStore(stubStateC);
