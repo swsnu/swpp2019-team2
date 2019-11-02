@@ -3,7 +3,12 @@ import BigCalendar from './BigCalendar';
 
 class SalesInfo extends Component {
   render() {
-    return <BigCalendar />;
+    return (
+      <div className="SalesInfo">
+        <h1> Sales Information </h1>
+        <BigCalendar />
+      </div>
+    );
   }
 }
 
