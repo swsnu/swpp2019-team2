@@ -23,6 +23,7 @@ class Lip(models.Model):
         max_length=1,
         choices=CATEGORY,
     )
+    img_url = models.TextField(default="//:0")
 
     def __str__(self):
         return self.name

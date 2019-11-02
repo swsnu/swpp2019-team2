@@ -13,9 +13,10 @@ from brand.models import Brand
 
 class LipProduct(DjangoItem):
     django_model = Lip
-    color_list = scrapy.Field()
+    crawled = scrapy.Field()
     pass
 
 class Brand(DjangoItem):
     django_model = Brand
+    crawled = scrapy.Field()
     pass
