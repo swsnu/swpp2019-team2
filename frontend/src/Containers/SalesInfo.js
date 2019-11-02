@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import BigCalendar from "./BigCalendar";
+import React, { Component } from 'react';
+import BigCalendar from './BigCalendar';
 
 class SalesInfo extends Component {
   render() {
