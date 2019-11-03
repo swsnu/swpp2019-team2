@@ -17,8 +17,11 @@ class CrawlPipeline(object):
         if item["crawled"] == "brand":
             self.process_brand(item)
         elif item["crawled"] == "product":
-            item.save()
-            return item
+            if len(Lip.objects.filter(name=item["name"])) == 0:
+                item.save()
+                return item
+            else:
+                pass
     
     def process_brand(self, item):
         if item["name"] not in self.ids_seen and len(Brand.objects.filter(name=item["name"])) == 0:
