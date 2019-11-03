@@ -1,7 +1,7 @@
 body {
     background-color : rgb(248, 236, 248);
 }
-.Signin {
+.Signup {
     width : 80%;
     position:absolute;
     left:50%;
@@ -14,13 +14,13 @@ body {
     background : rgb(255, 220, 226);
 }
 
-.Signin label {
+.Signup label {
     display : block;
     margin : 10px auto;
     text-align : center;
     font-weight : bold;
 }
-.Signin input#email-input {
+.Signup input#email-input {
     display : block;
     width : 80%;
     box-sizing: border-box;
@@ -29,7 +29,7 @@ body {
     margin : auto;
 }
 
-.Signin input#pw-input {
+.Signup input#pw-input {
     display : block;
     width : 80%;
     box-sizing: border-box;
@@ -38,7 +38,7 @@ body {
     margin : auto;
 }
 
-.Signin button {
+.Signup button {
     margin : 20px 0;
     padding: 10px;
     font : inherit;
@@ -48,8 +48,8 @@ body {
     cursor : pointer;
 }
 
-.Signin button:hover,
-.Signin button:active {
+.Signup button:hover,
+.Signup button:active {
     color:white;
     background-color:#9b45a7;
 }

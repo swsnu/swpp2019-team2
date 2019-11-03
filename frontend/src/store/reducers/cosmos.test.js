@@ -1,83 +1,70 @@
-import React from 'react';
-
 import reducer from './cosmos';
 import * as actionTypes from '../actions/actionTypes';
 
 
-const stubUser = {
-    id:0,
-    email:'TEST_EMAIL',
-    password:'TEST_PASS',
-    name:'TEST',
-    logged_in:false
-};
 
 
-describe('Article Reducer', () => {
-  it('should return default state', () => {
-    const newState = reducer(undefined, {}); // initialize
-    expect(newState).toEqual({
-        Users : [], selectedUser: null,});
+const stubuser = {id: 1, name: 'lip_test_name', price: 5000, category: '립스틱', brand: 1, color: 1};
+describe('post reducer', () => {
+  it('should return the initial state', () => {
+    expect(reducer(undefined, {})).toEqual({Lip:[],User:[],error:null,loading:false,token:null});
   });
-
-  it('should change/put User', () => {
-    const stubInitialState = {
-      Users: [stubUser,
-        {id:1,email:'TEST_EMAIL2',password:'TEST_PASS2',name:'TEST2',logged_in:false}],
-      selectedUser: null,
+  it('should handle GET_LIP', () => {
+    const startAction = {
+      type: actionTypes.GET_LIP
     };
-    let newState = reducer(stubInitialState, {
-      type: actionTypes.PUT_USER,
-      targetID: 0,
-      target:stubUser,
-      logged_in:true
-    });
-    expect(newState).toEqual({
-      Users: [{...stubUser, logged_in:true},
-        {id:1,email:'TEST_EMAIL2',password:'TEST_PASS2',name:'TEST2',logged_in:false}],
-      selectedUser: stubUser}
-    );
-    newState = reducer(newState, {
-      type: actionTypes.PUT_USER,
-      targetID: 0,
-      target:stubUser,
-      logged_in:false,
-    });
-    expect(newState).toEqual({
-        Users: [{...stubUser, logged_in:false},
-            {id:1,email:'TEST_EMAIL2',password:'TEST_PASS2',name:'TEST2',logged_in:false}],
-        selectedUser: stubUser}
-    );
-  });
-
-  it('should get User', () => {
-    const stubSelectedUser = {id:0,email:'TEST_EMAIL',password:'TEST_PASS',name:'TEST',logged_in:false};
-    const newState = reducer(undefined, {
-      type: actionTypes.GET_USER,
-      target: stubSelectedUser,
-    });
-    expect(newState).toEqual({
-      Users:[],
-      selectedUser:stubSelectedUser,
-    });
+    const expectedActions =
+        {Lip:undefined,User:[],error:null,loading:false,token:null};
+        
+    expect(reducer(undefined, startAction)).toEqual(expectedActions)
   });
 
 
-  it('should get all Users', () => {
-    const stubUsers = [
-      {id:0,email:'TEST_EMAIL',password:'TEST_PASS',name:'TEST',logged_in:false},
-      {id:1,email:'TEST_EMAIL2',password:'TEST_PASS2',name:'TEST2',logged_in:false},
-      {id:2,email:'TEST_EMAIL3',password:'TEST_PASS3',name:'TEST3',logged_in:false},
-    ];
-    const newState = reducer(undefined, {
-      type: actionTypes.GET_USERS,
-      Users:stubUsers
-    });
-    expect(newState).toEqual({
-      Users:stubUsers,
-      selectedUser:null,
-    });
+  it('should handle AUTH_START', () => {
+    const startAction = {
+      type: actionTypes.AUTH_START
+    };
+    const expectedActions =
+          {Lip:[],User:[],error:null,loading:true,token:null};
+        
+    expect(reducer(undefined, startAction)).toEqual(expectedActions)
+  });
+
+  it('should handle AUTH_SUCCESS', () => {
+    const startAction = {
+      type: actionTypes.AUTH_SUCCESS
+    };
+    const expectedActions =
+          {Lip:[],User:[],error:null,loading:false,token:undefined};
+        
+    expect(reducer(undefined, startAction)).toEqual(expectedActions)
   });
 
 
-})
+  it('should handle AUTH_FAIL', () => {
+    const startAction = {
+      type: actionTypes.AUTH_FAIL
+    };
+    const expectedActions =
+          {Lip:[],User:[],error:undefined,loading:false,token:null};
+        
+    expect(reducer(undefined, startAction)).toEqual(expectedActions)
+  });
+
+
+  it('should handle AUTH_LOGOUT', () => {
+    const startAction = {
+      type: actionTypes.AUTH_LOGOUT
+    };
+    const expectedActions =
+          {Lip:[],User:[],error:null,loading:false,token:null};
+        
+    expect(reducer(undefined, startAction)).toEqual(expectedActions)
+  });
+
+  
+
+
+
+
+});

@@ -1,11 +1,11 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
-import LogIn from "./LogIn";
+import Signup from "./Signup";
 import { Provider } from "react-redux";
+import {BrowserRouter} from 'react-router-dom';
 import { getMockStore } from "../Mocks/mocks";
 import { createBrowserHistory } from "history";
 import * as actions from "../store/actions/cosmos";
-import { BrowserRouter } from 'react-router-dom';
 
 
 const stubStateC = {
@@ -21,7 +21,9 @@ const stubSeletedUserF = {
 const stubSeletedUserT = {
   logged_in: true
 };
-describe("<LogIn />", () => {
+describe("<Signup />", () => {
+  let spygetLips;
+  let spylogout;
   let spyauthCheckState;
   beforeEach(() => {
 
@@ -29,13 +31,18 @@ describe("<LogIn />", () => {
   .mockImplementation(() => { return dispatch => {}; });
   })
   it("should render and call authLogin", () => {
+   /* let spyauthLogin = jest
+      .spyOn(actionCreators, "authLogin")
+      .mockImplementation(() => {
+        return dispatch => {};
+      });*/
 
     const mockStore = getMockStore(stubStateC);
     const history = createBrowserHistory();
     const component = mount(
       <Provider store={mockStore}>
         <BrowserRouter history={history}>
-          <LogIn />
+          <Signup />
         </BrowserRouter>
       </Provider>
     );
@@ -44,19 +51,19 @@ describe("<LogIn />", () => {
   });
 
   it("should render", () => {
-    const component = shallow(<LogIn.WrappedComponent />);
-    const wrapper = component.find(".Signin");
+    const component = shallow(<Signup.WrappedComponent />);
+    const wrapper = component.find(".Signup");
     expect(wrapper.length).toBe(1);
   });
   it("should have input for email and should change state", () => {
-    const component = shallow(<LogIn.WrappedComponent />);
-    const emailInput = component.find("#username-input");
-    emailInput.simulate("change", { target: { value: "test" } });
-    expect(emailInput.length).toBe(1);
+    const component = shallow(<Signup.WrappedComponent />);
+    const usernameInput = component.find("#username-input");
+    usernameInput.simulate("change", { target: { value: "test" } });
+    expect(usernameInput.length).toBe(1);
     expect(component.state().username).toEqual("test");
   });
   it("should have input for password and should change state", () => {
-    const component = shallow(<LogIn.WrappedComponent />);
+    const component = shallow(<Signup.WrappedComponent />);
     const pwInput = component.find("#pw-input");
     pwInput.simulate("change", { target: { value: "ptest" } });
     expect(pwInput.length).toBe(1);
@@ -66,8 +73,9 @@ describe("<LogIn />", () => {
     jest.spyOn(window, "alert").mockImplementation(() => {});
     const mockonTryAutoSignup = jest.fn();
     const mockonLogin = jest.fn();
+    const mockSignup = jest.fn();
     const component = mount(
-      <BrowserRouter><LogIn.WrappedComponent  onTryAutoSignup={ mockonTryAutoSignup} Login={mockonLogin} /></BrowserRouter>
+      <BrowserRouter><Signup.WrappedComponent  Signup={mockSignup} onTryAutoSignup={ mockonTryAutoSignup} Login={mockonLogin} /></BrowserRouter>
     );
     const emailInput = component.find("#username-input");
     emailInput.simulate("change", { target: { value: "etest" } });
@@ -77,45 +85,47 @@ describe("<LogIn />", () => {
     loginButton.simulate("click");
     expect(window.alert).toHaveBeenCalledTimes(0);
   });
-
   it("should have login button and button should work when inputs are corrent", () => {
     const mockonTryAutoSignup = jest.fn();
     const mockonLogin = jest.fn();
+    const mockSignup = jest.fn();
     const component = mount(
-      <BrowserRouter><LogIn.WrappedComponent  error={!null} onTryAutoSignup={ mockonTryAutoSignup} Login={mockonLogin} /></BrowserRouter>
+      <BrowserRouter><Signup.WrappedComponent  Signup ={mockSignup} error={!null} onTryAutoSignup={ mockonTryAutoSignup} Login={mockonLogin} /></BrowserRouter>
     );
-    const emailInput = component.find("#username-input");
-    emailInput.simulate("change", { target: { value: "test_id" } });
+    const usernameInput = component.find("#username-input");
+    usernameInput.simulate("change", { target: { value: "test_id" } });
+    const emailInput = component.find("#email-input");
+    emailInput.simulate("change", { target: { value: "test_" } });
     const pwInput = component.find("#pw-input");
     pwInput.simulate("change", { target: { value: "test_password" } });
     const loginButton = component.find("#login-button");
     loginButton.simulate("click");
     expect(mockonTryAutoSignup).toHaveBeenCalledTimes(2);
-    expect(mockonLogin).toHaveBeenCalledTimes(1);
+    expect(mockSignup).toHaveBeenCalledTimes(1);
   });
   it("should redirect to login when not there is no selected user", () => {
-    const component = shallow(<LogIn.WrappedComponent selectedUser={null} />);
+    const component = shallow(<Signup.WrappedComponent selectedUser={null} />);
     const redirect = component.find("Redirect");
-    expect(redirect.props().to).toEqual("/login");
+    expect(redirect.props().to).toEqual("/signup");
   });
   it("should replace to signup when not there is no selected user", () => {
-    const component = shallow(<LogIn.WrappedComponent isAuthenticated={true} />);
+    const component = shallow(<Signup.WrappedComponent isAuthenticated={true} />);
     const redirect = component.find("Redirect");
     expect(redirect.props().to).toEqual("/search");
   });
   it("should not have SelectedUser with its logged_in=false", () => {
     const component = shallow(
-      <LogIn.WrappedComponent selectedUser={stubSeletedUserF} />
+      <Signup.WrappedComponent selectedUser={stubSeletedUserF} />
     );
     const redirect = component.find("Redirect");
     expect(redirect.length).toBe(1);
   });
   it("should go to main page when logged in", () => {
     const component = shallow(
-      <LogIn.WrappedComponent selectedUser={stubSeletedUserT} />
+      <Signup.WrappedComponent selectedUser={stubSeletedUserT} />
     );
     const redirect = component.find("Redirect");
-    expect(redirect.props().to).toEqual("/login");
+    expect(redirect.props().to).toEqual("/signup");
   });
 
 });

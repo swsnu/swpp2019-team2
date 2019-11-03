@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -11,7 +12,8 @@ import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware} from 'connected-react-router';
 import {createBrowserHistory} from 'history';
 
-
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
 const history = createBrowserHistory();
 const rootReducer = combineReducers({

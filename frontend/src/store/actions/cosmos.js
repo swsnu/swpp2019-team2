@@ -1,55 +1,96 @@
-import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import * as actionTypes from './actionTypes';
 
-import { push } from 'connected-react-router';
 
-export const getUsers_ = (Users) => {
-    return { 
-        type : actionTypes.GET_USERS, 
-        Users : Users,
-    };
+export const getLips_ = (Lip) => ({ type: actionTypes.GET_LIP, Lip });
+export const getLips = () => (dispatch) => axios.get('/api/lip/')
+  .then((res) => dispatch(getLips_(res.data)));
+
+
+
+
+export const authStart = () => ({
+  type: actionTypes.AUTH_START,
+});
+
+export const authSuccess = (token) => ({
+  type: actionTypes.AUTH_SUCCESS,
+  token,
+});
+
+
+export const authFail = (error) => ({
+  type: actionTypes.AUTH_FAIL,
+  error,
+});
+
+
+export const authLogin = (username, password) => (dispatch) => {
+
+  dispatch(authStart());
+  axios.post('/api/signin/', {
+    username,
+    password,
+  })
+    .then((res) => {
+      const token = res;
+      const expirationDate = new Date().getTime() + 3600 * 1000;
+      localStorage.setItem('token', token);
+      localStorage.setItem('expirationDate', expirationDate);
+      dispatch(authSuccess(token));
+    })
+    .catch((err) => {
+
+      dispatch(authFail(err));
+
+    });
 };
 
-export const getUsers = () => {
-    return dispatch => {
-        return axios.get('/api/user')
-                    .then(res => dispatch(getUsers_(res.data)));
-    };
+
+export const logout = () => {
+  localStorage.removeItem('user');
+  localStorage.removeItem('expirationDate');
+  return {
+    type: actionTypes.AUTH_LOGOUT,
+  };
 };
 
-export const getUser_ = (User) => {
-    return {
-        type : actionTypes.GET_USER,
-        target : User,
-    };
+export const authSignup = (username, email, password) => (dispatch) => {
+  dispatch(authStart());
+  axios.post('/api/signup/', {
+    username,
+    email,
+    password,
+
+  })
+    .then((res) => {
+
+      const token = res;
+      const expirationDate = new Date().getTime() + 3600 * 1000;
+      localStorage.setItem('token', token);
+      localStorage.setItem('expirationDate', expirationDate);
+      dispatch(authSuccess(token));
+    })
+    .catch((err) => {
+      dispatch(authFail(err));
+    });
 };
 
-export const getUser = () => {
-    return (dispatch) => {
-        return axios.get('/api/user/1')
-                    .then(res => {
-                        dispatch(getUser_(res.data));
-                    })
-    };
-};
+export const authCheckState = () => (dispatch) => {
+  const token = localStorage.getItem('token');
+  if (token == undefined) {
 
-export const putUser_ = (user) => {
-    return {
-        type : actionTypes.PUT_USER,
-        id : user.id,
-        email : user.email,
-        password : user.password,
-        name : user.name,
-        logged_in : user.logged_in,
-        targetID : user.id
-    };
-};
+    dispatch(logout());
+  }
+  else {
+    const expirationDate = new Date(localStorage.getItem('expirationDate'));
+    if (expirationDate <= new Date()) {
 
-export const putUser = (user) => {
-    return (dispatch) => {
-        return axios.patch(`/api/user/1`, {logged_in: user.logged_in})
-                    .then(res => {
-                        dispatch(putUser_(res.data));
-                    })
-    };
+      dispatch(logout());
+    }
+    else {
+      dispatch(authSuccess(token));
+
+    }
+  }
 };

@@ -1,5 +1,7 @@
-export{
-    getUsers,
-    getUser,
-    putUser,
-} from './cosmos'
+export {
+    getLips,
+    logout,
+    authLogin,
+    authSignup,
+    authCheckState,
+  } from './cosmos';
