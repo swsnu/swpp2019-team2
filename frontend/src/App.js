@@ -1,17 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import MainPage from './Containers/MainPage';
-import LogIn from './Containers/LogIn';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
+import MainPage from './Containers/MainPage';
+import LogIn from './Containers/LogIn';
 import BudgetSearch from './Containers/BudgetSearch';
 import SkinTone from './Containers/SkinTone';
 import SalesInfo from './Containers/SalesInfo';
 
-function App(props) {
+function App({ history }) {
   return (
-    <ConnectedRouter history={props.history}>
+    <ConnectedRouter history={history}>
       <div className="App">
         <Switch>
           <Route path="/login" exact component={LogIn} />

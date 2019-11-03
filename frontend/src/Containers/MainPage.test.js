@@ -1,40 +1,37 @@
-import React from "react";
-import { shallow, mount } from "enzyme";
-import MainPage from "./MainPage";
-import { Provider } from "react-redux";
-import { ConnectedRouter } from "connected-react-router";
-import { getMockStore } from "../Mocks/mocks";
-import { createBrowserHistory } from "history";
-import { Route } from "react-router-dom";
-import * as actionCreators from "../store/actions/cosmos";
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import { shallow, mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
+import { getMockStore } from '../Mocks/mocks';
+import MainPage from './MainPage';
+import * as actionCreators from '../store/actions/cosmos';
+
 const history = createBrowserHistory();
 const stubSeletedUserF = {
-  id: "7",
-  logged_in: false
+  id: '7',
+  logged_in: false,
 };
 const stubSeletedUserT = {
-  id: "7",
-  logged_in: true
+  id: '7',
+  logged_in: true,
 };
 const stubStateC = {
   Users: [],
-  selectedUser: stubSeletedUserT
+  selectedUser: stubSeletedUserT,
 };
-describe("<MainPage/>", () => {
+describe('<MainPage/>', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it("should render and call getUser,getUsers", () => {
-    let spyGetUsers = jest
-      .spyOn(actionCreators, "getUsers")
-      .mockImplementation(() => {
-        return dispatch => {};
-      });
-    let spyGetUser = jest
-      .spyOn(actionCreators, "getUser")
-      .mockImplementation(() => {
-        return dispatch => {};
-      });
+  it('should render and call getUser,getUsers', () => {
+    const spyGetUsers = jest
+      .spyOn(actionCreators, 'getUsers')
+      .mockImplementation(() => (dispatch) => {});
+    const spyGetUser = jest
+      .spyOn(actionCreators, 'getUser')
+      .mockImplementation(() => (dispatch) => {});
     const mockStore = getMockStore(stubStateC);
 
     const component = mount(
@@ -42,12 +39,12 @@ describe("<MainPage/>", () => {
         <ConnectedRouter history={history}>
           <MainPage selectedUser={stubSeletedUserT} />
         </ConnectedRouter>
-      </Provider>
+      </Provider>,
     );
     expect(spyGetUsers).toHaveBeenCalledTimes(1);
     expect(spyGetUser).toHaveBeenCalledTimes(1);
   });
-  it("should set state id when mounted", () => {
+  it('should set state id when mounted', () => {
     const mockOnGetUser = jest.fn();
     const mockOnGetUsers = jest.fn();
     const component = mount(
@@ -55,11 +52,11 @@ describe("<MainPage/>", () => {
         selectedUser={stubSeletedUserT}
         onGETUSER={mockOnGetUser}
         onGETUSERS={mockOnGetUsers}
-      />
+      />,
     );
-    expect(component.state().id).toEqual("7");
+    expect(component.state().id).toEqual('7');
   });
-  it("should not set state id when user is not logged in", () => {
+  it('should not set state id when user is not logged in', () => {
     const mockOnGetUser = jest.fn();
     const mockOnGetUsers = jest.fn();
     const component = mount(
@@ -67,85 +64,85 @@ describe("<MainPage/>", () => {
         selectedUser={null}
         onGETUSER={mockOnGetUser}
         onGETUSERS={mockOnGetUsers}
-      />
+      />,
     );
-    expect(component.state().id).toEqual("");
+    expect(component.state().id).toEqual('');
   });
-  it("should render", () => {
+  it('should render', () => {
     const component = shallow(<MainPage.WrappedComponent />);
-    const wrapper = component.find(".MainPage");
+    const wrapper = component.find('.MainPage');
     expect(wrapper.length).toBe(1);
   });
-  it("should redirect to login page when not logged in", () => {
+  it('should redirect to login page when not logged in', () => {
     const component = shallow(
-      <MainPage.WrappedComponent selectedUser={stubSeletedUserF} />
+      <MainPage.WrappedComponent selectedUser={stubSeletedUserF} />,
     );
-    const redirect = component.find("Redirect");
-    expect(redirect.props().to).toEqual("/login");
+    const redirect = component.find('Redirect');
+    expect(redirect.props().to).toEqual('/login');
   });
-  it("should not redirect stay when logged in", () => {
+  it('should not redirect stay when logged in', () => {
     const component = shallow(
-      <MainPage.WrappedComponent selectedUser={stubSeletedUserT} />
+      <MainPage.WrappedComponent selectedUser={stubSeletedUserT} />,
     );
-    const redirect = component.find("Redirect");
+    const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
   });
-  it("should call searchHandler when clicking search tag button", () => {
+  it('should call searchHandler when clicking search tag button', () => {
     const spyHistoryReplace = jest
-      .spyOn(history, "replace")
+      .spyOn(history, 'replace')
       .mockImplementation(() => {});
     const component = shallow(<MainPage.WrappedComponent history={history} />);
-    const button = component.find("#search-tag");
-    button.simulate("click");
-    expect(spyHistoryReplace).toHaveBeenCalledWith("../search");
+    const button = component.find('#search-tag');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../search');
   });
-  it("should call budgetHandler when clicking budget search button", () => {
+  it('should call budgetHandler when clicking budget search button', () => {
     const spyHistoryReplace = jest
-      .spyOn(history, "replace")
+      .spyOn(history, 'replace')
       .mockImplementation(() => {});
     const component = shallow(<MainPage.WrappedComponent history={history} />);
-    const button = component.find("#budget-search");
-    button.simulate("click");
-    expect(spyHistoryReplace).toHaveBeenCalledWith("../budget");
+    const button = component.find('#budget-search');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../budget');
   });
-  it("should call toneHandler when clicking tone analysis button", () => {
+  it('should call toneHandler when clicking tone analysis button', () => {
     const spyHistoryReplace = jest
-      .spyOn(history, "replace")
+      .spyOn(history, 'replace')
       .mockImplementation(() => {});
     const component = shallow(<MainPage.WrappedComponent history={history} />);
-    const button = component.find("#tone-analysis");
-    button.simulate("click");
-    expect(spyHistoryReplace).toHaveBeenCalledWith("../skintone");
+    const button = component.find('#tone-analysis');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../skintone');
   });
-  it("should call saleHandler when clicking sale information button", () => {
+  it('should call saleHandler when clicking sale information button', () => {
     const spyHistoryReplace = jest
-      .spyOn(history, "replace")
+      .spyOn(history, 'replace')
       .mockImplementation(() => {});
     const component = shallow(<MainPage.WrappedComponent history={history} />);
-    const button = component.find("#sale-information");
-    button.simulate("click");
-    expect(spyHistoryReplace).toHaveBeenCalledWith("../sale");
+    const button = component.find('#sale-information');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../sale');
   });
-  it("should call mypageHandler when clicking mypage button", () => {
+  it('should call mypageHandler when clicking mypage button', () => {
     const mockStore = getMockStore(stubStateC);
     const spyHistoryReplace = jest
-      .spyOn(history, "replace")
+      .spyOn(history, 'replace')
       .mockImplementation(() => {});
     const component = mount(
       <Provider store={mockStore}>
         <ConnectedRouter history={history}>
           <MainPage selectedUser={stubSeletedUserT} history={history} />
         </ConnectedRouter>
-      </Provider>
+      </Provider>,
     );
-    const button = component.find("#my-page-button");
-    button.simulate("click");
-    expect(spyHistoryReplace).toHaveBeenCalledWith("../mypage/7");
+    const button = component.find('#my-page-button');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../mypage/7');
   });
 
-  it("should call logoutHandler when clicking logout button", () => {
+  it('should call logoutHandler when clicking logout button', () => {
     const spyHistoryPush = jest
-      .spyOn(history, "push")
+      .spyOn(history, 'push')
       .mockImplementation(() => {});
     const mockUserLogOut = jest.fn();
     const mockOnGetUser = jest.fn();
@@ -157,15 +154,15 @@ describe("<MainPage/>", () => {
         onGETUSERS={mockOnGetUsers}
         UserLogOut={mockUserLogOut}
         history={history}
-      />
+      />,
     );
-    const button = component.find("#log-out-button");
-    button.simulate("click");
-    expect(spyHistoryPush).toHaveBeenCalledWith("/login");
+    const button = component.find('#log-out-button');
+    button.simulate('click');
+    expect(spyHistoryPush).toHaveBeenCalledWith('/login');
   });
-  it("should have no case that can see logout button without user logged in", () => {
+  it('should have no case that can see logout button without user logged in', () => {
     const spyHistoryPush = jest
-      .spyOn(history, "push")
+      .spyOn(history, 'push')
       .mockImplementation(() => {});
     const mockUserLogOut = jest.fn();
     const mockOnGetUser = jest.fn();
@@ -177,18 +174,16 @@ describe("<MainPage/>", () => {
         onGETUSERS={mockOnGetUsers}
         UserLogOut={mockUserLogOut}
         history={history}
-      />
+      />,
     );
-    const button = component.find("#log-out-button");
-    button.simulate("click");
+    const button = component.find('#log-out-button');
+    button.simulate('click');
     expect(spyHistoryPush).toHaveBeenCalledTimes(0);
   });
-  it("should call logoutHandler when clicking logout button", () => {
-    let spyPutUser = jest
-      .spyOn(actionCreators, "putUser")
-      .mockImplementation(user => {
-        return dispatch => {};
-      });
+  it('should call logoutHandler when clicking logout button', () => {
+    const spyPutUser = jest
+      .spyOn(actionCreators, 'putUser')
+      .mockImplementation((user) => (dispatch) => {});
     const mockStore = getMockStore(stubStateC);
 
     const component = mount(
@@ -196,11 +191,11 @@ describe("<MainPage/>", () => {
         <ConnectedRouter history={history}>
           <MainPage selectedUser={stubSeletedUserT} />
         </ConnectedRouter>
-      </Provider>
+      </Provider>,
     );
 
-    const button = component.find("#log-out-button");
-    button.simulate("click");
+    const button = component.find('#log-out-button');
+    button.simulate('click');
 
     expect(spyPutUser).toHaveBeenCalledTimes(1);
   });

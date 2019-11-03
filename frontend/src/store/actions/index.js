@@ -1,5 +1,5 @@
-export{
-    getUsers,
-    getUser,
-    putUser,
-} from './cosmos'
+export {
+  getUsers,
+  getUser,
+  putUser,
+} from './cosmos';

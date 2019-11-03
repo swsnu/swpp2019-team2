@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import BigCalendar from './BigCalendar';
 
 const stubEvent = {
   title: 'dummy title',
-  detail: 'dummy detail'
-}
+  detail: 'dummy detail',
+};
 
 describe('<BigCalender />', () => {
   it('should show calander', () => {
@@ -15,10 +15,10 @@ describe('<BigCalender />', () => {
   });
 
   it('should show popup when select specific event', () => {
-    const mockSwal = jest.fn()
+    const mockSwal = jest.fn();
     const component = shallow(<BigCalendar />);
     const calendar = component.find('#BigCalendar');
     calendar.prop('onSelectEvent')(stubEvent, mockSwal());
     expect(mockSwal).toHaveBeenCalledTimes(1);
-  })
+  });
 });
