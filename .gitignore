@@ -83,7 +83,7 @@ _db.json
 
 npm-debug.log*
 yarn-debug.log*
-<<<<<<< HEAD
+yarn-error.log*
 yarn-error.log*
 
 ### Django ###
@@ -98,5 +98,4 @@ media
 
 # personal virtualenv
 env
-=======
 

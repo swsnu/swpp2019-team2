@@ -1,15 +1,22 @@
 matrix:
   include:
-    - language: node_js # Your language e.g. node_js, python
-      node_js:
-      - '10'
-      before_install:
-      - cd frontend
-      install:
-      - npm install
-      script:
-      - ./node_modules/.bin/eslint src
-      - yarn test --coverage --watchAll=false
-# - language: python
-#   python: 3.6
-#   ...
+  - language: node_js
+    node_js:
+    - '10'
+    dist: trusty
+    addons:
+      sonarcloud:
+        organization: "swsnu"
+        token:
+          secure: "NjT1ASH0bOVFV0fXGYcOm0mga6VzJmtt+cGlS2tcUbcHvU2FTWFwDYhvOiaynGyrInOaBekLdj1P3kSIGHlFuaX6nxjWW2QJHEHXioxjViKFQmcRAx/VFeeUtIoed2UguiYgkS/sz0qIN5CLJqgnsaf4Ympw8poG3YugdBP+9rd+4As9talJMdtixMw2r1/Bwtf4m9WvRYWpFF0LYi62/8QKCmLyAvoeRHJqAQoQcvHaj9Ix/qOutiOU1t/QVUE/dr3o4WiXuCv045cyrZGK31wzR0KzU1PdJAZinrvV+jh29nl6hjt8n4MqwRL7qa35zrLSvLcMl4Plh+7NIQcqO0jUk3wkhkPSfLWL4PTL/gn+mIeMzt+pLCmh8Yxn9ukXcpw+7hGe3YfDV2NO+o4zeqepIhY3OqeFUe9HymHDUL5gsNFo80NUcLpVJi+NFQhCRF6ZcQCNJ82wTSVAEDCuifxeJ5EfhtXyXoo29fxK8JXuzj/abCwjJyl5jJ76jS3X5A1L7+jZnCbo7o5G25mPV6OtCMx/axFThekYDNn1yqRbCKvHI/iwGf9z/qPgwyzKlOlbc+B+uphNm5sNmfqONuNKVA9Uz4V839duv3AwiKjEO3wE4G8JzGAs6/H6y38+8UJM24l7tANyBtjWDD7W27Uj/nfSlsmG+PPyhtmIiII="
+    before_install:
+    - cd frontend
+    install:
+    - npm install
+    - npm install coveralls
+    script:
+    - "./node_modules/.bin/eslint src/"
+    - yarn test --coverage --watchAll=false
+    - sonar-scanner
+    after_success:
+    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
