@@ -1,9 +1,9 @@
-// actions/index.js 
+// actions/index.js
 
 export {
-    getLips,
-    logout,
-    authLogin,
-    authSignup,
-    authCheckState
-                    } from './cosmos';
+  getLips,
+  logout,
+  authLogin,
+  authSignup,
+  authCheckState,
+} from './cosmos';
