@@ -1,0 +1,106 @@
+.Body_table {
+    display: table;
+    border: 1.5px solid black;
+}
+
+
+
+
+.Title {
+    padding: 1rem;
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: 500;
+    background: rgba(255, 192, 203, 0.678);
+    color: black;
+    border: 1px solid palevioletred;
+}
+
+.Title Button {
+    padding: 1px;
+    font: inherit;
+    border: 1.5px solid black;
+    background-color: transparent;
+    color: black;
+    cursor: pointer;
+  }
+
+.Title Button:hover,
+.Title Button:active {
+      color: white;
+      background-color: gray;
+}
+
+
+
+
+.Category .buttonFalse:active {
+    color: white;
+    background-color: #fa923f;
+}
+
+
+
+.Category Button {
+    display:table;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+    background: white;
+    color: #fa923f;
+    border: 1px solid palevioletred;
+    width: 4cm;
+}
+.Category .buttonTrue {
+    color: white;
+    background-color: #fa923f;
+}
+
+
+
+
+.Button {
+    float: right;
+    vertical-align: right;
+    padding: 2px;
+    font: inherit;
+    width: 3cm;
+    height: 1.5cm;
+    font-size: 0.5cm;
+    font-weight: bold;
+    background: rgba(255, 192, 203, 0.055);
+    cursor: pointer;
+  }
+
+
+
+
+.Sub_category {
+    display: table-row-group;
+    text-align: left;
+}
+
+.Sub_category Button {                     
+    padding: 3px;
+    font: inherit;
+    border: 1.5px solid #fa923f;
+    background-color: transparent;
+    color: #fa923f;
+    cursor: pointer;
+  }
+  
+.Sub_category Button:hover,
+.Sub_category Button:active {
+    color: white;
+    background-color: #fa923f;
+  }
+
+.Sub_category .buttonTrue {
+    color: white;
+    background-color: #fa923f;
+}
+
+.Result {
+
+}
+

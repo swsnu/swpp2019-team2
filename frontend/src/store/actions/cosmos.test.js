@@ -1,9 +1,21 @@
+<<<<<<< HEAD
 import axios from "axios";
 import store from "../store";
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import * as articleActions from "./cosmos";
+=======
+import { shallow } from 'enzyme';
+import React from 'react';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import moxios from 'moxios';
+import axios from 'axios';
+import { createBrowserHistory } from 'history';
+import store from '../store';
+import * as articleActions from './cosmos';
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -150,4 +162,11 @@ describe('article', () => {
     const store = mockStore();
     return expect(store.getActions()).toEqual(expectedActions);
   });
+<<<<<<< HEAD
 });
+=======
+});
+
+
+
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee

@@ -1,0 +1,105 @@
+body {
+    background-color : rgb(248, 236, 248);
+}
+<<<<<<< HEAD
+.Signup {
+=======
+<<<<<<<< HEAD:frontend/src/Containers/LogIn.css
+.Signin {
+========
+.Signup {
+>>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee:frontend/src/components/Signup.css
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee
+    width : 80%;
+    position:absolute;
+    left:50%;
+    top:50%;
+    height : 300px;
+    width : 400px;
+    margin: -150px 0px 0px -200px;
+    box-shadow: 0 2px 3px rgb(231, 201, 235);
+    text-align : center;
+    background : rgb(255, 220, 226);
+}
+
+<<<<<<< HEAD
+.Signup label {
+=======
+<<<<<<<< HEAD:frontend/src/Containers/LogIn.css
+.Signin label {
+========
+.Signup label {
+>>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee:frontend/src/components/Signup.css
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee
+    display : block;
+    margin : 10px auto;
+    text-align : center;
+    font-weight : bold;
+}
+<<<<<<< HEAD
+.Signup input#email-input {
+=======
+<<<<<<<< HEAD:frontend/src/Containers/LogIn.css
+.Signin input#email-input {
+========
+.Signup input#email-input {
+>>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee:frontend/src/components/Signup.css
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee
+    display : block;
+    width : 80%;
+    box-sizing: border-box;
+    outline : none;
+    font : inderit;
+    margin : auto;
+}
+
+<<<<<<< HEAD
+.Signup input#pw-input {
+=======
+<<<<<<<< HEAD:frontend/src/Containers/LogIn.css
+.Signin input#pw-input {
+========
+.Signup input#pw-input {
+>>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee:frontend/src/components/Signup.css
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee
+    display : block;
+    width : 80%;
+    box-sizing: border-box;
+    outline : none;
+    font : inderit;
+    margin : auto;
+}
+
+<<<<<<< HEAD
+.Signup button {
+=======
+<<<<<<<< HEAD:frontend/src/Containers/LogIn.css
+.Signin button {
+========
+.Signup button {
+>>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee:frontend/src/components/Signup.css
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee
+    margin : 20px 0;
+    padding: 10px;
+    font : inherit;
+    border : 1px solid #9b45a7;
+    background-color : transparent;
+    color : #9b45a7;
+    cursor : pointer;
+}
+
+<<<<<<< HEAD
+.Signup button:hover,
+.Signup button:active {
+=======
+<<<<<<<< HEAD:frontend/src/Containers/LogIn.css
+.Signin button:hover,
+.Signin button:active {
+========
+.Signup button:hover,
+.Signup button:active {
+>>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee:frontend/src/components/Signup.css
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee
+    color:white;
+    background-color:#9b45a7;
+}

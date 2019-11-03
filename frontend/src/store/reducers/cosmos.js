@@ -1,3 +1,5 @@
+import { comment } from 'postcss-selector-parser';
+import react from 'react';
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
@@ -48,4 +50,8 @@ const reducer = (state = initialState, action) => {
   }
   return state;
 };
+<<<<<<< HEAD
 export default reducer;
+=======
+export default reducer;
+>>>>>>> ce5f934287255c8528127115e05d59f5a760cbee
