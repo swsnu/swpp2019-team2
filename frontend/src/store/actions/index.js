@@ -1,5 +1,9 @@
-export{
-    getUsers,
-    getUser,
-    putUser,
-} from './cosmos'
+// actions/index.js 
+
+export {
+    getLips,
+    logout,
+    authLogin,
+    authSignup,
+    authCheckState
+                    } from './cosmos';

@@ -3,11 +3,11 @@ import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 
-import COSMOSReducer from './reducers/cosmos';
+import todoReducer from '../store/reducers/article';
 
 export const history = createBrowserHistory();
 const rootReducer = combineReducers({
-  td: COSMOSReducer,
+  td: todoReducer,
   router: connectRouter(history),
 });
 export const middlewares = [thunk, routerMiddleware(history)]

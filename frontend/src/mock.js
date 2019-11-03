@@ -1,12 +1,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';                                           
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { createBrowserHistory } from 'history';
 
-import { history, middlewares } from '../store/store';
-import * as actionTypes from '../store/actions/actionTypes';
+import { history, middlewares } from './store/store';
+import * as actionTypes from './store/actions/actionTypes';
 
-const getMockCOSMOSReducer = jest.fn(
+const getMockTodoReducer = jest.fn(
   initialState => (state = initialState, action) => {
     switch (action.type) {
       default:
@@ -17,9 +16,9 @@ const getMockCOSMOSReducer = jest.fn(
 );
 
 export const getMockStore = (initialState) => {
-  const mockCOSMOSReducer = getMockCOSMOSReducer(initialState);
+  const mockTodoReducer = getMockTodoReducer(initialState);
   const rootReducer = combineReducers({
-    td: mockCOSMOSReducer,
+    td: mockTodoReducer,
     router: connectRouter(history),
   });
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
