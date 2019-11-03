@@ -4,6 +4,7 @@ import moment from 'moment';
 import swal from 'sweetalert'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
+
 const localizer = momentLocalizer(moment);
 
 class BigCalendar extends Component {
@@ -45,7 +46,7 @@ class BigCalendar extends Component {
   render() {
     return (
       <div>
-        <div>
+        <div className = "Calendar">
           <Calendar
             id='BigCalendar'
             localizer={localizer}

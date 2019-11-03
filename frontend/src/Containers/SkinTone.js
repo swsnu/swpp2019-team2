@@ -4,6 +4,7 @@ import './SkinTone.css';
 import {connect} from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import logo from "../image/LOGO.png"
+import arrow from "../image/화살표.png";
 
 class SkinTone extends Component {
     constructor(props){
@@ -42,6 +43,9 @@ class SkinTone extends Component {
     mypageHandler = (id) => {
         this.props.history.replace('../mypage/' + id)
     }
+    menuHandler = () => {
+        this.props.history.replace('../main')
+    }
 
     fileinputHandler = (event) => {
         event.preventDefault();
@@ -76,23 +80,28 @@ class SkinTone extends Component {
                 redirect = <Redirect to = '/login' />
             }
         }
+        let image_input = "<Image Input>"
         return (
             <div className = "SkinTone">
                 {redirect}
-                <div id = "LOGO">
+                {/*<div id = "LOGO">
                     <img src = {logo} alt = "COSMOS" width = "100" />
+                </div>*/}
+                <div className="upperbar">
+                    <h1>Skin Tone Analysis</h1>
+                    <div className = "buttons">
+                        <img src = {arrow} alt = "Back to Main" id = "back-to-menu-button" onClick = {()=> this.menuHandler()}/>
+                        <button id = "log-out-button" onClick = {()=>this.logoutHandler()}>Log-Out</button>
+                        <button id= "my-page-button" onClick = {()=>this.mypageHandler(this.state.id)}>My Page</button>
+                    </div>
                 </div>
-                <div className = "buttons">
-                    <button id = "log-out-button" onClick = {()=>this.logoutHandler()}>Log-Out</button>
-                    <button id= "my-page-button" onClick = {()=>this.mypageHandler(this.state.id)}>My Page</button>
-                </div>
-                <h1>Skin Tone Analysis</h1>
-                <div className = "image_preview">
-                    <img src = {this.state.fileurl} alt = "Please select image" />  
-                </div>
-                <div className = "photo_input">
-                    <input id = "photo-input" type="file" name="file" accept = "image/*" onChange={event => this.fileinputHandler(event)}/>
-                    <button id = "submit-button" onClick = {(event)=>this.submitHandler(event)}>Submit</button>
+                <div className = "image_input">
+                    <h2>{image_input}</h2>
+                    <div className = "image_preview">
+                        <img src = {this.state.fileurl} alt = "Please select image" />
+                        <input id = "photo-input" type="file" name="file" accept = "image/*" onChange={event => this.fileinputHandler(event)}/>
+                        <button id = "submit-button" onClick = {(event)=>this.submitHandler(event)}>Submit</button>  
+                    </div>
                 </div>
             </div>
         )

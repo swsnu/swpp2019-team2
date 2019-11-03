@@ -4,6 +4,8 @@ import './LogIn.css';
 import {connect} from 'react-redux';
 
 import * as actionCreators from '../store/actions/index';
+import logo from "../image/LOGO.png";
+
 
 class LogIn extends Component {
     componentDidMount(){
@@ -30,22 +32,27 @@ class LogIn extends Component {
             redirect = <Redirect to ='/login' />
         }
         return (
-          < div className = 'LogIn'>
-              {redirect}
-            <h1>Log In</h1>
-            <label> E-mail</label>
-            <input type="text" 
-            id="email-input" 
-            value={this.state.email} 
-            onChange = {(event) => this.setState({email: event.target.value})} />
+            <div className = 'LogIn'>
+                {redirect}
+                <div className = "logo">
+                    <img id ="logo" src={logo} alt="COSMOS" width="100" />
+                </div>
+                <div className = "LogInBox">
+                <h1>Log In</h1>
+                <label> E-mail</label>
+                <input type="text" 
+                id="email-input" 
+                value={this.state.email} 
+                onChange = {(event) => this.setState({email: event.target.value})} />
             
-            <label>Password</label>
-            <input type="text" 
-            id="pw-input"  
-            value = {this.state.password}
-            onChange = {(event) => this.setState({ password: event.target.value})} />
+                <label>Password</label>
+                <input type="text" 
+                id="pw-input"  
+                value = {this.state.password}
+                onChange = {(event) => this.setState({ password: event.target.value})} />
     
-            <button id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
+                <button id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
+            </div>
           </div>
         );
     }
