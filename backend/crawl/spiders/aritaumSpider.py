@@ -3,6 +3,7 @@ import scrapy
 from crawl.items import LipProduct, Brand
 from selenium import webdriver
 from brand.models import Brand as Brand_db
+from selenium.common.exceptions import NoSuchElementException
 
 class AritaumShopSpider(scrapy.Spider):
     name = 'aritaum'
@@ -22,21 +23,38 @@ class AritaumShopSpider(scrapy.Spider):
             link:"https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2200"},
             ]
         for url in urls:
-            yield scrapy.Request(url=url[link], meta={idx:url[idx]}, callback=self.parse_brand)
+            self.browser.get(url[link])
+            yield scrapy.Request(url=url[link], meta={idx:url[idx]}, callback=self.parse)
 
-    def parse_brand(self, response):
+    def parse(self, response):
         driver = self.browser
-        driver.get(response.url)
-        
         brand_list = driver.find_elements_by_name("tagging_brandNm")
+        product_list = driver.find_elements_by_xpath("//*[@id='ul_prod_list']/li")
+        yield scrapy.Request(
+            url=response.url,
+            meta={"brand":brand_list,
+                "product":product_list,
+                "category":response.meta["category"],
+                },
+            callback = self.parse_brand,
+            dont_filter=True)
+            
+    def parse_brand(self, response):
+        brand_list = response.meta["brand"]
+        product_list = response.meta["product"]
         
         for brand_name in brand_list:
             yield Brand(name=brand_name.get_property("value"), crawled="brand")
-            
-        product_list = driver.find_elements_by_xpath("//*[@id='ul_prod_list']/li")
-        yield scrapy.Request(url=response.url, meta={"product":product_list}, callback=self.parse_product, dont_filter=True)
 
-        
+        yield scrapy.Request(
+            url=response.url,
+            meta={
+                "product":product_list,
+                "category":response.meta["category"]
+                }, 
+            callback=self.parse_product, 
+            dont_filter=True)
+    
     def parse_product(self, response):
         product_list = response.meta["product"]
         category_EN = {
@@ -62,10 +80,45 @@ class AritaumShopSpider(scrapy.Spider):
                 img_url=thumb_url,
                 crawled="product"
             )
-            
+            # TODO : Color 정보 저장해야
             color_range = item.find_elements_by_xpath("//*[@id='ul_prod_list']/li[1]/div/div[1]/div/div[1]/div/ul/li")
             for color in color_range:
                 color_img_src = color.find_element_by_tag_name("img").get_property("src")
                 color_name = color.find_element_by_tag_name("label").get_attribute("data-tooltip")
-            
+        yield scrapy.Request(
+            url=response.url,
+            meta = {"category":response.meta["category"]},
+            callback=self.go_next,
+            dont_filter=True
+            )
     
+    def go_next(self, response):
+        driver = self.browser
+        try:
+            click_next = driver.find_element_by_css_selector("a.page-nav__link.is-current + a.page-nav__link")
+            click_next.click()
+            driver.implicitly_wait(5)
+            yield scrapy.Request(
+                url=response.url,
+                meta={"category":response.meta["category"]},
+                callback=self.parse,
+                dont_filter=True
+            )
+        except NoSuchElementException:  #spelling error making this code not work as expected
+            try:
+                click_next_page = driver.find_element_by_css_selector("a.page-nav__link.page-nav__link--next")
+                click_next_page.click()
+                driver.implicitly_wait(5)
+                yield scrapy.Request(
+                    url=response.url,
+                    meta={"category":response.meta["category"]},
+                    callback=self.parse,
+                    dont_filter=True
+                )
+            except NoSuchElementException:
+                pass
+
+        
+        
+    def spider_closed(self, spider):
+        self.driver.close()
