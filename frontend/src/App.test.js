@@ -1,16 +1,14 @@
-  
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import { connectRouter, ConnectedRouter } from 'connected-react-router';
-import { Route, Redirect, Switch } from 'react-router-dom';
 
 import App from './App';
-import { getMockStore } from './mock';
+import { getMockStore } from './test-utils/mocks';
 import { history } from './store/store';
 
-const mockStore = getMockStore({ Lip: [], User: [], token: null, loading: false,
-                                  error: null});
+const mockStore = getMockStore({ Articles : [], selectedArticle:null,
+    Comments : [], selectedComment:null,
+    Users : [], selectedUser: null,});
 
 
 describe('App', () => {
