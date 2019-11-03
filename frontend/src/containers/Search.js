@@ -8,7 +8,6 @@ import cosmos from '../image/cosmos.png';
 import Photo from '../image/1.PNG';
 import LipForm from '../components/LipForm';
 
-
 class Search extends Component {
   state = { 
     button_dry: false,

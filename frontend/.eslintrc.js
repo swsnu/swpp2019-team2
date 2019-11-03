@@ -1,10 +1,11 @@
 module.exports = {
   env: {
     browser: true,
+    jest: true,
     es6: true,
   },
   extends: [
-    'airbnb',
+    'airbnb', 'plugin:react/recommended' 
   ],
   globals: {
     Atomics: 'readonly',
