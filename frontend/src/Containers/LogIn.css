@@ -3,7 +3,7 @@
     src: url('../fonts/야놀자_야체_Bold.ttf');
 }
 body {
-    background-color : rgb(248, 236, 248);
+    background-color :white;
     font-family: YACHE;
 }
 .LogInBox {
