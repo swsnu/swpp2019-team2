@@ -62,13 +62,17 @@ class AritaumShopSpider(scrapy.Spider):
             "립글로즈":"G",
             "립케어/립밤":"B",
             "립틴트":"T",
+            "립글로스":"S"
             }
         for item in product_list:
             product_name = item.find_element_by_name("tagging_productNm").get_property("value")
             brand_name = item.find_element_by_name("tagging_brandNm").get_property("value")
             price = item.find_element_by_name("tagging_price").get_property("value") 
             category_KO = item.find_element_by_name("tagging_category").get_property("value")[12:]
-            category = category_EN[category_KO]
+            try:
+                category = category_EN[category_KO]
+            except KeyError:
+                continue
             brand = Brand_db.objects.filter(name = brand_name)
             thumb_url = item.find_element_by_css_selector("div.product-thumb img").get_property("src")
             
