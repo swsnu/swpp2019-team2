@@ -111,8 +111,8 @@ class SkinTone extends Component {
 
 const mapStatetoProps = state => {
     return {
-        Users : state.td.Users,
-        selectedUser : state.td.selectedUser
+        Users : state.cosmos.Users,
+        selectedUser : state.cosmos.selectedUser
     };
 };
 const mapDispatchToProps = dispatch => {

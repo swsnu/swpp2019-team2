@@ -38,7 +38,7 @@ describe('<SkinTone />', () => {
     spyGetUser = jest.spyOn(actionCreators,'getUser')
       .mockImplementation(()=>{return dispatch => {};});
     spylogout = jest.spyOn(actionCreators, 'putUser')
-      .mockImplementation(td => { return dispatch => {};});
+      .mockImplementation(user => { return dispatch => {};});
   })
 
   afterEach(()=> {

@@ -33,21 +33,21 @@ export const getUser = () => {
     };
 };
 
-export const putUser_ = (td) => {
+export const putUser_ = (user) => {
     return {
         type : actionTypes.PUT_USER,
-        id : td.id,
-        email : td.email,
-        password : td.password,
-        name : td.name,
-        logged_in : td.logged_in,
-        targetID : td.id
+        id : user.id,
+        email : user.email,
+        password : user.password,
+        name : user.name,
+        logged_in : user.logged_in,
+        targetID : user.id
     };
 };
 
-export const putUser = (td) => {
+export const putUser = (user) => {
     return (dispatch) => {
-        return axios.patch(`/api/user/1`, {logged_in: td.logged_in})
+        return axios.patch(`/api/user/1`, {logged_in: user.logged_in})
                     .then(res => {
                         dispatch(putUser_(res.data));
                     })

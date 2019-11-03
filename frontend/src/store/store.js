@@ -7,7 +7,7 @@ import COSMOSReducer from './reducers/cosmos';
 
 export const history = createBrowserHistory();
 const rootReducer = combineReducers({
-  td: COSMOSReducer,
+  cosmos: COSMOSReducer,
   router: connectRouter(history),
 });
 export const middlewares = [thunk, routerMiddleware(history)]

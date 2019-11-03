@@ -15,7 +15,7 @@ import {createBrowserHistory} from 'history';
 
 const history = createBrowserHistory();
 const rootReducer = combineReducers({
-    td : cosmosReducer, router: connectRouter(history)
+    cosmos : cosmosReducer, router: connectRouter(history)
 });
 
 

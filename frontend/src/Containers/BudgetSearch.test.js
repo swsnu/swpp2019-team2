@@ -75,7 +75,7 @@ describe('<BudgetSearch />', () => {
     spyGetUser = jest
       .spyOn(actionCreators, 'getUser')
       .mockImplementation(() => (dispatch) => {});
-    spylogout = jest.spyOn(actionCreators, 'putUser').mockImplementation((td) => (dispatch) => {});
+    spylogout = jest.spyOn(actionCreators, 'putUser').mockImplementation((cosmos) => (dispatch) => {});
   });
 
   afterEach(() => {

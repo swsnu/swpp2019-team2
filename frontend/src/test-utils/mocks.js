@@ -19,7 +19,7 @@ const getMockCOSMOSReducer = jest.fn(
 export const getMockStore = (initialState) => {
   const mockCOSMOSReducer = getMockCOSMOSReducer(initialState);
   const rootReducer = combineReducers({
-    td: mockCOSMOSReducer,
+    cosmos: mockCOSMOSReducer,
     router: connectRouter(history),
   });
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

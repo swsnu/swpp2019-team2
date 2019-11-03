@@ -49,7 +49,7 @@ describe("cosmos.js", () => {
     });
     store.dispatch(cosmos.getUsers()).then(() => {
       const newState = store.getState();
-      expect(newState.td.Users).toBe(stubUserList);
+      expect(newState.cosmos.Users).toBe(stubUserList);
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
@@ -66,7 +66,7 @@ describe("cosmos.js", () => {
     });
     store.dispatch(cosmos.getUser()).then(() => {
       const newState = store.getState();
-      expect(newState.td.selectedUser).toBe(stubLoggedInUser1);
+      expect(newState.cosmos.selectedUser).toBe(stubLoggedInUser1);
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
@@ -75,7 +75,7 @@ describe("cosmos.js", () => {
     const stubUserList = [stubLoggedOutUser1, stubLoggedOutUser2];
 
     const spy = jest.spyOn(axios, 'patch')
-      .mockImplementation((url, td) => {
+      .mockImplementation((url, user) => {
         return new Promise((resolve, reject) => {
           const result = {
             status: 200,

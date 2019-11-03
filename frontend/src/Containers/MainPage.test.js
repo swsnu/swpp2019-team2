@@ -186,7 +186,7 @@ describe("<MainPage/>", () => {
   it("should call logoutHandler when clicking logout button", () => {
     let spyPutUser = jest
       .spyOn(actionCreators, "putUser")
-      .mockImplementation(td => {
+      .mockImplementation(user => {
         return dispatch => {};
       });
     const mockStore = getMockStore(stubStateC);

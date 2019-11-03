@@ -71,8 +71,8 @@ class LogIn extends Component {
 
 const mapStatetoProps = state => {
     return {
-        selectedUser : state.td.selectedUser,
-        Users : state.td.Users,
+        selectedUser : state.cosmos.selectedUser,
+        Users : state.cosmos.Users,
     };
   };
 

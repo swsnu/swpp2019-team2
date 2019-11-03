@@ -16,7 +16,7 @@ const getMockCosmosReducer = jest.fn(
 export const getMockStore = stateC => {
   const mockCosmosReducer = getMockCosmosReducer(stateC);
   const rootReducer = combineReducers({
-    td: mockCosmosReducer,
+    cosmos: mockCosmosReducer,
     router: connectRouter(history)
   });
   const mockStore = createStore(
