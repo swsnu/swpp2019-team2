@@ -64,38 +64,37 @@ class MainPage extends Component {
     return (
       <div className="MainPage">
         {redirect}
-        <div id="LOGO">
-          <img src={logo} alt="COSMOS" width="100" />
-        </div>
-        <h1>Menu</h1>
-        <div className="buttons">
-          <div className="button1">
-            <button id="search-tag" onClick={() => this.searchHandler()}>
-              Search Tag
-            </button>
-            <button id="budget-search" onClick={() => this.budgetHandler()}>
-              Budget Search
-            </button>
-          </div>
-          <div className="button2">
-            <button id="tone-analysis" onClick={() => this.toneHandler()}>
-              Tone Analysis
-            </button>
-            <button id="sale-information" onClick={() => this.saleHandler()}>
-              Sale Information
-            </button>
+        <div className = "main_upperbar">
+          <img id ="logo" src={logo} alt="COSMOS" width="100" />
+          <div className = "buttons">
+            <button id = "log-out-button" onClick = {()=>this.logoutHandler()}>Log-Out</button>
+            <button id= "my-page-button" onClick = {()=>this.mypageHandler(this.state.id)}>My Page</button>
           </div>
         </div>
-        <div className="buttons2">
-          <button id="log-out-button" onClick={() => this.logoutHandler()}>
-            Log-Out
-          </button>
-          <button
-            id="my-page-button"
-            onClick={() => this.mypageHandler(this.state.id)}
-          >
-            My Page
-          </button>
+        <div className = "Menu">
+          <h1>Menu</h1>
+          <div className="buttons">
+            <ul>
+              <button id="search-tag" onClick={() => this.searchHandler()}>
+                Search Tag
+              </button>
+            </ul>
+            <ul>
+              <button id="budget-search" onClick={() => this.budgetHandler()}>
+                Budget Search
+              </button>
+            </ul>
+            <ul>
+              <button id="tone-analysis" onClick={() => this.toneHandler()}>
+                Tone Analysis
+              </button>
+            </ul>
+            <ul>
+              <button id="sale-information" onClick={() => this.saleHandler()}>
+                Sale Information
+              </button>
+            </ul>
+          </div>
         </div>
       </div>
     );

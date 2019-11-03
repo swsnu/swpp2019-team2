@@ -4,6 +4,7 @@ import './BudgetSearch.css';
 import {connect} from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import logo from "../image/LOGO.png"
+import arrow from "../image/화살표.png";
 
 class BudgetSearch extends Component {
     state = {
@@ -85,69 +86,65 @@ class BudgetSearch extends Component {
                 redirect = <Redirect to = '/login' />
             }
         }
+        let str_num_items= "<Choose Number of Items>"
+        let str_budget= "<Choose Your Budget Range>"
         return (
             <div className = "BudgetSearch">
                 {redirect}
-                <div id = "LOGO">
+                {/*<div id = "LOGO">
                     <img src = {logo} alt = "COSMOS" width = "100" />
-                </div>
-                <div className = "buttons">
-                    <button id = "back-to-menu-button" onClick = {()=> this.menuHandler()}>Back To Main Menu</button>
-                    <button id = "log-out-button" onClick = {()=>this.logoutHandler()}>Log-Out</button>
-                    <button id= "my-page-button" onClick = {()=>this.mypageHandler(this.state.id)}>My Page</button>
-                </div>
-                <div id= "Header">
+                </div>*/}
+                <div className="upperbar">
                     <h1>Budget Search</h1>
+                    <div className = "buttons">
+                        <img src = {arrow} alt = "Back to Main" id = "back-to-menu-button" onClick = {()=> this.menuHandler()}/>
+                        <button id = "log-out-button" onClick = {()=>this.logoutHandler()}>Log-Out</button>
+                        <button id= "my-page-button" onClick = {()=>this.mypageHandler(this.state.id)}>My Page</button>
+                    </div>
                 </div>
                 <div className = "item_input">
-                    <h5>Choose Number of Items</h5>
+                    <h4>{str_num_items}</h4>
                     <input type = "text" name = "item_val" readOnly value={this.state.item_num} />
                     <input type="range" id = "item_num" value="0" min="2" max="5" value = {this.state.item_num} onChange = {(event)=> this.set_itemnum(event)} />
                 </div>
                 <div className = "Budget_input">
-                    <h5>Choose Your Budget</h5>
-                        <ul>
+                    <h4>{str_budget}</h4>
+                        <div className = "input1">
                             <input type = "checkbox" name="budget_range" id = "range1" onClick={() => this.setbudget()} /> 
-                            <h6>0원 이상 ~ 5000원 미만</h6>
-                        </ul>
-                        <ul>
+                            0원 이상 ~ 5000원 미만
+                        
                             <input type = "checkbox" name="budget_range" id = "range2" onClick={() => this.setbudget()} />
-                            <h6>5000원 이상 ~ 10000원 미만</h6>
-                        </ul>
-                        <ul>
+                            5000원 이상 ~ 10000원 미만
+                        
                             <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            <h6>10000원 이상 ~ 15000원 미만</h6>
-                        </ul>
-                        <ul>
+                            10000원 이상 ~ 15000원 미만
+                        
                             <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            <h6>15000원 이상 ~ 20000원 미만</h6>
-                        </ul>
-                        <ul>
+                            15000원 이상 ~ 20000원 미만
+
                             <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            <h6>20000원 이상 ~ 25000원 미만</h6>
-                        </ul>
-                        <ul>
+                            20000원 이상 ~ 25000원 미만
+                        </div>
+                        <div className="input2">
                             <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            <h6>25000원 이상 ~ 30000원 미만</h6>
-                        </ul>
-                        <ul>
+                            25000원 이상 ~ 30000원 미만
+                        
                             <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            <h6>30000원 이상 ~ 35000원 미만</h6>
-                        </ul>
-                        <ul>
+                            30000원 이상 ~ 35000원 미만
+                        
                             <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            <h6>35000원 이상  ~ 40000원 미만</h6>
-                        </ul>
-                        <ul>
+                            35000원 이상  ~ 40000원 미만
+                        
                             <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            <h6>40000원 이상  ~ 45000원 미만</h6>
-                        </ul>
-                        <ul>
+                            40000원 이상  ~ 45000원 미만
+                        
                             <input type = "checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            <h6>45000원 이상  ~ 50000원 미만</h6> 
-                        </ul>
+                            45000원 이상  ~ 50000원 미만
+                        </div>
+                        <div className= "button">
+                            <button id= "combine-cosmetics-button" onClick={()=> this.confirmHandler()}>Combine Cosmetics</button>    
+                        </div>
                 </div>
-                <button id= "combine-cosmetics-button" onClick={()=> this.confirmHandler()}>Combine Cosmetics</button>
             </div>
 
         )
