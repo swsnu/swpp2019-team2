@@ -70,23 +70,6 @@ describe('<BudgetSearch />', () => {
         </ConnectedRouter>
       </Provider>
     );
-    testBudgetSearch = (
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Route
-            path="/"
-            render={(props) => (
-              <BudgetSearch
-                {...props}
-                UserLogOut={spylogout}
-                onGETUSERS={spyGetUsers}
-                onGETUSER={spyGetUser}
-              />
-            )}
-          />
-        </Switch>
-      </ConnectedRouter>
-    );
     spyGetUsers = jest
       .spyOn(actionCreators, 'getUsers')
       .mockImplementation(() => (dispatch) => {});
