@@ -17,28 +17,13 @@ class BudgetSearch extends Component {
   }
 
   componentDidMount() {
-    this.props.onGETUSERS();
-    this.props.onGETUSER();
-    if (this.props.selectedUser) {
-      this.setState({ id: this.props.selectedUser.id });
-    }
+    this.props.onTryAutoSignup();
   }
 
+
     logoutHandler = () => {
-      if (this.props.selectedUser) {
-        const { id } = this.props.selectedUser;
-        const { password } = this.props.selectedUser;
-        const { email } = this.props.selectedUser;
-        const { name } = this.props.selectedUser;
-        this.props.UserLogOut(id, password, email, name, false);
-        this.props.onGETUSER();
-        this.props.onGETUSERS();
-        if (this.props.selectedUser) {
-          if (!this.props.selectedUser.logged_in) {
-            this.props.history.push('/login');
-          }
-        }
-      }
+      this.props.Logout();
+      this.props.onTryAutoSignup();
     }
 
     mypageHandler = (id) => {
@@ -91,10 +76,8 @@ class BudgetSearch extends Component {
 
     render() {
       let redirect = null;
-      if (this.props.selectedUser) {
-        if ((!this.props.selectedUser.logged_in)) {
-          redirect = <Redirect to="/login" />;
-        }
+      if(!this.props.isAuthenticated) {
+        redirect = <Redirect to='/login' />
       }
       const strNumItems = '<Choose Number of Items>';
       const strBudget = '<Choose Your Budget Range>';
@@ -107,7 +90,7 @@ class BudgetSearch extends Component {
           <div className="upperbar">
             <h1>Budget Search</h1>
             <div className="buttons">
-              <input type="image" src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.menuHandler()} />
+              <img src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.menuHandler()} />
               <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
               <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
             </div>
@@ -160,21 +143,18 @@ class BudgetSearch extends Component {
       );
     }
 }
-
-const mapStatetoProps = (state) => ({
-  Users: state.cosmos.Users,
-  selectedUser: state.cosmos.selectedUser,
-});
-const mapDispatchToProps = (dispatch) => ({
-  onGETUSERS: () => dispatch(actionCreators.getUsers()),
-  onGETUSER: () => dispatch(actionCreators.getUser()),
-  UserLogOut: (id, password, email, name, loggedIn) => dispatch(actionCreators.putUser({
-    id,
-    email,
-    password,
-    name,
-    logged_in: loggedIn,
-  })),
-
-});
-export default connect(mapStatetoProps, mapDispatchToProps)(BudgetSearch);
+const mapStateToProps = (state) => { 
+  return {    
+    isAuthenticated: state.cosmos.token != null,
+    loading: state.cosmos.loading,
+    error: state.cosmos.error
+  }
+}
+   
+const mapDispatchToProps = dispatch => {  
+  return {    
+    Logout: () => dispatch(actionCreators.logout()),
+    onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  }
+} 
+export default connect(mapStateToProps, mapDispatchToProps)(BudgetSearch);

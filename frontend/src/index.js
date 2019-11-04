@@ -10,8 +10,10 @@ import { createBrowserHistory } from 'history';
 import cosmosReducer from './store/reducers/cosmos';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
+import axios from 'axios';
 
-
+axios.defaults.xsrfCookieName = "csrftoken";    
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 const history = createBrowserHistory();
 const rootReducer = combineReducers({
   cosmos: cosmosReducer, router: connectRouter(history),

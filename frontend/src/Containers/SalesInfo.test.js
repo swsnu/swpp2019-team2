@@ -43,9 +43,8 @@ describe('<SkinTone />', () => {
                 (props) => (
                   <SalesInfo
                     {...props}
-                    UserLogOut={spylogout}
-                    onGETUSERS={spyGetUsers}
-                    onGETUSER={spyGetUser}
+                    Logout={spylogout}
+                    onTryAutoSignup={spyGetUser}
                   />
                 )
               }
@@ -54,11 +53,11 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>
     );
-    spyGetUsers = jest.spyOn(actionCreators, 'getUsers')
+    spyGetUsers = jest.spyOn(actionCreators, 'authLogin')
       .mockImplementation(() => (dispatch) => {});
-    spyGetUser = jest.spyOn(actionCreators, 'getUser')
+    spyGetUser = jest.spyOn(actionCreators, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
-    spylogout = jest.spyOn(actionCreators, 'putUser')
+    spylogout = jest.spyOn(actionCreators, 'logout')
       .mockImplementation((user) => (dispatch) => {});
   });
   afterEach(() => {
@@ -69,7 +68,6 @@ describe('<SkinTone />', () => {
     const component = mount(salesinfo);
     const wrapper = component.find('SalesInfo');
     expect(wrapper.length).toBe(1);
-    expect(spyGetUsers).toBeCalledTimes(1);
     expect(spyGetUser).toBeCalledTimes(1);
   });
 
@@ -79,20 +77,19 @@ describe('<SkinTone />', () => {
     const component = mount(salesinfo);
     const wrapper = component.find('#my-page-button');
     wrapper.simulate('click');
-    expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/1');
+    expect(spyHistoryPush).toBeCalledTimes(2);
   });
 
 
   it('should call logoutHandler', () => {
-    const spyHistoryPush = jest.spyOn(history, 'push')
+    const spyHistoryPush = jest.spyOn(history, 'replace')
       .mockImplementation((path) => {});
     const component = mount(salesinfo);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(2);
     expect(spyGetUser).toBeCalledTimes(2);
     expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toHaveBeenCalledWith('/login');
+    expect(spyHistoryPush).toBeCalledTimes(1);
   });
 
   it('should redirect to /login when not logged_in', () => {
@@ -123,9 +120,8 @@ describe('<SkinTone />', () => {
               render={(props) => (
                 <SalesInfo
                   {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
                 />
               )}
             />
@@ -133,7 +129,7 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
   });
 
   it('does not have a selectedUser', () => {
@@ -159,9 +155,8 @@ describe('<SkinTone />', () => {
               render={(props) => (
                 <SalesInfo
                   {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
                 />
               )}
             />
@@ -169,12 +164,11 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(1);
-    expect(spyGetUser).toBeCalledTimes(1);
-    expect(spylogout).toBeCalledTimes(0);
+    expect(spyGetUser).toBeCalledTimes(2);
+    expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(0);
   });
   it('does have a selectedUser && logged_in ', () => {
@@ -202,9 +196,8 @@ describe('<SkinTone />', () => {
               render={(props) => (
                 <SalesInfo
                   {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
                 />
               )}
             />
@@ -212,10 +205,9 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(2);
     expect(spyGetUser).toBeCalledTimes(2);
     expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(0);

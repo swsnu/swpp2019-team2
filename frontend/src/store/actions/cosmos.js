@@ -1,36 +1,120 @@
+import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
-import * as actionTypes from './actionTypes';
 
-export const getUsers_ = (Users) => ({
-  type: actionTypes.GET_USERS,
-  Users,
-});
+export const getLips_ = (Lip) => 
+{  return { type: actionTypes.GET_LIP, Lip: Lip 
+            }; 
+};
+export const getLips = () => {
 
-export const getUsers = () => (dispatch) => axios.get('/api/user')
-  .then((res) => dispatch(getUsers_(res.data)));
+    return dispatch => {    
+        return axios.get('/api/lip/')      
+        .then(res => dispatch(getLips_(res.data)));
+            
+    }  
+}
 
-export const getUser_ = (User) => ({
-  type: actionTypes.GET_USER,
-  target: User,
-});
 
-export const getUser = () => (dispatch) => axios.get('/api/user/1')
-  .then((res) => {
-    dispatch(getUser_(res.data));
-  });
 
-export const putUser_ = (user) => ({
-  type: actionTypes.PUT_USER,
-  id: user.id,
-  email: user.email,
-  password: user.password,
-  name: user.name,
-  logged_in: user.logged_in,
-  targetID: user.id,
-});
 
-export const putUser = (user) => (dispatch) => axios.patch('/api/user/1', { logged_in: user.logged_in })
-  .then((res) => {
-    dispatch(putUser_(res.data));
-  });
+export const authStart = () => {
+    return {
+        type: actionTypes.AUTH_START,
+    }
+}
+
+export const authSuccess = token => {
+    return {
+        type: actionTypes.AUTH_SUCCESS,
+        token: token
+    }
+}
+
+
+export const authFail = error => {
+    return {
+        type: actionTypes.AUTH_FAIL,
+        error: error,
+    }
+}
+
+
+
+export const authLogin = (username,password) => {
+    return dispatch => {
+    
+        dispatch(authStart());
+        axios.post('/api/signin/',{
+            username : username,
+            password : password,
+        })
+        .then(res => {
+            const token = res;
+            const expirationDate = new Date().getTime() + 3600 * 1000;
+            localStorage.setItem('token',token);
+            localStorage.setItem('expirationDate',expirationDate);
+            dispatch(authSuccess(token));
+        })
+        .catch(err => {
+            
+            dispatch(authFail(err));
+            
+        })
+    }
+}
+
+
+export const logout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('expirationDate');
+    return {
+        type: actionTypes.AUTH_LOGOUT,
+    }
+}
+
+export const authSignup = (username, email, password) => {
+    return dispatch => {
+        dispatch(authStart());
+        axios.post('/api/signup/',{
+            username : username,
+            email : email,
+            password : password,
+
+        })
+        .then(res => {
+            
+            const token = res;
+            const expirationDate = new Date().getTime() + 3600 * 1000;
+            localStorage.setItem('token',token);
+            localStorage.setItem('expirationDate',expirationDate);
+            dispatch(authSuccess(token));
+        })
+        .catch(err => {
+            dispatch(authFail(err));
+        })
+    }
+}
+
+export const authCheckState = () => {
+    return dispatch => {
+        const token = localStorage.getItem('token');
+        if(token == undefined) {
+            
+            dispatch(logout()); 
+        }
+        else {
+            const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            if(expirationDate <= new Date()) {
+                
+                dispatch(logout());
+            }
+            else {
+                dispatch(authSuccess(token));
+                
+            }
+        }
+    }
+}
+
+

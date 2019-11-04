@@ -70,13 +70,10 @@ describe('<BudgetSearch />', () => {
         </ConnectedRouter>
       </Provider>
     );
-    spyGetUsers = jest
-      .spyOn(actionCreators, 'getUsers')
-      .mockImplementation(() => (dispatch) => {});
     spyGetUser = jest
-      .spyOn(actionCreators, 'getUser')
+      .spyOn(actionCreators, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
-    spylogout = jest.spyOn(actionCreators, 'putUser').mockImplementation((cosmos) => (dispatch) => {});
+    spylogout = jest.spyOn(actionCreators, 'logout').mockImplementation((cosmos) => (dispatch) => {});
   });
 
   afterEach(() => {
@@ -87,7 +84,6 @@ describe('<BudgetSearch />', () => {
     const component = mount(budgetsearch);
     const wrapper = component.find('BudgetSearch');
     expect(wrapper.length).toBe(1);
-    expect(spyGetUsers).toBeCalledTimes(1);
     expect(spyGetUser).toBeCalledTimes(1);
   });
 
@@ -100,7 +96,7 @@ describe('<BudgetSearch />', () => {
     const component = mount(budgetsearch);
     const wrapper = component.find('#my-page-button');
     wrapper.simulate('click');
-    expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/1');
+    expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/');
   });
 
   it('should call confirmhandler && alert', () => {
@@ -161,15 +157,14 @@ describe('<BudgetSearch />', () => {
 
   it('should call logoutHandler', () => {
     const spyHistoryPush = jest
-      .spyOn(history, 'push')
+      .spyOn(history, 'replace')
       .mockImplementation((path) => {});
     const component = mount(budgetsearch);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(2);
     expect(spyGetUser).toBeCalledTimes(2);
     expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toHaveBeenCalledWith('/login');
+    expect(spyHistoryPush).toBeCalledTimes(1);
   });
 
   it('should redirect to /login when not logged_in', () => {
@@ -228,7 +223,7 @@ describe('<BudgetSearch />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
   });
 
   it('does not have a selectedUser', () => {
@@ -268,9 +263,8 @@ describe('<BudgetSearch />', () => {
               render={(props) => (
                 <BudgetSearch
                   {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
                 />
               )}
             />
@@ -278,16 +272,15 @@ describe('<BudgetSearch />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(1);
-    expect(spyGetUser).toBeCalledTimes(1);
-    expect(spylogout).toBeCalledTimes(0);
+    expect(spyGetUser).toBeCalledTimes(2);
+    expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(0);
   });
   it('does have a selectedUser && logged_in ', () => {
-    const spyHistoryPush = jest.spyOn(history, 'push');
+    const spyHistoryPush = jest.spyOn(history, 'replace');
     const mockInitialStore = getMockStore({
       selectedUser: {
         id: 1,
@@ -329,9 +322,8 @@ describe('<BudgetSearch />', () => {
               render={(props) => (
                 <BudgetSearch
                   {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
                 />
               )}
             />
@@ -339,12 +331,10 @@ describe('<BudgetSearch />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(2);
-    expect(spyGetUser).toBeCalledTimes(2);
     expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toBeCalledTimes(0);
+    expect(spyHistoryPush).toBeCalledTimes(1);
   });
 });

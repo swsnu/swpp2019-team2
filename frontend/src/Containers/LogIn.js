@@ -1,105 +1,107 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 import './LogIn.css';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import {Form} from 'antd';
 
 import * as actionCreators from '../store/actions/index';
-import logo from '../image/LOGO.png';
 
 
-class LogIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      id: '',
-      name: '',
-    };
-  }
 
 
-  componentDidMount() {
-    this.props.onGETUSERS();
-    this.props.ongetUser();
-  }
 
-  LoginHandler = () => {
-    if (this.state.email === 'swpp@snu.ac.kr' && this.state.password === 'iluvswpp') {
-      this.setState({ id: 1, name: 'Software Lover' });
-      this.props.UserLogIn(
-        this.state.id,
-        this.state.password,
-        this.state.email,
-        this.state.name,
-        true,
-      );
-      this.props.onGETUSERS();
-      this.props.ongetUser();
-    } else {
-      alert('Email or password is wrong');
+class NormalLoginForm extends Component {
+      state = {
+        signin : false,
+      }
+    
+      componentDidMount() {
+        this.props.onTryAutoSignup();
+      }
+    
+    
+    
+    
+      LoginHandler = e => {
+        
+    
+            
+            this.props.Login(this.state.username,this.state.password);
+            this.props.onTryAutoSignup();
+            this.setState({signin : true});
+            
+    
+          }
+    
+          
+        
+      
+    
+      signupHandler = () => {
+        this.props.history.replace('../signup')
+      }
+    
+      render() {
+    
+        let change_page = '';
+        if(this.props.error !=null && this.state.signin) {
+          var aler = alert("아이디(비밀번호)가 틀렸거나 존재하지 않는 계정입니다.")
+          this.setState({signin : false});
+        }
+    
+        if(this.props.isAuthenticated) {
+            change_page = <Redirect to='/main' />
+        }
+        else change_page = <Redirect to='/login' />
+      
+    
+        return (
+          <div>
+            {aler}
+            {change_page}
+            <div className = "Signin">
+              <h2>Log In</h2>
+              <label> Username </label>
+              <input type="text" 
+                id="username-input" 
+                value={this.state.email} 
+                onChange = {(event) => this.setState({username: event.target.value})} />
+                
+              <label>Password</label>
+              <input type="text" 
+                id="pw-input"  
+                value = {this.state.password}
+                onChange = {(event) => this.setState({ password: event.target.value})} />
+        
+              <button id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
+              <button id="sign-up-button" onClick = {()=> this.signupHandler()}>Sign Up</button>
+            </div>
+            
+          </div>
+    
+        );
+      }
     }
-  }
-
-  render() {
-    let redirect = null;
-    if (this.props.selectedUser) {
-      if (this.props.selectedUser.logged_in) {
-        redirect = <Redirect to="/main" />;
-      }
-    } else {
-      redirect = <Redirect to="/login" />;
-    }
-    return (
-      <div className="LogIn">
-        {redirect}
-        <div className="logo">
-          <img id="logo" src={logo} alt="COSMOS" width="100" />
-        </div>
-        <div className="LogInBox">
-          <h1>Log In</h1>
-          <label htmlFor="email-input">
-            E-mail
-            <input
-              type="text"
-              id="email-input"
-              value={this.state.email}
-              onChange={(event) => this.setState({ email: event.target.value })}
-            />
-          </label>
-          <label htmlFor="pw-input">
-            Password
-            <input
-              type="text"
-              id="pw-input"
-              value={this.state.password}
-              onChange={(event) => this.setState({ password: event.target.value })}
-            />
-          </label>
-          <button id="login-button" type="button" onClick={() => this.LoginHandler()}>Log-in</button>
-        </div>
-      </div>
-    );
-  }
-}
-
-const mapStatetoProps = (state) => ({
-  selectedUser: state.cosmos.selectedUser,
-  Users: state.cosmos.Users,
-});
-
-
-const mapDispatchToProps = (dispatch) => ({
-  onGETUSERS: () => dispatch(actionCreators.getUsers()),
-  UserLogIn: (id, password, email, name, loggedIn) => dispatch(actionCreators.putUser({
-    id,
-    email,
-    password,
-    name,
-    logged_in: loggedIn,
-  })),
-  ongetUser: () => dispatch(actionCreators.getUser()),
-});
-
-
-export default connect(mapStatetoProps, mapDispatchToProps)(LogIn);
+    
+    const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+    
+    const mapStateToProps = (state) => { 
+        return {    
+            isAuthenticated: state.cosmos.token != null,
+            loading: state.cosmos.loading,
+            error: state.cosmos.error
+     
+       }
+    
+     }
+     
+     const mapDispatchToProps = dispatch => {  
+        return {    
+            
+            Login: (username, password) => dispatch(actionCreators.authLogin(username,password)),
+            onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+            
+       }
+     } 
+    
+    export default connect(mapStateToProps,mapDispatchToProps)(WrappedNormalLoginForm);
