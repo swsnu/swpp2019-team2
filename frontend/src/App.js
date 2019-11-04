@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
-import { Route, Redirect, Switch, BrowserRouter } from 'react-router-dom';
+import {
+  Route, Redirect, Switch, BrowserRouter,
+} from 'react-router-dom';
 import MainPage from './Containers/MainPage';
 import LogIn from './Containers/LogIn';
 import BudgetSearch from './Containers/BudgetSearch';
@@ -15,10 +17,10 @@ function App({ history }) {
       <div className="App">
         <Switch>
           <Route path="/login" exact component={LogIn} />
-          <Route path = '/signup' exact component = {Signup} />
-          {/*<Route path = '/mypage' exact component = {} /> */}
+          <Route path="/signup" exact component={Signup} />
+          {/* <Route path = '/mypage' exact component = {} /> */}
           <Route path="/main" exact component={MainPage} />
-          <Route path = '/search' exact component = {Search} />
+          <Route path="/search" exact component={Search} />
           <Route path="/budget" exact component={BudgetSearch} />
           <Route path="/skintone" exact component={SkinTone} />
           {/* <Route path = '/skintone/result' exact component = {} /> */}

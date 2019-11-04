@@ -46,7 +46,7 @@ class RegistrationForm extends React.Component {
   }
 
     if(this.props.isAuthenticated) {
-        change_page = <Redirect to='/search' />
+        change_page = <Redirect to='/main' />
     }
     else change_page = <Redirect to='/signup' />
   
