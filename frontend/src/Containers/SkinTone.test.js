@@ -79,7 +79,6 @@ describe('<SkinTone />', () => {
     window.FileReader = jest.fn(() => dummyFileReader);
     const mockFile = new Blob([fileContents], { type: 'img/png' });
     const component = mount(skintone);
-    const newInstance = component.find(SkinTone.WrappedComponent).instance();
     const wrapper = component.find('#photo-input');
     wrapper.simulate('change', { target: { files: [mockFile] } });
     expect(FileReader).toHaveBeenCalled();
