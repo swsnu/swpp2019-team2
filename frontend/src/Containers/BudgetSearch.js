@@ -117,7 +117,7 @@ class BudgetSearch extends Component {
                     <img src = {logo} alt = "COSMOS" width = "100" />
                 </div> */}
         <div className="upperbar">
-          <h1>Budget Seabrch</h1>
+          <h1>Budget Search</h1>
           <div className="buttons">
             <input type="image" src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.menuHandler()} />
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
