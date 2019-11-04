@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import { Redirect } from 'react-router-dom';
 import './Signup.css';
+import logo from '../image/LOGO.png';
 
 
 
@@ -46,43 +47,47 @@ class RegistrationForm extends React.Component {
   }
 
     if(this.props.isAuthenticated) {
-        change_page = <Redirect to='/main' />
+        change_page = <Redirect to='/main' />
     }
-    else change_page = <Redirect to='/signup' />
+    else change_page = <Redirect to='/signup' />
   
 
-    return (
-      <div>
-        {aler}
+    return (
+      <div className="Signup">
+        {aler}
         {change_page}
-        <div className = "Signup">
-          <h2>Sign Up</h2>
-          <label> Username </label>
-          <input type="text" 
-            id="username-input" 
-            value={this.state.username} 
-            onChange = {(event) => this.setState({username: event.target.value})} />
-
-          <label> E-mail </label>
-          <input type="text" 
-            id="email-input" 
-            value={this.state.email} 
-            onChange = {(event) => this.setState({email: event.target.value})} />
-            
-          <label>Password</label>
-          <input type="text" 
-            id="pw-input"  
-            value = {this.state.password}
-            onChange = {(event) => this.setState({ password: event.target.value})} />
-    
-          <button id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
-          <button id="sign-up-button" onClick = {()=> this.signinHandler()}>Sign In</button>
-        </div>
-        
-      </div>
-
-    );
-  }
+        <div className="logo">
+          <img id="logo" src={logo} alt="COSMOS" width="100" />
+        </div>
+        <div className="SignupBox">
+          <h2>Sign Up</h2>
+          <label>Username</label>
+          <input
+            type="text"
+            id="username-input"
+            value={this.state.username}
+            onChange = {(event) => this.setState({username: event.target.value})}
+          />
+          <label>E-mail</label>
+          <input
+            type="text"
+            id="email-input"
+            value={this.state.email}
+            onChange={(event) => this.setState({ email: event.target.value })}
+          />
+          <label>Password</label>
+          <input
+            type="text"
+            id="pw-input"
+            value={this.state.password}
+            onChange={(event) => this.setState({ password: event.target.value })}
+          />
+          <button id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
+          <button id="sign-up-button" onClick = {()=> this.signinHandler()}>Sign In</button>
+        </div>
+      </div>
+    );
+  }
 }
 
 
