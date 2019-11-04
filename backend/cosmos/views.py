@@ -15,6 +15,7 @@ from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from django.db import IntegrityError
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -31,8 +32,7 @@ def lip(request):
 
 
 
-
-
+@csrf_exempt
 def signup(request):
     if request.method == 'GET':
         #if request.user.is_authenticated:  #로그인 확인                                                          
@@ -99,4 +99,3 @@ def token(request):
         return HttpResponse(status=204)
     else:
         return HttpResponseNotAllowed(['GET'])
-# Create your views here.
