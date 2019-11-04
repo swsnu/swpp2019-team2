@@ -1,0 +1,13 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+source = 
+    ./
+omit =
+    */env/*
+    */migrations/*
+    manage.py
+    *wsgi*
+
+[html]
+directory = htmlcov
