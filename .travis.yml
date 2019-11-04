@@ -10,6 +10,20 @@ matrix:
       script:
       - ./node_modules/.bin/eslint src
       - yarn test --coverage --watchAll=false
-# - language: python
-#   python: 3.6
-#   ...
+    - language: python
+      cache:
+        pip: true
+        python: 3.7
+      before_install:
+      - cd backend
+      install:
+      - pip install -r requirements.tst
+      script:
+      - python --version
+      - python -m django --version
+      - pylint */models.py */views/*.py */tests/*.py
+      - pylint crawl/spiders/* crawl/pipelines.py
+      - coverage run manage.py test
+      - coverage report -m
+      after_success:
+      - coveralls
