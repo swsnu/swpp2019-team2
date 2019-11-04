@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import { connectRouter, ConnectedRouter } from 'connected-react-router';
+import { ConnectedRouter } from 'connected-react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
 import BudgetSearch from './BudgetSearch';
@@ -49,7 +49,7 @@ const mockStore = getMockStore(stubInitialState);
 
 describe('<BudgetSearch />', () => {
   let budgetsearch; let spyGetUsers; let spyGetUser; let
-    spylogout;
+    spylogout; let testBudgetSearch;
   beforeEach(() => {
     budgetsearch = (
       <Provider store={mockStore}>

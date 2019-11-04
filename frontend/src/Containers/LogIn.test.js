@@ -4,7 +4,6 @@ import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import { Route } from 'react-router-dom';
 import { getMockStore } from '../Mocks/mocks';
 import LogIn from './LogIn';
 import * as actionCreators from '../store/actions/cosmos';
