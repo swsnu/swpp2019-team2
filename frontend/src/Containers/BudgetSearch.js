@@ -12,7 +12,20 @@ class BudgetSearch extends Component {
     this.state = {
       id: '',
       item_num: 2,
-      budget_high: 0,
+      budgetRange: null,
+      checked: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+
     };
   }
 
@@ -24,141 +37,138 @@ class BudgetSearch extends Component {
     }
   }
 
-    logoutHandler = () => {
+  logoutHandler = () => {
+    if (this.props.selectedUser) {
+      const { id } = this.props.selectedUser;
+      const { password } = this.props.selectedUser;
+      const { email } = this.props.selectedUser;
+      const { name } = this.props.selectedUser;
+      this.props.UserLogOut(id, password, email, name, false);
+      this.props.onGETUSER();
+      this.props.onGETUSERS();
       if (this.props.selectedUser) {
-        const { id } = this.props.selectedUser;
-        const { password } = this.props.selectedUser;
-        const { email } = this.props.selectedUser;
-        const { name } = this.props.selectedUser;
-        this.props.UserLogOut(id, password, email, name, false);
-        this.props.onGETUSER();
-        this.props.onGETUSERS();
-        if (this.props.selectedUser) {
-          if (!this.props.selectedUser.logged_in) {
-            this.props.history.push('/login');
-          }
+        if (!this.props.selectedUser.logged_in) {
+          this.props.history.push('/login');
         }
       }
     }
+  }
 
-    mypageHandler = (id) => {
-      this.props.history.replace(`../mypage/${id}`);
+  mypageHandler = (id) => {
+    this.props.history.replace(`../mypage/${id}`);
+  }
+
+  setItemNum = (event) => {
+    this.setState({ item_num: event.target.value });
+  }
+
+  confirmHandler = () => {
+    if (this.state.budgetRange === null) {
+      alert('Please set the budget range');
     }
+  }
 
-    /* set_budget = (event) => {
-        this.setState({budget:event.target.value})
-        this.setState({flag_budget:true})
-    } */
-    setItemNum = (event) => {
-      this.setState({ item_num: event.target.value });
+  handleChange = num => {
+    let selected = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ];
+    if(this.state.checked[num] === true){
+      this.setState({ checked : selected })
+      this.setState({ budgetRange : null })
     }
+    else {
+      selected[num] = true;
+      this.setState({ checked: selected });
+      let chosenBudgetRange = [5000 * num, 5000 * (num + 1)];
+      this.setState({ budgetRange: chosenBudgetRange });
+    }
+    
+  }
 
-    confirmHandler = () => {
-      if (this.state.budget_high === 0) {
-        alert('Please set the budget range');
+
+  menuHandler = () => {
+    this.props.history.replace('../main');
+  }
+
+  render() {
+    let redirect = null;
+    if (this.props.selectedUser) {
+      if ((!this.props.selectedUser.logged_in)) {
+        redirect = <Redirect to="/login" />;
       }
     }
-
-    setbudget = () => {
-      const checkbox = document.getElementsByName('budget_range');
-      let i;
-      let count = 0;
-      for (i = 0; i < checkbox.length; i++) {
-        if (checkbox[i].checked) {
-          count += 1;
-        }
-      }
-      if (count >= 2) {
-        alert('한 범위만 선택 가능합니다');
-        for (i = 0; i < checkbox.length; i++) {
-          checkbox[i].checked = false;
-        }
-        return;
-      }
-      for (i = 0; i < checkbox.length; i++) {
-        if (checkbox[i].checked) {
-          // TODO : budget_low 향후 코드에 사용하도록 수정
-          // eslint-disable-next-line react/no-unused-state
-          this.setState({ budget_low: 5000 * (i) });
-          this.setState({ budget_high: 5000 * (i + 1) });
-        }
-      }
-    }
-
-    menuHandler = () => {
-      this.props.history.replace('../main');
-    }
-
-    render() {
-      let redirect = null;
-      if (this.props.selectedUser) {
-        if ((!this.props.selectedUser.logged_in)) {
-          redirect = <Redirect to="/login" />;
-        }
-      }
-      const strNumItems = '<Choose Number of Items>';
-      const strBudget = '<Choose Your Budget Range>';
-      return (
-        <div className="BudgetSearch">
-          {redirect}
-          {/* <div id = "LOGO">
+    const strNumItems = '<Choose Number of Items>';
+    const strBudget = '<Choose Your Budget Range>';
+    return (
+      <div className="BudgetSearch">
+        {redirect}
+        {/* <div id = "LOGO">
                     <img src = {logo} alt = "COSMOS" width = "100" />
                 </div> */}
-          <div className="upperbar">
-            <h1>Budget Search</h1>
-            <div className="buttons">
-              <input type="image" src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.menuHandler()} />
-              <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
-              <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
-            </div>
-          </div>
-          <div className="item_input">
-            <h4>{strNumItems}</h4>
-            <input type="text" name="item_val" readOnly value={this.state.item_num} />
-            <input type="range" id="item_num" value="0" min="2" max="5" value={this.state.item_num} onChange={(event) => this.setItemNum(event)} />
-          </div>
-          <div className="Budget_input">
-            <h4>{strBudget}</h4>
-            <div className="input1">
-              <input type="checkbox" name="budget_range" id="range1" onClick={() => this.setbudget()} />
-                            0원 이상 ~ 5000원 미만
-
-              <input type="checkbox" name="budget_range" id="range2" onClick={() => this.setbudget()} />
-                            5000원 이상 ~ 10000원 미만
-
-              <input type="checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            10000원 이상 ~ 15000원 미만
-
-              <input type="checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            15000원 이상 ~ 20000원 미만
-
-              <input type="checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            20000원 이상 ~ 25000원 미만
-            </div>
-            <div className="input2">
-              <input type="checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            25000원 이상 ~ 30000원 미만
-
-              <input type="checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            30000원 이상 ~ 35000원 미만
-
-              <input type="checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            35000원 이상  ~ 40000원 미만
-
-              <input type="checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            40000원 이상  ~ 45000원 미만
-
-              <input type="checkbox" name="budget_range" onClick={() => this.setbudget()} />
-                            45000원 이상  ~ 50000원 미만
-            </div>
-            <div className="button">
-              <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()}>Combine Cosmetics</button>
-            </div>
+        <div className="upperbar">
+          <h1>Budget Search</h1>
+          <div className="buttons">
+            <input type="image" src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.menuHandler()} />
+            <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
+            <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
           </div>
         </div>
+        <div className="item_input">
+          <h4>{strNumItems}</h4>
+          <input type="text" name="item_val" readOnly value={this.state.item_num} />
+          <input type="range" id="item_num" value="0" min="2" max="5" value={this.state.item_num} onChange={(event) => this.setItemNum(event)} />
+        </div>
+        <div className="Budget_input">
+          <h4>{strBudget}</h4>
+            <div className = "input1">
+              <input type = "checkbox" name="budget_range" id="range1" checked={this.state.checked[0]} onChange={() => this.handleChange(0)} /> 
+              0원 이상 ~ 5000원 미만
+                        
+              <input type = "checkbox" name="budget_range" id ="range2" checked={this.state.checked[1]} onChange={() => this.handleChange(1)} />
+              5000원 이상 ~ 10000원 미만
+                        
+              <input type = "checkbox" name="budget_range" id ="range3" checked={this.state.checked[2]} onChange={() => this.handleChange(2)} />
+              10000원 이상 ~ 15000원 미만
+                        
+              <input type = "checkbox" name="budget_range" id ="range4" checked={this.state.checked[3]} onChange={() => this.handleChange(3)} />
+              15000원 이상 ~ 20000원 미만
 
-      );
-    }
+              <input type = "checkbox" name="budget_range" id ="range5" checked={this.state.checked[4]} onChange={() => this.handleChange(4)} />
+              20000원 이상 ~ 25000원 미만
+            </div>
+            <div className="input2">
+              <input type = "checkbox" name="budget_range" id ="range6" checked={this.state.checked[5]} onChange={() => this.handleChange(5)} />
+              25000원 이상 ~ 30000원 미만
+                        
+              <input type = "checkbox" name="budget_range" id ="range7" checked={this.state.checked[6]} onChange={() => this.handleChange(6)} />
+              30000원 이상 ~ 35000원 미만
+                        
+              <input type = "checkbox" name="budget_range" id ="range8" checked={this.state.checked[7]} onChange={() => this.handleChange(7)} />
+              35000원 이상  ~ 40000원 미만
+                        
+              <input type = "checkbox" name="budget_range" id ="range9" checked={this.state.checked[8]} onChange={() => this.handleChange(8)} />
+              40000원 이상  ~ 45000원 미만
+                        
+              <input type = "checkbox" name="budget_range" id ="range10" checked={this.state.checked[9]} onChange={() => this.handleChange(9)} />
+              45000원 이상  ~ 50000원 미만
+            </div>
+          <div className="button">
+            <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()}>Combine Cosmetics</button>
+          </div>
+        </div>
+      </div>
+
+    );
+  }
 }
 
 const mapStatetoProps = (state) => ({
