@@ -4,6 +4,7 @@ import './Search.css'
 import * as actionCreators from '../store/actions/index';
 import { connect } from 'react-redux';
 import LipForm from '../Components/LipForm';
+import arrow from '../image/화살표.png';
 
 
 class Search extends Component {
@@ -40,6 +41,10 @@ class Search extends Component {
 
   back = () => {                                // 메인페이지로 넘어가는 state 설정해주기
     this.setState({back: true});
+  }
+
+  mypageHandler = (id) => {
+    this.props.history.replace(`../mypage/${id}`);
   }
 
 
@@ -240,15 +245,15 @@ class Search extends Component {
       
       <div className="Search">
         {change_page} 
-          <div className="Title">
+          <div className="upperbar">
             {back_login}
-            <section className="Button">
-              
-              <button id="back_mainpage" onClick = {() => this.back()}>Main Page</button>
-            </section>
-            <section className="Button">
-              <button id="log-out-button" onClick = {() => this.logout()}>Log-out</button>{back_login}
-            </section>
+            <h1>Search</h1>
+            <div className="buttons">
+              <img src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.back()} />
+              <button id="log-out-button" onClick = {() => this.logout()}>Log-out</button>
+              {back_login}
+              <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
+            </div>
 
           </div>
 

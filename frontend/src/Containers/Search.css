@@ -1,98 +1,102 @@
-.Body_table {
-    display: table;
-    border: 1.5px solid black;
-}
-.Title {
-    padding: 1rem;
-    font-size: 2.5rem;
-    text-align: center;
-    font-weight: 500;
-    background: rgba(255, 192, 203, 0.678);
-    color: black;
-    border: 1px solid palevioletred;
-}
-.Title Button {
-    padding: 1px;
-    font: inherit;
-    border: 1.5px solid black;
-    background-color: transparent;
-    color: black;
-    cursor: pointer;
-  }
 
-.Title Button:hover,
-.Title Button:active {
-      color: white;
-      background-color: gray;
+.upperbar {
+    flex: 1;
+    flex-direction:row;
+    align-items:stretch;
+    width:100%;
+    background-color:rgb(255, 220, 226);
+    text-align : center;
+    display : table;
+    
 }
 
+.upperbar .buttons #back-to-menu-button{
+    display: inline-table;
+    position: absolute;
+    left : 2%;
+    top : 2%;
+    width:50px;
+    height: 50px;
+}
+.upperbar .buttons #log-out-button{
+    display: inline-table;
+    position: absolute;
+    right : 10%;
+    top : 2%;
+}
 
-
+.upperbar .buttons #my-page-button{
+    display: inline-table;
+    position: absolute;
+    right:4%;
+    top:2%;
+}
+.Category {
+    margin:20px;
+}
 
 .Category .buttonFalse:active {
-    color: white;
-    background-color: #fa923f;
+    color:white;
+    background-color:#9b45a7;
 }
-
-
 
 .Category Button {
     display:table;
     font-size: 1.5rem;
     text-align: center;
     font-weight: 500;
-    background: white;
-    color: #fa923f;
-    border: 1px solid palevioletred;
+    background: rgb(255, 220, 226);
+    color: #9b45a7;
+    border: 1px solid rgb(255, 220, 226);
     width: 4cm;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .Category .buttonTrue {
-    color: white;
-    background-color: #fa923f;
+    color:white;
+    background-color:#9b45a7;
 }
-
-
-
-
-.Button {
-    float: right;
-    vertical-align: right;
-    padding: 2px;
-    font: inherit;
-    width: 3cm;
-    height: 1.5cm;
-    font-size: 0.5cm;
-    font-weight: bold;
-    background: rgba(255, 192, 203, 0.055);
-    cursor: pointer;
-  }
 
 
 
 
 .Sub_category {
     display: table-row-group;
-    text-align: left;
+    text-align: center;
+}
+.Sub_category #search_result{
+    padding: 5px;
+    margin:10px;
+    margin-right:15px;
+    font-size: 1.5rem;
+    font-weight: 300;
+
 }
 
 .Sub_category Button {                     
     padding: 3px;
     font: inherit;
-    border: 1.5px solid #fa923f;
     background-color: transparent;
-    color: #fa923f;
+    color: #9b45a7;
+    border: 1px solid #9b45a7;
     cursor: pointer;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
   
 .Sub_category Button:hover,
 .Sub_category Button:active {
-    color: white;
-    background-color: #fa923f;
+    color:white;
+    background-color:#9b45a7;
   }
 
 .Sub_category .buttonTrue {
-    color: white;
-    background-color: #fa923f;
+    color:white;
+    background-color:#9b45a7;
 }
 
 
