@@ -24,8 +24,8 @@ class BudgetSearch extends Component {
         false,
         false,
         false,
-        false
-      ]
+        false,
+      ],
 
     };
   }
@@ -69,8 +69,8 @@ class BudgetSearch extends Component {
     }
   }
 
-  handleChange = num => {
-    let selected = [
+  handleChange = (num) => {
+    const selected = [
       false,
       false,
       false,
@@ -80,19 +80,17 @@ class BudgetSearch extends Component {
       false,
       false,
       false,
-      false
+      false,
     ];
-    if(this.state.checked[num] === true){
-      this.setState({ checked : selected })
-      this.setState({ budgetRange : null })
-    }
-    else {
+    if (this.state.checked[num] === true) {
+      this.setState({ checked: selected });
+      this.setState({ budgetRange: null });
+    } else {
       selected[num] = true;
       this.setState({ checked: selected });
-      let chosenBudgetRange = [5000 * num, 5000 * (num + 1)];
+      const chosenBudgetRange = [5000 * num, 5000 * (num + 1)];
       this.setState({ budgetRange: chosenBudgetRange });
     }
-    
   }
 
 
@@ -130,38 +128,38 @@ class BudgetSearch extends Component {
         </div>
         <div className="Budget_input">
           <h4>{strBudget}</h4>
-            <div className = "input1">
-              <input type = "checkbox" name="budget_range" id="range1" checked={this.state.checked[0]} onChange={() => this.handleChange(0)} /> 
-              0원 이상 ~ 5000원 미만
-                        
-              <input type = "checkbox" name="budget_range" id ="range2" checked={this.state.checked[1]} onChange={() => this.handleChange(1)} />
-              5000원 이상 ~ 10000원 미만
-                        
-              <input type = "checkbox" name="budget_range" id ="range3" checked={this.state.checked[2]} onChange={() => this.handleChange(2)} />
-              10000원 이상 ~ 15000원 미만
-                        
-              <input type = "checkbox" name="budget_range" id ="range4" checked={this.state.checked[3]} onChange={() => this.handleChange(3)} />
-              15000원 이상 ~ 20000원 미만
+          <div className="input1">
+            <input type="checkbox" name="budget_range" id="range1" checked={this.state.checked[0]} onChange={() => this.handleChange(0)} />
+            0원 이상 ~ 5000원 미만
 
-              <input type = "checkbox" name="budget_range" id ="range5" checked={this.state.checked[4]} onChange={() => this.handleChange(4)} />
-              20000원 이상 ~ 25000원 미만
-            </div>
-            <div className="input2">
-              <input type = "checkbox" name="budget_range" id ="range6" checked={this.state.checked[5]} onChange={() => this.handleChange(5)} />
-              25000원 이상 ~ 30000원 미만
-                        
-              <input type = "checkbox" name="budget_range" id ="range7" checked={this.state.checked[6]} onChange={() => this.handleChange(6)} />
-              30000원 이상 ~ 35000원 미만
-                        
-              <input type = "checkbox" name="budget_range" id ="range8" checked={this.state.checked[7]} onChange={() => this.handleChange(7)} />
-              35000원 이상  ~ 40000원 미만
-                        
-              <input type = "checkbox" name="budget_range" id ="range9" checked={this.state.checked[8]} onChange={() => this.handleChange(8)} />
-              40000원 이상  ~ 45000원 미만
-                        
-              <input type = "checkbox" name="budget_range" id ="range10" checked={this.state.checked[9]} onChange={() => this.handleChange(9)} />
-              45000원 이상  ~ 50000원 미만
-            </div>
+            <input type="checkbox" name="budget_range" id="range2" checked={this.state.checked[1]} onChange={() => this.handleChange(1)} />
+            5000원 이상 ~ 10000원 미만
+
+            <input type="checkbox" name="budget_range" id="range3" checked={this.state.checked[2]} onChange={() => this.handleChange(2)} />
+            10000원 이상 ~ 15000원 미만
+
+            <input type="checkbox" name="budget_range" id="range4" checked={this.state.checked[3]} onChange={() => this.handleChange(3)} />
+            15000원 이상 ~ 20000원 미만
+
+            <input type="checkbox" name="budget_range" id="range5" checked={this.state.checked[4]} onChange={() => this.handleChange(4)} />
+            20000원 이상 ~ 25000원 미만
+          </div>
+          <div className="input2">
+            <input type="checkbox" name="budget_range" id="range6" checked={this.state.checked[5]} onChange={() => this.handleChange(5)} />
+            25000원 이상 ~ 30000원 미만
+
+            <input type="checkbox" name="budget_range" id="range7" checked={this.state.checked[6]} onChange={() => this.handleChange(6)} />
+            30000원 이상 ~ 35000원 미만
+
+            <input type="checkbox" name="budget_range" id="range8" checked={this.state.checked[7]} onChange={() => this.handleChange(7)} />
+            35000원 이상  ~ 40000원 미만
+
+            <input type="checkbox" name="budget_range" id="range9" checked={this.state.checked[8]} onChange={() => this.handleChange(8)} />
+            40000원 이상  ~ 45000원 미만
+
+            <input type="checkbox" name="budget_range" id="range10" checked={this.state.checked[9]} onChange={() => this.handleChange(9)} />
+            45000원 이상  ~ 50000원 미만
+          </div>
           <div className="button">
             <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()}>Combine Cosmetics</button>
           </div>

@@ -104,7 +104,7 @@ describe('<BudgetSearch />', () => {
   it('should call confirmhandler && alert', () => {
     window.alert = jest.fn();
     const component = shallow(<BudgetSearch.WrappedComponent />);
-    const button = component.find('#combine-cosmetics-button')
+    const button = component.find('#combine-cosmetics-button');
     button.simulate('click');
     expect(window.alert).toHaveBeenCalledWith('Please set the budget range');
   });
@@ -122,61 +122,61 @@ describe('<BudgetSearch />', () => {
     const button1 = component.find('#range1');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([0, 5000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range2');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([5000, 10000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range3');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([10000, 15000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range4');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([15000, 20000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range5');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([20000, 25000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range6');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([25000, 30000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range7');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([30000, 35000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range8');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([35000, 40000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range9');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([40000, 45000]);
-  })
+  });
   it('should handle checkbox change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range10');
     button1.simulate('change', { target: { checked: true } });
     expect(component.state().budgetRange).toEqual([45000, 50000]);
-  })
+  });
   it('should handle checkbox double change properly', () => {
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button1 = component.find('#range10');
@@ -184,7 +184,7 @@ describe('<BudgetSearch />', () => {
     expect(component.state().budgetRange).toEqual([45000, 50000]);
     button1.simulate('change', { target: { checked: false } });
     expect(component.state().budgetRange).toBe(null);
-  })
+  });
 
   it('should call logoutHandler', () => {
     const spyHistoryPush = jest
