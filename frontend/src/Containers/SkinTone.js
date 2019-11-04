@@ -92,7 +92,7 @@ class SkinTone extends Component {
           <div className="upperbar">
             <h1>Skin Tone Analysis</h1>
             <div className="buttons">
-              <img src={arrow} alt="Back to Main" type="button" id="back-to-menu-button" onClick={() => this.menuHandler()} />
+              <input type="image" src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.menuHandler()} />
               <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
               <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
             </div>
