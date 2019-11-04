@@ -54,13 +54,12 @@
     background-color:#9b45a7;
 }
 .image_input{
-  width : 80%;
-    position:absolute;
-    left:50%;
-    top:50%;
-    height : 300px;
-    width : 400px;
-    margin: -150px 0px 0px -200px;
+  position:absolute;
+  left:50%;
+  top:50%;
+  height : 300px;
+  width : 400px;
+  margin: -150px 0px 0px -200px;
 }
 .SkinTone .image_preview input{
   border-bottom: 1px solid #9b45a7;
