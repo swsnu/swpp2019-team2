@@ -8,6 +8,10 @@ omit =
     */migrations/*
     manage.py
     *wsgi*
+    *test*
+    */middlewares.py
+    */settings.py
+    */pipelines.py
 
 [html]
 directory = htmlcov
