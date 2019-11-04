@@ -37,7 +37,7 @@ body {
     width : 80%;
     box-sizing: border-box;
     outline : none;
-    font : inderit;
+    font : inherit;
     margin : auto;
 }
 
@@ -46,7 +46,7 @@ body {
     width : 80%;
     box-sizing: border-box;
     outline : none;
-    font : inderit;
+    font : inherit;
     margin : auto;
 }
 
