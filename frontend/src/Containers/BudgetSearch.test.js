@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import { connectRouter, ConnectedRouter } from 'connected-react-router';
+import { ConnectedRouter } from 'connected-react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
 import BudgetSearch from './BudgetSearch';
@@ -49,7 +49,7 @@ const mockStore = getMockStore(stubInitialState);
 
 describe('<BudgetSearch />', () => {
   let budgetsearch; let spyGetUsers; let spyGetUser; let
-    spylogout;
+    spylogout; let testBudgetSearch;
   beforeEach(() => {
     budgetsearch = (
       <Provider store={mockStore}>
@@ -69,6 +69,23 @@ describe('<BudgetSearch />', () => {
           </Switch>
         </ConnectedRouter>
       </Provider>
+    );
+    testBudgetSearch = (
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route
+            path="/"
+            render={(props) => (
+              <BudgetSearch
+                {...props}
+                UserLogOut={spylogout}
+                onGETUSERS={spyGetUsers}
+                onGETUSER={spyGetUser}
+              />
+            )}
+          />
+        </Switch>
+      </ConnectedRouter>
     );
     spyGetUsers = jest
       .spyOn(actionCreators, 'getUsers')
@@ -139,9 +156,6 @@ describe('<BudgetSearch />', () => {
   it('should call setbudget', () => {
     window.alert = jest.fn();
     const component = mount(budgetsearch);
-    const newInstance = component
-      .find(BudgetSearch.WrappedComponent)
-      .instance();
     const wrapper = component.find('#range2');
     wrapper.simulate('change', { target: { checked: true } });
     expect(window.alert).toBeCalledTimes(0);
@@ -149,11 +163,8 @@ describe('<BudgetSearch />', () => {
   it('shuld not select more than 1 checkbox', () => {
     window.alert = jest.fn();
     const component = mount(budgetsearch);
-    const newInstance = component
-      .find(BudgetSearch.WrappedComponent)
-      .instance();
     const wrapper = component.find({ type: 'checkbox' });
-    let i = 0;
+    let i;
     for (i = 0; i < 10; i++) {
       wrapper.at(i).simulate('click');
     }
