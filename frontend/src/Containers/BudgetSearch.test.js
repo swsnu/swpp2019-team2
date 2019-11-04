@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
