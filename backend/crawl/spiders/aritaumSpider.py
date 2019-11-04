@@ -124,5 +124,5 @@ class AritaumShopSpider(scrapy.Spider):
 
         
         
-    def spider_closed(self, spider):
+    def spider_closed(self):
         self.driver.close()

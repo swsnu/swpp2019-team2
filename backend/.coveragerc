@@ -9,9 +9,7 @@ omit =
     manage.py
     *wsgi*
     *test*
-    */middlewares.py
-    */settings.py
-    */pipelines.py
+    ./crawl/*
 
 [html]
 directory = htmlcov
