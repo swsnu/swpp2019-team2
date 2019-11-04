@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
@@ -72,11 +72,11 @@ describe('<BudgetSearch />', () => {
     );
     spyGetUsers = jest
       .spyOn(actionCreators, 'getUsers')
-      .mockImplementation(() => (dispatch) => {});
+      .mockImplementation(() => (dispatch) => { });
     spyGetUser = jest
       .spyOn(actionCreators, 'getUser')
-      .mockImplementation(() => (dispatch) => {});
-    spylogout = jest.spyOn(actionCreators, 'putUser').mockImplementation((cosmos) => (dispatch) => {});
+      .mockImplementation(() => (dispatch) => { });
+    spylogout = jest.spyOn(actionCreators, 'putUser').mockImplementation((cosmos) => (dispatch) => { });
   });
 
   afterEach(() => {
@@ -90,43 +90,22 @@ describe('<BudgetSearch />', () => {
     expect(spyGetUsers).toBeCalledTimes(1);
     expect(spyGetUser).toBeCalledTimes(1);
   });
-
-  it('should deal range input', () => {});
-
   it('should call mypageHandler', () => {
     const spyHistoryPush = jest
       .spyOn(history, 'replace')
-      .mockImplementation((path) => {});
+      .mockImplementation((path) => { });
     const component = mount(budgetsearch);
     const wrapper = component.find('#my-page-button');
     wrapper.simulate('click');
     expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/1');
   });
-
   it('should call confirmhandler && alert', () => {
-    window.alert = jest.fn();
-    const component = mount(budgetsearch);
-    const wrapper = component.find('#combine-cosmetics-button');
-    wrapper.simulate('click');
-    const newInstance = component
-      .find(BudgetSearch.WrappedComponent)
-      .instance();
-    newInstance.setState({ budget_high: 0 });
-    expect(window.alert).toHaveBeenCalledWith('Please set the budget range');
+    const mockSwal = jest.fn();
+    const component = shallow(<BudgetSearch.WrappedComponent />);
+    const button = component.find('#combine-cosmetics-button');
+    button.prop('onClick')(mockSwal());
+    expect(mockSwal).toHaveBeenCalledTimes(1);
   });
-
-  it('should call confirmhandler && NOT alert', () => {
-    window.alert = jest.fn();
-    const component = mount(budgetsearch);
-    const newInstance = component
-      .find(BudgetSearch.WrappedComponent)
-      .instance();
-    newInstance.setState({ budget_high: 0 });
-    const wrapper = component.find('#combine-cosmetics-button');
-    wrapper.simulate('click');
-    expect(window.alert).toHaveBeenCalledWith('Please set the budget range');
-  });
-
   it('should call set_itemnum', () => {
     const component = mount(budgetsearch);
     const newInstance = component
@@ -136,27 +115,20 @@ describe('<BudgetSearch />', () => {
     wrapper.simulate('change', { target: { value: 3 } });
     expect(newInstance.state.item_num).toEqual(3);
   });
-  it('should call setbudget', () => {
-    window.alert = jest.fn();
-    const component = mount(budgetsearch);
-    const wrapper = component.find('#range2');
-    wrapper.simulate('change', { target: { checked: true } });
-    expect(window.alert).toBeCalledTimes(0);
-  });
-  it('shuld not select more than 1 checkbox', () => {
-    window.alert = jest.fn();
-    const component = mount(budgetsearch);
-    const wrapper = component.find({ type: 'checkbox' });
-    let i;
-    for (i = 0; i < 10; i++) {
-      wrapper.at(i).simulate('click');
+  it('should handle checkbox change properly', () => {
+    const component = shallow(<BudgetSearch.WrappedComponent />);
+    for (let i = 0; i < 10; i++) {
+      const button = component.find(`#range${i + 1}`);
+      button.simulate('change', { target: { checked: true } });
+      expect(component.state().budgetRange).toEqual([5000 * i, 5000 * (i + 1)]);
+      button.simulate('change', { target: { checked: false } });
+      expect(component.state().budgetRange).toBe(null);
     }
   });
-
   it('should call logoutHandler', () => {
     const spyHistoryPush = jest
       .spyOn(history, 'push')
-      .mockImplementation((path) => {});
+      .mockImplementation((path) => { });
     const component = mount(budgetsearch);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
@@ -165,7 +137,6 @@ describe('<BudgetSearch />', () => {
     expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toHaveBeenCalledWith('/login');
   });
-
   it('should redirect to /login when not logged_in', () => {
     const component = mount(budgetsearch);
     expect(component.find(Redirect)).toHaveLength(1);
@@ -224,7 +195,6 @@ describe('<BudgetSearch />', () => {
     );
     expect(component.find(Redirect)).toHaveLength(0);
   });
-
   it('does not have a selectedUser', () => {
     const spyHistoryPush = jest.spyOn(history, 'push');
     const mockInitialStore = getMockStore({
