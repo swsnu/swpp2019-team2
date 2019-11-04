@@ -90,7 +90,6 @@ describe('<BudgetSearch />', () => {
     expect(spyGetUsers).toBeCalledTimes(1);
     expect(spyGetUser).toBeCalledTimes(1);
   });
-
   it('should call mypageHandler', () => {
     const spyHistoryPush = jest
       .spyOn(history, 'replace')
@@ -100,7 +99,6 @@ describe('<BudgetSearch />', () => {
     wrapper.simulate('click');
     expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/1');
   });
-
   it('should call confirmhandler && alert', () => {
     const mockSwal = jest.fn();
     const component = shallow(<BudgetSearch.WrappedComponent />);
@@ -139,7 +137,6 @@ describe('<BudgetSearch />', () => {
     expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toHaveBeenCalledWith('/login');
   });
-
   it('should redirect to /login when not logged_in', () => {
     const component = mount(budgetsearch);
     expect(component.find(Redirect)).toHaveLength(1);
@@ -198,7 +195,6 @@ describe('<BudgetSearch />', () => {
     );
     expect(component.find(Redirect)).toHaveLength(0);
   });
-
   it('does not have a selectedUser', () => {
     const spyHistoryPush = jest.spyOn(history, 'push');
     const mockInitialStore = getMockStore({
