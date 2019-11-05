@@ -86,7 +86,7 @@ describe('<SkinTone />', () => {
       .spyOn(history, 'replace')
       .mockImplementation((path) => {});
     const component = mount(salesinfo);
-    const wrapper = component.find('#back-to-menu-button');
+    const wrapper = component.find('#back-button');
     wrapper.simulate('click');
     expect(spyHistoryPush).toHaveBeenCalledWith('../main');
   });

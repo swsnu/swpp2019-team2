@@ -91,12 +91,12 @@ describe('<BudgetSearch />', () => {
     expect(wrapper.length).toBe(1);
     expect(spyGetUser).toBeCalledTimes(1);
   });
-  it("should go back to main page when clicking button", () => {
+  it('should go back to main page when clicking button', () => {
     const spyHistoryPush = jest
       .spyOn(history, 'replace')
       .mockImplementation((path) => {});
     const component = mount(budgetsearch);
-    const wrapper = component.find('#back-to-menu-button');
+    const wrapper = component.find('#back-button');
     wrapper.simulate('click');
     expect(spyHistoryPush).toHaveBeenCalledWith('../main');
   });
@@ -151,7 +151,7 @@ describe('<BudgetSearch />', () => {
     wrapper.simulate('change', { target: { value: 3 } });
     expect(newInstance.state.item_num).toEqual(3);
   });
-  it('should call set_itemnum', () => {//
+  it('should call set_itemnum', () => {
     const component = mount(budgetsearch);
     const newInstance = component
       .find(BudgetSearch.WrappedComponent)

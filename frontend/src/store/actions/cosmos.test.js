@@ -1,41 +1,38 @@
-import * as articleActions from './cosmos';
-import { shallow } from 'enzyme';
-import React from 'react';
+/* eslint-disable no-shadow */
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import axios from 'axios';
 import store from '../store';
-import { createBrowserHistory } from 'history';
+import * as articleActions from './cosmos';
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const tdUser = {
+  id: 0,
+  error: null,
+  loading: false,
+};
 
-
-
-const td_user = {
+const tdUsertoken = {
   id: 0,
   token: null,
   error: null,
-  loading: false
-}
-
+  loading: false,
+};
 
 
 describe('article', () => {
   describe('actions', () => {
-
-    beforeEach(function () {
+    beforeEach(() => {
       moxios.install();
       history = { push: jest.fn() };
     });
-    
 
-    afterEach(function () {
+
+    afterEach(() => {
       moxios.uninstall();
     });
-
-
-
 
 
     it('GET_LIP', () => {
@@ -45,18 +42,14 @@ describe('article', () => {
           status: 200,
         });
       });
-      const expectedActions =[
+      const expectedActions = [
         { type: 'GET_LIP', Lip: undefined },
       ];
       const store = mockStore();
-      return store.dispatch(articleActions.getLips()).then(() => {expect(store.getActions()).toEqual(expectedActions);})
+      return store.dispatch(articleActions.getLips()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
     });
-
-
-
-
-
-
 
 
     it('AUTH_START', () => {
@@ -66,7 +59,7 @@ describe('article', () => {
           status: 200,
         });
       });
-      const expectedActions =[];
+      const expectedActions = [];
       const store = mockStore();
       return expect(store.getActions()).toEqual(expectedActions);
     });
@@ -78,7 +71,7 @@ describe('article', () => {
           status: 200,
         });
       });
-      const expectedActions =[];
+      const expectedActions = [];
       const store = mockStore();
       store.dispatch(articleActions.authSuccess);
       return expect(store.getActions()).toEqual(expectedActions);
@@ -92,12 +85,11 @@ describe('article', () => {
           status: 200,
         });
       });
-      const expectedActions =[];
+      const expectedActions = [];
       const store = mockStore();
       store.dispatch(articleActions.authFail);
       return expect(store.getActions()).toEqual(expectedActions);
     });
-
 
 
     it('AUTH_LOGOUT', () => {
@@ -107,44 +99,67 @@ describe('article', () => {
           status: 200,
         });
       });
-      const expectedActions =[];
+      const expectedActions = [];
       const store = mockStore();
-      return expect(store.getActions()).toEqual(expectedActions);})
+      return expect(store.getActions()).toEqual(expectedActions);
     });
+  });
 
 
-    it('AUTH_SIGNUP', (done) => {
-      const spy = jest.spyOn(axios, 'post')
-      .mockImplementation((url, td) => {
-        return new Promise((resolve, reject) => {
-          const result = {
-            status: 200,
-            data: td_user
-          };
-          resolve(result);
-        });
-      })
-
-    store.dispatch(articleActions.authSignup());
-      done();
-    });
-    
-  it('AUTH_LOGIN', (done) => {
+  it('AUTH_SIGNUP_havetoken', (done) => {
     const spy = jest.spyOn(axios, 'post')
-    .mockImplementation((url, td) => {
-      return new Promise((resolve, reject) => {
+      .mockImplementation((url, td) => new Promise((resolve) => {
         const result = {
           status: 200,
-          data: td_user
+          data: tdUser,
         };
         resolve(result);
-    });
-  })
+      }));
 
-store.dispatch(articleActions.authLogin());
-  done();
+    store.dispatch(articleActions.authSignup());
+    done();
+  });
+  it('AUTH_SIGNUP_nothavetoken', (done) => {
+    const spy = jest.spyOn(axios, 'post')
+      .mockImplementation((url, td) => new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: tdUsertoken,
+        };
+        reject(result);
+      }));
 
-});
+    store.dispatch(articleActions.authSignup());
+    done();
+  });
+
+  it('AUTH_LOGIN', (done) => {
+    const spy = jest.spyOn(axios, 'post')
+      .mockImplementation((url, td) => new Promise((resolve) => {
+        const result = {
+          status: 200,
+          data: null,
+        };
+        resolve(result);
+      }));
+
+    store.dispatch(articleActions.authLogin());
+    done();
+  });
+
+  it('AUTH_LOGIN_reject', (done) => {
+    const spy = jest.spyOn(axios, 'post')
+      .mockImplementation((url, td) => new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: null,
+        };
+        reject(result);
+      }));
+
+    store.dispatch(articleActions.authLogin());
+    done();
+  });
 
   it('AUTH_LOGOUT', () => {
     moxios.wait(() => {
@@ -153,10 +168,22 @@ store.dispatch(articleActions.authLogin());
         type: 'AUTH_SUCCESS',
       });
     });
-    const expectedActions =[];
+    const expectedActions = [];
     const store = mockStore();
-    return expect(store.getActions()).toEqual(expectedActions);})
+    return expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('AUTH_check_reject', (done) => {
+    const spy = jest.spyOn(axios, 'post')
+      .mockImplementation((url, td) => new Promise((resolve) => {
+        const result = {
+          status: 200,
+          data: tdUser,
+        };
+        resolve(result);
+      }));
+
+    store.dispatch(articleActions.authCheckState());
+    done();
+  });
 });
-    
-
-

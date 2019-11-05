@@ -1,22 +1,20 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './LogIn.css';
 import { connect } from 'react-redux';
 import { Form } from 'antd';
-
 import * as actionCreators from '../store/actions/index';
 import logo from '../image/LOGO.png';
 
-
-
 class NormalLoginForm extends Component {
       state = {
-        signin: false,
-      }
+        signin: false,
+      }
 
-      componentDidMount() {
-        this.props.onTryAutoSignup();
-      }
+      componentDidMount() {
+        this.props.onTryAutoSignup();
+      }
 
 
       LoginHandler = (e) => {
@@ -41,7 +39,7 @@ class NormalLoginForm extends Component {
           change_page = <Redirect to="/main" />;
         } else change_page = <Redirect to="/login" />;
 
-    return (
+        return (
       <div className="Login">
         {aler}
         {change_page}
@@ -60,19 +58,19 @@ class NormalLoginForm extends Component {
 
           <label>Password</label>
           <input
-          type="text"
-          id="pw-input"
-          value={this.state.password}
-          onChange={(event) => this.setState({ password: event.target.value })}
+            type="text"
+            id="pw-input"
+            value={this.state.password}
+            onChange={(event) => this.setState({ password: event.target.value })}
           />
 
           <button id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
           <button id="sign-up-button" onClick={() => this.signupHandler()}>Sign Up</button>
         </div>
       </div>
-    );
-    }
-  }
+        );
+      }
+}
 
 const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
 

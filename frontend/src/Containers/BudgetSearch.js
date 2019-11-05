@@ -145,14 +145,14 @@ class BudgetSearch extends Component {
       );
     }
 }
-const mapStateToProps = (state) => ({    
-    isAuthenticated: state.cosmos.token != null,
-    loading: state.cosmos.loading,
-    error: state.cosmos.error
-  });
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.cosmos.token != null,
+  loading: state.cosmos.loading,
+  error: state.cosmos.error,
+});
 
-const mapDispatchToProps = (dispatch) => ({    
-    Logout: () => dispatch(actionCreators.logout()),
-    onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-  });
+const mapDispatchToProps = (dispatch) => ({
+  Logout: () => dispatch(actionCreators.logout()),
+  onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetSearch);
