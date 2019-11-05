@@ -1,7 +1,10 @@
+""" model for brands information """
 from django.db import models
 
-# Create your models here.
+
+
 class Brand(models.Model):
+    """ django brand model store name, url for sale calender """
     name = models.CharField(max_length=20)
     url = models.TextField(default="//:0")
 

@@ -1,3 +1,4 @@
+""" spider pipelines """
 # -*- coding: utf-8 -*-
 
 # Define your item pipelines here
@@ -10,10 +11,12 @@ from brand.models import Brand
 
 
 class CrawlPipeline(object):
+    """ basic pipeline class """
     def __init__(self):
-            self.ids_seen = set()
-    
-    def process_item(self, item, spider):
+        self.ids_seen = set()
+
+    def process_item(self, item):
+        """ processing item depends on its type """
         if item["crawled"] == "brand":
             self.process_brand(item)
         elif item["crawled"] == "product":
@@ -22,9 +25,11 @@ class CrawlPipeline(object):
                 return item
             else:
                 pass
-    
+
     def process_brand(self, item):
-        if item["name"] not in self.ids_seen and len(Brand.objects.filter(name=item["name"])) == 0:
+        """ check if that brand is already seen """
+        if item["name"] not in self.ids_seen and len(
+                Brand.objects.filter(name=item["name"])) == 0:
             self.ids_seen.add(item["name"])
             item.save()
             return item
