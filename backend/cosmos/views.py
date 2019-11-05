@@ -24,9 +24,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 def lip(request):
     if request.method == 'GET':
-        if request.user.is_authenticated:  #로그인 확인                                                          
-            lip_all_list = [cosmos for cosmos in Lip.objects.all().values()]
-            return JsonResponse(lip_all_list, safe=False)
+        if request.user.is_authenticated:  #로그인 확인   
+            lip_all_list = Lip.objects.all()
+            result = list(
+                map(
+                    lambda lip: { "name": lip.name, "category": lip.category, "price": lip.price, "thumbnail": lip.thumbnail, "color": lip.color.name, "brand": lip.brand.name}, 
+                    lip_all_list
+                )
+            )
+        
+            return JsonResponse(result, safe=False)
         else:
             return HttpResponse(status = 401)
 
@@ -37,6 +44,8 @@ def signup(request):
     if request.method == 'GET':
         #if request.user.is_authenticated:  #로그인 확인                                                          
         user_all_list = [cosmos for cosmos in User.objects.all().values()]
+       
+
         return JsonResponse(user_all_list, safe=False)
 
     if request.method == 'POST':

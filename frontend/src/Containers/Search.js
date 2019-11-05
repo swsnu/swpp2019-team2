@@ -136,7 +136,7 @@ class Search extends Component {
                 name={td.name} 
                 price={td.price} 
                 category={td.category} 
-                brand_id={td.brand_id}     
+                brand={td.brand}     
               />); 
             })
           } 
@@ -150,13 +150,14 @@ class Search extends Component {
                 name={td.name} 
                 price={td.price} 
                 category={td.category} 
-                brand_id={td.brand_id}   
+                brand={td.brand}   
                 />); 
             })
           }
           if(this.state.button_lip_tint) {
             this.state.lip_tint = this.props.storedLips.filter(temp => temp.category == "틴트");
-            sample_tint = this.state.lip_tint.map(td => { 
+
+            sample_tint = this.state.lip_tint.map(td => {
                 
               return (<LipForm 
             
@@ -164,7 +165,7 @@ class Search extends Component {
                 name={td.name} 
                 price={td.price} 
                 category={td.category} 
-                brand_id={td.brand_id}    
+                brand={td.brand}    
                  />); 
             })
           }

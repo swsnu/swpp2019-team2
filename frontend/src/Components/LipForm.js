@@ -23,15 +23,15 @@ const LipForm = (props) => {
         
 
         <section className="Index2">
-          <h4 className = 'Lip_price'>{props.price}원</h4>
+          <h4 className = 'Lip_price'>가격:&emsp;{props.price}원</h4>
         </section> 
 
         <section className="Index3">
-          <h4 className = 'Lip_category'>{props.category}</h4>
+          <h4 className = 'Lip_category'>카테고리:&emsp;{props.category}</h4>
         </section>
 
         <section className="Index4">
-          <h4 className = 'Lip_brand'>{props.brand_id}</h4>
+          <h4 className = 'Lip_brand'>브랜드:&emsp;{props.brand}</h4>
         </section>
 
         <section className="Index5">

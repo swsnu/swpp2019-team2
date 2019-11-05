@@ -21,8 +21,8 @@ class Brand(models.Model):
     saledate = models.CharField(max_length=20)
     url = models.CharField(max_length=45)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
 
 
@@ -38,7 +38,8 @@ class Lip(models.Model):
     color = models.ForeignKey(ColorRange, on_delete=models.CASCADE)
     thumbnail = models.CharField(max_length=150)
 
-
+    
     def __str__(self):
         return self.brand.name
+        
 
