@@ -42,7 +42,9 @@ class SalesInfo extends Component {
         <div className="upperbar">
           <h1> Sales Information </h1>
           <div className="buttons">
-            <img src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.menuHandler()} />
+            <button id="back-button" type="button" onClick={() => this.menuHandler()}>
+              <img id="arrow" src={arrow} alt="Back to Main Menu" />
+            </button>
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
           </div>

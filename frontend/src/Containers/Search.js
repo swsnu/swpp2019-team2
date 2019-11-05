@@ -249,7 +249,9 @@ class Search extends Component {
             {back_login}
             <h1>Search</h1>
             <div className="buttons">
-              <img src={arrow} alt="Back to Main" id="back-to-menu-button" onClick={() => this.back()} />
+              <button id="back-button" type="button" onClick={() => this.back()}>
+                <img id="arrow" src={arrow} alt="Back to Main Menu" />
+              </button>
               <button id="log-out-button" onClick = {() => this.logout()}>Log-out</button>
               {back_login}
               <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
