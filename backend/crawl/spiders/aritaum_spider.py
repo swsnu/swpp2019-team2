@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
+""" scrapy spider for aritaum webpage """
 import scrapy
-from crawl.items import LipProduct, Brand
 from selenium import webdriver
-from brand.models import Brand as Brand_db
 from selenium.common.exceptions import NoSuchElementException
+from crawl.items import LipProduct, Brand
+from brand.models import Brand as Brand_db
 
 
-class AritaumShopSpider(scrapy.Spider):
+class AritaumSpider(scrapy.Spider):
+    """ Real Spider extends scrapy.Spider """
     name = 'aritaum'
 
     def __init__(self):
@@ -21,7 +23,8 @@ class AritaumShopSpider(scrapy.Spider):
 
         urls = [
             {idx: "lip",
-             link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2200"},
+             link:"https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2200"
+             },
         ]
         for url in urls:
             self.browser.get(url[link])
@@ -42,6 +45,7 @@ class AritaumShopSpider(scrapy.Spider):
             dont_filter=True)
 
     def parse_brand(self, response):
+        """ parse brand name from page """
         brand_list = response.meta["brand"]
         product_list = response.meta["product"]
 
@@ -58,25 +62,25 @@ class AritaumShopSpider(scrapy.Spider):
             dont_filter=True)
 
     def parse_product(self, response):
-        product_list = response.meta["product"]
-        category_EN = {
+        """ parse product information from page """
+        category_en = {
             "립스틱": "S",
             "립글로즈": "G",
             "립케어/립밤": "B",
             "립틴트": "T",
             "립글로스": "S"
         }
-        for item in product_list:
+        for item in response.meta["product"]:
             product_name = item.find_element_by_name(
                 "tagging_productNm").get_property("value")
             brand_name = item.find_element_by_name(
                 "tagging_brandNm").get_property("value")
             price = item.find_element_by_name(
                 "tagging_price").get_property("value")
-            category_KO = item.find_element_by_name(
+            category_ko = item.find_element_by_name(
                 "tagging_category").get_property("value")[12:]
             try:
-                category = category_EN[category_KO]
+                category = category_en[category_ko]
             except KeyError:
                 continue
             brand = Brand_db.objects.filter(name=brand_name)
@@ -91,14 +95,14 @@ class AritaumShopSpider(scrapy.Spider):
                 img_url=thumb_url,
                 crawled="product"
             )
-            # FIXME : Color 정보 저장해야
-            color_range = item.find_elements_by_xpath(
-                "//*[@id='ul_prod_list']/li[1]/div/div[1]/div/div[1]/div/ul/li")
-            for color in color_range:
-                color_img_src = color.find_element_by_tag_name(
-                    "img").get_property("src")
-                color_name = color.find_element_by_tag_name(
-                    "label").get_attribute("data-tooltip")
+            # TODO : Color 정보 저장해야
+            # color_range = item.find_elements_by_xpath(
+            #     "//*[@id='ul_prod_list']/li[1]/div/div[1]/div/div[1]/div/ul/li")
+            # for color in color_range:
+            #     color_img_src = color.find_element_by_tag_name(
+            #         "img").get_property("src")
+            #     color_name = color.find_element_by_tag_name(
+            #         "label").get_attribute("data-tooltip")
         yield scrapy.Request(
             url=response.url,
             meta={"category": response.meta["category"]},
@@ -107,6 +111,7 @@ class AritaumShopSpider(scrapy.Spider):
         )
 
     def go_next(self, response):
+        """ click next button on page """
         driver = self.browser
         try:
             click_next = driver.find_element_by_css_selector(
@@ -135,4 +140,5 @@ class AritaumShopSpider(scrapy.Spider):
                 pass
 
     def spider_closed(self):
-        self.driver.close()
+        """ close selenium browser after spider closed """
+        self.browser.close()

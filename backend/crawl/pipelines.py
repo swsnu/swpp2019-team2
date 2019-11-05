@@ -23,8 +23,7 @@ class CrawlPipeline(object):
             if len(Lip.objects.filter(name=item["name"])) == 0:
                 item.save()
                 return item
-            else:
-                pass
+        return item
 
     def process_brand(self, item):
         """ check if that brand is already seen """
@@ -32,6 +31,4 @@ class CrawlPipeline(object):
                 Brand.objects.filter(name=item["name"])) == 0:
             self.ids_seen.add(item["name"])
             item.save()
-            return item
-        else:
-            return item
+        return item
