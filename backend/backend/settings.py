@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cosmos.apps.CosmosConfig',
+    'lip.apps.LipConfig',
+    'brand.apps.BrandConfig',
 ]
 
 MIDDLEWARE = [
