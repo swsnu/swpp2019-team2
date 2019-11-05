@@ -1,6 +1,6 @@
 @font-face{
     font-family:YACHE;
-    src: url('../fonts/야놀자_야체_Bold.ttf');
+    src: url('/fonts/야놀자_야체_Bold.tff');
 }
 body {
     background-color :white;

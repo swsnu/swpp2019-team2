@@ -1,21 +1,25 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import Search from "./Search";
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { getMockStore } from "../Mocks/mocks";
 import * as actions from '../store/actions/cosmos';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 import { Route,Router,Switch } from 'react-router-dom';
-
+import { ConnectedRouter } from 'connected-react-router';
 
 const stubSeletedUserF = {
   id: '7',
   logged_in: false,
 };
 const stubSeletedUserT = {
-  id: '7',
-  logged_in: true,
+  Lips:[{"id": 1,"name": "test_name","price": 5000,"category": "립스틱","brand": 1, "color": 1},
+  {"id": 2,"name": "test_name2","price": 6000,"category": "틴트","brand": 1, "color": 1}],
+  token:null,
+  loading:false,
+  error:null,
+  isAuthenticated : false,
 };
 const stubStateC = {
   isAuthenticated : false,
@@ -132,7 +136,7 @@ describe("<Search />", () => {
   });
   it("should go back to main page when clicking button", () => {
     const component = shallow(<Search.WrappedComponent />);
-    const button = component.find("#back_mainpage");
+    const button = component.find("#back-to-menu-button");
     button.simulate("click");
     expect(component.state().back).toBe(true);
   });
@@ -280,7 +284,6 @@ describe("<Search />", () => {
 describe('<Liplist />', () => {
   const history = createBrowserHistory();
 
-  
   let spygetLips;
   let spylogout;
   let spyauthCheckState;
@@ -354,4 +357,105 @@ describe('<Search/>', () => {
     button.simulate('click');
     expect(spyLogout).toHaveBeenCalledTimes(1);
   });
+});
+
+describe('<SkinTone />', () => {
+  const mockStore = getMockStore(stubSeletedUserT);
+  let salesinfo; let spyGetUser; let spylogout;
+  beforeEach(() => {
+    search = (
+      <Provider store={mockStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              render={
+                (props) => (
+                  <Search
+                    {...props}
+                    Logout={spylogout}
+                    onTryAutoSignup={spyGetUser}
+                  />
+                )
+              }
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    );
+    spyGetUser = jest.spyOn(actions, 'authCheckState')
+      .mockImplementation(() => (dispatch) => {});
+    spylogout = jest.spyOn(actions, 'logout')
+      .mockImplementation((user) => (dispatch) => {});
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it("should go back to main page when clicking search_button", () => {
+    const component = mount(  <Provider store={mockStore}>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route
+            path="/"
+            render={
+              (props) => (
+                <Search
+                  {...props}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
+                />
+              )
+            }
+          />
+        </Switch>
+      </ConnectedRouter>
+    </Provider>);
+    const wrapper = component.find('#search_result');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('<BudgetSearch />', () => {
+  let search; let spyGetUser; let
+    spylogout;
+  beforeEach(() => {
+    search = (
+      <Provider store={mockStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              render={(props) => (
+                <BudgetSearch
+                  {...props}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
+                />
+              )}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    );
+    spyGetUser = jest
+      .spyOn(actionCreators, 'authCheckState')
+      .mockImplementation(() => (dispatch) => {});
+    spylogout = jest.spyOn(actionCreators, 'logout').mockImplementation((cosmos) => (dispatch) => {});
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+/*
+it('should call set_itemnum', () => {//
+  const component = mount(budgetsearch);
+  const newInstance = component
+    .find(BudgetSearch.WrappedComponent)
+    .instance();
+  const wrapper = component.find('#item_num');
+  wrapper.simulate('change', { target: { value: 1 } });
+  expect(newInstance.state.search).toEqual(1);
+});*/
 });

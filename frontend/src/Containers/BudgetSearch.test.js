@@ -12,6 +12,12 @@ import { history } from '../store/store';
 
 import * as actionCreators from '../store/actions/cosmos';
 
+
+const stubStateC = {
+  Users: [],
+  isAuthenticated: false,
+};
+
 const stubInitialState = {
   selectedUser: {
     id: 1,
@@ -48,7 +54,7 @@ const stubInitialState = {
 const mockStore = getMockStore(stubInitialState);
 
 describe('<BudgetSearch />', () => {
-  let budgetsearch; let spyGetUsers; let spyGetUser; let
+  let budgetsearch; let spyGetUser; let
     spylogout;
   beforeEach(() => {
     budgetsearch = (
@@ -60,9 +66,8 @@ describe('<BudgetSearch />', () => {
               render={(props) => (
                 <BudgetSearch
                   {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
                 />
               )}
             />
@@ -86,9 +91,23 @@ describe('<BudgetSearch />', () => {
     expect(wrapper.length).toBe(1);
     expect(spyGetUser).toBeCalledTimes(1);
   });
-
+  it("should go back to main page when clicking button", () => {
+    const spyHistoryPush = jest
+      .spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const component = mount(budgetsearch);
+    const wrapper = component.find('#back-to-menu-button');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toHaveBeenCalledWith('../main');
+  });
   it('should deal range input', () => {});
-
+  it('should not redirect stay when logged in', () => {
+    const component = shallow(
+      <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(0);
+  });
   it('should call mypageHandler', () => {
     const spyHistoryPush = jest
       .spyOn(history, 'replace')
@@ -117,10 +136,10 @@ describe('<BudgetSearch />', () => {
     const newInstance = component
       .find(BudgetSearch.WrappedComponent)
       .instance();
-    newInstance.setState({ budget_high: 0 });
+    newInstance.setState({ budget_high: 200 });
     const wrapper = component.find('#combine-cosmetics-button');
     wrapper.simulate('click');
-    expect(window.alert).toHaveBeenCalledWith('Please set the budget range');
+    expect(window.alert).toBeCalledTimes(0);
   });
 
   it('should call set_itemnum', () => {
@@ -131,6 +150,15 @@ describe('<BudgetSearch />', () => {
     const wrapper = component.find('#item_num');
     wrapper.simulate('change', { target: { value: 3 } });
     expect(newInstance.state.item_num).toEqual(3);
+  });
+  it('should call set_itemnum', () => {//
+    const component = mount(budgetsearch);
+    const newInstance = component
+      .find(BudgetSearch.WrappedComponent)
+      .instance();
+    const wrapper = component.find('#item_num');
+    wrapper.simulate('change', { target: { value: 1 } });
+    expect(newInstance.state.item_num).toEqual(1);
   });
   it('should call setbudget', () => {
     window.alert = jest.fn();
@@ -213,9 +241,8 @@ describe('<BudgetSearch />', () => {
               render={(props) => (
                 <BudgetSearch
                   {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
                 />
               )}
             />

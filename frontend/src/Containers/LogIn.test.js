@@ -54,7 +54,7 @@ describe("<LogIn />", () => {
 
   it("should render", () => {
     const component = shallow(<LogIn.WrappedComponent />);
-    const wrapper = component.find(".Signin");
+    const wrapper = component.find(".Login");
     expect(wrapper.length).toBe(1);
   });
   it("should have input for email and should change state", () => {

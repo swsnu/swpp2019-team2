@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
@@ -12,6 +12,11 @@ import { history } from '../store/store';
 
 import * as actionCreators from '../store/actions/cosmos';
 import SalesInfo from './SalesInfo';
+
+const stubStateC = {
+  Users: [],
+  isAuthenticated: false,
+};
 
 const stubInitialState = {
   selectedUser: {
@@ -31,7 +36,7 @@ const stubInitialState = {
 const mockStore = getMockStore(stubInitialState);
 
 describe('<SkinTone />', () => {
-  let salesinfo; let spyGetUsers; let spyGetUser; let spylogout;
+  let salesinfo; let spyGetUser; let spylogout;
   beforeEach(() => {
     salesinfo = (
       <Provider store={mockStore}>
@@ -53,8 +58,6 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>
     );
-    spyGetUsers = jest.spyOn(actionCreators, 'authLogin')
-      .mockImplementation(() => (dispatch) => {});
     spyGetUser = jest.spyOn(actionCreators, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
     spylogout = jest.spyOn(actionCreators, 'logout')
@@ -68,7 +71,6 @@ describe('<SkinTone />', () => {
     const component = mount(salesinfo);
     const wrapper = component.find('SalesInfo');
     expect(wrapper.length).toBe(1);
-    expect(spyGetUser).toBeCalledTimes(1);
   });
 
   it('should call mypageHandler', () => {
@@ -79,7 +81,15 @@ describe('<SkinTone />', () => {
     wrapper.simulate('click');
     expect(spyHistoryPush).toBeCalledTimes(2);
   });
-
+  it("should go back to main page when clicking button", () => {
+    const spyHistoryPush = jest
+      .spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const component = mount(salesinfo);
+    const wrapper = component.find('#back-to-menu-button');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toHaveBeenCalledWith('../main');
+  });
 
   it('should call logoutHandler', () => {
     const spyHistoryPush = jest.spyOn(history, 'replace')
@@ -91,7 +101,13 @@ describe('<SkinTone />', () => {
     expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(1);
   });
-
+  it('should not redirect stay when logged in', () => {
+    const component = shallow(
+      <SalesInfo.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(0);
+  });
   it('should redirect to /login when not logged_in', () => {
     const component = mount(salesinfo);
     expect(component.find(Redirect)).toHaveLength(1);

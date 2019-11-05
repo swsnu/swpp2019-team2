@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
@@ -11,6 +11,11 @@ import { getMockStore } from '../test-utils/mocks';
 import { history } from '../store/store';
 
 import * as actionCreators from '../store/actions/cosmos';
+
+const stubStateC = {
+  Users: [],
+  isAuthenticated: false,
+};
 
 const stubInitialState = {
   selectedUser: {
@@ -82,6 +87,29 @@ describe('<SkinTone />', () => {
     wrapper.simulate('change', { target: { files: [mockFile] } });
     expect(FileReader).toHaveBeenCalled();
     expect(readAsDataURL).toHaveBeenCalledWith(mockFile);
+  });
+
+  it('should call fileinputHandler without file', () => {
+    const fileContents = 'test_picture';
+    const readAsDataURL = jest.fn();
+    const onloadend = jest.fn();
+    const dummyFileReader = { onloadend, readAsDataURL, result: fileContents };
+    window.FileReader = jest.fn(() => dummyFileReader);
+    const mockFile = null;
+    const component = mount(skintone);
+    const newInstance = component.find(SkinTone.WrappedComponent).instance();
+    const wrapper = component.find('#photo-input');
+    wrapper.simulate('change', { target: { files: [mockFile] } });
+    expect(FileReader).toHaveBeenCalled();
+    expect(readAsDataURL).toBeCalledTimes(0);
+  });
+
+  it('should not redirect stay when logged in', () => {
+    const component = shallow(
+      <SkinTone.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(0);
   });
 
   it('should call submitHandler & flag = false', () => {
