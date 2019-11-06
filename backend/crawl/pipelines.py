@@ -15,17 +15,18 @@ class CrawlPipeline(object):
     def __init__(self):
         self.ids_seen = set()
 
-    def process_item(self, item):
+    def process_item(self, item, spider):
         """ processing item depends on its type """
         if item["crawled"] == "brand":
-            self.process_brand(item)
+            self.process_brand(item, spider)
         elif item["crawled"] == "product":
             if len(Lip.objects.filter(name=item["name"])) == 0:
                 item.save()
                 return item
         return item
 
-    def process_brand(self, item):
+    def process_brand(self, item, spider):
+         # pylint: disable=unused-argument
         """ check if that brand is already seen """
         if item["name"] not in self.ids_seen and len(
                 Brand.objects.filter(name=item["name"])) == 0:

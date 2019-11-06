@@ -35,9 +35,11 @@ class AritaumSpider(scrapy.Spider):
         brand_list = driver.find_elements_by_name("tagging_brandNm")
         product_list = driver.find_elements_by_xpath(
             "//*[@id='ul_prod_list']/li")
+        brand_name = driver.find_elements_by_css_selector("span.goods-brand")
         yield scrapy.Request(
             url=response.url,
             meta={"brand": brand_list,
+                  "brand_name": brand_name,
                   "product": product_list,
                   "category": response.meta["category"],
                   },
@@ -47,15 +49,18 @@ class AritaumSpider(scrapy.Spider):
     def parse_brand(self, response):
         """ parse brand name from page """
         brand_list = response.meta["brand"]
-        product_list = response.meta["product"]
+        brand_name_ko = response.meta["brand_name"]
 
-        for brand_name in brand_list:
-            yield Brand(name=brand_name.get_property("value"), crawled="brand")
+        # pylint: disable=unused-variable
+        for i, item in enumerate(brand_list):
+            name_ko = brand_name_ko[i].text
+            name_en = brand_list[i].get_property("value")
+            yield Brand(name=name_en, name_ko=name_ko, crawled="brand")
 
         yield scrapy.Request(
             url=response.url,
             meta={
-                "product": product_list,
+                "product": response.meta["product"],
                 "category": response.meta["category"]
             },
             callback=self.parse_product,
