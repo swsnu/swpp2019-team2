@@ -43,16 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
-=======
     'lip.apps.LipConfig',
     'brand.apps.BrandConfig',
->>>>>>> origin/dev/master
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
