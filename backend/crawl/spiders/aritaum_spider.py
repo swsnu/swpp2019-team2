@@ -50,7 +50,9 @@ class AritaumSpider(scrapy.Spider):
         """ parse brand name from page """
         brand_list = response.meta["brand"]
         brand_name_ko = response.meta["brand_name"]
-        for i in range(len(brand_list)):
+
+        # pylint: disable=unused-variable
+        for i, item in enumerate(brand_list):
             name_ko = brand_name_ko[i].text
             name_en = brand_list[i].get_property("value")
             yield Brand(name=name_en, name_ko=name_ko, crawled="brand")
