@@ -7,10 +7,20 @@
 
 #### How to Run
 ```
- cd frontend
- yarn install
- yarn run backedn
- yarn start
+ Git 에서 프로젝트 clone( git clone {project repo url} )
+
+ {projectFolder}/backend/ 로 들어가서 pip install -r requirements.txt (패키지 종속성 관리)
+ 
+ {projectFolder}/backend/ -> python manage.py makemigrations & python manage.py migrate
+
+ {projectFolder}/backend/ -> python manage.py runserver
+
+ {projectFolder}/frontend/ -> yarn install
+
+ {projectFolder}/frontend/ ->  yarn start
+
+ Cosmos 정상 작동여부 확인
+
 ```
 #### temporarily User Authentification
 - For login, we are currently using a dummy ID & Login 

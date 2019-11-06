@@ -1,12 +1,16 @@
-@font-face{
-    font-family:YACHE;
-    src: url('../fonts/야놀자_야체_Bold.ttf');
-}
 body {
-    background-color :white;
-    font-family: YACHE,serif;
+    background-color : white;
 }
-.LogInBox {
+
+.Signup .logo{
+    position:absolute;
+    left:50%;
+    top:20%;
+    height: 100px;
+    width:100px;
+    margin: -50px 0px 0px -50px;
+}
+.SignupBox {
     position:absolute;
     left:50%;
     top:50%;
@@ -17,22 +21,14 @@ body {
     text-align : center;
     background : rgb(255, 220, 226);
 }
-.Login .logo{
-    position:absolute;
-    left:50%;
-    top:20%;
-    height: 100px;
-    width:100px;
-    margin: -50px 0px 0px -50px;
-}
-.LogInBox label {
+
+.SignupBox label {
     display : block;
-    padding : 10px;
     margin : 10px auto;
     text-align : center;
     font-weight : bold;
 }
-.LogInBox input#username-input {
+.SignupBox input#username-input {
     display : block;
     width : 80%;
     box-sizing: border-box;
@@ -41,7 +37,7 @@ body {
     margin : auto;
 }
 
-.LogInBox input#pw-input {
+.SignupBox input#email-input {
     display : block;
     width : 80%;
     box-sizing: border-box;
@@ -50,7 +46,16 @@ body {
     margin : auto;
 }
 
-.LogInBox button {
+.SignupBox input#pw-input {
+    display : block;
+    width : 80%;
+    box-sizing: border-box;
+    outline : none;
+    font : inherit;
+    margin : auto;
+}
+
+.SignupBox button {
     margin : 20px 0;
     font : inherit;
     border : 1px solid #9b45a7;
@@ -63,8 +68,8 @@ body {
     border-bottom-right-radius: 10px;
 }
 
-.LogInBox button:hover,
-.LogInBox button:active {
+.SignupBox button:hover,
+.SignupBox button:active {
     color:white;
     background-color:#9b45a7;
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { BrowserRouter } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { getMockStore } from '../Mocks/mocks';
 import MainPage from './MainPage';
@@ -19,54 +20,41 @@ const stubSeletedUserT = {
 };
 const stubStateC = {
   Users: [],
-  selectedUser: stubSeletedUserT,
+  isAuthenticated: false,
 };
 describe('<MainPage/>', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
   it('should render and call getUser,getUsers', () => {
-    const spyGetUsers = jest
-      .spyOn(actionCreators, 'getUsers')
-      .mockImplementation(() => (dispatch) => {});
     const spyGetUser = jest
-      .spyOn(actionCreators, 'getUser')
+      .spyOn(actionCreators, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
     const mockStore = getMockStore(stubStateC);
 
     const component = mount(
       <Provider store={mockStore}>
-        <ConnectedRouter history={history}>
+        <BrowserRouter history={history}>
           <MainPage selectedUser={stubSeletedUserT} />
-        </ConnectedRouter>
+        </BrowserRouter>
       </Provider>,
     );
-    expect(spyGetUsers).toHaveBeenCalledTimes(1);
     expect(spyGetUser).toHaveBeenCalledTimes(1);
   });
-  it('should set state id when mounted', () => {
-    const mockOnGetUser = jest.fn();
-    const mockOnGetUsers = jest.fn();
-    const component = mount(
-      <MainPage.WrappedComponent
-        selectedUser={stubSeletedUserT}
-        onGETUSER={mockOnGetUser}
-        onGETUSERS={mockOnGetUsers}
-      />,
-    );
-    expect(component.state().id).toEqual('7');
-  });
   it('should not set state id when user is not logged in', () => {
+    const spyGetUser = jest
+      .spyOn(actionCreators, 'authCheckState')
+      .mockImplementation(() => (dispatch) => {});
+    const mockStore = getMockStore(stubStateC);
     const mockOnGetUser = jest.fn();
-    const mockOnGetUsers = jest.fn();
     const component = mount(
-      <MainPage.WrappedComponent
-        selectedUser={null}
-        onGETUSER={mockOnGetUser}
-        onGETUSERS={mockOnGetUsers}
-      />,
+      <Provider store={mockStore}>
+        <BrowserRouter history={history}>
+          <MainPage selectedUser={stubSeletedUserT} />
+        </BrowserRouter>
+      </Provider>,
     );
-    expect(component.state().id).toEqual('');
+    expect(spyGetUser).toHaveBeenCalledTimes(1);
   });
   it('should render', () => {
     const component = shallow(<MainPage.WrappedComponent />);
@@ -83,6 +71,13 @@ describe('<MainPage/>', () => {
   it('should not redirect stay when logged in', () => {
     const component = shallow(
       <MainPage.WrappedComponent selectedUser={stubSeletedUserT} />,
+    );
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(1);
+  });
+  it('should redirect stay when logged in', () => {
+    const component = shallow(
+      <MainPage.WrappedComponent isAuthenticated={stubStateC} />,
     );
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
@@ -137,7 +132,7 @@ describe('<MainPage/>', () => {
     );
     const button = component.find('#my-page-button');
     button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../mypage/7');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../mypage/');
   });
 
   it('should call logoutHandler when clicking logout button', () => {
@@ -146,19 +141,16 @@ describe('<MainPage/>', () => {
       .mockImplementation(() => {});
     const mockUserLogOut = jest.fn();
     const mockOnGetUser = jest.fn();
-    const mockOnGetUsers = jest.fn();
     const component = shallow(
       <MainPage.WrappedComponent
-        selectedUser={stubSeletedUserF}
-        onGETUSER={mockOnGetUser}
-        onGETUSERS={mockOnGetUsers}
-        UserLogOut={mockUserLogOut}
+        onTryAutoSignup={mockOnGetUser}
+        Logout={mockUserLogOut}
         history={history}
       />,
     );
     const button = component.find('#log-out-button');
     button.simulate('click');
-    expect(spyHistoryPush).toHaveBeenCalledWith('/login');
+    expect(mockUserLogOut).toHaveBeenCalledTimes(1);
   });
   it('should have no case that can see logout button without user logged in', () => {
     const spyHistoryPush = jest
@@ -166,13 +158,11 @@ describe('<MainPage/>', () => {
       .mockImplementation(() => {});
     const mockUserLogOut = jest.fn();
     const mockOnGetUser = jest.fn();
-    const mockOnGetUsers = jest.fn();
     const component = shallow(
       <MainPage.WrappedComponent
         selectedUser={null}
-        onGETUSER={mockOnGetUser}
-        onGETUSERS={mockOnGetUsers}
-        UserLogOut={mockUserLogOut}
+        onTryAutoSignup={mockOnGetUser}
+        Logout={mockUserLogOut}
         history={history}
       />,
     );
@@ -182,7 +172,7 @@ describe('<MainPage/>', () => {
   });
   it('should call logoutHandler when clicking logout button', () => {
     const spyPutUser = jest
-      .spyOn(actionCreators, 'putUser')
+      .spyOn(actionCreators, 'logout')
       .mockImplementation((user) => (dispatch) => {});
     const mockStore = getMockStore(stubStateC);
 

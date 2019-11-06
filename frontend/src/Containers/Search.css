@@ -1,0 +1,117 @@
+
+.upperbar {
+    flex: 1;
+    flex-direction:row;
+    align-items:stretch;
+    width:100%;
+    background-color:rgb(255, 220, 226);
+    text-align : center;
+    display : table;
+    
+}
+
+.upperbar .buttons #back-button{
+    display: inline-table;
+    position: absolute;
+    left : 2%;
+    top: 0%;
+    align-content: center;
+    border:none;
+}
+#arrow{
+    width:50px;
+    height: 40px;
+}
+.upperbar .buttons #log-out-button{
+    display: inline-table;
+    position: absolute;
+    right : 10%;
+    top : 2%;
+}
+
+.upperbar .buttons #my-page-button{
+    display: inline-table;
+    position: absolute;
+    right:4%;
+    top:2%;
+}
+
+.Content{
+   display: table; 
+}
+.Result{
+    display: inline-table;
+    position: absolute;
+    left:50%;
+    top:10%;
+    margin: 0px 0px 0px -100px;
+}
+.Category {
+    margin:20px;
+}
+
+.Category .buttonFalse:active {
+    color:white;
+    background-color:#9b45a7;
+}
+
+.Category Button {
+    display:table;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+    background: rgb(255, 220, 226);
+    color: #9b45a7;
+    border: 1px solid rgb(255, 220, 226);
+    width: 4cm;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.Category .buttonTrue {
+    color:white;
+    background-color:#9b45a7;
+}
+
+
+
+
+.Sub_category {
+    display: table-row-group;
+    text-align: center;
+}
+.Sub_category #search_result{
+    padding: 5px;
+    margin:10px;
+    margin-right:15px;
+    font-size: 1.5rem;
+    font-weight: 300;
+
+}
+
+.Sub_category Button {                     
+    padding: 3px;
+    font: inherit;
+    background-color: transparent;
+    color: #9b45a7;
+    border: 1px solid #9b45a7;
+    cursor: pointer;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+.Sub_category Button:hover,
+.Sub_category Button:active {
+    color:white;
+    background-color:#9b45a7;
+  }
+
+.Sub_category .buttonTrue {
+    color:white;
+    background-color:#9b45a7;
+}
+
+

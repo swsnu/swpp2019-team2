@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "antd": "^3.25.0",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "connected-react-router": "^6.5.2",
@@ -12,6 +13,7 @@
     "history": "^4.10.1",
     "json-server": "^0.15.1",
     "moment": "^2.24.0",
+    "moxios": "^0.4.0",
     "react": "^16.10.2",
     "react-big-calendar": "^0.22.1",
     "react-bootstrap": "^1.0.0-beta.12",
@@ -24,7 +26,8 @@
     "redux": "^4.0.4",
     "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "ttf-loader": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,7 +37,11 @@
     "backend": "cp api/db.json api/_db.json && json-server --watch api/_db.json --routes api/routes.json --port 8000"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "plugin:vue/recommended",
+      "eslint:recommended"
+    ]
   },
   "browserslist": {
     "production": [
