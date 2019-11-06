@@ -284,27 +284,29 @@ class Search extends Component {
           </div>
 
         </div>
-
-
-        <h4 className="Category">
-          <button className={this.state.button_face ? 'buttonTrue' : 'buttonFalse'} id="Category_face" onClick={() => this.clickFaceTag()}>Face</button>
+        <div className="Content">
+          <div className="Left">
+            <h4 className="Category">
+              <button className={this.state.button_face ? 'buttonTrue' : 'buttonFalse'} id="Category_face" onClick={() => this.clickFaceTag()}>Face</button>
 &emsp;
-          <button className={this.state.button_skin ? 'buttonTrue' : 'buttonFalse'} id="Category_skin" onClick={() => this.clickSkinTag()}>Skin</button>
+              <button className={this.state.button_skin ? 'buttonTrue' : 'buttonFalse'} id="Category_skin" onClick={() => this.clickSkinTag()}>Skin</button>
 &emsp;
-          <button className={this.state.button_lip ? 'buttonTrue' : 'buttonFalse'} id="Category_lip" onClick={() => this.clickLipTag()}>Lip</button>
+              <button className={this.state.button_lip ? 'buttonTrue' : 'buttonFalse'} id="Category_lip" onClick={() => this.clickLipTag()}>Lip</button>
 &emsp;
-        </h4>
+            </h4>
 
-        <div className="Sub_category">
-          {tagNum}
+            <div className="Sub_category">
+              {tagNum}
 
-        </div>
+            </div>
+          </div>
 
-        <div className="Result">
+          <div className="Result">
 
-          {sampleStick}
-          {sample_gloss}
-          {sample_tint}
+            {sampleStick}
+            {sample_gloss}
+            {sample_tint}
+          </div>
         </div>
       </div>
 
