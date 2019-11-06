@@ -7,13 +7,13 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
+import axios from 'axios';
 import cosmosReducer from './store/reducers/cosmos';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import axios from 'axios';
 
-axios.defaults.xsrfCookieName = "csrftoken";    
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 const history = createBrowserHistory();
 const rootReducer = combineReducers({
   cosmos: cosmosReducer, router: connectRouter(history),

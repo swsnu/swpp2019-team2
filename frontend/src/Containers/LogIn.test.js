@@ -75,7 +75,12 @@ describe('<LogIn />', () => {
     const mockonTryAutoSignup = jest.fn();
     const mockonLogin = jest.fn();
     const component = mount(
-      <BrowserRouter><LogIn.WrappedComponent onTryAutoSignup={mockonTryAutoSignup} Login={mockonLogin} /></BrowserRouter>,
+      <BrowserRouter>
+        <LogIn.WrappedComponent
+          onTryAutoSignup={mockonTryAutoSignup}
+          Login={mockonLogin}
+        />
+      </BrowserRouter>,
     );
     const emailInput = component.find('#username-input');
     emailInput.simulate('change', { target: { value: 'etest' } });
@@ -89,7 +94,13 @@ describe('<LogIn />', () => {
     const mockonTryAutoSignup = jest.fn();
     const mockonLogin = jest.fn();
     const component = mount(
-      <BrowserRouter><LogIn.WrappedComponent error={!null} onTryAutoSignup={mockonTryAutoSignup} Login={mockonLogin} /></BrowserRouter>,
+      <BrowserRouter>
+        <LogIn.WrappedComponent
+          error={!null}
+          onTryAutoSignup={mockonTryAutoSignup}
+          Login={mockonLogin}
+        />
+      </BrowserRouter>,
     );
     const emailInput = component.find('#username-input');
     emailInput.simulate('change', { target: { value: 'test_id' } });

@@ -81,7 +81,7 @@ describe('<SkinTone />', () => {
     wrapper.simulate('click');
     expect(spyHistoryPush).toBeCalledTimes(2);
   });
-  it("should go back to main page when clicking button", () => {
+  it('should go back to main page when clicking button', () => {
     const spyHistoryPush = jest
       .spyOn(history, 'replace')
       .mockImplementation((path) => {});

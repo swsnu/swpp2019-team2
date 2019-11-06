@@ -1,13 +1,13 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import {
- BrowserRouter, Route, Router, Switch 
+  BrowserRouter, Route, Router, Switch,
 } from 'react-router-dom';
-import * as actions from '../store/actions/cosmos';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 
-import { ConnectedRouter } from 'connected-react-router';
+import * as actions from '../store/actions/cosmos';
 import { getMockStore } from '../Mocks/mocks';
 import Search from './Search';
 
@@ -30,44 +30,43 @@ const stubStateC = {
 
 jest.mock('../Components/LipForm', () => jest.fn((props) => (
   <div className="spyLip">
-        <div>
+    <div>
 
 
-  <section className="Index">
-          <h4 className ="Lip_id">{props.id}</h4>
-        </section>
+      <section className="Index">
+        <h4 className="Lip_id">{props.id}</h4>
+      </section>
 
-  <section className="Index6">
-          <img height ="200" width= "200" src={props.thumbnail} alt="new" />
-        </section>
+      <section className="Index6">
+        <img height="200" width="200" src={props.thumbnail} alt="new" />
+      </section>
 
-  <section className="Index1">
-          <h4 id ="Lip_name">{props.name}</h4>
-        </section>
+      <section className="Index1">
+        <h4 id="Lip_name">{props.name}</h4>
+      </section>
 
-  <section className="Index2">
-          <h4 className= "Lip_price">
-{props.price}
+      <section className="Index2">
+        <h4 className="Lip_price">
+          {props.price}
 원
-</h4>
-        </section>
+        </h4>
+      </section>
 
-  <section className="Index3">
-          <h4 className ="Lip_category">{props.category}</h4>
-        </section>
+      <section className="Index3">
+        <h4 className="Lip_category">{props.category}</h4>
+      </section>
 
-  <section className="Index4">
-          <h4 className ="Lip_brand">{props.brand_id}</h4>
-        </section>
+      <section className="Index4">
+        <h4 className="Lip_brand">{props.brand_id}</h4>
+      </section>
 
-  <section className="Index5">
-          <h4 className ="Lip_color">{props.color}</h4>
-        </section>
+      <section className="Index5">
+        <h4 className="Lip_color">{props.color}</h4>
+      </section>
 
 
-
-</div>
-      </div>
+    </div>
+  </div>
 )));
 const stubInitState = {
   Lips: [{
@@ -90,7 +89,6 @@ describe('<Liplist />', () => {
   let spyauthCheckState;
   const mockStore = getMockStore(stubInitState);
   beforeEach(() => {
-
     spygetLips = jest.spyOn(actions, 'getLips')
       .mockImplementation(() => (dispatch) => {});
     spylogout = jest.spyOn(actions, 'logout')
@@ -106,7 +104,7 @@ describe('<Liplist />', () => {
             <Route
               path="/"
               render={(props) => <Search title="Search" {...props} />}
-              />
+            />
           </Switch>
         </Router>
       </Provider>,
@@ -122,12 +120,12 @@ describe('<Liplist />', () => {
       <Provider store={mockStore}>
         <Router history={history}>
           <Switch>
-          <Route
-            path="/"
-            render={(props) => <Search title="Search" {...props} />}
+            <Route
+              path="/"
+              render={(props) => <Search title="Search" {...props} />}
             />
-        </Switch>
-      </Router>
+          </Switch>
+        </Router>
       </Provider>,
     );
     const wrapper = component.find('#log-out-button');
@@ -142,8 +140,14 @@ describe('<Search />', () => {
     const mockonTryAutoSignup = jest.fn();
     const mockononGetLip = jest.fn();
     const component = mount(
-      <BrowserRouter><Search.WrappedComponent onTryAutoSignup={mockonTryAutoSignup} onGetLip={mockononGetLip} /></BrowserRouter>,
+      <BrowserRouter>
+        <Search.WrappedComponent
+          onTryAutoSignup={mockonTryAutoSignup}
+          onGetLip={mockononGetLip}
+        />
+      </BrowserRouter>,
     );
+
     const wrapper = component.find('.Search');
     expect(wrapper.length).toBe(1);
     expect(mockonTryAutoSignup).toHaveBeenCalledTimes(1);
@@ -266,7 +270,6 @@ describe('<Search />', () => {
     expect(component.state().button_low).toBe(true);
   });
   it('should not search if tag is chosed1', () => {
-
     const component = shallow(<Search.WrappedComponent props={stubInitState} />);
     const button = component.find('#Category_lip');
     button.simulate('click');
@@ -291,8 +294,6 @@ describe('<Search />', () => {
 
     expect(component.state().button_lip_tint).toBe(true);
   });
-
-
 });
 
 describe('<Liplist />', () => {
@@ -303,7 +304,6 @@ describe('<Liplist />', () => {
   let spyauthCheckState;
   const mockStore = getMockStore(stubInitState);
   beforeEach(() => {
-
     spygetLips = jest.spyOn(actions, 'getLips')
       .mockImplementation(() => (dispatch) => {});
     spylogout = jest.spyOn(actions, 'logout')
@@ -317,9 +317,9 @@ describe('<Liplist />', () => {
         <Router history={history}>
           <Switch>
             <Route
-                path="/"
-                render={(props) => <Search title="Search" {...props} />}
-              />
+              path="/"
+              render={(props) => <Search title="Search" {...props} />}
+            />
           </Switch>
         </Router>
       </Provider>,

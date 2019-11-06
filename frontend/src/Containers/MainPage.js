@@ -42,8 +42,8 @@ class MainPage extends Component {
 
   render() {
     let redirect = null;
-    if(!this.props.isAuthenticated) {
-      redirect = <Redirect to='/login' />
+    if (!this.props.isAuthenticated) {
+      redirect = <Redirect to="/login" />;
     }
     return (
       <div className="MainPage">
@@ -85,20 +85,16 @@ class MainPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => { 
-  return {    
-    isAuthenticated: state.cosmos.token != null,
-    loading: state.cosmos.loading,
-    error: state.cosmos.error
-  }
-}
-   
-const mapDispatchToProps = dispatch => {  
-  return {    
-    Logout: () => dispatch(actionCreators.logout()),
-    onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-  }
-} 
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.cosmos.token != null,
+  loading: state.cosmos.loading,
+  error: state.cosmos.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  Logout: () => dispatch(actionCreators.logout()),
+  onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+});
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
