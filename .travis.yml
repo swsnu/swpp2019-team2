@@ -20,3 +20,20 @@ matrix:
     - sonar-scanner
     after_success:
     - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - language: python
+    cache:
+      pip: true
+      python: 3.7
+    before_install:
+    - cd backend
+    install:
+    - pip install -r requirements.txt
+    script:
+    - python --version
+    - python -m django --version
+    - pylint */models.py */views.py */tests.py
+    - pylint crawl/spiders/* crawl/pipelines.py
+    - coverage run manage.py test
+    - coverage report -m
+    after_success:
+    - coveralls

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 astroid==2.2.5
 certifi==2019.9.11
 chardet==3.0.4
@@ -25,3 +26,13 @@ typed-ast==1.4.0
 urllib3==1.25.6
 wincertstore==0.2
 wrapt==1.11.2
+=======
+Django==2.2.6
+Scrapy==1.8.0
+scrapy-djangoitem==1.1.1
+pylint==2.4.3
+pylint-django==2.0.11
+selenium==3.141.0
+coverage==4.5.4
+coveralls==1.8.2
+>>>>>>> origin/dev/master
