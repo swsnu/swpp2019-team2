@@ -41,7 +41,10 @@ const LipForm = (props) => (
       </section>
 
       <section className="Index5">
-        <h4 className="Lip_color">{props.color}</h4>
+        <h4 className="Lip_color">
+색상:&emsp;
+          {props.color}
+        </h4>
       </section>
 
 

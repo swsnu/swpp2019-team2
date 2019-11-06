@@ -135,41 +135,44 @@ class Search extends Component {
         if ((this.state.button_tone1 || this.state.button_tone2) && (this.state.button_lip_gloss || this.state.button_lip_stick || this.state.button_lip_tint)) {
           if (this.state.button_lip_stick) {
             this.state.lip_stick = this.props.storedLips.filter((temp) => temp.category === '립스틱');
-            sampleStick = this.state.lip_stick.map((td) => (
+            sampleStick = this.state.lip_stick.map((cosmos) => (
               <LipForm
-
-                thumbnail={td.thumbnail}
-                name={td.name}
-                price={td.price}
-                category={td.category}
-                brand={td.brand}
+                key={cosmos.id}
+                thumbnail={cosmos.thumbnail}
+                name={cosmos.name}
+                price={cosmos.price}
+                category={cosmos.category}
+                brand={cosmos.brand}
+                color={cosmos.color}
               />
             ));
           }
           if (this.state.button_lip_gloss) {
             this.state.lip_gloss = this.props.storedLips.filter((temp) => temp.category === '립글로스');
-            sample_gloss = this.state.lip_gloss.map((td) => (
+            sample_gloss = this.state.lip_gloss.map((cosmos) => (
               <LipForm
-
-                thumbnail={td.thumbnail}
-                name={td.name}
-                price={td.price}
-                category={td.category}
-                brand={td.brand}
+                key={cosmos.id}
+                thumbnail={cosmos.thumbnail}
+                name={cosmos.name}
+                price={cosmos.price}
+                category={cosmos.category}
+                brand={cosmos.brand}
+                color={cosmos.color}
               />
             ));
           }
           if (this.state.button_lip_tint) {
             this.state.lip_tint = this.props.storedLips.filter((temp) => temp.category === '틴트');
 
-            sample_tint = this.state.lip_tint.map((td) => (
+            sample_tint = this.state.lip_tint.map((cosmos) => (
               <LipForm
-
-                thumbnail={td.thumbnail}
-                name={td.name}
-                price={td.price}
-                category={td.category}
-                brand={td.brand}
+                key={cosmos.id}
+                thumbnail={cosmos.thumbnail}
+                name={cosmos.name}
+                price={cosmos.price}
+                category={cosmos.category}
+                brand={cosmos.brand}
+                color={cosmos.color}
               />
             ));
           }
