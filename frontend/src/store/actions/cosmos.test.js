@@ -27,7 +27,7 @@ describe('article', () => {
   describe('actions', () => {
     beforeEach(() => {
       moxios.install();
-      history = { push: jest.fn() };
+      // history = { push: jest.fn() };
     });
 
 

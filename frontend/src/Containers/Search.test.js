@@ -347,7 +347,7 @@ describe('<Search/>', () => {
 
     const component = mount(
       <Provider store={mockStore}>
-        <BrowserRouter history={history}>
+        <BrowserRouter >
           <Search selectedUser={stubSeletedUserT} />
         </BrowserRouter>
       </Provider>,
@@ -366,7 +366,6 @@ describe('<Search/>', () => {
       <Search.WrappedComponent
         onTryAutoSignup={spyGetUser}
         Logout={spyLogout}
-        history={history}
       />,
     );
     const button = component.find('#log-out-button');
