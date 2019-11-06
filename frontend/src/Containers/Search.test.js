@@ -347,7 +347,7 @@ describe('<Search/>', () => {
 
     const component = mount(
       <Provider store={mockStore}>
-        <BrowserRouter >
+        <BrowserRouter>
           <Search selectedUser={stubSeletedUserT} />
         </BrowserRouter>
       </Provider>,
