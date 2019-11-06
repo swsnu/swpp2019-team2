@@ -18,7 +18,7 @@ class ItemTest(unittest.TestCase):
 
     def test_brand_product(self):
         i = Brand()
-        self.assert_sorted_equal(i.fields.keys(), ['crawled', 'name', 'url'])
+        self.assert_sorted_equal(i.fields.keys(), ['crawled', 'name', 'url', 'name_ko'])
 
 
 
