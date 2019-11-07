@@ -1,39 +1,62 @@
 matrix:
   include:
-  - language: node_js
+  - language: 
+    - python
+    cache:
+      yarn: true
+      pip: true
     node_js:
     - '10'
-    dist: trusty
+    python:
+    - '3.7'
+    dist: xenial
+    services:
+    - sqlite3
     addons:
       sonarcloud:
         organization: "swsnu"
         token:
           secure: "NjT1ASH0bOVFV0fXGYcOm0mga6VzJmtt+cGlS2tcUbcHvU2FTWFwDYhvOiaynGyrInOaBekLdj1P3kSIGHlFuaX6nxjWW2QJHEHXioxjViKFQmcRAx/VFeeUtIoed2UguiYgkS/sz0qIN5CLJqgnsaf4Ympw8poG3YugdBP+9rd+4As9talJMdtixMw2r1/Bwtf4m9WvRYWpFF0LYi62/8QKCmLyAvoeRHJqAQoQcvHaj9Ix/qOutiOU1t/QVUE/dr3o4WiXuCv045cyrZGK31wzR0KzU1PdJAZinrvV+jh29nl6hjt8n4MqwRL7qa35zrLSvLcMl4Plh+7NIQcqO0jUk3wkhkPSfLWL4PTL/gn+mIeMzt+pLCmh8Yxn9ukXcpw+7hGe3YfDV2NO+o4zeqepIhY3OqeFUe9HymHDUL5gsNFo80NUcLpVJi+NFQhCRF6ZcQCNJ82wTSVAEDCuifxeJ5EfhtXyXoo29fxK8JXuzj/abCwjJyl5jJ76jS3X5A1L7+jZnCbo7o5G25mPV6OtCMx/axFThekYDNn1yqRbCKvHI/iwGf9z/qPgwyzKlOlbc+B+uphNm5sNmfqONuNKVA9Uz4V839duv3AwiKjEO3wE4G8JzGAs6/H6y38+8UJM24l7tANyBtjWDD7W27Uj/nfSlsmG+PPyhtmIiII="
-    before_install:
-    - cd frontend
+    env:
+    - DJANGO_VERSION=2.2.6
     install:
-    - npm install
-    - npm install coveralls
+    - cd frontend
+    - yarn install
+    - yarn add coveralls
+    - cd ..
+    - cd backend
+    - pip install -r requirements.txt
+    - cd ..
+    before_script:
+    - cd backend
+    - python3 manage.py migrate
+    - cd ..
     script:
+    - cd frontend
     - "./node_modules/.bin/eslint src/"
     - yarn test --coverage --watchAll=false
-    - sonar-scanner
-    after_success:
-    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-  - language: python
-    cache:
-      pip: true
-      python: 3.7
-    before_install:
+    - cd ..
     - cd backend
-    install:
-    - pip install -r requirements.txt
-    script:
     - python --version
     - python -m django --version
     - pylint */models.py */views.py */tests.py
     - pylint crawl/spiders/* crawl/pipelines.py
     - coverage run manage.py test
+    - coverage xml
     - coverage report -m
+    - cd ..
+    - sonar-scanner
     after_success:
+    - cd frontend
+    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - cd ..
+    - cd backend
     - coveralls
+    - cd ..
+    after_failure:
+    - cd frontend
+    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - cd ..
+    - cd backend
+    - coveralls
+    - cd ..
