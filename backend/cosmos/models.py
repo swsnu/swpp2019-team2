@@ -44,8 +44,6 @@ class Lip(models.Model):
     color = models.ForeignKey(ColorRange, on_delete=models.CASCADE)
     thumbnail = models.CharField(max_length=150)
 
-    
+
     def __str__(self):
         return self.brand.name
-        
-
