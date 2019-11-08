@@ -1,21 +1,19 @@
+"""VIEW MODEL"""
+import json
+from json import JSONDecodeError
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
-import json
-from django.contrib.auth import login, authenticate ,logout
-from .models import ColorRange,Lip,Brand
-from json import JSONDecodeError
+from django.contrib.auth import login, authenticate, logout
 from django.views.decorators.csrf import csrf_exempt
-
-from django.core import serializers
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
-
+#from django.core import serializers
+#from rest_framework import status
+#from rest_framework.views import APIView
+#from rest_framework.response import Response
+#from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
+#from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db import IntegrityError
-from django.views.decorators.csrf import csrf_exempt
+from .models import Lip
 
 
 
@@ -23,29 +21,29 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def lip(request):
+    """LIP MODEL FUNCTION"""
     if request.method == 'GET':
-        if request.user.is_authenticated:  #로그인 확인   
+        if request.user.is_authenticated: #로그인 확인
             lip_all_list = Lip.objects.all()
             result = list(
                 map(
-                    lambda lip: { "name": lip.name, "category": lip.category, "price": lip.price, "thumbnail": lip.thumbnail, "color": lip.color.name, "brand": lip.brand.name}, 
-                    lip_all_list
+                    lambda lip: {"name": lip.name, "category": lip.category, "price": lip.price,
+                                 "thumbnail": lip.thumbnail, "color": lip.color.name,
+                                 "brand": lip.brand.name}, lip_all_list
                 )
             )
-        
             return JsonResponse(result, safe=False)
-        else:
-            return HttpResponse(status = 401)
+        return HttpResponse(status=401)
+
+    return HttpResponseNotAllowed(['GET'])
 
 
 
 @csrf_exempt
 def signup(request):
-    if request.method == 'GET':
-        #if request.user.is_authenticated:  #로그인 확인                                                          
+    """SIGNUP FUNCTION"""
+    if request.method == 'GET':                         
         user_all_list = [cosmos for cosmos in User.objects.all().values()]
-       
-
         return JsonResponse(user_all_list, safe=False)
 
     if request.method == 'POST':
@@ -54,27 +52,26 @@ def signup(request):
             username = req_data['username']
             email = req_data['email']
             password = req_data['password']
-        except (KeyError, JSONDecodeError) as e:                                                
-                return HttpResponseBadRequest()
+        except (KeyError, JSONDecodeError):                                              
+            return HttpResponseBadRequest()
         try:
             User.objects.create_user(username=username, email=email, password=password)
-        
-        except IntegrityError as e: 
-            return HttpResponseBadRequest()
-        
+        except IntegrityError: 
+            return HttpResponseBadRequest()        
         return HttpResponse(status=201)
-    else:
-        return HttpResponseNotAllowed(['GET','POST']) 
+    
+    return HttpResponseNotAllowed(['GET', 'POST']) 
 
-def signin(request):
+def signin(request):    #Signin function
+    """SIGNIN FUNCTION"""
 
     if request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
             username = req_data['username']
             password = req_data['password']
-        except (KeyError, JSONDecodeError) as e:                                                
-                return HttpResponseBadRequest()
+        except (KeyError, JSONDecodeError):                                                
+            return HttpResponseBadRequest()
 
         user = authenticate(request, username=username, password=password)
         
@@ -84,27 +81,29 @@ def signin(request):
 
             return HttpResponse(status=204)
         
-        else: 
-            return HttpResponse(status=401)
+         
+        return HttpResponse(status=401)
     
-    else:
-        return HttpResponseNotAllowed(['POST']) 
+    
+    return HttpResponseNotAllowed(['POST']) 
 
 
 def signout(request):
+    """SIGNOUT FUNCTION"""
     if request.method == 'GET':
         if request.user.is_authenticated:
             logout(request)
             return HttpResponse(status=204)
-        else:
-            return HttpResponse(status=401)
-    else:
-        return HttpResponseNotAllowed(['GET']) 
+        
+        return HttpResponse(status=401)
+    
+    return HttpResponseNotAllowed(['GET']) 
 
 
 @ensure_csrf_cookie
 def token(request):
+    """TOKEN FUNCTION"""
     if request.method == 'GET':
         return HttpResponse(status=204)
-    else:
-        return HttpResponseNotAllowed(['GET'])
+    
+    return HttpResponseNotAllowed(['GET'])
