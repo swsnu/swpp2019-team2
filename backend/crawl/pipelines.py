@@ -6,7 +6,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-from lip.models import Lip
+from lip.models import Lip, LipOption
 from brand.models import Brand
 
 
@@ -21,6 +21,13 @@ class CrawlPipeline(object):
             self.process_brand(item, spider)
         elif item["crawled"] == "product":
             if len(Lip.objects.filter(name=item["name"])) == 0:
+                item.save()
+                return item
+        elif item["crawled"] == "lip_option":
+            if len(LipOption.objects.filter(
+                    optionName=item["optionName"]
+                        ).filter(
+                            product=item["product"])) == 0:
                 item.save()
                 return item
         return item

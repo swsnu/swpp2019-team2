@@ -1,3 +1,4 @@
+"""Define Scrapy Items"""
 # -*- coding: utf-8 -*-
 
 # Define here the models for your scraped items
@@ -7,16 +8,20 @@
 
 import scrapy
 from scrapy_djangoitem import DjangoItem
-from lip.models import Lip
-from brand.models import Brand
+from lip.models import Lip, LipOption
+from brand.models import Brand as BrandModel
 
+class LipColor(DjangoItem):
+    """LipColor Scrapy Item"""
+    django_model = LipOption
+    crawled = scrapy.Field()
 
 class LipProduct(DjangoItem):
+    """LipProduct Scrapy Item"""
     django_model = Lip
     crawled = scrapy.Field()
-    pass
 
 class Brand(DjangoItem):
-    django_model = Brand
+    """Brand Scrapy Item"""
+    django_model = BrandModel
     crawled = scrapy.Field()
-    pass
