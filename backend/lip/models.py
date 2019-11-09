@@ -46,10 +46,16 @@ class LipOption(models.Model):
     )
     color = models.CharField(
         max_length=2,
-        choices=COLOR
+        choices=COLOR,
+        default="RD"
     )
+    color_hex = models.CharField(max_length=10)
     optionName = models.CharField(max_length=30)
     product = models.ForeignKey(
         Lip,
         on_delete=models.CASCADE
     )
+
+    def __str__(self):
+        return str(self.product) + " " +self.optionName
+
