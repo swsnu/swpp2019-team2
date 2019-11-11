@@ -10,6 +10,8 @@ from crawl.items import LipProduct, LipColor, Brand
 from brand.models import Brand as Brand_db
 from products.lip.models import Lip as Lip_db
 
+from color_tag import cal_color_tag
+
 
 class AritaumSpider(scrapy.Spider):
     """ Real Spider extends scrapy.Spider """
@@ -130,8 +132,13 @@ class AritaumSpider(scrapy.Spider):
                         "./span/label/span").value_of_css_property("background-color")
                     product = Lip_db.objects.filter(name=product_name)[0]
                     color_hex = self.save_color_by_rgb(color_rgb)
+                    color_tuple = cal_color_tag(color_hex[1:])
                     yield LipColor(
                         color_hex=color_hex,
+                        color = (color_tuple[0] == 'red'? "RD" 
+                                : color_tuple[0] == 'pink'? "PK"
+                                : "OR")
+                        sub_color = color_tuple[1]
                         optionName=color_name,
                         product=product,
                         crawled="lip_option"
@@ -153,9 +160,14 @@ class AritaumSpider(scrapy.Spider):
         img = Image.open(requests.get(url, stream=True).raw)
         img = img.resize((30, 30))
         color_hex = self.getcolors(img, url)
+        color_tuple = cal_color_tag(color_hex[1:])
         product = Lip_db.objects.filter(name=name)[0]
         yield LipColor(
             color_hex=color_hex,
+            color = (color_tuple[0] == 'red'? "RD" 
+                    : color_tuple[0] == 'pink'? "PK"
+                    : "OR")
+            sub_color = color_tuple[1]
             optionName=color,
             product=product,
             crawled="lip_option"
