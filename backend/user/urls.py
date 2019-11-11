@@ -1,4 +1,4 @@
-"""cosmos URL Configuration
+"""products URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -14,13 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from cosmos import views
+from user import views
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
-    path('token/', views.token, name='token'),
-    path('lip/', views.lip, name='lip'),
+    path('token/', views.token, name='token')
 ]
