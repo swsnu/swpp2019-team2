@@ -109,6 +109,7 @@ def two_point_length(tuple1, tuple2):
 
 def min_len(tuple1):
     """ find sub_color with minimum length """
+    # pylint: disable=too-many-locals
     pink_val = PINK_DICT.values()
     pink_key = list(PINK_DICT.keys())
     red_val = RED_DICT.values()
@@ -161,6 +162,7 @@ def min_len(tuple1):
         return ('RD', red_key[tar_red])
     if(min_orange <= min_pink and min_orange <= min_red):
         return ('OR', orange_key[tar_orange])
+    return (None, None)
 
 
 def cal_color_tag(hexa):
