@@ -59,6 +59,7 @@ class LipOption(models.Model):
         max_length=2,
         choices=COLOR
     )
+    sub_color = models.CharField(max_length=30)
     color_hex = models.CharField(max_length=10)
     optionName = models.CharField(max_length=30)
     product = models.ForeignKey(
