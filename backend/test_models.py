@@ -1,4 +1,4 @@
-from lip.models import Lip, LipOption
+from products.lip.models import Lip, LipOption
 from brand.models import Brand
 import unittest
 
