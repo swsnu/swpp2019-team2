@@ -16,11 +16,24 @@ class Lip(models.Model):
         (BALM, 'Balm'),
         (TINT, 'Tint'),
     )
+    MATTE = 'M'
+    GLOSSY = 'G'
+    NONE = 'N'
+    FORM = (
+        (MATTE, 'Matte'),
+        (GLOSSY, 'Glossy'),
+        (NONE, 'None')
+    )
     name = models.CharField(max_length=20)
     price = models.IntegerField()
     brand = models.ForeignKey(
         brand_models.Brand,
         on_delete=models.CASCADE
+    )
+    form = models.CharField(
+        max_length=1,
+        choices=FORM,
+        default=NONE
     )
     category = models.CharField(
         max_length=1,
@@ -35,19 +48,16 @@ class Lip(models.Model):
 class LipOption(models.Model):
     """ option of django lip model """
     RED = "RD"
-    CORAL = "CR"
     PINK = "PK"
     ORANGE = "OR"
     COLOR = (
         (RED, "Red"),
-        (CORAL, "Coral"),
         (PINK, "Pink"),
         (ORANGE, "Orange"),
     )
     color = models.CharField(
         max_length=2,
-        choices=COLOR,
-        default="RD"
+        choices=COLOR
     )
     color_hex = models.CharField(max_length=10)
     optionName = models.CharField(max_length=30)
