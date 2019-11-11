@@ -10,7 +10,7 @@ from crawl.items import LipProduct, LipColor, Brand
 from brand.models import Brand as Brand_db
 from products.lip.models import Lip as Lip_db
 
-from color_tag import cal_color_tag
+from .color_tag import cal_color_tag
 
 
 class AritaumSpider(scrapy.Spider):
@@ -133,12 +133,16 @@ class AritaumSpider(scrapy.Spider):
                     product = Lip_db.objects.filter(name=product_name)[0]
                     color_hex = self.save_color_by_rgb(color_rgb)
                     color_tuple = cal_color_tag(color_hex[1:])
+                    if color_tuple[0] == "red":
+                        color = "RD"
+                    elif color_tuple[0] == "pink":
+                        color = "PK"
+                    else:
+                        color = "OR"
                     yield LipColor(
                         color_hex=color_hex,
-                        color = (color_tuple[0] == 'red'? "RD" 
-                                : color_tuple[0] == 'pink'? "PK"
-                                : "OR")
-                        sub_color = color_tuple[1]
+                        color=color,
+                        sub_color=color_tuple[1],
                         optionName=color_name,
                         product=product,
                         crawled="lip_option"
@@ -161,13 +165,17 @@ class AritaumSpider(scrapy.Spider):
         img = img.resize((30, 30))
         color_hex = self.getcolors(img, url)
         color_tuple = cal_color_tag(color_hex[1:])
+        if color_tuple[0] == "red":
+            color = "RD"
+        elif color_tuple[0] == "pink":
+            color = "PK"
+        else:
+            color = "OR"
         product = Lip_db.objects.filter(name=name)[0]
         yield LipColor(
             color_hex=color_hex,
-            color = (color_tuple[0] == 'red'? "RD" 
-                    : color_tuple[0] == 'pink'? "PK"
-                    : "OR")
-            sub_color = color_tuple[1]
+            color = color,
+            sub_color = color_tuple[1],
             optionName=color,
             product=product,
             crawled="lip_option"
