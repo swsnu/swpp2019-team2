@@ -8,7 +8,7 @@ import webcolors
 from PIL import Image
 from crawl.items import LipProduct, LipColor, Brand
 from brand.models import Brand as Brand_db
-from lip.models import Lip as Lip_db
+from products.lip.models import Lip as Lip_db
 
 
 class AritaumSpider(scrapy.Spider):

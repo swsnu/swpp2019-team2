@@ -8,7 +8,7 @@
 
 import scrapy
 from scrapy_djangoitem import DjangoItem
-from lip.models import Lip, LipOption
+from products.lip.models import Lip, LipOption
 from brand.models import Brand as BrandModel
 
 class LipColor(DjangoItem):
