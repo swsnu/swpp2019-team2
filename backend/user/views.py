@@ -14,7 +14,7 @@ def signup(request):
     """SIGNUP FUNCTION"""
     print("signup")
     if request.method == 'GET':
-        user_all_list = [cosmos for cosmos in User.objects.all().values()]
+        user_all_list = list(User.objects.all().values())
         return JsonResponse(user_all_list, safe=False)
 
     if request.method == 'POST':
