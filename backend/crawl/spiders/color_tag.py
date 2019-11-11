@@ -152,11 +152,11 @@ def min_len(t1):
                 tar_orange = i
 
     if(min_pink <= min_red and min_pink <= min_orange):
-        return ('pink', pink_key[tar_pink])
+        return ('PK', pink_key[tar_pink])
     elif(min_red <= min_pink and min_red <= min_orange):
-        return ('red', red_key[tar_red])
+        return ('RD', red_key[tar_red])
     else:
-        return ('orange', orange_key[tar_orange])
+        return ('OR', orange_key[tar_orange])
 
 
 
