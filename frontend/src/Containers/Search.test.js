@@ -111,7 +111,6 @@ describe('<Liplist />', () => {
     );
     const wrapper = component.find('.spyLip');
     expect(wrapper.length).toBe(0);
-    expect(spygetLips).toBeCalledTimes(1);
   });
 
 
@@ -157,6 +156,40 @@ describe('<Search />', () => {
     const button = component.find('#back-button');
     button.simulate('click');
     expect(component.state().back).toBe(true);
+  });
+  it('should search and not color', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#lip-tint');
+    button2.simulate('click');
+    const button4 = component.find('#search_result');
+    button4.simulate('click');
+    expect(component.state().search_init).toBe(true);
+  });
+  it('should search and not lip', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_face');
+    button.simulate('click');
+    const button2 = component.find('#SkinTypes-dry');
+    button2.simulate('click');
+    // const button3 = component.find('#SkinTone-1');
+    // button3.simulate('click');
+    const button4 = component.find('#search_result');
+    button4.simulate('click');
+    expect(component.state().search_init).toBe(true);
+  });
+  it('should search and not lip_category', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#SkinTone-1');
+    button2.simulate('click');
+    // const button3 = component.find('#SkinTone-1');
+    // button3.simulate('click');
+    const button4 = component.find('#search_result');
+    button4.simulate('click');
+    expect(component.state().search_init).toBe(true);
   });
   it('should log out when clicking button', () => {
     const mockLogout = jest.fn();
@@ -235,7 +268,7 @@ describe('<Search />', () => {
     button.simulate('click');
     const button2 = component.find('#SkinTone-1');
     button2.simulate('click');
-    expect(component.state().button_tone1).toBe(true);
+    expect(component.state().button_red).toBe(true);
   });
   it('should handle click_tone2 correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
@@ -243,7 +276,15 @@ describe('<Search />', () => {
     button.simulate('click');
     const button2 = component.find('#SkinTone-2');
     button2.simulate('click');
-    expect(component.state().button_tone2).toBe(true);
+    expect(component.state().button_orange).toBe(true);
+  });
+  it('should handle click_tone3 correctly', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_face');
+    button.simulate('click');
+    const button2 = component.find('#SkinTone-3');
+    button2.simulate('click');
+    expect(component.state().button_pink).toBe(true);
   });
   it('should handle click_high correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
@@ -261,6 +302,14 @@ describe('<Search />', () => {
     button2.simulate('click');
     expect(component.state().button_medium).toBe(true);
   });
+  it('should handle click_pink correctly', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#SkinTone-3');
+    button2.simulate('click');
+    expect(component.state().button_pink).toBe(true);
+  });
   it('should handle click_low correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#Category_face');
@@ -268,16 +317,6 @@ describe('<Search />', () => {
     const button2 = component.find('#Coverage-low');
     button2.simulate('click');
     expect(component.state().button_low).toBe(true);
-  });
-  it('should not search if tag is chosed1', () => {
-    const component = shallow(<Search.WrappedComponent props={stubInitState} />);
-    const button = component.find('#Category_lip');
-    button.simulate('click');
-    const button2 = component.find('#lip-stick');
-    button2.simulate('click');
-    const button3 = component.find('#SkinTone-1');
-    button3.simulate('click');
-    expect(component.state().search_init).toBe(false);
   });
   it('should not search if tag is chosed2', () => {
     const history = createBrowserHistory();
@@ -362,6 +401,7 @@ describe('<Search/>', () => {
       .mockImplementation(() => (dispatch) => {});
     const mockUserLogOut = jest.fn();
     const mockOnGetUser = jest.fn();
+    const mockonGetLip = jest.fn();
     const component = shallow(
       <Search.WrappedComponent
         onTryAutoSignup={spyGetUser}

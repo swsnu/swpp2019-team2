@@ -13,8 +13,9 @@ class Search extends Component {
     this.state = {
       button_dry: false,
       button_oily: false,
-      button_tone1: false,
-      button_tone2: false,
+      button_red: false,
+      button_orange: false,
+      button_pink: false,
       button_high: false,
       button_medium: false,
       button_low: false,
@@ -24,18 +25,14 @@ class Search extends Component {
       button_lip_stick: false,
       button_lip_tint: false,
       button_lip_gloss: false,
-      lip_stick: [],
-      lip_tint: [],
-      lip_gloss: [],
-      set_Lipstick: false,
-      set_Liptint: false,
-      set_Lipgloss: false,
+      lip: [],
+      set_Lip: false,
     };
   }
 
   componentDidMount() { // initialize state
     this.props.onTryAutoSignup();
-    this.props.onGetLip();
+
   }
 
   logout = () => {
@@ -82,15 +79,21 @@ class Search extends Component {
     this.setState({ button_oily: !buttonOily });
   }
 
-  handleClickTone1() { // tone1 태그 선택
-    const buttonTone1 = this.state.button_tone1;
-    this.setState({ button_tone1: !buttonTone1 });
+  handleClickRed() { // tone1 태그 선택
+    const buttonTone1 = this.state.button_red;
+    this.setState({ button_red: !buttonTone1 });
     this.setState({ search_init: false });
   }
 
-  handleClickTone2() { // tone2 태그 선택
-    const buttonTone2 = this.state.button_tone2;
-    this.setState({ button_tone2: !buttonTone2 });
+  handleClickOrange() { // tone2 태그 선택
+    const buttonTone2 = this.state.button_orange;
+    this.setState({ button_orange: !buttonTone2 });
+    this.setState({ search_init: false });
+  }
+
+  handleClickPink() { // tone2 태그 선택
+    const buttonTone3 = this.state.button_pink;
+    this.setState({ button_pink: !buttonTone3 });
     this.setState({ search_init: false });
   }
 
@@ -137,7 +140,8 @@ class Search extends Component {
     let changePage = '';
     let tagNum; // 최상위 3개 태그 렌더 변수
     let backLogin = '';
-    let sampleStick; let sampleTint; let sampleGloss = '';
+    let result = '';
+    let lipResult;
 
     if (!this.props.isAuthenticated) {
       changePage = <Redirect to="/login" />;
@@ -145,70 +149,37 @@ class Search extends Component {
 
     if (this.state.search_init) {
       if (this.state.button_lip) {
-        if ((this.state.button_tone1 || this.state.button_tone2)) {
-          if (this.state.button_lip_gloss || this.state.button_lip_stick
-            || this.state.button_lip_tint) {
-            if (this.state.button_lip_stick) {
-              const lipStick = this.props.storedLips.filter((temp) => temp.category === '립스틱');
-              if (!this.state.set_Lipstick) {
-                this.setState({ lip_stick: lipStick });
-                this.setState({ set_Lipstick: true });
-              }
-              console.log('lipstck state :', this.state.lip_stick);
-              sampleStick = this.state.lip_stick.map((cosmos) => (
-                <LipForm
-                  key={cosmos.id}
-                  thumbnail={cosmos.thumbnail}
-                  name={cosmos.name}
-                  price={cosmos.price}
-                  category={cosmos.category}
-                  brand={cosmos.brand}
-                  color={cosmos.color}
-                />
-              ));
+        if (this.state.button_lip_gloss || this.state.button_lip_stick
+          || this.state.button_lip_tint) {
+          if ((this.state.button_red || this.state.button_orange || this.state.button_pink)) {
+            if(this.state.button_lip_stick) result = result.concat("category=stick&");
+            if(this.state.button_lip_gloss) result = result.concat("category=gloss&");
+            if(this.state.button_lip_tint) result = result.concat("category=tint&");
+            if(this.state.button_red) result = result.concat("color=red&");
+            if(this.state.button_orange) result = result.concat("color=orange&");
+            if(this.state.button_pink) result = result.concat("color=pink&");
+            this.props.onGetLip(result);
+            const sampleLip = this.props.storedLips;
+            if (!this.state.set_Lip) {
+              this.setState({ lip: sampleLip });
+              this.setState({ set_Lip: true });
             }
-            if (this.state.button_lip_gloss) {
-              const lipGloss = this.props.storedLips.filter((temp) => temp.category === '립글로스');
-              if (!this.state.set_Lipgloss) {
-                this.setState({ lip_gloss: lipGloss });
-                this.setState({ set_Lipgloss: true });
-              }
-              sampleGloss = this.state.lip_gloss.map((cosmos) => (
-                <LipForm
-                  key={cosmos.id}
-                  thumbnail={cosmos.thumbnail}
-                  name={cosmos.name}
-                  price={cosmos.price}
-                  category={cosmos.category}
-                  brand={cosmos.brand}
-                  color={cosmos.color}
-                />
-              ));
-            }
-            if (this.state.button_lip_tint) {
-              const lipTint = this.props.storedLips.filter((temp) => temp.category === '틴트');
-              if (!this.state.set_Liptint) {
-                this.setState({ lip_tint: lipTint });
-                this.setState({ set_Liptint: true });
-              }
-              sampleTint = this.state.lip_tint.map((cosmos) => (
-                <LipForm
-                  key={cosmos.id}
-                  thumbnail={cosmos.thumbnail}
-                  name={cosmos.name}
-                  price={cosmos.price}
-                  category={cosmos.category}
-                  brand={cosmos.brand}
-                  color={cosmos.color}
-                />
-              ));
-            }
+            lipResult = this.state.lip.map((cosmos) => (
+              <LipForm
+                key={cosmos.id}
+                thumbnail={cosmos.thumbnail}
+                name={cosmos.name}
+                price={cosmos.price}
+                category={cosmos.category}
+                brand={cosmos.brand}
+                color={cosmos.color}
+              />
+            ));
           }
         }
-      }
+      }   
     }
-
-
+   
     if (this.state.back === true) { // 메인페이지로 돌아가기
       backLogin = <Redirect to="/main" />;
     }
@@ -231,9 +202,11 @@ class Search extends Component {
             <section className="Skin_tones">
               <h4 id="SkinTone">&emsp;SkinTone</h4>
           &emsp;
-              <button type="button" className={this.state.button_tone1 ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-1" onClick={() => this.handleClickTone1()}>Tone1</button>
+              <button type="button" className={this.state.button_red ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-1" onClick={() => this.handleClickRed()}>Red</button>
 &emsp;
-              <button type="button" className={this.state.button_tone2 ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-2" onClick={() => this.handleClickTone2()}>Tone2</button>
+              <button type="button" className={this.state.button_orange ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-2" onClick={() => this.handleClickOrange()}>Orange</button>
+&emsp;
+              <button type="button" className={this.state.button_pink ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-3" onClick={() => this.handleClickPink()}>Pink</button>
 &emsp;
 
             </section>
@@ -250,6 +223,8 @@ class Search extends Component {
 &emsp;
 
             </section>
+        &emsp;
+            <button type="button" id="search_result" onClick={() => this.search()}>Search!</button>
           </div>
         </div>
       );
@@ -274,13 +249,14 @@ class Search extends Component {
             </section>
 
             <section className="Skin_tones">
-              <h4 id="SkinTone">&emsp;SkinTone</h4>
+              <h4 id="SkinTone">&emsp;Color</h4>
           &emsp;
-              <button type="button" className={this.state.button_tone1 ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-1" onClick={() => this.handleClickTone1()}>Tone1</button>
+              <button type="button" className={this.state.button_red ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-1" onClick={() => this.handleClickRed()}>Red</button>
 &emsp;
-              <button type="button" className={this.state.button_tone2 ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-2" onClick={() => this.handleClickTone2()}>Tone2</button>
+              <button type="button" className={this.state.button_orange ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-2" onClick={() => this.handleClickOrange()}>Orange</button>
 &emsp;
-
+              <button type="button" className={this.state.button_pink ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-3" onClick={() => this.handleClickPink()}>Pink</button>
+&emsp;
             </section>
         &emsp;
             <button type="button" id="search_result" onClick={() => this.search()}>Search!</button>
@@ -326,9 +302,7 @@ class Search extends Component {
 
           <div className="Result">
 
-            {sampleStick}
-            {sampleGloss}
-            {sampleTint}
+            {lipResult}
           </div>
         </div>
       </div>
@@ -349,9 +323,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 
-  onGetLip: () => dispatch(actionCreators.getLips()),
+  onGetLip: (result) => dispatch(actionCreators.getLips(result)),
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+
 
 });
 
