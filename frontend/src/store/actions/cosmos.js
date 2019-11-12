@@ -3,8 +3,8 @@ import * as actionTypes from './actionTypes';
 
 
 export const getLips_ = (Lip) => ({ type: actionTypes.GET_LIP, Lip });
-export const getLips = () => (dispatch) => axios.get('/api/lip/')
-  .then((res) => dispatch(getLips_(res.data)));
+export const getLips = (searchResult) => (dispatch) => axios.get(`/api/lip/${searchResult}`)
+  .then((res) => dispatch(getLip(res.data)));
 
 
 export const authStart = () => ({
