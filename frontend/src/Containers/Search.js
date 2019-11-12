@@ -151,12 +151,12 @@ class Search extends Component {
         if (this.state.button_lip_gloss || this.state.button_lip_stick
           || this.state.button_lip_tint) {
           if ((this.state.button_red || this.state.button_orange || this.state.button_pink)) {
-            if(this.state.button_lip_stick) result = result.concat("category=stick&");
-            if(this.state.button_lip_gloss) result = result.concat("category=gloss&");
-            if(this.state.button_lip_tint) result = result.concat("category=tint&");
-            if(this.state.button_red) result = result.concat("color=red&");
-            if(this.state.button_orange) result = result.concat("color=orange&");
-            if(this.state.button_pink) result = result.concat("color=pink&");
+            if (this.state.button_lip_stick) result = result.concat('category=stick&');
+            if (this.state.button_lip_gloss) result = result.concat('category=gloss&');
+            if (this.state.button_lip_tint) result = result.concat('category=tint&');
+            if (this.state.button_red) result = result.concat('color=red&');
+            if (this.state.button_orange) result = result.concat('color=orange&');
+            if (this.state.button_pink) result = result.concat('color=pink&');
             this.props.onGetLip(result);
             const sampleLip = this.props.storedLips;
             if (!this.state.set_Lip) {
@@ -176,9 +176,8 @@ class Search extends Component {
             ));
           }
         }
-      }   
+      }
     }
-   
     if (this.state.back === true) { // 메인페이지로 돌아가기
       backLogin = <Redirect to="/main" />;
     }
