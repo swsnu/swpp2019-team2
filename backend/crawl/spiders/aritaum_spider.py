@@ -3,8 +3,14 @@
 import scrapy
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from crawl.items import LipProduct, Brand
+import requests
+import webcolors
+from PIL import Image
+from crawl.items import LipProduct, LipColor, Brand
 from brand.models import Brand as Brand_db
+from products.lip.models import Lip as Lip_db
+
+from .color_tag import cal_color_tag
 
 
 class AritaumSpider(scrapy.Spider):
@@ -68,6 +74,7 @@ class AritaumSpider(scrapy.Spider):
 
     def parse_product(self, response):
         """ parse product information from page """
+        #pylint: disable=too-many-locals
         category_en = {
             "립스틱": "S",
             "립글로즈": "G",
@@ -100,20 +107,111 @@ class AritaumSpider(scrapy.Spider):
                 img_url=thumb_url,
                 crawled="product"
             )
-            # TODO : Color 정보 저장해야
-            # color_range = item.find_elements_by_xpath(
-            #     "//*[@id='ul_prod_list']/li[1]/div/div[1]/div/div[1]/div/ul/li")
-            # for color in color_range:
-            #     color_img_src = color.find_element_by_tag_name(
-            #         "img").get_property("src")
-            #     color_name = color.find_element_by_tag_name(
-            #         "label").get_attribute("data-tooltip")
+
+            color_range = item.find_elements_by_class_name(
+                "product-unit__scroller-item")
+            for color in color_range:
+                color_name = color.find_element_by_tag_name(
+                    "label").get_attribute("data-tooltip")
+                if color_name is None:
+                    continue
+                try:
+                    color_url = color.find_element_by_tag_name(
+                        "img").get_property("src")
+                    yield scrapy.Request(
+                        url=color_url,
+                        meta={
+                            "product":product_name,
+                            "color":color_name
+                        },
+                        callback=self.save_color_by_url,
+                        dont_filter=True
+                    )
+                except NoSuchElementException:
+                    color_rgb = color.find_element_by_xpath(
+                        "./span/label/span").value_of_css_property("background-color")
+                    product = Lip_db.objects.filter(name=product_name)[0]
+                    color_hex = self.save_color_by_rgb(color_rgb)
+                    color_tuple = cal_color_tag(color_hex[1:])
+                    if color_tuple[0] == "red":
+                        color = "RD"
+                    elif color_tuple[0] == "pink":
+                        color = "PK"
+                    else:
+                        color = "OR"
+                    yield LipColor(
+                        color_hex=color_hex,
+                        color=color,
+                        sub_color=color_tuple[1],
+                        optionName=color_name,
+                        product=product,
+                        crawled="lip_option"
+                        )
+
         yield scrapy.Request(
             url=response.url,
             meta={"category": response.meta["category"]},
             callback=self.go_next,
             dont_filter=True
         )
+
+    def save_color_by_url(self, response):
+        """yield Request for color url"""
+        url = response.url
+        name = response.meta["product"]
+        color_name = response.meta["color"]
+        img = Image.open(requests.get(url, stream=True).raw)
+        img = img.resize((30, 30))
+        color_hex = self.getcolors(img, url)
+        color_tuple = cal_color_tag(color_hex[1:])
+        product = Lip_db.objects.filter(name=name)[0]
+        yield LipColor(
+            color_hex=color_hex,
+            color=color_tuple[0],
+            sub_color=color_tuple[1],
+            optionName=color_name,
+            product=product,
+            crawled="lip_option"
+        )
+
+    @staticmethod
+    def save_color_by_rgb(rgba):
+        """yield scrapy request for color rgb"""
+        r_1 = rgba.split("(")[1]
+        r_2 = r_1.split(")")[0]
+        colors = r_2.split(", ")
+        rgb = (int(colors[0]), int(colors[1]), int(colors[2]))
+        color_hex = webcolors.rgb_to_hex(rgb)
+        return color_hex
+
+    @staticmethod
+    def getcolors(img, url):
+        """get color hexa value from url image"""
+        #pylint: disable=too-many-locals
+        width, height = img.size
+        colors = img.getcolors(width * height)
+
+        r_total = 0
+        g_total = 0
+        b_total = 0
+        count = 0
+        for pixel in colors:
+            red, green, blue = pixel[1]
+            if (red+green+blue)/3 >= 250:
+                count += pixel[0]
+                continue
+            r_total += pixel[0]*red
+            g_total += pixel[0]*green
+            b_total += pixel[0]*blue
+        try:
+            r_sum = int(r_total/(width*height - count))
+            g_sum = int(g_total/(width*height - count))
+            b_sum = int(b_total/(width*height - count))
+            return webcolors.rgb_to_hex((r_sum, g_sum, b_sum))
+        except ZeroDivisionError:
+            print(url)
+
+
 
     def go_next(self, response):
         """ click next button on page """
@@ -122,7 +220,7 @@ class AritaumSpider(scrapy.Spider):
             click_next = driver.find_element_by_css_selector(
                 "a.page-nav__link.is-current + a.page-nav__link")
             click_next.click()
-            driver.implicitly_wait(5)
+            driver.implicitly_wait(10)
             yield scrapy.Request(
                 url=response.url,
                 meta={"category": response.meta["category"]},

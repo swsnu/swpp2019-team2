@@ -1,23 +1,23 @@
 @font-face{
     font-family:YACHE;
-    src: url('../fonts/야놀자_야체_Bold.ttf');
+    src: url('../fonts/야놀자_야체_Bold.ttf');
 }
 body {
     background-color :white;
-    font-family: YACHE, serif;
+    font-family: YACHE,serif;
 }
 .LogInBox {
-    width : 80%;
     position:absolute;
     left:50%;
     top:50%;
     height : 300px;
+    width : 400px;
     margin: -150px 0px 0px -200px;
     box-shadow: 0 2px 3px rgb(231, 201, 235);
     text-align : center;
     background : rgb(255, 220, 226);
 }
-.logo{
+.Login .logo{
     position:absolute;
     left:50%;
     top:20%;
@@ -27,16 +27,17 @@ body {
 }
 .LogInBox label {
     display : block;
+    padding : 10px;
     margin : 10px auto;
     text-align : center;
     font-weight : bold;
 }
-.LogInBox input#email-input {
+.LogInBox input#username-input {
     display : block;
     width : 80%;
     box-sizing: border-box;
     outline : none;
-    font : inherit,serif;
+    font : inherit;
     margin : auto;
 }
 
@@ -45,13 +46,12 @@ body {
     width : 80%;
     box-sizing: border-box;
     outline : none;
-    font : inherit,serif;
+    font : inherit;
     margin : auto;
 }
 
 .LogInBox button {
     margin : 20px 0;
-    padding: 10px;
     font : inherit;
     border : 1px solid #9b45a7;
     background-color : transparent;

@@ -12,28 +12,12 @@ class MainPage extends Component {
   }
 
   componentDidMount() {
-    this.props.onGETUSERS();
-    this.props.onGETUSER();
-    if (this.props.selectedUser) {
-      this.setState({ id: this.props.selectedUser.id });
-    }
+    this.props.onTryAutoSignup();
   }
 
   logoutHandler = () => {
-    if (this.props.selectedUser) {
-      const { id } = this.props.selectedUser;
-      const { password } = this.props.selectedUser;
-      const { email } = this.props.selectedUser;
-      const { name } = this.props.selectedUser;
-      this.props.UserLogOut(id, password, email, name, false);
-      this.props.onGETUSER();
-      this.props.onGETUSERS();
-      if (this.props.selectedUser) {
-        if (!this.props.selectedUser.logged_in) {
-          this.props.history.push('/login');
-        }
-      }
-    }
+    this.props.Logout();
+    this.props.onTryAutoSignup();
   };
 
   searchHandler = () => {
@@ -58,10 +42,8 @@ class MainPage extends Component {
 
   render() {
     let redirect = null;
-    if (this.props.selectedUser) {
-      if (!this.props.selectedUser.logged_in) {
-        redirect = <Redirect to="/login" />;
-      }
+    if (!this.props.isAuthenticated) {
+      redirect = <Redirect to="/login" />;
     }
     return (
       <div className="MainPage">
@@ -103,24 +85,17 @@ class MainPage extends Component {
   }
 }
 
-const mapStatetoProps = (state) => ({
-  Users: state.cosmos.Users,
-  selectedUser: state.cosmos.selectedUser,
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.cosmos.token != null,
+  loading: state.cosmos.loading,
+  error: state.cosmos.error,
 });
+
 const mapDispatchToProps = (dispatch) => ({
-  onGETUSERS: () => dispatch(actionCreators.getUsers()),
-  onGETUSER: () => dispatch(actionCreators.getUser()),
-  UserLogOut: (id, password, email, name, loggedIn) => dispatch(
-    actionCreators.putUser({
-      id,
-      email,
-      password,
-      name,
-      logged_in: loggedIn,
-    }),
-  ),
+  Logout: () => dispatch(actionCreators.logout()),
+  onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
 });
 export default connect(
-  mapStatetoProps,
+  mapStateToProps,
   mapDispatchToProps,
 )(MainPage);

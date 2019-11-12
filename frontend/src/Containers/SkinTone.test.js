@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
@@ -11,6 +11,11 @@ import { getMockStore } from '../test-utils/mocks';
 import { history } from '../store/store';
 
 import * as actionCreators from '../store/actions/cosmos';
+
+const stubStateC = {
+  Users: [],
+  isAuthenticated: false,
+};
 
 const stubInitialState = {
   selectedUser: {
@@ -41,9 +46,8 @@ describe('<SkinTone />', () => {
               render={(props) => (
                 <SkinTone
                   {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
+                  Logout={spylogout}
+                  onTryAutoSignup={spyGetUser}
                 />
               )}
             />
@@ -51,11 +55,11 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>
     );
-    spyGetUsers = jest.spyOn(actionCreators, 'getUsers')
+    spyGetUsers = jest.spyOn(actionCreators, 'authLogin')
       .mockImplementation(() => () => {});
-    spyGetUser = jest.spyOn(actionCreators, 'getUser')
+    spyGetUser = jest.spyOn(actionCreators, 'authCheckState')
       .mockImplementation(() => () => {});
-    spylogout = jest.spyOn(actionCreators, 'putUser')
+    spylogout = jest.spyOn(actionCreators, 'logout')
       .mockImplementation(() => () => {});
   });
 
@@ -67,7 +71,6 @@ describe('<SkinTone />', () => {
     const component = mount(skintone);
     const wrapper = component.find('SkinTone');
     expect(wrapper.length).toBe(1);
-    expect(spyGetUsers).toBeCalledTimes(1);
     expect(spyGetUser).toBeCalledTimes(1);
   });
 
@@ -83,6 +86,29 @@ describe('<SkinTone />', () => {
     wrapper.simulate('change', { target: { files: [mockFile] } });
     expect(FileReader).toHaveBeenCalled();
     expect(readAsDataURL).toHaveBeenCalledWith(mockFile);
+  });
+
+  it('should call fileinputHandler without file', () => {
+    const fileContents = 'test_picture';
+    const readAsDataURL = jest.fn();
+    const onloadend = jest.fn();
+    const dummyFileReader = { onloadend, readAsDataURL, result: fileContents };
+    window.FileReader = jest.fn(() => dummyFileReader);
+    const mockFile = null;
+    const component = mount(skintone);
+    const newInstance = component.find(SkinTone.WrappedComponent).instance();
+    const wrapper = component.find('#photo-input');
+    wrapper.simulate('change', { target: { files: [mockFile] } });
+    expect(FileReader).toHaveBeenCalled();
+    expect(readAsDataURL).toBeCalledTimes(0);
+  });
+
+  it('should not redirect stay when logged in', () => {
+    const component = shallow(
+      <SkinTone.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(0);
   });
 
   it('should call submitHandler & flag = false', () => {
@@ -111,20 +137,19 @@ describe('<SkinTone />', () => {
     const component = mount(skintone);
     const wrapper = component.find('#my-page-button');
     wrapper.simulate('click');
-    expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/1');
+    expect(spyHistoryPush).toBeCalledTimes(2);
   });
 
 
   it('should call logoutHandler', () => {
-    const spyHistoryPush = jest.spyOn(history, 'push')
+    const spyHistoryPush = jest.spyOn(history, 'replace')
       .mockImplementation((path) => {});
     const component = mount(skintone);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(2);
     expect(spyGetUser).toBeCalledTimes(2);
     expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toHaveBeenCalledWith('/login');
+    expect(spyHistoryPush).toBeCalledTimes(1);
   });
 
   it('should redirect to /login when not logged_in', () => {
@@ -165,7 +190,7 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
   });
 
   it('does not have a selectedUser', () => {
@@ -201,12 +226,11 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(1);
-    expect(spyGetUser).toBeCalledTimes(1);
-    expect(spylogout).toBeCalledTimes(0);
+    expect(spyGetUser).toBeCalledTimes(2);
+    expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(0);
   });
   it('does have a selectedUser && logged_in ', () => {
@@ -244,10 +268,9 @@ describe('<SkinTone />', () => {
         </ConnectedRouter>
       </Provider>,
     );
-    expect(component.find(Redirect)).toHaveLength(0);
+    expect(component.find(Redirect)).toHaveLength(1);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
-    expect(spyGetUsers).toBeCalledTimes(2);
     expect(spyGetUser).toBeCalledTimes(2);
     expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(0);
