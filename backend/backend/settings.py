@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'brand.apps.BrandConfig',
     'products',
     'products.lip',
+    'products.base'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
