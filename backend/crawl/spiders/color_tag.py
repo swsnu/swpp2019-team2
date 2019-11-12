@@ -77,7 +77,7 @@ def two_point_length(tuple1, tuple2):
 
 def min_len(tuple1):
     """ find sub_color with minimum length """
-    # pylint: disable=too-many-locals
+    # pylint: disable=too-many-locals,too-many-return-statements,too-many-branches
     # 색조 sub-color
     min_color = -1
     tar_color = -1
