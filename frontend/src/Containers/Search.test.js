@@ -98,7 +98,7 @@ describe('<Liplist />', () => {
     spygetLips = jest.spyOn(actions, 'getLips')
       .mockImplementation(() => (dispatch) => {});
     spylogout = jest.spyOn(actions, 'logout')
-      .mockImplementation();
+      .mockImplementation(() => (dispatch) => {});
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
   });
