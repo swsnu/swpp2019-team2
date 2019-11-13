@@ -163,7 +163,7 @@ class Search extends Component {
               this.setState({ lip: sampleLip });
               this.setState({ set_Lip: true });
             }
-            lipResult = this.state.lip.map((cosmos) => (
+            lipResult = this.props.storedLips.map((cosmos) => (
               <LipForm
                 key={cosmos.id}
                 thumbnail={cosmos.thumbnail}

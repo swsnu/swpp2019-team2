@@ -79,7 +79,7 @@ class RegistrationForm extends React.Component {
               onChange={(event) => this.setState({ password: event.target.value })}
             />
           </label>
-          <button type="button" id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
+          <button type="button" id="login-button" onClick={() => this.LoginHandler()}>Join Now!</button>
           <button type="button" id="sign-up-button" onClick={() => this.signinHandler()}>Sign In</button>
         </div>
       </div>
