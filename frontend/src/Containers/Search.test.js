@@ -100,8 +100,8 @@ describe('<Liplist />', () => {
     spylogout = jest.spyOn(actions, 'logout')
       .mockImplementation();
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
-    .mockImplementation(() => (dispatch) => {});
-  })   
+      .mockImplementation(() => (dispatch) => {});
+  });
   it('should render Lips', () => {
     const component = mount(lipList);
     const button = component.find('#Category_lip');
@@ -112,7 +112,6 @@ describe('<Liplist />', () => {
     button3.simulate('click');
     const button4 = component.find('#search_result');
     button4.simulate('click');
-
     const wrapper = component.find('.spyLip');
     expect(wrapper.length).toBe(2);
   });
@@ -150,9 +149,6 @@ describe('<Search />', () => {
     expect(wrapper.length).toBe(1);
     expect(mockonTryAutoSignup).toHaveBeenCalledTimes(1);
   });
-
-
-  
   it('should go back to main page when clicking button', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#back-button');
@@ -343,4 +339,3 @@ describe('<Liplist />', () => {
     expect(redirect.length).toBe(0);
   });
 });
-
