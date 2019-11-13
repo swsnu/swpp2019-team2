@@ -25,6 +25,10 @@ class Search extends Component {
       button_lip_stick: false,
       button_lip_tint: false,
       button_lip_gloss: false,
+      button_lip_balm: false,
+      button_lip_matte: false,
+      button_lip_glossy: false,
+      button_lip_none: false,
       lip: [],
       set_Lip: false,
     };
@@ -78,23 +82,23 @@ class Search extends Component {
     this.setState({ button_oily: !buttonOily });
   }
 
-  handleClickRed() { // tone1 태그 선택
-    const buttonTone1 = this.state.button_red;
-    this.setState({ button_red: !buttonTone1 });
-    this.setState({ search_init: false });
-  }
+  // handleClickRed() { // red 태그 선택
+  //   const buttonRed = this.state.button_red;
+  //   this.setState({ button_red: !buttonRed });
+  //   this.setState({ search_init: false });
+  // }
 
-  handleClickOrange() { // tone2 태그 선택
-    const buttonTone2 = this.state.button_orange;
-    this.setState({ button_orange: !buttonTone2 });
-    this.setState({ search_init: false });
-  }
+  // handleClickOrange() { // orange 태그 선택
+  //   const buttonOrange = this.state.button_orange;
+  //   this.setState({ button_orange: !buttonOrange });
+  //   this.setState({ search_init: false });
+  // }
 
-  handleClickPink() { // tone2 태그 선택
-    const buttonTone3 = this.state.button_pink;
-    this.setState({ button_pink: !buttonTone3 });
-    this.setState({ search_init: false });
-  }
+  // handleClickPink() { // pink 태그 선택
+  //   const buttonPink = this.state.button_pink;
+  //   this.setState({ button_pink: !buttonPink });
+  //   this.setState({ search_init: false });
+  // }
 
   handleClickHigh() { // high 태그 선택
     const buttonHigh = this.state.button_high;
@@ -129,6 +133,30 @@ class Search extends Component {
     this.setState({ search_init: false });
   }
 
+  handleClickBalm() { // dry 태그 선택
+    const buttonLipbalm = this.state.button_lip_balm;
+    this.setState({ button_lip_balm: !buttonLipbalm });
+    this.setState({ search_init: false });
+  }
+
+  handleClickMatte() { // dry 태그 선택
+    const buttonLipmatte = this.state.button_lip_matte;
+    this.setState({ button_lip_matte: !buttonLipmatte });
+    this.setState({ search_init: false });
+  }
+
+  handleClickGlossy() { // dry 태그 선택
+    const buttonLipglossy = this.state.button_lip_glossy;
+    this.setState({ button_lip_glossy: !buttonLipglossy });
+    this.setState({ search_init: false });
+  }
+
+  handleClickFormNone() { // dry 태그 선택
+    const buttonLipnone = this.state.button_lip_none;
+    this.setState({ button_lip_none: !buttonLipnone });
+    this.setState({ search_init: false });
+  }
+
   search() {
     this.setState({ sample: '' });
     this.setState({ search_init: true });
@@ -149,29 +177,30 @@ class Search extends Component {
     if (this.state.search_init) {
       if (this.state.button_lip) {
         if (this.state.button_lip_gloss || this.state.button_lip_stick
-          || this.state.button_lip_tint) {
-          if ((this.state.button_red || this.state.button_orange || this.state.button_pink)) {
+          || this.state.button_lip_tint || this.state.button_lip_balm) {
+          if ((this.state.button_lip_matte || this.state.button_lip_glossy || this.state.button_lip_none)) {
             if (this.state.button_lip_stick) result = result.concat('category=stick&');
             if (this.state.button_lip_gloss) result = result.concat('category=gloss&');
             if (this.state.button_lip_tint) result = result.concat('category=tint&');
-            if (this.state.button_red) result = result.concat('color=red&');
-            if (this.state.button_orange) result = result.concat('color=orange&');
-            if (this.state.button_pink) result = result.concat('color=pink&');
+            if (this.state.button_lip_balm) result = result.concat('category=balm&');
+            if (this.state.button_lip_matte) result = result.concat('form=matte&');
+            if (this.state.button_lip_glossy) result = result.concat('form=glossy&');
+            if (this.state.button_lip_none) result = result.concat('form=none&');
             this.props.onGetLip(result);
             const sampleLip = this.props.storedLips;
             if (!this.state.set_Lip) {
               this.setState({ lip: sampleLip });
               this.setState({ set_Lip: true });
             }
-            lipResult = this.props.storedLips.map((cosmos) => (
+            lipResult = this.state.lip.map((cosmos) => (
               <LipForm
                 key={cosmos.id}
                 thumbnail={cosmos.thumbnail}
                 name={cosmos.name}
                 price={cosmos.price}
                 category={cosmos.category}
+                form={cosmos.form}
                 brand={cosmos.brand}
-                color={cosmos.color}
               />
             ));
           }
@@ -196,19 +225,6 @@ class Search extends Component {
 &emsp;
 
             </section>
-
-            <section className="Skin_tones">
-              <h4 id="SkinTone">&emsp;SkinTone</h4>
-          &emsp;
-              <button type="button" className={this.state.button_red ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-1" onClick={() => this.handleClickRed()}>Red</button>
-&emsp;
-              <button type="button" className={this.state.button_orange ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-2" onClick={() => this.handleClickOrange()}>Orange</button>
-&emsp;
-              <button type="button" className={this.state.button_pink ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-3" onClick={() => this.handleClickPink()}>Pink</button>
-&emsp;
-
-            </section>
-
 
             <section className="Coverage">
               <h4 id="Coverage">&emsp;Coverage</h4>
@@ -243,17 +259,19 @@ class Search extends Component {
 &emsp;
               <button type="button" className={this.state.button_lip_tint ? 'buttonTrue' : 'buttonFalse'} id="lip-tint" onClick={() => this.handleClickTint()}>틴트</button>
 &emsp;
+              <button type="button" className={this.state.button_lip_balm ? 'buttonTrue' : 'buttonFalse'} id="lip-balm" onClick={() => this.handleClickBalm()}>립밤</button>
+&emsp;
 
             </section>
 
-            <section className="Skin_tones">
-              <h4 id="SkinTone">&emsp;Color</h4>
+            <section className="Lip_form">
+              <h4 id="Lip_Form">&emsp;Form</h4>
           &emsp;
-              <button type="button" className={this.state.button_red ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-1" onClick={() => this.handleClickRed()}>Red</button>
+              <button type="button" className={this.state.button_lip_matte ? 'buttonTrue' : 'buttonFalse'} id="lip-matte" onClick={() => this.handleClickMatte()}>Matte</button>
 &emsp;
-              <button type="button" className={this.state.button_orange ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-2" onClick={() => this.handleClickOrange()}>Orange</button>
+              <button type="button" className={this.state.button_lip_glossy ? 'buttonTrue' : 'buttonFalse'} id="lip-glossy" onClick={() => this.handleClickGlossy()}>Glossy</button>
 &emsp;
-              <button type="button" className={this.state.button_pink ? 'buttonTrue' : 'buttonFalse'} id="SkinTone-3" onClick={() => this.handleClickPink()}>Pink</button>
+              <button type="button" className={this.state.button_lip_none ? 'buttonTrue' : 'buttonFalse'} id="lip-none" onClick={() => this.handleClickFormNone()}>None</button>
 &emsp;
             </section>
         &emsp;

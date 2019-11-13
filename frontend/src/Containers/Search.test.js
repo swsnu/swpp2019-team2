@@ -108,10 +108,29 @@ describe('<Liplist />', () => {
     button.simulate('click');
     const button2 = component.find('#lip-tint');
     button2.simulate('click');
-    const button3 = component.find('#SkinTone-1');
+    const button3 = component.find('#lip-matte');
     button3.simulate('click');
     const button4 = component.find('#search_result');
     button4.simulate('click');
+    const wrapper = component.find('.spyLip');
+    expect(wrapper.length).toBe(2);
+  });
+  it('should render Lips_another_branch', () => {
+    const component = mount(lipList);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#lip-stick');
+    button2.simulate('click');
+    const button3 = component.find('#lip-gloss');
+    button3.simulate('click');
+    const button4 = component.find('#lip-balm');
+    button4.simulate('click');
+    const button5 = component.find('#lip-glossy');
+    button5.simulate('click');
+    const button6 = component.find('#lip-none');
+    button6.simulate('click');
+    const button7 = component.find('#search_result');
+    button7.simulate('click');
     const wrapper = component.find('.spyLip');
     expect(wrapper.length).toBe(2);
   });
@@ -120,7 +139,7 @@ describe('<Liplist />', () => {
     const button = component.find('#log-out-button');
     button.simulate('click');
     const wrapper = component.find('.spyLip');
-    expect(spyauthCheckState).toHaveBeenCalledTimes(3);
+    expect(spyauthCheckState).toHaveBeenCalledTimes(4);
   });
   it('should click mypage', () => {
     const component = mount(lipList);
@@ -179,7 +198,7 @@ describe('<Search />', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#Category_lip');
     button.simulate('click');
-    const button2 = component.find('#SkinTone-1');
+    const button2 = component.find('#lip-matte');
     button2.simulate('click');
     const button4 = component.find('#search_result');
     button4.simulate('click');
@@ -243,29 +262,29 @@ describe('<Search />', () => {
     button2.simulate('click');
     expect(component.state().button_lip_tint).toBe(true);
   });
+  it('should handle click_balm correctly', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#lip-balm');
+    button2.simulate('click');
+    expect(component.state().button_lip_balm).toBe(true);
+  });
   it('should handle click_tone1 correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#Category_face');
     button.simulate('click');
-    const button2 = component.find('#SkinTone-1');
+    const button2 = component.find('#SkinTypes-dry');
     button2.simulate('click');
-    expect(component.state().button_red).toBe(true);
+    expect(component.state().button_dry).toBe(true);
   });
   it('should handle click_tone2 correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#Category_face');
     button.simulate('click');
-    const button2 = component.find('#SkinTone-2');
+    const button2 = component.find('#SkinTypes-oily');
     button2.simulate('click');
-    expect(component.state().button_orange).toBe(true);
-  });
-  it('should handle click_tone3 correctly', () => {
-    const component = shallow(<Search.WrappedComponent />);
-    const button = component.find('#Category_face');
-    button.simulate('click');
-    const button2 = component.find('#SkinTone-3');
-    button2.simulate('click');
-    expect(component.state().button_pink).toBe(true);
+    expect(component.state().button_oily).toBe(true);
   });
   it('should handle click_high correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
@@ -287,9 +306,9 @@ describe('<Search />', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#Category_lip');
     button.simulate('click');
-    const button2 = component.find('#SkinTone-3');
+    const button2 = component.find('#lip-none');
     button2.simulate('click');
-    expect(component.state().button_pink).toBe(true);
+    expect(component.state().button_lip_none).toBe(true);
   });
   it('should handle click_low correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
@@ -309,7 +328,7 @@ describe('<Search />', () => {
     button.simulate('click');
     const button2 = component.find('#lip-tint');
     button2.simulate('click');
-    const button3 = component.find('#SkinTone-2');
+    const button3 = component.find('#lip-glossy');
     button3.simulate('click');
 
     expect(component.state().button_lip_tint).toBe(true);
