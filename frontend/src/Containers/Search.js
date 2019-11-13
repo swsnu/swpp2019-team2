@@ -178,7 +178,7 @@ class Search extends Component {
       if (this.state.button_lip) {
         if (this.state.button_lip_gloss || this.state.button_lip_stick
           || this.state.button_lip_tint || this.state.button_lip_balm) {
-          if ((this.state.button_lip_matte || this.state.button_lip_glossy 
+          if ((this.state.button_lip_matte || this.state.button_lip_glossy
             || this.state.button_lip_none)) {
             if (this.state.button_lip_stick) result = result.concat('category=stick&');
             if (this.state.button_lip_gloss) result = result.concat('category=gloss&');
