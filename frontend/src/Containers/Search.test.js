@@ -96,11 +96,17 @@ describe('<Liplist />', () => {
       </Provider>
     );
     spygetLips = jest.spyOn(actions, 'getLips')
-      .mockImplementation(() => { return dispatch => {}; });
+      .mockImplementation(() => {
+        return dispatch => {};
+      });
     spylogout = jest.spyOn(actions, 'logout')
-      .mockImplementation(() => { return dispatch => {}; });
+      .mockImplementation(() => {
+        return dispatch => {};
+      });
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
-      .mockImplementation(() => { return dispatch => {}; });
+      .mockImplementation(() => {
+        return dispatch => {};
+      });
   })   
   it('should render Lips', () => {
     const component = mount(lipList);
