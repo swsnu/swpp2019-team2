@@ -12,7 +12,7 @@ import { getMockStore } from '../Mocks/mocks';
 import Search from './Search';
 
 const stubSeletedUserT = {
-  Lips: [{
+  Lip: [{
     id: 1, name: 'test_name', price: 5000, category: '립스틱', brand: 1, color: 1,
   },
   {
@@ -69,12 +69,7 @@ jest.mock('../Components/LipForm', () => jest.fn((props) => (
   </div>
 )));
 const stubInitState = {
-  Lips: [{
-    id: 1, name: 'test_name', price: 5000, category: '립스틱', brand: 1, color: 1,
-  },
-  {
-    id: 2, name: 'test_name2', price: 6000, category: '틴트', brand: 1, color: 1,
-  }],
+  Lip: [],
   User: [],
   token: null,
   loading: false,
@@ -82,55 +77,76 @@ const stubInitState = {
 };
 describe('<Liplist />', () => {
   const history = createBrowserHistory();
-
-
+  let lipList;
   let spygetLips;
   let spylogout;
   let spyauthCheckState;
-  const mockStore = getMockStore(stubInitState);
+  const mockStore = getMockStore(stubSeletedUserT);
   beforeEach(() => {
+    lipList = (
+      <Provider store={mockStore}>
+        <Router history={history}>
+          <Switch>
+            <Route
+              path="/"
+              render={(props) => <Search {...props} />}
+            />
+          </Switch>
+        </Router>
+      </Provider>
+    );
     spygetLips = jest.spyOn(actions, 'getLips')
       .mockImplementation(() => (dispatch) => {});
     spylogout = jest.spyOn(actions, 'logout')
-      .mockImplementation();
+      .mockImplementation(() => (dispatch) => {});
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
   });
-  it('should render Articles', () => {
-    const component = mount(
-      <Provider store={mockStore}>
-        <Router history={history}>
-          <Switch>
-            <Route
-              path="/"
-              render={(props) => <Search title="Search" {...props} />}
-            />
-          </Switch>
-        </Router>
-      </Provider>,
-    );
+  it('should render Lips', () => {
+    const component = mount(lipList);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#lip-tint');
+    button2.simulate('click');
+    const button3 = component.find('#lip-matte');
+    button3.simulate('click');
+    const button4 = component.find('#search_result');
+    button4.simulate('click');
     const wrapper = component.find('.spyLip');
-    expect(wrapper.length).toBe(0);
-    expect(spygetLips).toBeCalledTimes(1);
+    expect(wrapper.length).toBe(2);
   });
-
-
-  it('should render logout', () => {
-    const component = mount(
-      <Provider store={mockStore}>
-        <Router history={history}>
-          <Switch>
-            <Route
-              path="/"
-              render={(props) => <Search title="Search" {...props} />}
-            />
-          </Switch>
-        </Router>
-      </Provider>,
-    );
-    const wrapper = component.find('#log-out-button');
-    expect(wrapper.length).toBe(1);
-    expect(spyauthCheckState).toBeCalledTimes(2);
+  it('should render Lips_another_branch', () => {
+    const component = mount(lipList);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#lip-stick');
+    button2.simulate('click');
+    const button3 = component.find('#lip-gloss');
+    button3.simulate('click');
+    const button4 = component.find('#lip-balm');
+    button4.simulate('click');
+    const button5 = component.find('#lip-glossy');
+    button5.simulate('click');
+    const button6 = component.find('#lip-none');
+    button6.simulate('click');
+    const button7 = component.find('#search_result');
+    button7.simulate('click');
+    const wrapper = component.find('.spyLip');
+    expect(wrapper.length).toBe(2);
+  });
+  it('should click logout', () => {
+    const component = mount(lipList);
+    const button = component.find('#log-out-button');
+    button.simulate('click');
+    const wrapper = component.find('.spyLip');
+    expect(spyauthCheckState).toHaveBeenCalledTimes(4);
+  });
+  it('should click mypage', () => {
+    const component = mount(lipList);
+    const button = component.find('#my-page-button');
+    button.simulate('click');
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(1);
   });
 });
 
@@ -158,18 +174,35 @@ describe('<Search />', () => {
     button.simulate('click');
     expect(component.state().back).toBe(true);
   });
-  it('should log out when clicking button', () => {
-    const mockLogout = jest.fn();
-    const mockonTryAutoSignup = jest.fn();
-    const component = shallow(
-      <Search.WrappedComponent
-        Logout={mockLogout}
-        onTryAutoSignup={mockonTryAutoSignup}
-      />,
-    );
-    const button = component.find('#log-out-button');
+  it('should search and not color', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_lip');
     button.simulate('click');
-    expect(mockonTryAutoSignup).toHaveBeenCalledTimes(1);
+    const button2 = component.find('#lip-tint');
+    button2.simulate('click');
+    const button4 = component.find('#search_result');
+    button4.simulate('click');
+    expect(component.state().search_init).toBe(true);
+  });
+  it('should search and not lip', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_face');
+    button.simulate('click');
+    const button2 = component.find('#SkinTypes-dry');
+    button2.simulate('click');
+    const button4 = component.find('#search_result');
+    button4.simulate('click');
+    expect(component.state().search_init).toBe(true);
+  });
+  it('should search and not lip_category', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#lip-matte');
+    button2.simulate('click');
+    const button4 = component.find('#search_result');
+    button4.simulate('click');
+    expect(component.state().search_init).toBe(true);
   });
   it('should handle click_facetag', () => {
     const component = shallow(<Search.WrappedComponent />);
@@ -229,21 +262,29 @@ describe('<Search />', () => {
     button2.simulate('click');
     expect(component.state().button_lip_tint).toBe(true);
   });
+  it('should handle click_balm correctly', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#lip-balm');
+    button2.simulate('click');
+    expect(component.state().button_lip_balm).toBe(true);
+  });
   it('should handle click_tone1 correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#Category_face');
     button.simulate('click');
-    const button2 = component.find('#SkinTone-1');
+    const button2 = component.find('#SkinTypes-dry');
     button2.simulate('click');
-    expect(component.state().button_tone1).toBe(true);
+    expect(component.state().button_dry).toBe(true);
   });
   it('should handle click_tone2 correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#Category_face');
     button.simulate('click');
-    const button2 = component.find('#SkinTone-2');
+    const button2 = component.find('#SkinTypes-oily');
     button2.simulate('click');
-    expect(component.state().button_tone2).toBe(true);
+    expect(component.state().button_oily).toBe(true);
   });
   it('should handle click_high correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
@@ -261,6 +302,14 @@ describe('<Search />', () => {
     button2.simulate('click');
     expect(component.state().button_medium).toBe(true);
   });
+  it('should handle click_pink correctly', () => {
+    const component = shallow(<Search.WrappedComponent />);
+    const button = component.find('#Category_lip');
+    button.simulate('click');
+    const button2 = component.find('#lip-none');
+    button2.simulate('click');
+    expect(component.state().button_lip_none).toBe(true);
+  });
   it('should handle click_low correctly', () => {
     const component = shallow(<Search.WrappedComponent />);
     const button = component.find('#Category_face');
@@ -268,16 +317,6 @@ describe('<Search />', () => {
     const button2 = component.find('#Coverage-low');
     button2.simulate('click');
     expect(component.state().button_low).toBe(true);
-  });
-  it('should not search if tag is chosed1', () => {
-    const component = shallow(<Search.WrappedComponent props={stubInitState} />);
-    const button = component.find('#Category_lip');
-    button.simulate('click');
-    const button2 = component.find('#lip-stick');
-    button2.simulate('click');
-    const button3 = component.find('#SkinTone-1');
-    button3.simulate('click');
-    expect(component.state().search_init).toBe(false);
   });
   it('should not search if tag is chosed2', () => {
     const history = createBrowserHistory();
@@ -289,7 +328,7 @@ describe('<Search />', () => {
     button.simulate('click');
     const button2 = component.find('#lip-tint');
     button2.simulate('click');
-    const button3 = component.find('#SkinTone-2');
+    const button3 = component.find('#lip-glossy');
     button3.simulate('click');
 
     expect(component.state().button_lip_tint).toBe(true);
@@ -311,65 +350,11 @@ describe('<Liplist />', () => {
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
   });
-  it('should render Articles', () => {
-    const component = mount(
-      <Provider store={mockStore}>
-        <Router history={history}>
-          <Switch>
-            <Route
-              path="/"
-              render={(props) => <Search title="Search" {...props} />}
-            />
-          </Switch>
-        </Router>
-      </Provider>,
-    );
-  });
   it('should not redirect stay when logged in', () => {
     const component = shallow(
       <Search.WrappedComponent isAuthenticated={stubStateC} />,
     );
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
-  });
-});
-
-
-describe('<Search/>', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-  it('should render and call getUser,getUsers', () => {
-    const spyGetUser = jest
-      .spyOn(actions, 'authCheckState')
-      .mockImplementation(() => (dispatch) => {});
-    const mockStore = getMockStore(stubStateC);
-
-    const component = mount(
-      <Provider store={mockStore}>
-        <BrowserRouter>
-          <Search selectedUser={stubSeletedUserT} />
-        </BrowserRouter>
-      </Provider>,
-    );
-  });
-  it('should call logoutHandler when clicking logout button', () => {
-    const spyGetUser = jest
-      .spyOn(actions, 'authCheckState')
-      .mockImplementation(() => (dispatch) => {});
-    const spyLogout = jest
-      .spyOn(actions, 'logout')
-      .mockImplementation(() => (dispatch) => {});
-    const mockUserLogOut = jest.fn();
-    const mockOnGetUser = jest.fn();
-    const component = shallow(
-      <Search.WrappedComponent
-        onTryAutoSignup={spyGetUser}
-        Logout={spyLogout}
-      />,
-    );
-    const button = component.find('#log-out-button');
-    button.simulate('click');
-    expect(spyLogout).toHaveBeenCalledTimes(1);
   });
 });
