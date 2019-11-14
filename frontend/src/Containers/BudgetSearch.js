@@ -6,6 +6,8 @@ import swal from 'sweetalert';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import arrow from '../image/화살표.png';
+import CheckBox from './CheckBox';
+
 
 class BudgetSearch extends Component {
   constructor(props) {
@@ -117,6 +119,11 @@ class BudgetSearch extends Component {
           <input type="text" name="item_val" readOnly value={itemNum} />
           <input type="range" id="item_num" value="0" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
         </div>
+        <CheckBox className="checkbox" />
+        <CheckBox className="checkbox" />
+        {itemNum > 2 && (<CheckBox className="checkbox" />)}
+        {itemNum > 3 && (<CheckBox className="checkbox" />)}
+        {itemNum > 4 && (<CheckBox className="checkbox" />)}
         <div className="Budget_input">
           <h4>{strBudget}</h4>
           <div className="input1">

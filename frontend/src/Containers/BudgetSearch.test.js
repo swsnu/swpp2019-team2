@@ -100,7 +100,21 @@ describe('<BudgetSearch />', () => {
     wrapper.simulate('click');
     expect(spyHistoryPush).toHaveBeenCalledWith('../main');
   });
-  it('should deal range input', () => { });
+  it('should deal range input', () => {
+    const component = shallow(
+      <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const inputBar = component.find('#item_num');
+    inputBar.simulate('change', { target: { value: 3 } });
+    let wrapper = component.find('.checkbox');
+    expect(wrapper.length).toBe(3);
+    inputBar.simulate('change', { target: { value: 4 } });
+    wrapper = component.find('.checkbox');
+    expect(wrapper.length).toBe(4);
+    inputBar.simulate('change', { target: { value: 5 } });
+    wrapper = component.find('.checkbox');
+    expect(wrapper.length).toBe(5);
+  });
   it('should not redirect stay when logged in', () => {
     const component = shallow(
       <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
