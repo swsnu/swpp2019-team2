@@ -13,6 +13,11 @@ class BudgetSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      find1: '',
+      find2: '',
+      find3: '',
+      find4: '',
+      find5: '',
       id: '',
       itemNum: 2,
       budgetRange: null,
@@ -45,10 +50,6 @@ class BudgetSearch extends Component {
     this.props.history.replace(`../mypage/${id}`);
   }
 
-  /* set_budget = (event) => {
-      this.setState({budget:event.target.value})
-      this.setState({flag_budget:true})
-  } */
   setItemNum = (event) => {
     this.setState({ itemNum: event.target.value });
   }
@@ -89,8 +90,31 @@ class BudgetSearch extends Component {
     this.props.history.replace('../main');
   }
 
+  findFirst(url) {
+    this.setState({ find1: url });
+  }
+
+  findSecond(url) {
+    this.setState({ find2: url });
+  }
+
+  findThird(url) {
+    this.setState({ find3: url });
+  }
+
+  findFourth(url) {
+    this.setState({ find4: url });
+  }
+
+  findFifth(url) {
+    this.setState({ find5: url });
+  }
+
+
   render() {
-    const { checked, id, itemNum } = this.state;
+    const {
+      checked, id, itemNum, find1, find2, find3, find4, find5,
+    } = this.state;
     const { isAuthenticated } = this.props;
     let redirect = null;
     if (!isAuthenticated) {
@@ -119,11 +143,16 @@ class BudgetSearch extends Component {
           <input type="text" name="item_val" readOnly value={itemNum} />
           <input type="range" id="item_num" value="0" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
         </div>
-        <CheckBox className="checkbox" />
-        <CheckBox className="checkbox" />
-        {itemNum > 2 && (<CheckBox className="checkbox" />)}
-        {itemNum > 3 && (<CheckBox className="checkbox" />)}
-        {itemNum > 4 && (<CheckBox className="checkbox" />)}
+        <h5>{find1}</h5>
+        <h5>{find2}</h5>
+        <h5>{find3}</h5>
+        <h5>{find4}</h5>
+        <h5>{find5}</h5>
+        <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
+        <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
+        {itemNum > 2 && (<CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />)}
+        {itemNum > 3 && (<CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />)}
+        {itemNum > 4 && (<CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />)}
         <div className="Budget_input">
           <h4>{strBudget}</h4>
           <div className="input1">

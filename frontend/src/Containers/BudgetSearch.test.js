@@ -115,6 +115,22 @@ describe('<BudgetSearch />', () => {
     wrapper = component.find('.checkbox');
     expect(wrapper.length).toBe(5);
   });
+  it('should call findUrl properly', () => {
+    const mockFindUrl = jest.fn();
+    const component = shallow(
+      <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const checkbox = component.find('#checkbox1');
+    checkbox.prop('findUrl')('url', mockFindUrl());
+    expect(mockFindUrl).toBeCalled();
+    const inputBar = component.find('#item_num');
+    for (let i = 2; i <= 5; i++) {
+      inputBar.simulate('change', { target: { value: i } });
+      const wrapper = component.find(`#checkbox${i}`);
+      wrapper.prop('findUrl')('url', mockFindUrl());
+      expect(mockFindUrl).toBeCalled();
+    }
+  });
   it('should not redirect stay when logged in', () => {
     const component = shallow(
       <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,

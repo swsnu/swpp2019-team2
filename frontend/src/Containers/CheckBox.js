@@ -11,11 +11,11 @@ const nodes = [
         label: 'SkinType',
         children: [
           {
-            value: '/Face/SkinType/Dry',
+            value: 1,
             label: 'Dry',
           },
           {
-            value: '/Face/SkinType/Oily',
+            value: 2,
             label: 'Oily',
           },
         ],
@@ -25,15 +25,15 @@ const nodes = [
         label: 'Coverage',
         children: [
           {
-            value: '/Face/Coverage/High',
+            value: 3,
             label: 'High',
           },
           {
-            value: '/Face/Coverage/Medium',
+            value: 4,
             label: 'Medium',
           },
           {
-            value: '/Face/Coverage/Low',
+            value: 5,
             label: 'Low',
           },
         ],
@@ -49,11 +49,11 @@ const nodes = [
         label: 'SkinType',
         children: [
           {
-            value: '/Skin/SkinType/Dry',
+            value: 6,
             label: 'Dry',
           },
           {
-            value: '/Skin/SkinType/Oily',
+            value: 7,
             label: 'Oily',
           },
         ],
@@ -63,15 +63,15 @@ const nodes = [
         label: 'Coverage',
         children: [
           {
-            value: '/Skin/Coverage/High',
+            value: 8,
             label: 'High',
           },
           {
-            value: '/Skin/Coverage/Medium',
+            value: 9,
             label: 'Medium',
           },
           {
-            value: '/Skin/Coverage/Low',
+            value: 10,
             label: 'Low',
           },
         ],
@@ -87,19 +87,19 @@ const nodes = [
         label: 'Category',
         children: [
           {
-            value: '/Lip/Category/LipStick',
+            value: 11,
             label: 'LipStick',
           },
           {
-            value: '/Lip/Category/LiGloss',
+            value: 12,
             label: 'LipGloss',
           },
           {
-            value: '/Lip/Category/Tint',
-            label: 'Tink',
+            value: 13,
+            label: 'Tint',
           },
           {
-            value: '/Lip/Category/LipBalm',
+            value: 14,
             label: 'LipBalm',
           },
         ],
@@ -109,15 +109,15 @@ const nodes = [
         label: 'Form',
         children: [
           {
-            value: '/Lip/Form/Matte',
+            value: 15,
             label: 'Matte',
           },
           {
-            value: '/Lip/Form/Glossy',
+            value: 16,
             label: 'Glossy',
           },
           {
-            value: '/Lip/Form/None',
+            value: 17,
             label: 'None',
           },
         ],
@@ -131,22 +131,17 @@ class CheckBox extends React.Component {
   constructor(props) {
     super(props);
     this.onCheck = this.onCheck.bind(this);
-    this.onClick = this.onClick.bind(this);
     this.onExpand = this.onExpand.bind(this);
     this.state = {
       checked: [],
       expanded: [],
-      clicked: {},
     };
   }
 
-
   onCheck(checked) {
+    const { findUrl } = this.props;
+    findUrl(checked);
     this.setState({ checked });
-  }
-
-  onClick(clicked) {
-    this.setState({ clicked });
   }
 
   onExpand(expanded) {
@@ -169,9 +164,6 @@ class CheckBox extends React.Component {
           onClick={this.onClick}
           onExpand={this.onExpand}
         />
-        <div className="clickable-labels-info">
-          <strong>Checked Node</strong>: {checked}
-        </div>
       </div>
     );
   }
