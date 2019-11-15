@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import arrow from '../image/화살표.png';
 import CheckBox from './CheckBox';
-
+import ItemDisplay from './ItemDisplay';
 
 class BudgetSearch extends Component {
   constructor(props) {
@@ -19,7 +19,14 @@ class BudgetSearch extends Component {
       find4: '',
       find5: '',
       id: '',
-      itemNum: 2,
+      list1: [{ name: 'a1', price: 2500 }, { name: 'a2', price: 3500 }, { name: 'a3', price: 4500 }, { name: 'a4', price: 5500 }, { name: 'a5', price: 6500 }, { name: 'a6', price: 7500 }, { name: 'a7', price: 8500 }, { name: 'a8', price: 9500 }, { name: 'a9', price: 10500 }, { name: 'a10', price: 11500 }],
+      list2: [{ name: 'b1', price: 2000 }, { name: 'b2', price: 4000 }, { name: 'b3', price: 6000 }, { name: 'b4', price: 8000 }, { name: 'b5', price: 10000 }, { name: 'b6', price: 12000 }, { name: 'b7', price: 14000 }, { name: 'b8', price: 16000 }, { name: 'b9', price: 18000 }, { name: 'b10', price: 20000 }],
+      list3: [{ name: 'c1', price: 3700 }, { name: 'c2', price: 4400 }, { name: 'c3', price: 5100 }, { name: 'c4', price: 5800 }, { name: 'c5', price: 6500 }, { name: 'c6', price: 7200 }, { name: 'c7', price: 7900 }, { name: 'c8', price: 8600 }, { name: 'c9', price: 9300 }, { name: 'c10', price: 10000 }],
+      list4: [{ name: 'd1', price: 12700 }, { name: 'd2', price: 17550 }, { name: 'd3', price: 22400 }, { name: 'd4', price: 27250 }, { name: 'd5', price: 32100 }, { name: 'd6', price: 36950 }, { name: 'd7', price: 41800 }, { name: 'd8', price: 46650 }, { name: 'd9', price: 51500 }, { name: 'd10', price: 56350 }],
+      list5: [{ name: 'e1', price: 8400 }, { name: 'e2', price: 10800 }, { name: 'e3', price: 13200 }, { name: 'e4', price: 15600 }, { name: 'e5', price: 18000 }, { name: 'e6', price: 20400 }, { name: 'e7', price: 22800 }, { name: 'e8', price: 25200 }, { name: 'e9', price: 27600 }, { name: 'e10', price: 30000 }],
+      combi: [],
+      show: false,
+      itemNum: 4,
       budgetRange: null,
       checked: [
         false,
@@ -58,7 +65,7 @@ class BudgetSearch extends Component {
     if (this.state.budgetRange === null) {
       swal('Please set the budget range');
     } else {
-      swal('will be handled');
+      this.handleClick();
     }
   }
 
@@ -110,10 +117,104 @@ class BudgetSearch extends Component {
     this.setState({ find5: url });
   }
 
+  handleClick() {
+    const {
+      budgetRange, list1, list2, list3, list4, list5, itemNum,
+    } = this.state;
+    const minBudget = budgetRange[0];
+    const maxBudget = budgetRange[1];
+    const tmp1 = list1;
+    const tmp2 = list2;
+    const tmp3 = list3;
+    const tmp4 = list4;
+    const tmp5 = list5;
+    const answer = [];
+    for (let i = 0; i < tmp1.length; i++) {
+      const comb = [];
+      let sum = 0;
+      if (tmp1[i].price > maxBudget) break;
+      else {
+        comb.push(tmp1[i]);
+        sum += tmp1[i].price;
+        for (let j = 0; j < tmp2.length; j++) {
+          if (sum + tmp2[j].price > maxBudget) break;
+          else {
+            comb.push(tmp2[j]);
+            sum += tmp2[j].price;
+            if (itemNum === 2) {
+              if (sum >= minBudget) {
+                answer.push(comb.slice());
+              }
+              comb.pop();
+              sum -= tmp2[j].price;
+              // eslint-disable-next-line no-continue
+              continue;
+            }
+            for (let k = 0; k < tmp3.length; k++) {
+              if (sum + tmp3[k].price > maxBudget) break;
+              else {
+                comb.push(tmp3[k]);
+                sum += tmp3[k].price;
+                if (itemNum === 3) {
+                  if (sum >= minBudget) {
+                    answer.push(comb.slice());
+                  }
+                  comb.pop();
+                  sum -= tmp3[k].price;
+                  // eslint-disable-next-line no-continue
+                  continue;
+                }
+                for (let l = 0; l < tmp4.length; l++) {
+                  if (sum + tmp4[l].price > maxBudget) break;
+                  else {
+                    comb.push(tmp4[l]);
+                    sum += tmp4[l].price;
+                    if (itemNum === 4) {
+                      if (sum >= minBudget) {
+                        answer.push(comb.slice());
+                      }
+                      comb.pop();
+                      sum -= tmp4[l].price;
+                      // eslint-disable-next-line no-continue
+                      continue;
+                    }
+                    for (let m = 0; m < tmp5.length; m++) {
+                      if (sum + tmp5[m].price > maxBudget) break;
+                      else {
+                        comb.push(tmp5[m]);
+                        sum += tmp5[m].price;
+                        if (itemNum === 5) {
+                          if (sum >= minBudget) {
+                            answer.push(comb.slice());
+                          }
+                          comb.pop();
+                          sum -= tmp5[m];
+                          // eslint-disable-next-line no-continue
+                          continue;
+                        }
+                      }
+                    }
+                  }
+                }
+                comb.pop();
+                sum -= tmp3[k].price;
+              }
+            }
+
+            comb.pop();
+            sum -= tmp2[j].price;
+          }
+        }
+      }
+    }
+
+    this.setState({ combi: answer });
+    this.setState({ show: true });
+  }
 
   render() {
     const {
-      checked, id, itemNum, find1, find2, find3, find4, find5,
+      checked, id, itemNum, find1, find2, find3, find4, find5, show, combi,
     } = this.state;
     const { isAuthenticated } = this.props;
     let redirect = null;
@@ -141,7 +242,7 @@ class BudgetSearch extends Component {
         <div className="item_input">
           <h4>{strNumItems}</h4>
           <input type="text" name="item_val" readOnly value={itemNum} />
-          <input type="range" id="item_num" value="0" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
+          <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
         </div>
         <h5>{find1}</h5>
         <h5>{find2}</h5>
@@ -190,7 +291,11 @@ class BudgetSearch extends Component {
           <div className="button">
             <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()}>Combine Cosmetics</button>
           </div>
+          <div>
+            <button type="button" id="reset-result" onClick={() => this.setState({ combi: [] })}> 초기화 </button>
+          </div>
         </div>
+        {show && (<ItemDisplay combinations={combi} />)}
       </div>
 
     );
