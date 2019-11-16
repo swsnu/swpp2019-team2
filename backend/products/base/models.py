@@ -49,6 +49,7 @@ class BaseOption(models.Model):
         (NONE, "Other type")
     )
     color = models.CharField(
+        default="NO",
         max_length=2,
         choices=COLOR
     )
