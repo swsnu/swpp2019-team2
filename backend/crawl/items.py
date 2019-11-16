@@ -10,6 +10,17 @@ import scrapy
 from scrapy_djangoitem import DjangoItem
 from products.lip.models import Lip, LipOption
 from brand.models import Brand as BrandModel
+from products.base.models import Base, BaseOption
+#pylint: disable=ungrouped-imports
+
+class BaseProduct(DjangoItem):
+    """BaseProduct Scrapy Item"""
+    django_model = Base
+    crawled = scrapy.Field()
+class BaseColor(DjangoItem):
+    """BaseColor Scrapy Item"""
+    django_model = BaseOption
+    crawled = scrapy.Field()
 
 class LipColor(DjangoItem):
     """LipColor Scrapy Item"""

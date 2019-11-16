@@ -38,6 +38,25 @@ class Base(models.Model):
 
 class BaseOption(models.Model):
     """ option of django base model """
+    LIGHT = "LT"
+    MIDDLE = "MD"
+    DARK = "DK"
+    NONE = "NO"
+    COLOR = (
+        (LIGHT, "under 21"),
+        (MIDDLE, "21 ~ 23"),
+        (DARK, "over 23"),
+        (NONE, "Other type")
+    )
+    color = models.CharField(
+        max_length=2,
+        choices=COLOR
+    )
+    sub_color = models.CharField(
+        default=None,
+        null=True,
+        max_length=30
+        )
     color_hex = models.CharField(max_length=10)
     optionName = models.CharField(max_length=30)
     product = models.ForeignKey(
