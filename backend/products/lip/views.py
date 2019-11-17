@@ -1,6 +1,6 @@
 """ TODO : DOCSTRING"""
 from urllib.parse import urlparse, parse_qs
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse, HttpResponseNotAllowed
 from .models import Lip, LipOption
 from .serializers import LipSerializer
 
@@ -34,4 +34,4 @@ def search(request, option):
         lipserializer = LipSerializer(lip, many=True, context=color_option)
         return JsonResponse(lipserializer.data, safe=False)
 
-    return HttpResponse("hi!!!")
+    return HttpResponseNotAllowed(['GET'])
