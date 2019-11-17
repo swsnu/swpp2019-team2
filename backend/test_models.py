@@ -20,12 +20,12 @@ class ItemTest(unittest.TestCase):
         self.assertEqual(str(o), str(i)+" "+ o.optionName)
     
     def test_base_class(self):
-        i = Lip(name="tmp_name")
+        i = Base(name="tmp_name")
         self.assertEqual(str(i), i.name)
     
     def test_baseoption_class(self):
-        i = Lip(name="tmp_base")
-        o = LipOption(product=i, optionName="tmp_option")
+        i = Base(name="tmp_base")
+        o = BaseOption(product=i, optionName="tmp_option")
         self.assertEqual(str(o), str(i)+" "+ o.optionName)
 
     def test_eye_class(self):
