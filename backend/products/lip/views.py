@@ -1,7 +1,7 @@
 """ TODO : DOCSTRING"""
-from django.http import HttpResponse
+#from django.http import HttpResponse
 
 
-def search(request):
-    """ TODO : DOCSTRING"""
-    return HttpResponse("Lip")
+#def search(request):
+#    """ TODO : DOCSTRING"""
+#    return HttpResponse("Lip")

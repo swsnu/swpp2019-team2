@@ -170,5 +170,4 @@ def cal_color_tag(title, hexa):
     if title == 'lip':
         item_rgb = hex_into_rgb(hexa)
         return min_len(item_rgb)
-    else:
-        return -1
+    return -1

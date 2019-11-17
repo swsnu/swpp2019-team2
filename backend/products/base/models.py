@@ -1,3 +1,4 @@
+""" Django Base Product Model """
 from django.db import models
 from brand import models as brand_models
 # Create your models here.
