@@ -7,6 +7,7 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 from products.lip.models import Lip, LipOption
+from products.base.models import Base, BaseOption
 from brand.models import Brand
 
 
@@ -19,12 +20,23 @@ class CrawlPipeline(object):
         """ processing item depends on its type """
         if item["crawled"] == "brand":
             self.process_brand(item, spider)
-        elif item["crawled"] == "product":
+        elif item["crawled"] == "lip":
             if len(Lip.objects.filter(name=item["name"])) == 0:
                 item.save()
                 return item
         elif item["crawled"] == "lip_option":
             if len(LipOption.objects.filter(
+                    optionName=item["optionName"]
+                        ).filter(
+                            product=item["product"])) == 0:
+                item.save()
+                return item
+        elif item["crawled"] == "base":
+            if len(Base.objects.filter(name=item["name"])) == 0:
+                item.save()
+                return item
+        elif item["crawled"] == "base_option":
+            if len(BaseOption.objects.filter(
                     optionName=item["optionName"]
                         ).filter(
                             product=item["product"])) == 0:
