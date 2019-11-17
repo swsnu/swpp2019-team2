@@ -132,9 +132,11 @@ class CheckBox extends React.Component {
     super(props);
     this.onCheck = this.onCheck.bind(this);
     this.onExpand = this.onExpand.bind(this);
+    this.onClick = this.onClick.bind(this);
     this.state = {
       checked: [],
       expanded: [],
+      clicked:{},
     };
   }
 
@@ -142,6 +144,14 @@ class CheckBox extends React.Component {
     const { findUrl } = this.props;
     findUrl(checked);
     this.setState({ checked });
+  }
+
+  onClick(clicked){
+    if(clicked.isLeaf) {
+      const { checked } = this.state;
+      checked.push(clicked.value);
+    }
+    this.setState({ clicked });
   }
 
   onExpand(expanded) {
