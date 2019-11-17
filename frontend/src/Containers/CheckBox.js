@@ -136,7 +136,7 @@ class CheckBox extends React.Component {
     this.state = {
       checked: [],
       expanded: [],
-      clicked:{},
+      clicked: {},
     };
   }
 
@@ -146,8 +146,8 @@ class CheckBox extends React.Component {
     this.setState({ checked });
   }
 
-  onClick(clicked){
-    if(clicked.isLeaf) {
+  onClick(clicked) {
+    if (clicked.isLeaf) {
       const { checked } = this.state;
       checked.push(clicked.value);
     }
