@@ -18,6 +18,6 @@ from .lip import views as lip
 from .base import views as base
 
 urlpatterns = [
-    #path('lip/', lip.search, name='lip'),
+    path('lip/<option>', lip.search, name='lip'),
     #path('base/', base.search, name='base')
 ]
