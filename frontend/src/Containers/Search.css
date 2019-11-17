@@ -103,7 +103,6 @@
     border-bottom-right-radius: 10px;
   }
   
-.Sub_category Button:hover,
 .Sub_category Button:active {
     color:white;
     background-color:#9b45a7;
