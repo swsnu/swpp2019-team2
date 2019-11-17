@@ -58,7 +58,7 @@ class BudgetSearch extends Component {
   }
 
   setItemNum = (event) => {
-    this.setState({ itemNum: event.target.value });
+    this.setState({ itemNum: parseInt(event.target.value, 10) });
   }
 
   confirmHandler = () => {
