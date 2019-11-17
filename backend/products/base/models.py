@@ -58,7 +58,7 @@ class BaseOption(models.Model):
         default=None,
         null=True,
         max_length=30
-        )
+    )
     color_hex = models.CharField(max_length=10)
     optionName = models.CharField(max_length=30)
     product = models.ForeignKey(

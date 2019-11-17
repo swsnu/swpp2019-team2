@@ -13,6 +13,7 @@ from products.base.models import Base as Base_db
 from .color_tag import cal_color_tag
 from .spider_helper import translate_category
 
+
 class AritaumSpider(scrapy.Spider):
     """ Real Spider extends scrapy.Spider """
     name = 'aritaum'
@@ -30,10 +31,10 @@ class AritaumSpider(scrapy.Spider):
         urls = [
             {
                 title: "lip",
-                link:"https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2200"
+                link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2200"
             }, {
                 title: "base",
-                link:"https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2100"
+                link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2100"
             }]
         for url in urls:
             self.browser.get(url[link])
@@ -52,7 +53,7 @@ class AritaumSpider(scrapy.Spider):
                 "brand_name": brand_name,
                 "product": product_list,
                 "title": response.meta["title"],
-                },
+            },
             callback=self.parse_brand,
             dont_filter=True)
 
@@ -96,7 +97,7 @@ class AritaumSpider(scrapy.Spider):
             brand = Brand_db.objects.filter(name=brand_name)
             thumb_url = item.find_element_by_css_selector(
                 "div.product-thumb img").get_property("src")
-            #case로 나누기
+            # case로 나누기
             if title == 'lip':
                 yield LipProduct(
                     name=product_name,
@@ -105,7 +106,7 @@ class AritaumSpider(scrapy.Spider):
                     category=category,
                     img_url=thumb_url,
                     crawled=title
-                    )
+                )
             elif title == 'base':
                 yield BaseProduct(
                     name=product_name,
@@ -131,9 +132,9 @@ class AritaumSpider(scrapy.Spider):
                     yield scrapy.Request(
                         url=color_url,
                         meta={
-                            "title":title,
-                            "product":product_name,
-                            "color":color_name
+                            "title": title,
+                            "product": product_name,
+                            "color": color_name
                         },
                         callback=self.save_color_by_url,
                         dont_filter=True
@@ -177,7 +178,7 @@ class AritaumSpider(scrapy.Spider):
         img = Image.open(requests.get(url, stream=True).raw)
         img = img.resize((30, 30))
         color_hex = self.getcolors(img, url)
-        color_tuple = cal_color_tag(title, color_hex[1:]) # TODO : 여러 모델 다루도록
+        color_tuple = cal_color_tag(title, color_hex[1:])  # TODO : 여러 모델 다루도록
         if title == 'lip':
             product = Lip_db.objects.filter(name=name)[0]
             yield LipColor(
@@ -222,21 +223,19 @@ class AritaumSpider(scrapy.Spider):
         count = 0
         for pixel in colors:
             red, green, blue = pixel[1]
-            if (red+green+blue)/3 >= 250:
+            if (red + green + blue) / 3 >= 250:
                 count += pixel[0]
                 continue
-            r_total += pixel[0]*red
-            g_total += pixel[0]*green
-            b_total += pixel[0]*blue
+            r_total += pixel[0] * red
+            g_total += pixel[0] * green
+            b_total += pixel[0] * blue
         try:
-            r_sum = int(r_total/(width*height - count))
-            g_sum = int(g_total/(width*height - count))
-            b_sum = int(b_total/(width*height - count))
+            r_sum = int(r_total / (width * height - count))
+            g_sum = int(g_total / (width * height - count))
+            b_sum = int(b_total / (width * height - count))
             return webcolors.rgb_to_hex((r_sum, g_sum, b_sum))
         except ZeroDivisionError:
             print(url)
-
-
 
     def go_next(self, response):
         """ click next button on page """
