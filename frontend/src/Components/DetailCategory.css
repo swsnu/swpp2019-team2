@@ -1,0 +1,12 @@
+div.detail-category {
+    display: inline-flex;
+}
+
+label.selectionValue {
+    display: block;
+    padding : 1px;
+}
+
+div.detail-sub-category {
+    margin: 10px;
+}
