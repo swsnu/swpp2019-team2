@@ -34,7 +34,7 @@ const ItemShow = ({ combination }) => {
 const ItemDisplay = ({ combinations }) => {
   return (
     <div>
-      {combinations.map((c) => (<ItemShow combination={c} key={c[0].name + c[1].name} />))}
+      {combinations.map((c) => (<ItemShow className="ItemShow" combination={c} key={c[0].name + c[1].name} />))}
     </div>
   );
 };

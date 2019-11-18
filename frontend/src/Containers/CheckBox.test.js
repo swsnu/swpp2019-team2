@@ -25,4 +25,18 @@ describe('<CheckBox />', () => {
     wrapper.prop('onExpand')('expanded', mockOnExpand());
     expect(mockOnExpand).toHaveBeenCalledTimes(1);
   });
+  it('shoudl call onClick for leaf node', () => {
+    const mockOnClick = jest.fn();
+    const component = shallow(<CheckBox />);
+    const wrapper = component.find('#CheckboxTree');
+    wrapper.prop('onClick')({ value: 'v', isLeaf: true }, mockOnClick());
+    expect(mockOnClick).toHaveBeenCalledTimes(1);
+  });
+  it('shoudl call onClick for non-leaf node', () => {
+    const mockOnClick = jest.fn();
+    const component = shallow(<CheckBox />);
+    const wrapper = component.find('#CheckboxTree');
+    wrapper.prop('onClick')({ value: 'v', isLeaf: false }, mockOnClick());
+    expect(mockOnClick).toHaveBeenCalledTimes(1);
+  });
 });

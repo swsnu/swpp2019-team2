@@ -12,7 +12,7 @@ import ItemDisplay from './ItemDisplay';
 
 const options = [
   { value: 0, label: '0원 ~ 5000원' }, // 삭제가능
-  { value: 1, label: '5000원 ~10000원' },
+  { value: 1, label: '5000원 ~10000' },
   { value: 2, label: '10000원 ~ 15000원' },
   { value: 3, label: '15000원 ~ 20000원' },
   { value: 4, label: '20000원 ~ 25000원' },
@@ -171,15 +171,13 @@ class BudgetSearch extends Component {
                       else {
                         comb.push(tmp5[m]);
                         sum += tmp5[m].price;
-                        if (itemNum === 5) {
-                          if (sum >= minBudget) {
-                            answer.push(comb.slice());
-                          }
-                          comb.pop();
-                          sum -= tmp5[m];
-                          // eslint-disable-next-line no-continue
-                          continue;
+                        if (sum >= minBudget) {
+                          answer.push(comb.slice());
                         }
+                        comb.pop();
+                        sum -= tmp5[m];
+                        // eslint-disable-next-line no-continue
+                        continue;
                       }
                     }
                   }
@@ -229,6 +227,7 @@ class BudgetSearch extends Component {
         </div>
         <h4>{strBudget}</h4>
         <Select
+          id="select"
           isClearable
           placeholder="select budget..."
           options={options}
