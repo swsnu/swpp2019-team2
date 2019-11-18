@@ -39,7 +39,7 @@ matrix:
     - cd backend
     - python --version
     - python -m django --version
-    - pylint */models.py */views.py */tests.py */*/views.py */*/models.py
+    - pylint */models.py */views.py */tests.py */*/views.py */*/models.py */*/serializers.py
     - pylint crawl/spiders/* crawl/pipelines.py
     - coverage run manage.py test
     - coverage xml

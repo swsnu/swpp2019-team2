@@ -3,6 +3,7 @@ from django.db import models
 from brand import models as brand_models
 # Create your models here.
 
+
 class CommonProduct(models.Model):
     """ abstract product class"""
     name = models.CharField(max_length=20)
@@ -18,6 +19,7 @@ class CommonProduct(models.Model):
 
     class Meta:
         abstract = True
+
 
 class Eyeshadow(CommonProduct):
     """django eyeshadow model"""
@@ -40,8 +42,10 @@ class Eyeliner(CommonProduct):
         default=None
     )
 
+
 class Eyebrow(CommonProduct):
     """django eyebrow model"""
+
 
 class Mascara(CommonProduct):
     """django mascara model"""
@@ -81,13 +85,16 @@ class EyeColorOption(models.Model):
     class Meta:
         abstract = True
 
+
 class MascaraOption(EyeColorOption):
     """ mascara color option"""
     product = models.ForeignKey(Mascara, on_delete=models.CASCADE)
 
+
 class EyebrowOption(EyeColorOption):
     """ eyebrow color option"""
     product = models.ForeignKey(Eyebrow, on_delete=models.CASCADE)
+
 
 class EyelinerOption(EyeColorOption):
     """ eyeliner color option"""

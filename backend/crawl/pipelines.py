@@ -13,6 +13,7 @@ from brand.models import Brand
 
 class CrawlPipeline(object):
     """ basic pipeline class """
+
     def __init__(self):
         self.ids_seen = set()
 
@@ -27,8 +28,8 @@ class CrawlPipeline(object):
         elif item["crawled"] == "lip_option":
             if len(LipOption.objects.filter(
                     optionName=item["optionName"]
-                        ).filter(
-                            product=item["product"])) == 0:
+                ).filter(
+                    product=item["product"])) == 0:
                 item.save()
                 return item
         elif item["crawled"] == "base":
@@ -38,8 +39,8 @@ class CrawlPipeline(object):
         elif item["crawled"] == "base_option":
             if len(BaseOption.objects.filter(
                     optionName=item["optionName"]
-                        ).filter(
-                            product=item["product"])) == 0:
+                ).filter(
+                    product=item["product"])) == 0:
                 item.save()
                 return item
         return item

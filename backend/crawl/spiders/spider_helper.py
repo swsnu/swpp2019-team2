@@ -12,11 +12,11 @@ def translate_category(raw_text, category):
         "립글로스": "S"
     }, 'base': {
         "쿠션": "CU",
-        "파운데이션" : "F",
+        "파운데이션": "F",
         "파우더/팩트": "P",
         "프라이머/베이스": "PR",
         "비비/씨씨크림": "B",
-        "컨실러" :"C"
+        "컨실러": "C"
     }}
     size = trim_size[category]
     category_ko = raw_text[size:]
