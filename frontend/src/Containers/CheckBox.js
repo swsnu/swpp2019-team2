@@ -191,7 +191,6 @@ class CheckBox extends React.Component {
           onCheck={(chk) => this.onCheck(chk)}
           onExpand={(exp) => this.onExpand(exp)}
         />
-        <h2>checked node: {checked}</h2>
       </div>
     );
   }
