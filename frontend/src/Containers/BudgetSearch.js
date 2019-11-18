@@ -232,7 +232,6 @@ class BudgetSearch extends Component {
           placeholder="select budget..."
           options={options}
           onChange={(selected) => this.handleChange(selected)}
-          styles={{ width: '70%' }}
         />
         <div className="item_input">
           <h4>{strNumItems}</h4>
@@ -244,11 +243,13 @@ class BudgetSearch extends Component {
         <h5>{find3}</h5>
         <h5>{find4}</h5>
         <h5>{find5}</h5>
-        <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
-        <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
-        {itemNum > 2 && (<CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />)}
-        {itemNum > 3 && (<CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />)}
-        {itemNum > 4 && (<CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />)}
+        <ul>
+          <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
+          <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
+          {itemNum > 2 && (<CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />)}
+          {itemNum > 3 && (<CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />)}
+          {itemNum > 4 && (<CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />)}
+        </ul>
         <div className="button">
           <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()}>Combine Cosmetics</button>
         </div>
