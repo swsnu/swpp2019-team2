@@ -1,5 +1,5 @@
 export {
-  getLips,
+  getProducts,
   logout,
   authLogin,
   authSignup,

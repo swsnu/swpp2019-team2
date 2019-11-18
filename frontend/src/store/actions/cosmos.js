@@ -2,9 +2,9 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 
-export const getLips_ = (Lip) => ({ type: actionTypes.GET_LIP, Lip });
-export const getLips = (searchResult) => (dispatch) => axios.get(`/api/lip/${searchResult}`)
-  .then((res) => dispatch(getLips_(res.data)));
+export const getProducts_ = (result) => ({ type: actionTypes.GET_PRODUCT, result });
+export const getProducts = (searchQuery) => (dispatch) => axios.get(`/api/${searchQuery}`)
+  .then((res) => dispatch(getProducts_(res.data)));
 
 
 export const authStart = () => ({

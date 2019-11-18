@@ -12,7 +12,6 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      product_len: 0,
       selection: null,
     };
   }
@@ -37,7 +36,24 @@ class Search extends Component {
   render() {
     let changePage = '';
     let backLogin = '';
-
+    const { selection } = this.state;
+    const { searchResult } = this.props;
+    const searchedProduct = searchResult.map((res) => {
+      if (selection === 'lip') {
+        return (
+          <LipForm
+            key={res.id}
+            imgUrl={res.img_url}
+            name={res.name}
+            price={res.price}
+            category={res.category}
+            form={res.form}
+            brand={res.brand}
+          />
+        );
+      }
+      return null;
+    });
     if (!this.props.isAuthenticated) {
       changePage = <Redirect to="/login" />;
     }
@@ -47,15 +63,17 @@ class Search extends Component {
     }
 
     const click = (e) => {
-      const { selection } = this.state;
       if (selection !== e.target.id) this.setState({ selection: e.target.id });
     };
 
     const search = () => {
-      
-    }
+      const checked = document.querySelectorAll(`div.detail-category#${selection} input:checked`);
+      let queryStr = `${selection}/`;
+      checked.forEach((box) => { queryStr = queryStr.concat(box.id); });
+      const { onGetProduct } = this.props;
+      onGetProduct(queryStr);
+    };
 
-    const { selection } = this.state;
 
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} />;
@@ -85,21 +103,18 @@ class Search extends Component {
           {lip}
           {base}
           {eye}
-          <div><button type="button" className="searchProduct" onClick={search}> Search </button></div>
-          <div className="Result">
-               Result Will be inserted Here
-          </div>
+          <div><button type="button" className="searchProduct" onClick={() => search()}> Search </button></div>
+          <ul className="Result">
+            {searchedProduct}
+          </ul>
         </div>
       </div>
-
-
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-
-  storedLips: state.cosmos.Lip,
+  searchResult: state.cosmos.result,
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
@@ -108,7 +123,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 
-  onGetLip: (result) => dispatch(actionCreators.getLips(result)),
+  onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
 
