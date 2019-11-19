@@ -49,6 +49,7 @@ class Search extends Component {
             category={res.category}
             form={res.form}
             brand={res.brand}
+            colors={res.color}
           />
         );
       }
