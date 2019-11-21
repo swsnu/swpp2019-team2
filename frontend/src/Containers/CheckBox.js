@@ -1,7 +1,12 @@
 import React from 'react';
 import CheckboxTree from 'react-checkbox-tree';
 import Select from 'react-select';
-
+import 'react-checkbox-tree/lib/react-checkbox-tree.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCheckSquare, faSquare, faFolder, faFolderOpen,
+  faFile, faChevronRight, faChevronDown, faPlusSquare, faMinusSquare,
+} from '@fortawesome/free-solid-svg-icons';
 
 const selectOptions = [
   { value: 0, label: 'Face' },
@@ -15,11 +20,11 @@ const faceNode = [
     label: 'SkinType',
     children: [
       {
-        value: 1,
+        value: 'Alpha',
         label: 'Dry',
       },
       {
-        value: 2,
+        value: 'Beta',
         label: 'Oily',
       },
     ],
@@ -126,17 +131,26 @@ const lipNode = [
 class CheckBox extends React.Component {
   constructor(props) {
     super(props);
+    this.onCheck = this.onCheck.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onExpand = this.onExpand.bind(this);
+
     this.state = {
       checked: [],
       expanded: [],
+      clicked: {},
       selected: 0,
     };
   }
 
-  onCheck = (checked) => {
+  onCheck(checked) {
     const { findUrl } = this.props;
     findUrl(checked);
     this.setState({ checked });
+  }
+
+  onClick(clicked) {
+    this.setState({ clicked });
   }
 
   onExpand = (expanded) => {
@@ -152,7 +166,7 @@ class CheckBox extends React.Component {
 
   render() {
     const { checked, expanded, selected } = this.state;
-    let node = null;
+    let node = faceNode;
     switch (selected) {
       case 0: {
         node = faceNode;
@@ -181,19 +195,32 @@ class CheckBox extends React.Component {
           defaultValue={selectOptions[0]}
         />
         <CheckboxTree
-          id="CheckboxTree"
+          className="CheckboxTree"
           checked={checked}
           expanded={expanded}
           nodes={node}
           expandOnClick
           onlyLeafCheckboxes
-          onClick={() => { }}
-          onCheck={(chk) => this.onCheck(chk)}
+          onClick={this.onClick}
+          onCheck={this.onCheck}
           onExpand={(exp) => this.onExpand(exp)}
+          icons={{
+            check: <FontAwesomeIcon className="rct-icon rct-icon-check" icon={faCheckSquare} />,
+            uncheck: <FontAwesomeIcon className="rct-icon rct-icon-uncheck" icon={faSquare} />,
+            halfCheck: <FontAwesomeIcon className="rct-icon rct-icon-half-check" icon={faCheckSquare} />,
+            expandClose: <FontAwesomeIcon className="rct-icon rct-icon-expand-close" icon={faChevronRight} />,
+            expandOpen: <FontAwesomeIcon className="rct-icon rct-icon-expand-open" icon={faChevronDown} />,
+            expandAll: <FontAwesomeIcon className="rct-icon rct-icon-expand-all" icon={faPlusSquare} />,
+            collapseAll: <FontAwesomeIcon className="rct-icon rct-icon-collapse-all" icon={faMinusSquare} />,
+            parentClose: <FontAwesomeIcon className="rct-icon rct-icon-parent-close" icon={faFolder} />,
+            parentOpen: <FontAwesomeIcon className="rct-icon rct-icon-parent-open" icon={faFolderOpen} />,
+            leaf: <FontAwesomeIcon className="rct-icon rct-icon-leaf-close" icon={faFile} />,
+          }}
         />
       </div>
     );
   }
 }
-
+Select.displayName = 'Select';
+CheckboxTree.displayName = 'CheckboxTree';
 export default CheckBox;

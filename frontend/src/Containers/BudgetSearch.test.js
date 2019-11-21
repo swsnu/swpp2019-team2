@@ -188,6 +188,10 @@ describe('<BudgetSearch />', () => {
       button.prop('onClick')(mockConfirmHandler());
       expect(mockConfirmHandler).toBeCalled();
     }
+    wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
+    inputBar.simulate('change', { target: { value: 2 } });
+    button.prop('onClick')(mockConfirmHandler());
+    expect(mockConfirmHandler).toBeCalled();
   });
 
   it('should call set_itemnum', () => {
