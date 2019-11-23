@@ -8,6 +8,7 @@ const initialState = {
   token: null,
   error: null,
   loading: false,
+  ML_results: [],
 };
 
 const authStart = (state) => updateObject(state, {
@@ -38,6 +39,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
     case actionTypes.AUTH_FAIL: return authFail(state, action);
     case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
+    case actionTypes.TONE_ANALYSIS: return { ...state };
+    case actionTypes.GET_ANALYSIS_RESULT: return { ...state, ML_results: action.total_results };
 
     default:
       break;

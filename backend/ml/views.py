@@ -15,19 +15,15 @@ from .models import ML
 class FileUploadView(APIView):
     parser_class = (FileUploadParser,)
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         mls = ML.objects.all()
         serializer = FileSerializer(mls, many=True)
         return Response(serializer.data)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         file = FileSerializer(data=request.data)
         if file.is_valid():
             file.save()
-            picture = file.data
-            rgb = tone_analysis(picture)
-            ml = ML(file=picture, result=rgb)
-            ml.save()
             return Response(file.data, status=status.HTTP_201_CREATED)
         else:
             return Response(file.errors, status=status.HTTP_400_BAD_REQUEST)

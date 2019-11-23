@@ -4,4 +4,6 @@ export {
   authLogin,
   authSignup,
   authCheckState,
+  toneAnalysis,
+  getAnalysisResult,
 } from './cosmos';

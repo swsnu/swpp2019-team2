@@ -83,3 +83,31 @@ export const authCheckState = () => (dispatch) => {
     }
   }
 };
+
+export const toneAnalysis_ = (image) => ({
+  type: actionTypes.TONE_ANALYSIS,
+  target: image,
+});
+
+export const toneAnalysis = (image) => (dispatch) => {
+  axios.post('/api/ml/', image, {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  })
+    .then((res) => {
+      dispatch(toneAnalysis_(res.data));
+    });
+};
+
+export const getAnalysisResult_ = (results) => ({
+  type: actionTypes.GET_ANALYSIS_RESULT,
+  total_results: results,
+});
+
+export const getAnalysisResult = () => (dispatch) => {
+  axios.get('/api/ml/')
+    .then((res) => {
+      dispatch(getAnalysisResult_(res.data));
+    });
+};
