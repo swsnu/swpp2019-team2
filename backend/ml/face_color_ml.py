@@ -8,7 +8,8 @@ import cv2
 from sklearn.cluster import KMeans
 import imutils
 from matplotlib import pyplot as plt
-path = 'backend/image/anne-marie.jpg'
+
+#path = 'backend/ml/image/anne-marie'
 
 resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
@@ -23,7 +24,7 @@ def img_to_face(image_path):
     resnet.classify = True
     img_probs = resnet(img_cropped.unsqueeze(0))
 
-img_to_face(path)
+#img_to_face(path)
 
 def extractSkin(image):
     # Taking a copy of the image
@@ -191,27 +192,27 @@ The below lines of code, is the implementation of the above defined function.
 """
 
 # Get Image from URL. If you want to upload an image file and use that comment the below code and replace with  image=cv2.imread("FILE_NAME")
-image = cv2.imread("backend/image/face.png")
+#image = cv2.imread("backend/image/face.png")
 
 # Resize image to a width of 250
-image = imutils.resize(image, width=250)
+#image = imutils.resize(image, width=250)
 
 # Show image
-plt.subplot(3, 1, 1)
-plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-plt.title("Original Image")
+#plt.subplot(3, 1, 1)
+#plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+#plt.title("Original Image")
 # plt.show()
 
 # Apply Skin Mask
-skin = extractSkin(image)
+#skin = extractSkin(image)
 
-plt.subplot(3, 1, 2)
-plt.imshow(cv2.cvtColor(skin, cv2.COLOR_BGR2RGB))
-plt.title("Thresholded  Image2")
+#plt.subplot(3, 1, 2)
+#plt.imshow(cv2.cvtColor(skin, cv2.COLOR_BGR2RGB))
+#plt.title("Thresholded  Image2")
 # plt.show()
 
 # Find the dominant color. Default is 1 , pass the parameter 'number_of_colors=N' where N is the specified number of colors
-dominantColors = extractDominantColor(skin, hasThresholding=True)
+#dominantColors = extractDominantColor(skin, hasThresholding=True)
 
 # Show in the dominant color information
 #print("Color Information")
@@ -220,34 +221,38 @@ dominantColors = extractDominantColor(skin, hasThresholding=True)
 # Show in the dominant color as bar
 # print("Color Bar")
 #colour_bar = plotColorBar(dominantColors)
-max_color = [0,0,0]
-sel_color = [0,0,0]
-site1 = 0
-site2 = 1
-for i in range(20):
-    lum = dominantColors[i].get('color')[0]*0.2126 + dominantColors[i].get('color')[1]*0.7152 + dominantColors[i].get('color')[2]*0.0722
-    max_lum = max_color[0]*0.2126 + max_color[1]*0.7152 + max_color[2]*0.0722
-    sel_lum = sel_color[0]*0.2126 + sel_color[1]*0.7152 + sel_color[2]*0.0722
-    if max_lum < lum:
-        sel_color[0] = max_color[0]
-        sel_color[1] = max_color[1]
-        sel_color[2] = max_color[2]
-        max_color[0] = dominantColors[i].get('color')[0]
-        max_color[1] = dominantColors[i].get('color')[1]
-        max_color[2] = dominantColors[i].get('color')[2]
-        site2 = site1
-        site1 = i
-    elif sel_lum < lum:
-        sel_color[0] = dominantColors[i].get('color')[0]
-        sel_color[1] = dominantColors[i].get('color')[1]
-        sel_color[2] = dominantColors[i].get('color')[2]
-        site2 = i
-plt.subplot(3, 1, 3)
-plt.axis("off")
+#max_color = [0,0,0]
+#sel_color = [0,0,0]
+#site1 = 0
+#site2 = 1
+#for i in range(20):
+#    lum = dominantColors[i].get('color')[0]*0.2126 + dominantColors[i].get('color')[1]*0.7152 + dominantColors[i].get('color')[2]*0.0722
+#    max_lum = max_color[0]*0.2126 + max_color[1]*0.7152 + max_color[2]*0.0722
+#    sel_lum = sel_color[0]*0.2126 + sel_color[1]*0.7152 + sel_color[2]*0.0722
+#    if max_lum < lum:
+#        sel_color[0] = max_color[0]
+#        sel_color[1] = max_color[1]
+#        sel_color[2] = max_color[2]
+#        max_color[0] = dominantColors[i].get('color')[0]
+#        max_color[1] = dominantColors[i].get('color')[1]
+#        max_color[2] = dominantColors[i].get('color')[2]
+#        site2 = site1
+#        site1 = i
+#    elif sel_lum < lum:
+#        sel_color[0] = dominantColors[i].get('color')[0]
+#        sel_color[1] = dominantColors[i].get('color')[1]
+#        sel_color[2] = dominantColors[i].get('color')[2]
+#        site2 = i
+#plt.subplot(3, 1, 3)
+#plt.axis("off")
 #plt.imshow(colour_bar)
 #plt.title("Color Bar")
 #plt.show()
 
 #plt.tight_layout()
-print(sel_color)
-print(site2)
+#print(sel_color)
+#print(site2)
+
+def tone_analysis(file):
+    return True
+

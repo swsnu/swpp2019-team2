@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'products',
     'products.lip',
     'products.base',
-    'products.eye'
+    'products.eye',
+    'ml',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -127,3 +128,6 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
