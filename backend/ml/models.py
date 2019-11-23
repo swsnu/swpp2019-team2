@@ -5,7 +5,8 @@ from django.db import models
 
 class ML(models.Model):
     """ model for ML results """
+    user_id = models.CharField(max_length=30,default="NONE")
     result = models.CharField(max_length=30)
     file = models.ImageField(blank=False, null=False)
     def __str__(self):
-        return self.result
+        return str(self.user_id + self.result)
