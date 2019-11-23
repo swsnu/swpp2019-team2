@@ -16,7 +16,7 @@ def img_to_face(image_path):
     img = Image.open(image_path).convert('RGB')
     mtcnn = MTCNN(image_size=100)
     # Get cropped and prewhitened image tensor
-    img_cropped = mtcnn(img, save_path='face.png')
+    img_cropped = mtcnn(img, save_path='backend/image/face.png')
     # Calculate embedding (unsqueeze to add batch dimension)
     img_embedding = resnet(img_cropped.unsqueeze(0))
     # Or, if using for VGGFace2 classification
@@ -191,7 +191,7 @@ The below lines of code, is the implementation of the above defined function.
 """
 
 # Get Image from URL. If you want to upload an image file and use that comment the below code and replace with  image=cv2.imread("FILE_NAME")
-image = cv2.imread("face.png")
+image = cv2.imread("backend/image/face.png")
 
 # Resize image to a width of 250
 image = imutils.resize(image, width=250)
