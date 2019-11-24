@@ -9,6 +9,7 @@ const initialState = {
   error: null,
   loading: false,
   ML_results: [],
+  ML: null,
 };
 
 const authStart = (state) => updateObject(state, {
@@ -32,6 +33,14 @@ const authLogout = (state) => updateObject(state, {
   error: null,
 });
 
+const saveML = (state, action) => updateObject(state, {
+  ml: {
+    id: action.id,
+    user_id: action.user_id,
+    result: action.result,
+  },
+});
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_LIP: return { ...state, Lip: action.Lip };
@@ -39,9 +48,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
     case actionTypes.AUTH_FAIL: return authFail(state, action);
     case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
-    case actionTypes.TONE_ANALYSIS: return { ...state };
+    case actionTypes.SEND_PICTURE: return { ...state };
     case actionTypes.GET_ANALYSIS_RESULT: return { ...state, ML_results: action.total_results };
-
+    case actionTypes.RUN_ANALYSIS: return saveML(state, action);
     default:
       break;
   }

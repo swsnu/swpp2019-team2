@@ -4,5 +4,6 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const GET_LIP = 'GET_LIP';
 
-export const TONE_ANALYSIS = 'TONE_ANALYSIS';
+export const SEND_PICTURE = 'SEND_PICTURE';
 export const GET_ANALYSIS_RESULT = 'GET_ANALYSIS_RESULT';
+export const RUN_ANALYSIS = 'RUN_ANALYSIS';

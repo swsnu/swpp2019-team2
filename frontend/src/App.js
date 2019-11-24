@@ -10,6 +10,7 @@ import SkinTone from './Containers/SkinTone';
 import SalesInfo from './Containers/SalesInfo';
 import Search from './Containers/Search';
 import Signup from './Containers/Signup';
+import SkinToneResult from './Containers/SkinToneResult';
 
 function App({ history }) {
   return (
@@ -23,7 +24,7 @@ function App({ history }) {
           <Route path="/search" exact component={Search} />
           <Route path="/budget" exact component={BudgetSearch} />
           <Route path="/skintone" exact component={SkinTone} />
-          {/* <Route path = '/skintone/result' exact component = {} /> */}
+          <Route path="/skintone/result" exact component={SkinToneResult} />
           <Route path="/sale" exact component={SalesInfo} />
           <Redirect path="*" to="/login" />
         </Switch>

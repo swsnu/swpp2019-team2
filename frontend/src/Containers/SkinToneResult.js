@@ -43,7 +43,7 @@ class SkinToneResult extends Component {
         }
         const id = this.state;
         return (
-          <div className="SkinTone">
+          <div className="SkinToneResult">
             {redirect}
             {/* <div id = "LOGO">
                       <img src = {logo} alt = "COSMOS" width = "100" />
@@ -74,6 +74,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
 });
-
 export default connect(mapStateToProps, mapDispatchToProps)(SkinToneResult);

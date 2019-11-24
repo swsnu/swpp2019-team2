@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 import * as actionTypes from './actionTypes';
 
 
@@ -84,19 +85,34 @@ export const authCheckState = () => (dispatch) => {
   }
 };
 
-export const toneAnalysis_ = (image) => ({
-  type: actionTypes.TONE_ANALYSIS,
+export const runAnalysis_ = (data) => ({
+  type: actionTypes.RUN_ANALYSIS,
+  user_id: data.user_id,
+  result: data.result,
+  id: data.id,
+});
+
+export const runAnalysis = (userID) => (dispatch) => {
+  axios.put('/api/ml/', userID)
+    .then((res) => {
+      dispatch(runAnalysis_(res.data));
+    });
+};
+
+export const sendImage_ = (image) => ({
+  type: actionTypes.SEND_PICTURE,
   target: image,
 });
 
-export const toneAnalysis = (image) => (dispatch) => {
+export const sendImage = (image) => (dispatch) => {
   axios.post('/api/ml/', image, {
     headers: {
       'content-type': 'multipart/form-data',
     },
   })
     .then((res) => {
-      dispatch(toneAnalysis_(res.data));
+      dispatch(sendImage_(res.data));
+      dispatch(push('result'));
     });
 };
 

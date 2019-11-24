@@ -61,8 +61,10 @@ class SkinTone extends Component {
       }
       const picture = new FormData();
       picture.append('image', this.state.selectedFile, this.state.selectedFile.name);
+      picture.append('user_id', '425');
       // user_id state에 저장?
-      this.props.tone_analysis(picture);
+      this.props.send_picture(picture);
+      // this.props.run_analysis('425')
     }
 
     render() {
@@ -110,7 +112,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-  tone_analysis: (img) => dispatch(actionCreators.toneAnalysis(img)),
+  send_picture: (img) => dispatch(actionCreators.sendImage(img)),
+  run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SkinTone);
