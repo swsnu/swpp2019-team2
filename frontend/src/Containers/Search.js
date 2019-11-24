@@ -18,6 +18,7 @@ class Search extends Component {
 
   componentDidMount() { // initialize state
     this.props.onTryAutoSignup();
+    this.props.getUserInfo();
   }
 
   logout = () => {
@@ -36,6 +37,10 @@ class Search extends Component {
   render() {
     let changePage = '';
     let backLogin = '';
+    const userInfo = this.props.user.map((res) => {
+      this.state.username = res.username;
+    });
+    let infoString = 'Hello, ' + this.state.username + '!';
     const { selection } = this.state;
     const { searchResult } = this.props;
     const searchedProduct = searchResult.map((res) => {
@@ -96,6 +101,7 @@ class Search extends Component {
             {backLogin}
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
           </div>
+          {infoString}
         </div>
         <div className="Content">
           <ul className="Category">
@@ -122,6 +128,7 @@ class Search extends Component {
 const mapStateToProps = (state) => ({
   searchResult: state.cosmos.result,
   isAuthenticated: state.cosmos.token != null,
+  user: state.cosmos.User,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
 });
@@ -132,7 +139,7 @@ const mapDispatchToProps = (dispatch) => ({
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

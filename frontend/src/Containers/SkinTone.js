@@ -63,6 +63,10 @@ class SkinTone extends Component {
 
     render() {
       let redirect = null;
+      const userInfo = this.props.user.map((res) => {
+        this.state.username = res.username;
+      });
+      let infoString = 'Hello, ' + this.state.username + '!';
       if (!this.props.isAuthenticated) {
         redirect = <Redirect to="/login" />;
       }
@@ -77,6 +81,7 @@ class SkinTone extends Component {
                 </div> */}
           <div className="upperbar">
             <h1>Skin Tone Analysis</h1>
+            {infoString}
             <div className="buttons">
               <button id="back-button" type="button" onClick={() => this.menuHandler()}>
                 <img id="arrow" src={arrow} alt="Back to Main Menu" />
@@ -101,11 +106,13 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  user: state.cosmos.User,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SkinTone);

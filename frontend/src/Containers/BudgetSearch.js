@@ -37,6 +37,7 @@ class BudgetSearch extends Component {
   logoutHandler = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
+    this.props.getUserInfo();
   }
 
   mypageHandler = (id) => {
@@ -88,6 +89,10 @@ class BudgetSearch extends Component {
   }
 
   render() {
+    const userInfo = this.props.user.map((res) => {
+      this.state.username = res.username;
+    });
+    let infoString = 'Hello, ' + this.state.username + '!';
     const { checked, id, itemNum } = this.state;
     const { isAuthenticated } = this.props;
     let redirect = null;
@@ -104,6 +109,7 @@ class BudgetSearch extends Component {
                 </div> */}
         <div className="upperbar">
           <h1>Budget Search</h1>
+          {infoString}
           <div className="buttons">
             <button id="back-button" type="button" onClick={() => this.menuHandler()}>
               <img id="arrow" src={arrow} alt="Back to Main Menu" />
@@ -164,10 +170,12 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  user: state.cosmos.User,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetSearch);

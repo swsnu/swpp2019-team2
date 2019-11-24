@@ -6,6 +6,10 @@ export const getProducts_ = (result) => ({ type: actionTypes.GET_PRODUCT, result
 export const getProducts = (searchQuery) => (dispatch) => axios.get(`/api/${searchQuery}`)
   .then((res) => dispatch(getProducts_(res.data)));
 
+export const getUser_ = (User) => ({ type: actionTypes.GET_USER, User });
+export const getUser = () => (dispatch) => axios.get('/api/signup/')
+  .then((res) => dispatch(getUser_(res.data)));
+
 
 export const authStart = () => ({
   type: actionTypes.AUTH_START,
@@ -34,6 +38,8 @@ export const authLogin = (username, password) => (dispatch) => {
       const expirationDate = new Date().getTime() + 3600 * 1000;
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
       dispatch(authSuccess(token));
     })
     .catch((err) => {
