@@ -1,5 +1,5 @@
 div.detail-category {
-    display: inline-flex;
+    display: table-column-group;
 }
 
 label.selectionValue {
@@ -8,5 +8,6 @@ label.selectionValue {
 }
 
 div.detail-sub-category {
+    display: table-cell;
     margin: 10px;
 }

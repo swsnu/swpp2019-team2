@@ -45,9 +45,10 @@ ul.Category li.Product {
     cursor: pointer;
 }
 
-/* .Content{
-   display: table; 
-} */
+.Content{
+   display: table;
+   text-align: left; 
+}
 /*
 .Result{
     display: inline-table;
@@ -59,6 +60,7 @@ ul.Category li.Product {
 */
 .Category {
     padding-left:30px;
+    display: table-row;
 }
 /*
 .Category .buttonFalse:active {

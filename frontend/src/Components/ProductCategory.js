@@ -11,6 +11,7 @@ const CATEGORY = {
       Red: 'RD',
       Pink: 'PK',
       Orange: 'OR',
+      Purple: 'PP',
     },
     form: {
       Matte: 'M',
@@ -27,6 +28,17 @@ const CATEGORY = {
       Primer: 'PR',
       'BB & CC': 'B',
     },
+    color: {
+      'under 21': 'under21',
+      '21 ~ 23': '21~23',
+      'over 23': 'over23',
+    },
+    subcolor: {
+      Light: "LT",
+      Middle: "MD",
+      Dark: "DK",
+      None: "NO",
+    },
   },
   eye: {
     category: {
@@ -34,6 +46,30 @@ const CATEGORY = {
       Mascara: 'M',
       EyeLiner: 'L',
       EyeBrow: 'B',
+    },
+  },
+  cheek: {
+    color: {
+      Red: 'RD',
+      Pink: 'PK',
+      Orange: 'OR',
+    },
+    form: {
+      Powder: 'P',
+      Liquid: 'L',
+      Cream: 'C',
+    },
+  },
+  skincare: {
+    category: {
+      Skin: 'SK',
+      Lotion: 'LO',
+      Essence: 'ES',
+      Cream: 'CR',
+      Eyecream: 'EC',
+      Mist: 'MI',
+      Suncare: 'SU',
+      Specialcare: 'SP',
     },
   },
 };
