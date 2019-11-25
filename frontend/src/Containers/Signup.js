@@ -22,6 +22,7 @@ class RegistrationForm extends React.Component {
   LoginHandler = () => {
     this.props.Signup(this.state.username, this.state.email, this.state.password);
     this.props.onTryAutoSignup();
+    this.props.getUserInfo();
     this.setState({ signup: true });
   }
 
@@ -73,7 +74,7 @@ class RegistrationForm extends React.Component {
           <label htmlFor="pw-input">
             Password
             <input
-              type="text"
+              type="password"
               id="pw-input"
               value={this.state.password}
               onChange={(event) => this.setState({ password: event.target.value })}
@@ -103,6 +104,7 @@ const mapDispatchToProps = (dispatch) => ({
   (username, email, password) => dispatch(actionCreators.authSignup(username, email, password)),
   Login: (username, password) => dispatch(actionCreators.authLogin(username, password)),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
 

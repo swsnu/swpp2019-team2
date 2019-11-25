@@ -53,12 +53,33 @@ class BudgetSearch extends Component {
   logoutHandler = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
+    this.props.getUserInfo();
   }
 
   mypageHandler = (id) => {
     this.props.history.replace(`../mypage/${id}`);
   }
 
+  searchHandler = () => {
+    this.props.history.replace('../search');
+  };
+
+  budgetHandler = () => {
+    this.props.history.replace('../budget');
+  };
+
+  toneHandler = () => {
+    this.props.history.replace('../skintone');
+  };
+
+  saleHandler = () => {
+    this.props.history.replace('../sale');
+  };
+
+  /* set_budget = (event) => {
+      this.setState({budget:event.target.value})
+      this.setState({flag_budget:true})
+  } */
   setItemNum = (event) => {
     this.setState({ itemNum: parseInt(event.target.value, 10) });
   }
@@ -225,6 +246,11 @@ class BudgetSearch extends Component {
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
           </div>
         </div>
+        <div className="Menubar">
+          <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
+          <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
+          <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+          <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
         <h4>{strBudget}</h4>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div style={{ width: 300 }}>
@@ -280,10 +306,12 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  user: state.cosmos.User,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetSearch);

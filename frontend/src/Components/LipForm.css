@@ -1,0 +1,44 @@
+li.LipContainer {
+    width: 250px;
+    float: left;
+}
+
+li.color-chip {
+    float:left;
+}
+
+section.info_text {
+    margin: 10px 0 10px 0;
+}
+
+span.color-chip {
+    width:24px;
+    height:24px;
+    border-radius: 30%;
+    display:inline-block;
+    margin:0 2px 0 2px;
+}
+section.color {
+    display:inline-flex;
+    height:35px;
+    overflow:scroll;
+}
+section.color > ul {
+    overflow:scroll;
+}
+
+.react-tooltip-lite {
+    background: #333;
+    color: white;
+    text-align:center;
+    padding:5px;
+    border-radius:8px;
+  }
+  
+.react-tooltip-lite-arrow {
+    border-color: #333;
+  }
+
+.react-tooltip-lite-arrow .react-tooltip-lite-left-arrow {
+    display:none;
+}

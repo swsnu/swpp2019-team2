@@ -70,6 +70,7 @@ describe('<Signup />', () => {
           Signup={mockSignup}
           onTryAutoSignup={mockonTryAutoSignup}
           Login={mockonLogin}
+          getUserInfo={jest.fn()}
         />
       </BrowserRouter>,
     );
@@ -92,6 +93,7 @@ describe('<Signup />', () => {
           error={!null}
           onTryAutoSignup={mockonTryAutoSignup}
           Login={mockonLogin}
+          getUserInfo={jest.fn()}
         />
       </BrowserRouter>,
     );

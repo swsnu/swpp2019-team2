@@ -12,10 +12,11 @@ from django.db import IntegrityError
 @csrf_exempt
 def signup(request):
     """SIGNUP FUNCTION"""
-    print("signup")
+
     if request.method == 'GET':
-        user_all_list = list(User.objects.all().values())
-        return JsonResponse(user_all_list, safe=False)
+        if request.user.is_authenticated:
+            user_info = list(User.objects.filter(username=request.user.username).values())
+            return JsonResponse(user_info, safe=False)
 
     if request.method == 'POST':
         try:
@@ -30,6 +31,8 @@ def signup(request):
                 username=username, email=email, password=password)
         except IntegrityError:
             return HttpResponseBadRequest()
+        user = authenticate(request, username=username, password=password)
+        login(request, user)
         return HttpResponse(status=201)
 
     return HttpResponseNotAllowed(['GET', 'POST'])
@@ -50,8 +53,8 @@ def signin(request):  # Signin function
 
         if user is not None:
             login(request, user)
-
-            return HttpResponse(status=204)
+            response = user.email
+            return HttpResponse(response, status=204)
 
         return HttpResponse(status=401)
 

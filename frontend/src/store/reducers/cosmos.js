@@ -3,7 +3,7 @@ import { updateObject } from '../utility';
 
 
 const initialState = {
-  Lip: [],
+  result: [],
   User: [],
   token: null,
   error: null,
@@ -33,11 +33,12 @@ const authLogout = (state) => updateObject(state, {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.GET_LIP: return { ...state, Lip: action.Lip };
+    case actionTypes.GET_PRODUCT: return { ...state, result: action.result };
     case actionTypes.AUTH_START: return authStart(state, action);
     case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
     case actionTypes.AUTH_FAIL: return authFail(state, action);
     case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
+    case actionTypes.GET_USER: return { ...state, User: action.User };
 
     default:
       break;

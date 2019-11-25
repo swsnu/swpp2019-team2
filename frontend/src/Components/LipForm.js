@@ -1,52 +1,50 @@
 import React from 'react';
+import './LipForm.css';
+import Tooltip from 'react-tooltip-lite';
+import CATEGORY from './ProductCategory';
 
-const LipForm = (props) => (
-  <div className="LipForm">
-    <div>
+const getKeyByValue = (object, value) => Object.keys(object).find((key) => object[key] === value);
 
-
-      <section className="id">
-        <h4 className="Lip_id">{props.id}</h4>
-      </section>
-
-      <section className="thumbnail">
-        <img height="200" width="200" src={props.thumbnail} alt="new" />
-      </section>
-
-      <section className="name">
-        <h4 id="Lip_name">{props.name}</h4>
-      </section>
-
-
-      <section className="price">
-        <h4 className="Lip_price">
+const LipForm = (props) => {
+  const {
+    imgUrl, name, price, category, brand, form, colors,
+  } = props;
+  const subcolor = colors.map((color) => {
+    const style = { backgroundColor: color.color_hex };
+    return (<li className="color-chip" key={color.optionName}><Tooltip key={color.optionName} content={color.optionName}><span data-tip={color.optionName} key={color.optionName} className="color-chip" style={style} /></Tooltip></li>);
+  });
+  const realCategory = getKeyByValue(CATEGORY.lip.category, category);
+  const realForm = getKeyByValue(CATEGORY.lip.form, form);
+  return (
+    <li className="LipContainer">
+      <div>
+        <section className="thumbnail">
+          <img height="200" width="200" src={imgUrl} alt="new" />
+        </section>
+        <section className="Lip_name info_text">
+          {name}
+          {' / '}
+          {brand}
+        </section>
+        <section className="color">
+          <ul>{subcolor}</ul>
+        </section>
+        <section className="Lip_price info_text">
 가격:&emsp;
-          {props.price}
+          {price}
 원
-        </h4>
-      </section>
-
-      <section className="category">
-        <h4 className="Lip_category">
+        </section>
+        <section className="Lip_category info_text">
 카테고리:&emsp;
-          {props.category}
-        </h4>
-      </section>
+          {realCategory}
+        </section>
+        <section className="Lip_form info_text">
+제형:&emsp;
+          {realForm}
+        </section>
+      </div>
+    </li>
 
-      <section className="category">
-        <h4 className="Lip_form">
-폼:&emsp;
-          {props.form}
-        </h4>
-      </section>
-
-      <section className="brand">
-        <h4 className="Lip_brand">
-브랜드:&emsp;
-          {props.brand}
-        </h4>
-      </section>
-    </div>
-  </div>
-);
+  );
+};
 export default LipForm;

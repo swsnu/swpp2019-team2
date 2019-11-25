@@ -1,7 +1,8 @@
 export {
-  getLips,
+  getProducts,
   logout,
   authLogin,
   authSignup,
   authCheckState,
+  getUser,
 } from './cosmos';

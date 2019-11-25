@@ -60,8 +60,6 @@ class LipOption(models.Model):
         choices=COLOR
     )
     sub_color = models.CharField(
-        default=None,
-        null=True,
         max_length=30
     )
     color_hex = models.CharField(max_length=10)
