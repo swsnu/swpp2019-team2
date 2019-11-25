@@ -40,7 +40,7 @@ def signup(request):
 
 def signin(request):  # Signin function
     """SIGNIN FUNCTION"""
-   
+
     if request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
@@ -54,7 +54,7 @@ def signin(request):  # Signin function
         if user is not None:
             login(request, user)
             response = user.email
-            return HttpResponse(response,status=204)
+            return HttpResponse(response, status=204)
 
         return HttpResponse(status=401)
 
