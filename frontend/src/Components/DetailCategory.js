@@ -88,7 +88,11 @@ class DetailCategory extends React.Component {
     const { category, selected } = this.props;
     const style = selected ? { display: 'inline-flex' } : { display: 'none' };
     const sub = this.getCategory(category, selected);
-    return (<div style={style} className="detail-category" id={category}>{sub}</div>);
+    return (
+      <div style={style} className="detail-category" id={category}>{sub}
+        <button type="button" className="searchProduct" onClick={this.props.clickSearch}> Search </button>
+      </div>
+    );
   }
 }
 

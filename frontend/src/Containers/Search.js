@@ -18,6 +18,7 @@ class Search extends Component {
 
   componentDidMount() { // initialize state
     this.props.onTryAutoSignup();
+    this.props.getUserInfo();
   }
 
   logout = () => {
@@ -32,10 +33,29 @@ class Search extends Component {
     this.props.history.replace(`../mypage/${id}`);
   }
 
+  searchHandler = () => {
+    this.props.history.replace('../search');
+  };
+
+  budgetHandler = () => {
+    this.props.history.replace('../budget');
+  };
+
+  toneHandler = () => {
+    this.props.history.replace('../skintone');
+  };
+
+  saleHandler = () => {
+    this.props.history.replace('../sale');
+  };
 
   render() {
     let changePage = '';
     let backLogin = '';
+    const userInfo = this.props.user.map((res) => {
+      this.state.username = res.username;
+    });
+    let infoString = 'Hello, ' + this.state.username + '!';
     const { selection } = this.state;
     const { searchResult } = this.props;
     const searchedProduct = searchResult.map((res) => {
@@ -76,9 +96,11 @@ class Search extends Component {
     };
 
 
-    const lip = <DetailCategory category="lip" selected={(selection === 'lip')} />;
-    const base = <DetailCategory category="base" selected={(selection === 'base')} />;
-    const eye = <DetailCategory category="eye" selected={(selection === 'eye')} />;
+    const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch = {() => search()} />;
+    const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch = {() => search()} />;
+    const eye = <DetailCategory category="eye" selected={(selection === 'eye')} clickSearch = {() => search()} />;
+    const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch = {() => search()} />;
+    const skincare = <DetailCategory category="skincare" selected={(selection === 'skincare')} clickSearch = {() => search()} />;
 
     return (
       <div className="Search">
@@ -94,17 +116,27 @@ class Search extends Component {
             {backLogin}
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
           </div>
+          {infoString}
+        </div>
+        <div className="Menubar">
+          <button id="Searchmenu" onClick={() => this.searchHandler()}>Search-Tag</button>
+          <button id="Budgetmenu" onClick={() => this.budgetHandler()}>Budget-Search</button>
+          <button id="Tonemenu" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+          <button id="Salemenu" onClick={() => this.saleHandler()}>Sale-Info</button> 
         </div>
         <div className="Content">
           <ul className="Category">
-            <button type="button" className="Product" onClick={click} id="lip">Lip</button>
-            <button type="button" className="Product" onClick={click} id="base">Base</button>
-            <button type="button" className="Product" onClick={click} id="eye">Eye</button>
+            <button type="button" className="Product" onClick={click} id="lip">Lip</button><h4/>
+            <button type="button" className="Product" onClick={click} id="base">Base</button><h4/>
+            <button type="button" className="Product" onClick={click} id="eye">Eye</button><h4/>
+            <button type="button" className="Product" onClick={click} id="cheek">Cheek</button><h4/>
+            <button type="button" className="Product" onClick={click} id="skincare">Skin</button>
           </ul>
           {lip}
           {base}
           {eye}
-          <div><button type="button" className="searchProduct" onClick={() => search()}> Search </button></div>
+          {cheek}
+          {skincare}
           <ul className="Result">
             {searchedProduct}
           </ul>
@@ -117,6 +149,7 @@ class Search extends Component {
 const mapStateToProps = (state) => ({
   searchResult: state.cosmos.result,
   isAuthenticated: state.cosmos.token != null,
+  user: state.cosmos.User,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
 });
@@ -127,7 +160,7 @@ const mapDispatchToProps = (dispatch) => ({
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

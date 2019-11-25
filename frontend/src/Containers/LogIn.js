@@ -65,7 +65,7 @@ class NormalLoginForm extends Component {
               <label htmlFor="pw-input">
                 Password
                 <input
-                  type="text"
+                  type="password"
                   id="pw-input"
                   value={this.state.password}
                   onChange={(event) => this.setState({ password: event.target.value })}
