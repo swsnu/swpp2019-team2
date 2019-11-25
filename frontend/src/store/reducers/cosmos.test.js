@@ -11,7 +11,7 @@ const stubuser = {
 describe('post reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
-      Lip: [], User: [], error: null, loading: false, token: null,
+      result: [], User: [], error: null, loading: false, token: null,
     });
   });
 
@@ -20,7 +20,7 @@ describe('post reducer', () => {
       type: actionTypes.GET_LIP,
     };
     const expectedActions = {
-      Lip: undefined, User: [], error: null, loading: false, token: null,
+      result: [], User: [], error: null, loading: false, token: null,
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -32,7 +32,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_START,
     };
     const expectedActions = {
-      Lip: [], User: [], error: null, loading: true, token: null,
+      result: [], User: [], error: null, loading: true, token: null,
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -43,7 +43,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_SUCCESS,
     };
     const expectedActions = {
-      Lip: [], User: [], error: null, loading: false, token: undefined,
+      result: [], User: [], error: null, loading: false, token: undefined,
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -55,7 +55,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_FAIL,
     };
     const expectedActions = {
-      Lip: [], User: [], error: undefined, loading: false, token: null,
+      result: [], User: [], error: undefined, loading: false, token: null,
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -67,7 +67,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_LOGOUT,
     };
     const expectedActions = {
-      Lip: [], User: [], error: null, loading: false, token: null,
+      result: [], User: [], error: null, loading: false, token: null,
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);

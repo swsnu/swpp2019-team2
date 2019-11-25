@@ -44,10 +44,10 @@ describe('article', () => {
         });
       });
       const expectedActions = [
-        { type: 'GET_LIP', Lip: undefined },
+        { type: 'GET_PRODUCT', result: undefined },
       ];
       const store = mockStore();
-      return store.dispatch(articleActions.getLips()).then(() => {
+      return store.dispatch(articleActions.getProducts()).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
     });
