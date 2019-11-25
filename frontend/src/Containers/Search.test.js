@@ -126,7 +126,7 @@ describe('<Liplist />', () => {
     const component = mount(lipList);
     const newInstance = component.find(Search.WrappedComponent).instance();
     newInstance.setState({ selection: 'lip' });
-    const button = component.find('.searchProduct');
+    const button = component.find('.searchProduct').at(0);
     button.simulate('click');
     expect(spygetLips).toHaveBeenCalledTimes(1);
   });

@@ -51,7 +51,7 @@ class SalesInfo extends Component {
   render() {
     let redirect = null;
     let infoString = 'Hello';
-    if (this.props.user[0]) {
+    if (this.props.user !== undefined) {
       const { username } = this.props.user[0];
       infoString = `Hello, ${username}!`;
     }
