@@ -39,8 +39,6 @@ const stubSeletedUserF = {
 jest.mock('../Components/LipForm', () => jest.fn((props) => (
   <div className="spyLip">
     <div>
-
-
       <section className="Index">
         <h4 className="Lip_id">{props.id}</h4>
       </section>
@@ -139,6 +137,16 @@ describe('<Liplist />', () => {
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(3);
   });
+  it('should change visible category when clicked', () => {
+    const component = mount(lipList);
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    newInstance.setState({ selection: 'lip' });
+    const button = component.find('button.Product#eye');
+    button.simulate('click');
+    expect(newInstance.state).toEqual({ selection: 'eye' });
+    button.simulate('click');
+    expect(newInstance.state).toEqual({ selection: 'eye' });
+  });
 });
 
 describe('<Liplist />', () => {
@@ -174,5 +182,13 @@ describe('<Liplist />', () => {
     button.simulate('click');
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
+  });
+  it('should render CategoryList', () => {
+    const component = mount(lipList, { attachTo: document.body });
+    const wrapper = component.find('.color-selection-input-box');
+    const label = component.find('label.color-selection-chip').at(0);
+    wrapper.at(0).simulate('click');
+    wrapper.at(0).instance().checked = true;
+    wrapper.at(0).simulate('click');
   });
 });
