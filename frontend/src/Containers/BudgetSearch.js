@@ -12,7 +12,7 @@ import ItemDisplay from './ItemDisplay';
 
 const options = [
   { value: 0, label: '0원 ~ 5000원' }, // 삭제가능
-  { value: 1, label: '5000원 ~10000' },
+  { value: 1, label: '5000원 ~10000원' },
   { value: 2, label: '10000원 ~ 15000원' },
   { value: 3, label: '15000원 ~ 20000원' },
   { value: 4, label: '20000원 ~ 25000원' },
@@ -247,25 +247,31 @@ class BudgetSearch extends Component {
         <h5>{find3}</h5>
         <h5>{find4}</h5>
         <h5>{find5}</h5>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ marginRight: 10, width: 180 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 30 }}>
+          <div style={{ marginRight: 30, width: 180 }}>
             <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
           </div>
-          <div style={{ marginRight: 10, width: 180 }}>
+          <div style={{ marginRight: 30, width: 180 }}>
             <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
           </div>
-          <div style={{ marginRight: 10, width: 180 }}>
-            {itemNum > 2 && (<CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />)}
-          </div>
-          <div style={{ marginRight: 10, width: 180 }}>
-            {itemNum > 3 && (<CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />)}
-          </div>
-          <div style={{ width: 180 }}>
-            {itemNum > 4 && (<CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />)}
-          </div>
+          {itemNum > 2 && (
+            <div style={{ marginRight: 30, width: 180 }}>
+              <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
+            </div>
+          )}
+          {itemNum > 3 && (
+            <div style={{ marginRight: 30, width: 180 }}>
+              <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
+            </div>
+          )}
+          {itemNum > 4 && (
+            <div style={{ width: 180 }}>
+              <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
+            </div>
+          )}
         </div>
         <div className="button">
-          <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()}>Combine Cosmetics</button>
+          <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()} style={{ borderWidth: 2 }}>Combine Cosmetics</button>
         </div>
         <div>
           <button type="button" id="reset-result" onClick={() => this.setState({ combi: [] })}> 초기화 </button>
