@@ -52,10 +52,12 @@ class Search extends Component {
   render() {
     let changePage = '';
     let backLogin = '';
-    let infoString = 'Hello';
-    if (this.props.user !== undefined) {
+    let infoString = '';
+    try {
       const { username } = this.props.user[0];
       infoString = `Hello, ${username}!`;
+    } catch {
+      infoString = 'Hello';
     }
     const { selection } = this.state;
     const { searchResult } = this.props;

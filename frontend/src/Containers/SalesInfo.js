@@ -50,10 +50,12 @@ class SalesInfo extends Component {
 
   render() {
     let redirect = null;
-    let infoString = 'Hello';
-    if (this.props.user !== undefined) {
+    let infoString = '';
+    try {
       const { username } = this.props.user[0];
       infoString = `Hello, ${username}!`;
+    } catch {
+      infoString = 'Hello';
     }
     if (!this.props.isAuthenticated) {
       redirect = <Redirect to="/login" />;
