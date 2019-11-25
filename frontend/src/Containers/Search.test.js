@@ -147,10 +147,10 @@ describe('<Liplist />', () => {
   let spygetLips;
   let spylogout;
   let spyauthCheckState;
-  const mockStore_auth = getMockStore(stubSeletedUserF);
+  const mockStoreAuth = getMockStore(stubSeletedUserF);
   beforeEach(() => {
     lipList = (
-      <Provider store={mockStore_auth}>
+      <Provider store={mockStoreAuth}>
         <Router history={history}>
           <Switch>
             <Route
