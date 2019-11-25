@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { Component } from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { connectRouter, ConnectedRouter } from 'connected-react-router';
@@ -100,7 +100,56 @@ describe('<BudgetSearch />', () => {
     wrapper.simulate('click');
     expect(spyHistoryPush).toHaveBeenCalledWith('../main');
   });
-  it('should deal range input', () => { });
+  it('should deal range input', () => {
+    const component = shallow(
+      <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const inputBar = component.find('#item_num');
+    inputBar.simulate('change', { target: { value: 3 } });
+    let wrapper = component.find('.checkbox');
+    expect(wrapper.length).toBe(3);
+    inputBar.simulate('change', { target: { value: 4 } });
+    wrapper = component.find('.checkbox');
+    expect(wrapper.length).toBe(4);
+    inputBar.simulate('change', { target: { value: 5 } });
+    wrapper = component.find('.checkbox');
+    expect(wrapper.length).toBe(5);
+  });
+  it('should call handleChange', () => {
+    const mockHandleChange = jest.fn();
+    const component = shallow(
+      <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const wrapper = component.find('#select');
+    wrapper.prop('onChange')(null, mockHandleChange());
+    expect(component.state().budgetRange).toBe(null);
+    wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
+    expect(component.state().budgetRange).toEqual([5000, 10000]);
+  });
+  it('should reset result', () => {
+    const component = shallow(
+      <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const restButton = component.find('#reset-result');
+    restButton.simulate('click');
+    expect(component.state().combi).toEqual([]);
+  });
+  it('should call findUrl properly', () => {
+    const mockFindUrl = jest.fn();
+    const component = shallow(
+      <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
+    );
+    const checkbox = component.find('#checkbox1');
+    checkbox.prop('findUrl')('url', mockFindUrl());
+    expect(mockFindUrl).toBeCalled();
+    const inputBar = component.find('#item_num');
+    for (let i = 2; i <= 5; i++) {
+      inputBar.simulate('change', { target: { value: i } });
+      const wrapper = component.find(`#checkbox${i}`);
+      wrapper.prop('findUrl')('url', mockFindUrl());
+      expect(mockFindUrl).toBeCalled();
+    }
+  });
   it('should not redirect stay when logged in', () => {
     const component = shallow(
       <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} />,
@@ -118,33 +167,31 @@ describe('<BudgetSearch />', () => {
     expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/');
   });
 
-  it('should call confirmhandler && not alert', () => {
-    const mockSwal = jest.fn();
-    const component = shallow(<BudgetSearch.WrappedComponent />);
-    const button = component.find('#range1');
-    button.simulate('change', { target: { checked: true } });
-    const confirmButton = component.find('#combine-cosmetics-button');
-    confirmButton.prop('onClick')(mockSwal());
-    expect(mockSwal).toHaveBeenCalledTimes(1);
-  });
-
-  it('should call confirmhandler && alert', () => {
+  it('should call confirmhandler and alert', () => {
     const mockSwal = jest.fn();
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const button = component.find('#combine-cosmetics-button');
     button.prop('onClick')(mockSwal());
     expect(mockSwal).toHaveBeenCalledTimes(1);
   });
-
-  it('should handle checkbox change properly', () => {
+  it('should call confirmhandler and call handleClick', () => {
+    const mockHandleChange = jest.fn();
     const component = shallow(<BudgetSearch.WrappedComponent />);
-    for (let i = 0; i < 10; i++) {
-      const button = component.find(`#range${i + 1}`);
-      button.simulate('change', { target: { checked: true } });
-      expect(component.state().budgetRange).toEqual([5000 * i, 5000 * (i + 1)]);
-      button.simulate('change', { target: { checked: false } });
-      expect(component.state().budgetRange).toBe(null);
+    const inputBar = component.find('#item_num');
+    const wrapper = component.find('#select');
+    wrapper.prop('onChange')({ value: 6 }, mockHandleChange());
+    const mockConfirmHandler = jest.fn();
+    const button = component.find('#combine-cosmetics-button');
+    expect(component.state().budgetRange).toEqual([30000, 35000]);
+    for (let i = 2; i <= 5; i++) {
+      inputBar.simulate('change', { target: { value: i } });
+      button.prop('onClick')(mockConfirmHandler());
+      expect(mockConfirmHandler).toBeCalled();
     }
+    wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
+    inputBar.simulate('change', { target: { value: 2 } });
+    button.prop('onClick')(mockConfirmHandler());
+    expect(mockConfirmHandler).toBeCalled();
   });
 
   it('should call set_itemnum', () => {
