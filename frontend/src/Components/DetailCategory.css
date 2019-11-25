@@ -10,3 +10,22 @@ label.selectionValue {
 div.detail-sub-category {
     margin: 10px;
 }
+
+input.color-selection-input-box {
+    visibility:hidden;
+}
+div.detail-sub-color-category {
+    display:inline-block;
+}
+
+label.color-selection-chip {
+    width: 20px;
+    height:20px;
+    border-radius: 60%;
+    float:left;
+    opacity:100%;
+}
+
+div.sub-color-visual {
+    width:100px;
+}
