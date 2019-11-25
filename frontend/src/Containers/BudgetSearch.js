@@ -44,6 +44,22 @@ class BudgetSearch extends Component {
     this.props.history.replace(`../mypage/${id}`);
   }
 
+  searchHandler = () => {
+    this.props.history.replace('../search');
+  };
+
+  budgetHandler = () => {
+    this.props.history.replace('../budget');
+  };
+
+  toneHandler = () => {
+    this.props.history.replace('../skintone');
+  };
+
+  saleHandler = () => {
+    this.props.history.replace('../sale');
+  };
+  
   /* set_budget = (event) => {
       this.setState({budget:event.target.value})
       this.setState({flag_budget:true})
@@ -117,6 +133,12 @@ class BudgetSearch extends Component {
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
           </div>
+        </div>
+        <div className="Menubar">
+          <button id="Searchmenu" onClick={() => this.searchHandler()}>Search-Tag</button>
+          <button id="Budgetmenu" onClick={() => this.budgetHandler()}>Budget-Search</button>
+          <button id="Tonemenu" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+          <button id="Salemenu" onClick={() => this.saleHandler()}>Sale-Info</button> 
         </div>
         <div className="item_input">
           <h4>{strNumItems}</h4>

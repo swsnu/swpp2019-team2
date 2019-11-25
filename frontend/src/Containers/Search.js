@@ -33,6 +33,21 @@ class Search extends Component {
     this.props.history.replace(`../mypage/${id}`);
   }
 
+  searchHandler = () => {
+    this.props.history.replace('../search');
+  };
+
+  budgetHandler = () => {
+    this.props.history.replace('../budget');
+  };
+
+  toneHandler = () => {
+    this.props.history.replace('../skintone');
+  };
+
+  saleHandler = () => {
+    this.props.history.replace('../sale');
+  };
 
   render() {
     let changePage = '';
@@ -102,6 +117,12 @@ class Search extends Component {
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
           </div>
           {infoString}
+        </div>
+        <div className="Menubar">
+          <button id="Searchmenu" onClick={() => this.searchHandler()}>Search-Tag</button>
+          <button id="Budgetmenu" onClick={() => this.budgetHandler()}>Budget-Search</button>
+          <button id="Tonemenu" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+          <button id="Salemenu" onClick={() => this.saleHandler()}>Sale-Info</button> 
         </div>
         <div className="Content">
           <ul className="Category">

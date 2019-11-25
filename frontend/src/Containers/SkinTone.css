@@ -52,8 +52,8 @@
     border-bottom-right-radius: 10px;
 }
 
-.SkinTone button:hover,
-.SkinTone button:active {
+.SkinTone .image_preview button:hover,
+.SkinTone .image_preview button:active {
     color:white;
     background-color:#9b45a7;
 }

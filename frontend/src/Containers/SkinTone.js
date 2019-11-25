@@ -61,6 +61,22 @@ class SkinTone extends Component {
       // TODO : file backend로 전송
     }
 
+    searchHandler = () => {
+      this.props.history.replace('../search');
+    };
+  
+    budgetHandler = () => {
+      this.props.history.replace('../budget');
+    };
+  
+    toneHandler = () => {
+      this.props.history.replace('../skintone');
+    };
+  
+    saleHandler = () => {
+      this.props.history.replace('../sale');
+    };
+
     render() {
       let redirect = null;
       const userInfo = this.props.user.map((res) => {
@@ -82,6 +98,12 @@ class SkinTone extends Component {
           <div className="upperbar">
             <h1>Skin Tone Analysis</h1>
             {infoString}
+            <div className="Menubar">
+              <button id="Searchmenu" onClick={() => this.searchHandler()}>Search-Tag</button>
+              <button id="Budgetmenu" onClick={() => this.budgetHandler()}>Budget-Search</button>
+              <button id="Tonemenu" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+              <button id="Salemenu" onClick={() => this.saleHandler()}>Sale-Info</button> 
+            </div>
             <div className="buttons">
               <button id="back-button" type="button" onClick={() => this.menuHandler()}>
                 <img id="arrow" src={arrow} alt="Back to Main Menu" />
