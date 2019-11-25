@@ -61,15 +61,15 @@ const CATEGORY = {
       'BB & CC': 'B',
     },
     color: {
-      'under 21': 'under21',
-      '21 ~ 23': '21~23',
-      'over 23': 'over23',
+      'under 21': ['under21'],
+      '21 ~ 23': ['21~23'],
+      'over 23': ['over23'],
     },
     subcolor: {
-      Light: "LT",
-      Middle: "MD",
-      Dark: "DK",
-      None: "NO",
+      Light: 'LT',
+      Middle: 'MD',
+      Dark: 'DK',
+      None: 'NO',
     },
   },
   eye: {
@@ -82,9 +82,9 @@ const CATEGORY = {
   },
   cheek: {
     color: {
-      Red: 'RD',
-      Pink: 'PK',
-      Orange: 'OR',
+      Red: ['RD'],
+      Pink: ['PK'],
+      Orange: ['OR'],
     },
     form: {
       Powder: 'P',

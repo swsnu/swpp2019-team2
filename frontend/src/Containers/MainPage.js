@@ -8,9 +8,8 @@ import logo from '../image/LOGO.png';
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       id: '',
-      username: '',
     };
   }
 
@@ -46,10 +45,11 @@ class MainPage extends Component {
 
   render() {
     let redirect = null;
-    const userInfo = this.props.user.map((res) => {
-      this.state.username = res.username;
-    });
-    let infoString = 'Hello, ' + this.state.username + '!';
+    let infoString = 'Hello';
+    if (this.props.user[0]) {
+      const { username } = this.props.user[0];
+      infoString = `Hello, ${username}!`;
+    }
     if (!this.props.isAuthenticated) {
       redirect = <Redirect to="/login" />;
     }

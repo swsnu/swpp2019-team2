@@ -29,7 +29,10 @@ class DetailCategory extends React.Component {
             </label>
           );
         });
-        const subcolors = colorKeys.map((colorKey) => {
+        const subcolors = colorKeys.filter((colorKey) => {
+          if (LargeCategory.color[colorKey].length > 1) return true;
+          return false;
+        }).map((colorKey) => {
           const colorData = LargeCategory.color[colorKey];
           const detailColors = colorData[1];
 
@@ -88,9 +91,11 @@ class DetailCategory extends React.Component {
     const { category, selected } = this.props;
     const style = selected ? { display: 'inline-flex' } : { display: 'none' };
     const sub = this.getCategory(category, selected);
+    const { clickSearch } = this.props;
     return (
-      <div style={style} className="detail-category" id={category}>{sub}
-        <button type="button" className="searchProduct" onClick={this.props.clickSearch}> Search </button>
+      <div style={style} className="detail-category" id={category}>
+        {sub}
+        <button type="button" className="searchProduct" onClick={clickSearch}> Search </button>
       </div>
     );
   }

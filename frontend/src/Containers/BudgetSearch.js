@@ -59,7 +59,7 @@ class BudgetSearch extends Component {
   saleHandler = () => {
     this.props.history.replace('../sale');
   };
-  
+
   /* set_budget = (event) => {
       this.setState({budget:event.target.value})
       this.setState({flag_budget:true})
@@ -105,10 +105,6 @@ class BudgetSearch extends Component {
   }
 
   render() {
-    const userInfo = this.props.user.map((res) => {
-      this.state.username = res.username;
-    });
-    let infoString = 'Hello, ' + this.state.username + '!';
     const { checked, id, itemNum } = this.state;
     const { isAuthenticated } = this.props;
     let redirect = null;
@@ -125,7 +121,6 @@ class BudgetSearch extends Component {
                 </div> */}
         <div className="upperbar">
           <h1>Budget Search</h1>
-          {infoString}
           <div className="buttons">
             <button id="back-button" type="button" onClick={() => this.menuHandler()}>
               <img id="arrow" src={arrow} alt="Back to Main Menu" />
@@ -135,10 +130,10 @@ class BudgetSearch extends Component {
           </div>
         </div>
         <div className="Menubar">
-          <button id="Searchmenu" onClick={() => this.searchHandler()}>Search-Tag</button>
-          <button id="Budgetmenu" onClick={() => this.budgetHandler()}>Budget-Search</button>
-          <button id="Tonemenu" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-          <button id="Salemenu" onClick={() => this.saleHandler()}>Sale-Info</button> 
+          <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
+          <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
+          <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+          <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
         </div>
         <div className="item_input">
           <h4>{strNumItems}</h4>

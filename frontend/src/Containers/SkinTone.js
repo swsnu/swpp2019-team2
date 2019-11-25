@@ -64,25 +64,26 @@ class SkinTone extends Component {
     searchHandler = () => {
       this.props.history.replace('../search');
     };
-  
+
     budgetHandler = () => {
       this.props.history.replace('../budget');
     };
-  
+
     toneHandler = () => {
       this.props.history.replace('../skintone');
     };
-  
+
     saleHandler = () => {
       this.props.history.replace('../sale');
     };
 
     render() {
       let redirect = null;
-      const userInfo = this.props.user.map((res) => {
-        this.state.username = res.username;
-      });
-      let infoString = 'Hello, ' + this.state.username + '!';
+      let infoString = 'Hello';
+      if (this.props.user[0]) {
+        const { username } = this.props.user[0];
+        infoString = `Hello, ${username}!`;
+      }
       if (!this.props.isAuthenticated) {
         redirect = <Redirect to="/login" />;
       }
@@ -99,10 +100,10 @@ class SkinTone extends Component {
             <h1>Skin Tone Analysis</h1>
             {infoString}
             <div className="Menubar">
-              <button id="Searchmenu" onClick={() => this.searchHandler()}>Search-Tag</button>
-              <button id="Budgetmenu" onClick={() => this.budgetHandler()}>Budget-Search</button>
-              <button id="Tonemenu" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-              <button id="Salemenu" onClick={() => this.saleHandler()}>Sale-Info</button> 
+              <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
+              <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
+              <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+              <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
             </div>
             <div className="buttons">
               <button id="back-button" type="button" onClick={() => this.menuHandler()}>

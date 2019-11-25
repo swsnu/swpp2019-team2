@@ -4,5 +4,5 @@ export {
   authLogin,
   authSignup,
   authCheckState,
-  getUser
+  getUser,
 } from './cosmos';
