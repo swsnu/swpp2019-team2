@@ -87,7 +87,7 @@ def min_lip_len(hexa):
         return ('PU', webcolors.rgb_to_hex(color_total_list[tar_color]))
     return (None, None)
 
-
+# pylint: disable=pointless-string-statement
 ''' # TODO : FIX
 def min_base_len(tuple1):
     min_face = -1
