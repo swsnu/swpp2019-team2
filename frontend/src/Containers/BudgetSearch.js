@@ -251,54 +251,54 @@ class BudgetSearch extends Component {
           <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
           <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
           <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
-        <h4>{strBudget}</h4>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: 300 }}>
-            <Select
-              id="select"
-              isClearable
-              placeholder="select budget..."
-              options={options}
-              onChange={(selected) => this.handleChange(selected)}
-            />
+          <h4>{strBudget}</h4>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: 300 }}>
+              <Select
+                id="select"
+                isClearable
+                placeholder="select budget..."
+                options={options}
+                onChange={(selected) => this.handleChange(selected)}
+              />
+            </div>
           </div>
+          <div className="item_input">
+            <h4>{strNumItems}</h4>
+            <input type="text" name="item_val" readOnly value={itemNum} />
+            <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
+          </div>
+          <h5>{find1}</h5>
+          <h5>{find2}</h5>
+          <h5>{find3}</h5>
+          <h5>{find4}</h5>
+          <h5>{find5}</h5>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ marginRight: 10, width: 180 }}>
+              <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
+            </div>
+            <div style={{ marginRight: 10, width: 180 }}>
+              <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
+            </div>
+            <div style={{ marginRight: 10, width: 180 }}>
+              {itemNum > 2 && (<CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />)}
+            </div>
+            <div style={{ marginRight: 10, width: 180 }}>
+              {itemNum > 3 && (<CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />)}
+            </div>
+            <div style={{ width: 180 }}>
+              {itemNum > 4 && (<CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />)}
+            </div>
+          </div>
+          <div className="button">
+            <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()}>Combine Cosmetics</button>
+          </div>
+          <div>
+            <button type="button" id="reset-result" onClick={() => this.setState({ combi: [] })}> 초기화 </button>
+          </div>
+          {show && (<ItemDisplay combinations={combi} />)}
         </div>
-        <div className="item_input">
-          <h4>{strNumItems}</h4>
-          <input type="text" name="item_val" readOnly value={itemNum} />
-          <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
-        </div>
-        <h5>{find1}</h5>
-        <h5>{find2}</h5>
-        <h5>{find3}</h5>
-        <h5>{find4}</h5>
-        <h5>{find5}</h5>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ marginRight: 10, width: 180 }}>
-            <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
-          </div>
-          <div style={{ marginRight: 10, width: 180 }}>
-            <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
-          </div>
-          <div style={{ marginRight: 10, width: 180 }}>
-            {itemNum > 2 && (<CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />)}
-          </div>
-          <div style={{ marginRight: 10, width: 180 }}>
-            {itemNum > 3 && (<CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />)}
-          </div>
-          <div style={{ width: 180 }}>
-            {itemNum > 4 && (<CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />)}
-          </div>
-        </div>
-        <div className="button">
-          <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()}>Combine Cosmetics</button>
-        </div>
-        <div>
-          <button type="button" id="reset-result" onClick={() => this.setState({ combi: [] })}> 초기화 </button>
-        </div>
-        {show && (<ItemDisplay combinations={combi} />)}
       </div>
-
     );
   }
 }
