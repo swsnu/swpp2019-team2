@@ -50,10 +50,12 @@ class LipOption(models.Model):
     RED = "RD"
     PINK = "PK"
     ORANGE = "OR"
+    PURPLE = "PU"
     COLOR = (
         (RED, "Red"),
         (PINK, "Pink"),
         (ORANGE, "Orange"),
+        (PURPLE, "Purple"),
     )
     color = models.CharField(
         max_length=2,
