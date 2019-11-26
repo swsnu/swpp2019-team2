@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './SkinToneResult.css';
+import { css } from '@emotion/core'
+import { SyncLoader } from 'react-spinners';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import arrow from '../image/화살표.png';
