@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import {
-  Route, Redirect, Switch, BrowserRouter, Router
+  Route, Redirect, Switch,
 } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router'
+import { ConnectedRouter } from 'connected-react-router';
 import MainPage from './Containers/MainPage';
 import LogIn from './Containers/LogIn';
 import BudgetSearch from './Containers/BudgetSearch';
