@@ -26,10 +26,10 @@ class AritaumSpider(scrapy.Spider):
     def start_requests(self):
         link = 'link'
         title = 'title'
-        
+
         urls = [{
-                title: "base",
-                link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2100"
+            title: "base",
+            link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2100"
             }]
         for url in urls:
             self.browser.get(url[link])
