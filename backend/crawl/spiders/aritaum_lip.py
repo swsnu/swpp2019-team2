@@ -105,7 +105,7 @@ class AritaumSpider(scrapy.Spider):
                 brand=brand[0],
                 category=category,
                 img_url=thumb_url,
-                crawled="product"
+                crawled="lip"
             )
 
             color_range = item.find_elements_by_class_name(
@@ -132,16 +132,10 @@ class AritaumSpider(scrapy.Spider):
                         "./span/label/span").value_of_css_property("background-color")
                     product = Lip_db.objects.filter(name=product_name)[0]
                     color_hex = self.save_color_by_rgb(color_rgb)
-                    color_tuple = cal_color_tag(color_hex[1:])
-                    if color_tuple[0] == "red":
-                        color = "RD"
-                    elif color_tuple[0] == "pink":
-                        color = "PK"
-                    else:
-                        color = "OR"
+                    color_tuple = cal_color_tag("lip", color_hex)
                     yield LipColor(
                         color_hex=color_hex,
-                        color=color,
+                        color=color_tuple[0],
                         sub_color=color_tuple[1],
                         optionName=color_name,
                         product=product,
@@ -163,7 +157,7 @@ class AritaumSpider(scrapy.Spider):
         img = Image.open(requests.get(url, stream=True).raw)
         img = img.resize((30, 30))
         color_hex = self.getcolors(img, url)
-        color_tuple = cal_color_tag(color_hex[1:])
+        color_tuple = cal_color_tag("lip", color_hex)
         product = Lip_db.objects.filter(name=name)[0]
         yield LipColor(
             color_hex=color_hex,
