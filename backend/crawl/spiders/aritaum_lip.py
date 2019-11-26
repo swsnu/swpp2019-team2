@@ -9,6 +9,8 @@ from PIL import Image
 from crawl.items import LipProduct, LipColor, Brand
 from brand.models import Brand as Brand_db
 from products.lip.models import Lip as Lip_db
+from .spider_helper import translate_category
+
 
 from .color_tag import cal_color_tag
 
@@ -75,13 +77,6 @@ class AritaumSpider(scrapy.Spider):
     def parse_product(self, response):
         """ parse product information from page """
         #pylint: disable=too-many-locals
-        category_en = {
-            "립스틱": "S",
-            "립글로즈": "G",
-            "립케어/립밤": "B",
-            "립틴트": "T",
-            "립글로스": "S"
-        }
         for item in response.meta["product"]:
             product_name = item.find_element_by_name(
                 "tagging_productNm").get_property("value")
@@ -89,12 +84,14 @@ class AritaumSpider(scrapy.Spider):
                 "tagging_brandNm").get_property("value")
             price = item.find_element_by_name(
                 "tagging_price").get_property("value")
-            category_ko = item.find_element_by_name(
-                "tagging_category").get_property("value")[12:]
-            try:
-                category = category_en[category_ko]
-            except KeyError:
-                continue
+            product_id = item.find_element_by_name(
+                "i_sProductcd").get_property("value")
+            product_url = "https://www.aritaum.com/shop/pr/shop_pr_product_view.do?i_sProductcd="+product_id
+            category_raw = item.find_element_by_name(
+                "tagging_category").get_property("value")
+            category = translate_category(category_raw, "lip")
+            if category == -1:
+                pass
             brand = Brand_db.objects.filter(name=brand_name)
             thumb_url = item.find_element_by_css_selector(
                 "div.product-thumb img").get_property("src")
@@ -105,7 +102,8 @@ class AritaumSpider(scrapy.Spider):
                 brand=brand[0],
                 category=category,
                 img_url=thumb_url,
-                crawled="lip"
+                crawled="lip",
+                product_url=product_url
             )
 
             color_range = item.find_elements_by_class_name(
