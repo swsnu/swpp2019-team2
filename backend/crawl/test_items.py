@@ -17,7 +17,7 @@ class ItemTest(unittest.TestCase):
         i = LipProduct()
         self.assert_sorted_equal(
             i.fields.keys(), [
-                'name', 'price', 'brand', 'category', 'img_url', 'crawled', 'form'])
+                'name', 'price', 'brand', 'category', 'product_url', 'img_url', 'crawled', 'form'])
 
     def test_brand_product(self):
         i = Brand()
