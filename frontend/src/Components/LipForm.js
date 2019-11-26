@@ -7,7 +7,7 @@ const getKeyByValue = (object, value) => Object.keys(object).find((key) => objec
 
 const LipForm = (props) => {
   const {
-    imgUrl, name, price, category, brand, form, colors,
+    imgUrl, name, price, category, brand, form, colors, productUrl,
   } = props;
   const subcolor = colors.map((color) => {
     const style = { backgroundColor: color.color_hex };
@@ -17,7 +17,7 @@ const LipForm = (props) => {
   const realForm = getKeyByValue(CATEGORY.lip.form, form);
   return (
     <li className="LipContainer">
-      <div>
+      <a target="_blank" rel="noopener noreferrer" className="productItem" href={productUrl}>
         <section className="thumbnail">
           <img height="200" width="200" src={imgUrl} alt="new" />
         </section>
@@ -42,7 +42,7 @@ const LipForm = (props) => {
 제형:&emsp;
           {realForm}
         </section>
-      </div>
+      </a>
     </li>
 
   );

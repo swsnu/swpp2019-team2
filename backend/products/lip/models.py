@@ -39,7 +39,14 @@ class Lip(models.Model):
         max_length=1,
         choices=CATEGORY,
     )
-    img_url = models.TextField(default="//:0")
+    product_url = models.CharField(
+        max_length=255,
+        default="//:0",
+    )
+    img_url = models.CharField(
+        max_length=255,
+        default="//:0",
+    )
 
     def __str__(self):
         return self.name
