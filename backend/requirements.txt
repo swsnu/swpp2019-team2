@@ -31,3 +31,4 @@ wincertstore==0.2
 wrapt==1.11.2
 Pillow==6.2.1
 webcolors==1.10
+colormath==3.0.0
