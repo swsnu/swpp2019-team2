@@ -35,7 +35,7 @@ class FileUploadView(APIView):
             u_id = json.loads(body)['userID']
         except(KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        ml = ML.objects.get(user_id=u_id)
+        ml = ML.objects.filter(user_id=u_id).latest('id')
         ml.result = tone_analysis(ml.image)
         ml.save()
         response_dict = {'id':ml.id, 'user_id':ml.user_id, 'result':ml.result}

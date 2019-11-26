@@ -96,6 +96,7 @@ export const runAnalysis = (userID) => (dispatch) => {
   axios.put('/api/ml/', userID)
     .then((res) => {
       dispatch(runAnalysis_(res.data));
+      dispatch(push('../skintone/result'));
     });
 };
 
@@ -112,7 +113,7 @@ export const sendImage = (image) => (dispatch) => {
   })
     .then((res) => {
       dispatch(sendImage_(res.data));
-      dispatch(push('result'));
+      dispatch(push('../skintone/loading'));
     });
 };
 
