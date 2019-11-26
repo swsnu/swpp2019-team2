@@ -42,6 +42,7 @@ class BudgetSearch extends Component {
       show: false,
       itemNum: 2,
       budgetRange: null,
+      initialized: true,
     };
   }
 
@@ -107,95 +108,108 @@ class BudgetSearch extends Component {
 
   handleClick() {
     const {
-      budgetRange, list1, list2, list3, list4, list5, itemNum,
+      budgetRange, list1, list2, list3, list4, list5, itemNum, initialized,
     } = this.state;
-    const minBudget = budgetRange[0];
-    const maxBudget = budgetRange[1];
-    const tmp1 = list1;
-    const tmp2 = list2;
-    const tmp3 = list3;
-    const tmp4 = list4;
-    const tmp5 = list5;
-    const answer = [];
-    for (let i = 0; i < tmp1.length; i++) {
-      const comb = [];
-      let sum = 0;
-      if (tmp1[i].price > maxBudget) break;
-      else {
-        comb.push(tmp1[i]);
-        sum += tmp1[i].price;
-        for (let j = 0; j < tmp2.length; j++) {
-          if (sum + tmp2[j].price > maxBudget) break;
-          else {
-            comb.push(tmp2[j]);
-            sum += tmp2[j].price;
-            if (itemNum === 2) {
-              if (sum >= minBudget) {
-                answer.push(comb.slice());
-              }
-              comb.pop();
-              sum -= tmp2[j].price;
-              // eslint-disable-next-line no-continue
-              continue;
-            }
-            for (let k = 0; k < tmp3.length; k++) {
-              if (sum + tmp3[k].price > maxBudget) break;
-              else {
-                comb.push(tmp3[k]);
-                sum += tmp3[k].price;
-                if (itemNum === 3) {
-                  if (sum >= minBudget) {
-                    answer.push(comb.slice());
-                  }
-                  comb.pop();
-                  sum -= tmp3[k].price;
-                  // eslint-disable-next-line no-continue
-                  continue;
+    if (initialized === false) {
+      swal('please reset before another search');
+    } else {
+      const minBudget = budgetRange[0];
+      const maxBudget = budgetRange[1];
+      const tmp1 = list1;
+      const tmp2 = list2;
+      const tmp3 = list3;
+      const tmp4 = list4;
+      const tmp5 = list5;
+      const answer = [];
+      for (let i = 0; i < tmp1.length; i++) {
+        const comb = [];
+        let sum = 0;
+        if (tmp1[i].price > maxBudget) break;
+        else {
+          comb.push(tmp1[i]);
+          sum += tmp1[i].price;
+          for (let j = 0; j < tmp2.length; j++) {
+            if (sum + tmp2[j].price > maxBudget) break;
+            else {
+              comb.push(tmp2[j]);
+              sum += tmp2[j].price;
+              if (itemNum === 2) {
+                if (sum >= minBudget) {
+                  answer.push(comb.slice());
                 }
-                for (let l = 0; l < tmp4.length; l++) {
-                  if (sum + tmp4[l].price > maxBudget) break;
-                  else {
-                    comb.push(tmp4[l]);
-                    sum += tmp4[l].price;
-                    if (itemNum === 4) {
-                      if (sum >= minBudget) {
-                        answer.push(comb.slice());
-                      }
-                      comb.pop();
-                      sum -= tmp4[l].price;
-                      // eslint-disable-next-line no-continue
-                      continue;
+                comb.pop();
+                sum -= tmp2[j].price;
+                // eslint-disable-next-line no-continue
+                continue;
+              }
+              for (let k = 0; k < tmp3.length; k++) {
+                if (sum + tmp3[k].price > maxBudget) break;
+                else {
+                  comb.push(tmp3[k]);
+                  sum += tmp3[k].price;
+                  if (itemNum === 3) {
+                    if (sum >= minBudget) {
+                      answer.push(comb.slice());
                     }
-                    for (let m = 0; m < tmp5.length; m++) {
-                      if (sum + tmp5[m].price > maxBudget) break;
-                      else {
-                        comb.push(tmp5[m]);
-                        sum += tmp5[m].price;
+                    comb.pop();
+                    sum -= tmp3[k].price;
+                    // eslint-disable-next-line no-continue
+                    continue;
+                  }
+                  for (let l = 0; l < tmp4.length; l++) {
+                    if (sum + tmp4[l].price > maxBudget) break;
+                    else {
+                      comb.push(tmp4[l]);
+                      sum += tmp4[l].price;
+                      if (itemNum === 4) {
                         if (sum >= minBudget) {
                           answer.push(comb.slice());
                         }
                         comb.pop();
-                        sum -= tmp5[m];
+                        sum -= tmp4[l].price;
                         // eslint-disable-next-line no-continue
                         continue;
                       }
+                      for (let m = 0; m < tmp5.length; m++) {
+                        if (sum + tmp5[m].price > maxBudget) break;
+                        else {
+                          comb.push(tmp5[m]);
+                          sum += tmp5[m].price;
+                          if (sum >= minBudget) {
+                            answer.push(comb.slice());
+                          }
+                          comb.pop();
+                          sum -= tmp5[m];
+                          // eslint-disable-next-line no-continue
+                          continue;
+                        }
+                      }
                     }
                   }
+                  comb.pop();
+                  sum -= tmp3[k].price;
                 }
-                comb.pop();
-                sum -= tmp3[k].price;
               }
-            }
 
-            comb.pop();
-            sum -= tmp2[j].price;
+              comb.pop();
+              sum -= tmp2[j].price;
+            }
           }
         }
       }
-    }
 
-    this.setState({ combi: answer });
-    this.setState({ show: true });
+      this.setState({ combi: answer });
+      this.setState({ show: true });
+      if (answer.length !== 0) {
+        this.setState({ initialized: false });
+      }
+    }
+  }
+
+  handleReset() {
+    this.setState({ combi: [] });
+    this.setState({ show: false });
+    this.setState({ initialized: true });
   }
 
   render() {
@@ -225,60 +239,97 @@ class BudgetSearch extends Component {
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
           </div>
         </div>
-        <h4>{strBudget}</h4>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: 300 }}>
-            <Select
-              id="select"
-              isClearable
-              placeholder="select budget..."
-              options={options}
-              onChange={(selected) => this.handleChange(selected)}
-            />
-          </div>
-        </div>
-        <div className="item_input">
-          <h4>{strNumItems}</h4>
-          <input type="text" name="item_val" readOnly value={itemNum} />
-          <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
-        </div>
-        <h5>{find1}</h5>
-        <h5>{find2}</h5>
-        <h5>{find3}</h5>
-        <h5>{find4}</h5>
-        <h5>{find5}</h5>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 30 }}>
-          <div style={{ marginRight: 30, width: 180 }}>
-            <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
-          </div>
-          <div style={{ marginRight: 30, width: 180 }}>
-            <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
-          </div>
-          {itemNum > 2 && (
-            <div style={{ marginRight: 30, width: 180 }}>
-              <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
+        <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{
+              display: 'flex', flexDirection: 'column', margin: 20, backgroundColor: '#EAEAEA', borderRadius: 10, padding: 10,
+            }}
+            >
+              <h4 style={{ display: 'flex', justifyContent: 'center' }}>{strBudget}</h4>
+              <div>
+                <div style={{ width: 220 }}>
+                  <Select
+                    id="select"
+                    isClearable
+                    placeholder="select budget..."
+                    options={options}
+                    onChange={(selected) => this.handleChange(selected)}
+                  />
+                </div>
+              </div>
+              <div className="item_input" style={{ display: 'flex', flexDirection: 'column' }}>
+                <h4>{strNumItems}</h4>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                  <input type="text" name="item_val" readOnly value={itemNum} style={{ width: 50 }} />
+                  <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} style={{ width: 100 }} />
+                </div>
+              </div>
+              <div>
+                <div style={{ margin: 22, width: 180 }}>
+                  <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
+                </div>
+                <div style={{ margin: 22, width: 180 }}>
+                  <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
+                </div>
+                {itemNum > 2 && (
+                  <div style={{ margin: 22, width: 180 }}>
+                    <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
+                  </div>
+                )}
+                {itemNum > 3 && (
+                  <div style={{ margin: 22, width: 180 }}>
+                    <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
+                  </div>
+                )}
+                {itemNum > 4 && (
+                  <div style={{ margin: 22, width: 180 }}>
+                    <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-          {itemNum > 3 && (
-            <div style={{ marginRight: 30, width: 180 }}>
-              <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
+            <div>
+              <h5>{find1}</h5>
+              <h5>{find2}</h5>
+              <h5>{find3}</h5>
+              <h5>{find4}</h5>
+              <h5>{find5}</h5>
             </div>
-          )}
-          {itemNum > 4 && (
-            <div style={{ width: 180 }}>
-              <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
-            </div>
-          )}
-        </div>
-        <div className="button">
-          <button id="combine-cosmetics-button" type="submit" onClick={() => this.confirmHandler()} style={{ borderWidth: 2 }}>Combine Cosmetics</button>
-        </div>
-        <div>
-          <button type="button" id="reset-result" onClick={() => this.setState({ combi: [] })}> 초기화 </button>
-        </div>
-        {show && (<ItemDisplay combinations={combi} />)}
-      </div>
+          </div>
+          <div style={{ flex: 1, paddingRight: 20 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
+              <div>
+                <button
+                  id="combine-cosmetics-button"
+                  type="submit"
+                  onClick={() => this.confirmHandler()}
+                  style={{
+                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3,
+                  }}
+                >
+                  Combine Cosmetics
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  id="reset-result"
+                  onClick={() => this.handleReset()}
+                  style={{
+                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3,
+                  }}
+                >
+                  {' '}
+                  초기화
+                  {' '}
 
+                </button>
+              </div>
+            </div>
+            {show && (<ItemDisplay combinations={combi} />)}
+          </div>
+        </div>
+      </div>
     );
   }
 }
