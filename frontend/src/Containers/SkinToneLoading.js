@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { ClipLoader, SyncLoader } from 'react-spinners';
 import * as actionCreators from '../store/actions/index';
 import arrow from '../image/화살표.png';
+import css from '@emotion/core';
 
 class SkinToneLoading extends Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class SkinToneLoading extends Component {
       selectedFile: null,
       fileurl: '',
       flag: false,
+      loading: true,
     };
   }
 
@@ -44,6 +47,11 @@ class SkinToneLoading extends Component {
       }
 
       render() {
+        const override = css`
+            display: block;
+            margin: 0 auto;
+            border-color: red;
+        `;
         let redirect = null;
         if (!this.props.isAuthenticated) {
           redirect = <Redirect to="/login" />;
@@ -68,6 +76,13 @@ class SkinToneLoading extends Component {
             <div className="loading">
               <h1>Loading</h1>
             </div>
+            <SyncLoader
+              css={override}
+              sizeUnit="px"
+              size={150}
+              color="#123abc"
+              loading={this.state.loading}
+            />
           </div>
         );
       }

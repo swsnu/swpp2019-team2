@@ -2,6 +2,8 @@
 
 def hex_into_rgb(hexa):
     """ change hex value into rgb value """
+    if hexa[0] == '#':
+        hexa = hexa[1:]
     str_r = hexa[0:2]
     str_g = hexa[2:4]
     str_b = hexa[4:]

@@ -40,11 +40,20 @@ class FileUploadView(APIView):
         ml_object = ML.objects.filter(user_id=u_id).latest('id')
         ml_object.result = tone_analysis(ml_object.image)
         ml_object.save()
-        base_products = Base_models.BaseOption.objects.all()
-        base_products_hexa = [i.color_hex for i in base_products]
+        base_products = Base_models.Base.objects.filter(category='F')
+        base_products_info = []
+        total_base_products_info = Base_models.BaseOption.objects.all()
+        for p in base_products.all():
+            for q in total_base_products_info:
+                if q.product == p:
+                    base_products_info.append(q)
+
+        #base_products_info = Base_models.BaseOption.objects.filter(product=base_products.all())
+        base_products_hexa = [i.color_hex for i in base_products_info]
         best_product = best_match(base_products_hexa, ml_object.result)
-        ml_object.base = best_product
-        #ml_object.base = str(Base_models.BaseOption.objects.get(id=best_product).product) + " " + Base_models.BaseOption.objects.get(id=best_product).optionName
+        final = base_products_info[best_product]
+        ml_object.base = str(final.product) + " " + final.optionName
+        ml_object.product = base_products.filter(name=final.product)
         ml_object.save()
         response_dict = {'id':ml_object.id, 'user_id':ml_object.user_id, 'result':ml_object.result, 'base':ml_object.base}
         return JsonResponse(response_dict, status=201)
