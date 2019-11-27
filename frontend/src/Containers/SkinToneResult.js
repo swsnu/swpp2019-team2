@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './SkinToneResult.css';
-import { css } from '@emotion/core'
-import { SyncLoader } from 'react-spinners';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import arrow from '../image/화살표.png';
@@ -15,11 +13,13 @@ class SkinToneResult extends Component {
       selectedFile: null,
       fileurl: '',
       flag: false,
+      result: '',
     };
   }
 
   componentDidMount() {
     this.props.onTryAutoSignup();
+    this.setState({ result: `rgb(${this.props.ML.result_r},${this.props.ML.result_g},${this.props.ML.result_b})` });
     /* if (this.props.selectedUser) {
         this.setState({ id: this.props.selectedUser.id });
       } */
@@ -43,6 +43,7 @@ class SkinToneResult extends Component {
         if (!this.props.isAuthenticated) {
           redirect = <Redirect to="/login" />;
         }
+        const ML_result = `(${this.props.ML.result_r},${this.props.ML.result_g},${this.props.ML.result_b})`;
         const id = this.state;
         return (
           <div className="SkinToneResult">
@@ -62,6 +63,12 @@ class SkinToneResult extends Component {
             </div>
             <div className="result">
               <h1>Result</h1>
+              <h2>User ID</h2>
+              <div>{this.props.ML.user_id}</div>
+              <h2>result</h2>
+              <div className="MLresult" style={{ backgroundColor: this.state.result, width: 300, height: 300 }}>{this.state.ML_result}</div>
+              <h2>Foundation Recommendation</h2>
+              <div>{this.props.ML.base}</div>
             </div>
           </div>
         );
@@ -71,6 +78,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  ML: state.cosmos.ML,
 });
 
 const mapDispatchToProps = (dispatch) => ({

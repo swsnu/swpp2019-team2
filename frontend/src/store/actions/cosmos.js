@@ -88,8 +88,11 @@ export const authCheckState = () => (dispatch) => {
 export const runAnalysis_ = (data) => ({
   type: actionTypes.RUN_ANALYSIS,
   user_id: data.user_id,
-  result: data.result,
+  r: data.r,
+  g: data.g,
+  b: data.b,
   id: data.id,
+  base: data.base,
 });
 
 export const runAnalysis = (userID) => (dispatch) => {

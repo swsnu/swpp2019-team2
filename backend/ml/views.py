@@ -55,5 +55,5 @@ class FileUploadView(APIView):
         ml_object.base = str(final.product) + " " + final.optionName
         ml_object.product = base_products.filter(name=final.product)
         ml_object.save()
-        response_dict = {'id':ml_object.id, 'user_id':ml_object.user_id, 'result':ml_object.result, 'base':ml_object.base}
+        response_dict = {'id':ml_object.id, 'user_id':ml_object.user_id, 'r':ml_object.result[0], 'g':ml_object.result[1], 'b':ml_object.result[2], 'base':ml_object.base}
         return JsonResponse(response_dict, status=201)

@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 
 const initialState = {
@@ -34,10 +35,13 @@ const authLogout = (state) => updateObject(state, {
 });
 
 const saveML = (state, action) => updateObject(state, {
-  ml: {
+  ML: {
     id: action.id,
     user_id: action.user_id,
-    result: action.result,
+    result_r: action.r,
+    result_g: action.g,
+    result_b: action.b,
+    base: action.base,
   },
 });
 
