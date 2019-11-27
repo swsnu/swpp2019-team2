@@ -41,7 +41,7 @@ const ItemShow = ({ combination }) => {
 const ItemDisplay = ({ combinations }) => {
   if (combinations.length === 0) {
     return (
-      <div>
+      <div className="NoResult">
         <h1>No Result!</h1>
       </div>
     );

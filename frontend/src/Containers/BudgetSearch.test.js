@@ -176,22 +176,27 @@ describe('<BudgetSearch />', () => {
   });
   it('should call confirmhandler and call handleClick', () => {
     const mockHandleChange = jest.fn();
+    const mockSwal = jest.fn();
     const component = shallow(<BudgetSearch.WrappedComponent />);
     const inputBar = component.find('#item_num');
     const wrapper = component.find('#select');
     wrapper.prop('onChange')({ value: 6 }, mockHandleChange());
     const mockConfirmHandler = jest.fn();
     const button = component.find('#combine-cosmetics-button');
+    const resetButton = component.find('#reset-result');
     expect(component.state().budgetRange).toEqual([30000, 35000]);
     for (let i = 2; i <= 5; i++) {
       inputBar.simulate('change', { target: { value: i } });
       button.prop('onClick')(mockConfirmHandler());
       expect(mockConfirmHandler).toBeCalled();
+      resetButton.simulate('click');
     }
     wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
     inputBar.simulate('change', { target: { value: 2 } });
     button.prop('onClick')(mockConfirmHandler());
     expect(mockConfirmHandler).toBeCalled();
+    button.prop('onClick')(mockSwal());
+    expect(mockSwal).toBeCalled();
   });
 
   it('should call set_itemnum', () => {

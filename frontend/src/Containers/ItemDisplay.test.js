@@ -13,4 +13,10 @@ describe('<ItemDisplay />', () => {
     const wrapper = component.find('.ItemShow');
     expect(wrapper.length).toBe(2);
   });
+
+  it('should render no result page when there is no result', () => {
+    const component = mount(<ItemDisplay combinations={[]} />);
+    const wrapper = component.find('.NoResult');
+    expect(wrapper.length).toBe(1);
+  });
 });
