@@ -9,10 +9,6 @@ class SkinToneResult extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      selectedFile: null,
-      fileurl: '',
-      flag: false,
       result: '',
     };
   }
@@ -43,7 +39,6 @@ class SkinToneResult extends Component {
         if (!this.props.isAuthenticated) {
           redirect = <Redirect to="/login" />;
         }
-        const ML_result = `(${this.props.ML.result_r},${this.props.ML.result_g},${this.props.ML.result_b})`;
         const id = this.state;
         return (
           <div className="SkinToneResult">

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { css } from '@emotion/core';
-import { SyncLoader, BeatLoader } from 'react-spinners';
+import { BeatLoader } from 'react-spinners';
 import * as actionCreators from '../store/actions/index';
-import arrow from '../image/화살표.png';
 import './SkinToneLoading.css';
 
 class SkinToneLoading extends Component {
