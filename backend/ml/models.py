@@ -1,6 +1,6 @@
 """ ML model """
 from django.db import models
-from products.base import models as product_models
+# from products.base import models as product_models
 # Create your models here.
 
 class ML(models.Model):

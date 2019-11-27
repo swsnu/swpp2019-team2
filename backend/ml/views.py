@@ -8,22 +8,25 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from products.base import models as Base_models
 from .face_color_ml import tone_analysis
 from .serializers import FileSerializer
 from .models import ML
-from products.base import models as Base_models
-from .face_color_ml import tone_analysis
 from .find_base import best_match
 
 class FileUploadView(APIView):
+    """ ML Model View"""
     parser_class = (FileUploadParser,)
 
     def get(self, request):
+        # pylint: disable=no-member
+        """ GET """
         mls = ML.objects.all()
         serializer = FileSerializer(mls, many=True)
         return Response(serializer.data)
 
     def post(self, request):
+        """ POST """
         file = FileSerializer(data=request.data)
         if file.is_valid():
             file.save()
@@ -32,10 +35,12 @@ class FileUploadView(APIView):
             return Response(file.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
+        # pylint: disable=line-too-long,no-member
+        """ PUT """
         try:
             body = request.body.decode()
             u_id = json.loads(body)['userID']
-        except(KeyError, JSONDecodeError) as e:
+        except(KeyError, JSONDecodeError) as error:
             return HttpResponseBadRequest()
         ml_object = ML.objects.filter(user_id=u_id).latest('id')
         ml_object.result = tone_analysis(ml_object.image)
@@ -43,10 +48,10 @@ class FileUploadView(APIView):
         base_products = Base_models.Base.objects.filter(category='F')
         base_products_info = []
         total_base_products_info = Base_models.BaseOption.objects.all()
-        for p in base_products.all():
-            for q in total_base_products_info:
-                if q.product == p:
-                    base_products_info.append(q)
+        for product1 in base_products.all():
+            for product2 in total_base_products_info:
+                if product2.product == product1:
+                    base_products_info.append(product2)
 
         #base_products_info = Base_models.BaseOption.objects.filter(product=base_products.all())
         base_products_hexa = [i.color_hex for i in base_products_info]
