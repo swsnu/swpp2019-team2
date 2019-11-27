@@ -31,11 +31,13 @@ span.color-chip {
 section.color {
     display:inline-flex;
     height:35px;
-    overflow:scroll;
+    -ms-overflow-style: none;
+    overflow-y:scroll;
 }
-section.color > ul {
-    overflow:scroll;
-}
+
+section.color::-webkit-scrollbar {
+    display: none;
+  }
 
 .react-tooltip-lite {
     background: #333;
