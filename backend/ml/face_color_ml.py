@@ -14,7 +14,10 @@ from matplotlib import pyplot as plt
 resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
 def img_to_face(image_path):
-    final_path = 'media/' + str(image_path)
+    if not isinstance(image_path, str):
+        final_path = image_path
+    else:
+        final_path = 'media/' + str(image_path)
     img = Image.open(final_path).convert('RGB')
     mtcnn = MTCNN(image_size=100)
     # Get cropped and prewhitened image tensor
