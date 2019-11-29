@@ -2,8 +2,7 @@
 
 import json
 from json import JSONDecodeError
-from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseBadRequest
-from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponseBadRequest
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -31,16 +30,15 @@ class FileUploadView(APIView):
         if file.is_valid():
             file.save()
             return Response(file.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(file.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(file.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        # pylint: disable=line-too-long,no-member
+        # pylint: disable=line-too-long,no-member,too-many-locals,no-self-use
         """ PUT """
         try:
             body = request.body.decode()
             u_id = json.loads(body)['userID']
-        except(KeyError, JSONDecodeError) as error:
+        except(KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         ml_object = ML.objects.filter(user_id=u_id).latest('id')
         ml_object.result = tone_analysis(ml_object.image)
