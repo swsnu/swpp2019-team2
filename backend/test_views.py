@@ -65,7 +65,7 @@ class MLTestCase(TestCase):
             color_hex="111111", optionName="option", product=self.product1
         )
         img_url = 'http://ph.spotvnews.co.kr/news/photo/201905/285546_351974_2458.jpg'
-        self.img_temp = NamedTemporaryFile(delete=True, dir='media/images', suffix='.jpg')
+        self.img_temp = NamedTemporaryFile(delete=True, dir='media', suffix='.jpg')
         self.img_temp.write(urlopen(img_url).read())
         self.img_temp.flush()
         self.ml_object = ML.objects.create(
