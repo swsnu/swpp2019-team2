@@ -19,47 +19,35 @@ class SkinToneLoading extends Component {
     setTimeout(this.props.run_analysis('425'), 4000);
   }
 
-      logoutHandler = () => {
-        this.props.Logout();
-        this.props.onTryAutoSignup();
-      }
 
-      mypageHandler = (id) => {
-        this.props.history.replace(`../mypage/${id}`);
-      }
-
-      menuHandler = () => {
-        this.props.history.replace('../main');
-      }
-
-      render() {
-        const override = css`
+  render() {
+    const override = css`
             display: block;
             margin: 100 auto;
             border-color: red;
         `;
-        let redirect = null;
-        if (!this.props.isAuthenticated) {
-          redirect = <Redirect to="/login" />;
-        }
-        return (
-          <div className="SkinToneLoading">
-            {redirect}
-            <div className="LoadingBox">
-              <h3>Calculating...</h3>
-              <div className="Loader">
-                <BeatLoader
-                  css={override}
-                  sizeUnit="px"
-                  size={30}
-                  color="#BD10E0"
-                  loading={this.state.loading}
-                />
-              </div>
-            </div>
+    let redirect = null;
+    if (!this.props.isAuthenticated) {
+      redirect = <Redirect to="/login" />;
+    }
+    return (
+      <div className="SkinToneLoading">
+        {redirect}
+        <div className="LoadingBox">
+          <h3>Calculating...</h3>
+          <div className="Loader">
+            <BeatLoader
+              css={override}
+              sizeUnit="px"
+              size={30}
+              color="#BD10E0"
+              loading={this.state.loading}
+            />
           </div>
-        );
-      }
+        </div>
+      </div>
+    );
+  }
 }
 const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,

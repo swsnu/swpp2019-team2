@@ -52,7 +52,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_FAIL: return authFail(state, action);
     case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
     case actionTypes.SEND_PICTURE: return { ...state };
-    case actionTypes.GET_ANALYSIS_RESULT: return { ...state, ML_results: action.total_results };
+    case actionTypes.GET_ANALYSIS_RESULT: return { ...state };
     case actionTypes.RUN_ANALYSIS: return saveML(state, action);
     case actionTypes.GET_USER: return { ...state, User: action.User };
 

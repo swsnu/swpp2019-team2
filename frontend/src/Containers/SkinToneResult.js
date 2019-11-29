@@ -4,7 +4,6 @@ import './SkinToneResult.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import arrow from '../image/화살표.png';
-import LipForm from '../Components/LipForm';
 
 class SkinToneResult extends Component {
   constructor(props) {
@@ -36,16 +35,23 @@ class SkinToneResult extends Component {
       }
 
       render() {
+        const productUrl = '';
         const FoundationResult = (
-          <LipForm
-            key={this.props.ML.id}
-            thumbnail={this.props.ML.product.img_url}
-            name={this.props.ML.base}
-            price={this.props.ML.product.price}
-            category="Foundation"
-            form={null}
-            brand={this.props.ML.product.brand}
-          />
+          <a target="_blank" rel="noopener noreferrer" className="productItem" href={productUrl}>
+            <section className="thumbnail">
+              <img height="200" width="200" src={this.props.ML.product.img_url} alt="new" />
+            </section>
+            <section className="name_info_text">
+              {this.props.ML.base}
+              {' / '}
+              {this.props.ML.product.brand}
+            </section>
+            <section className="price_info_text">
+가격:&emsp;
+              {this.props.ML.product.price}
+원
+            </section>
+          </a>
         );
         let redirect = null;
         if (!this.props.isAuthenticated) {
