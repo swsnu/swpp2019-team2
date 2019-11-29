@@ -1,10 +1,10 @@
+""" test views """
+import json
+from urllib.request import urlopen
 from django.core.files import File
 from django.core import files
-from io import StringIO
 from django.core.files.temp import NamedTemporaryFile
-from urllib.request import urlopen
 from django.test import TestCase, Client
-import json
 from products.lip.models import Lip, LipOption
 from brand.models import Brand
 from products.lip.serializers import LipSerializer, LipOptionSerializer
