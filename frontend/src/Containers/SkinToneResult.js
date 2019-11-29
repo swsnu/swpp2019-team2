@@ -68,16 +68,17 @@ class SkinToneResult extends Component {
                 <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
               </div>
             </div>
-            <div className="result">
-              <h1>Result</h1>
-              <h2>User ID</h2>
-              <div>{this.props.ML.user_id}</div>
-              <h2>result</h2>
-              <div className="MLresult" style={{ backgroundColor: this.state.result, width: 300, height: 300 }}>{this.state.ML_result}</div>
-            </div>
-            <div className="recommendation">
-              <h2>Foundation Recommendation</h2>
-              <div>{FoundationResult}</div>
+            <div className="resultbox">
+              <div className="result">
+                <h2>User ID</h2>
+                <div>{this.props.ML.user_id}</div>
+                <h2>result</h2>
+                <div className="MLresult" style={{ backgroundColor: this.state.result, width: 150, height: 150, margin: 'auto' }}>{this.state.ML_result}</div>
+              </div>
+              <div className="recommendation">
+                <h2>Foundation Recommendation</h2>
+                <div>{FoundationResult}</div>
+              </div>
             </div>
           </div>
         );

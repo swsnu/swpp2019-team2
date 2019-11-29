@@ -1,6 +1,26 @@
+
 .result {
     display: table;
     align-content: center;
     align-items: center;
+    width:400px;
+    height:430px;
+    position: absolute;
+    top:20%;
+    left:22%;
+    background-color: rgb(255, 220, 226);
+    margin: auto;
+    padding-top: 70px;
+}
+.recommendation {
+    display: table;
+    align-content: center;
+    align-items: center;
     margin:auto;
+    width:400px;
+    height:500px;
+    position: absolute;
+    top:20%;
+    right:22%;
+    background-color: rgb(255, 220, 226);
 }
