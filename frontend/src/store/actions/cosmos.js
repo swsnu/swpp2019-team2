@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 import * as actionTypes from './actionTypes';
 
 
@@ -88,4 +89,52 @@ export const authCheckState = () => (dispatch) => {
       dispatch(authSuccess(token));
     }
   }
+};
+
+export const runAnalysis_ = (data) => ({
+  type: actionTypes.RUN_ANALYSIS,
+  user_id: data.user_id,
+  r: data.r,
+  g: data.g,
+  b: data.b,
+  id: data.id,
+  base: data.base,
+  product: data.product,
+});
+
+export const runAnalysis = (userID) => (dispatch) => {
+  axios.put('/api/ml/', userID)
+    .then((res) => {
+      dispatch(runAnalysis_(res.data));
+      dispatch(push('../skintone/result'));
+    });
+};
+
+export const sendImage_ = (image) => ({
+  type: actionTypes.SEND_PICTURE,
+  target: image,
+});
+
+export const sendImage = (image) => (dispatch) => {
+  axios.post('/api/ml/', image, {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  })
+    .then((res) => {
+      dispatch(sendImage_(res.data));
+      dispatch(push('../skintone/loading'));
+    });
+};
+
+export const getAnalysisResult_ = (results) => ({
+  type: actionTypes.GET_ANALYSIS_RESULT,
+  total_results: results,
+});
+
+export const getAnalysisResult = () => (dispatch) => {
+  axios.get('/api/ml/')
+    .then((res) => {
+      dispatch(getAnalysisResult_(res.data));
+    });
 };
