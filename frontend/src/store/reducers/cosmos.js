@@ -8,7 +8,6 @@ const initialState = {
   token: null,
   error: null,
   loading: false,
-  ML_results: [],
   ML: null,
 };
 
@@ -41,6 +40,7 @@ const saveML = (state, action) => updateObject(state, {
     result_g: action.g,
     result_b: action.b,
     base: action.base,
+    product: action.product,
   },
 });
 

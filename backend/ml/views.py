@@ -58,7 +58,8 @@ class FileUploadView(APIView):
         best_product = best_match(base_products_hexa, ml_object.result)
         final = base_products_info[best_product]
         ml_object.base = str(final.product) + " " + final.optionName
-        ml_object.product = base_products.filter(name=final.product)
+        ml_object.product = Base_models.Base.objects.get(name=final.product)
         ml_object.save()
-        response_dict = {'id':ml_object.id, 'user_id':ml_object.user_id, 'r':ml_object.result[0], 'g':ml_object.result[1], 'b':ml_object.result[2], 'base':ml_object.base, 'product':ml_object.product.values()}
+        product_info = {'price':ml_object.product.price, 'brand':ml_object.product.brand.name, 'img_url':ml_object.product.img_url}
+        response_dict = {'id':ml_object.id, 'user_id':ml_object.user_id, 'r':ml_object.result[0], 'g':ml_object.result[1], 'b':ml_object.result[2], 'base':ml_object.base, 'product':product_info}
         return JsonResponse(response_dict, status=201)

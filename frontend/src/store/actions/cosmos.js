@@ -93,6 +93,7 @@ export const runAnalysis_ = (data) => ({
   b: data.b,
   id: data.id,
   base: data.base,
+  product: data.product,
 });
 
 export const runAnalysis = (userID) => (dispatch) => {

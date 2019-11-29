@@ -4,6 +4,7 @@ import './SkinToneResult.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import arrow from '../image/화살표.png';
+import LipForm from '../Components/LipForm';
 
 class SkinToneResult extends Component {
   constructor(props) {
@@ -35,6 +36,17 @@ class SkinToneResult extends Component {
       }
 
       render() {
+        const FoundationResult = (
+          <LipForm
+            key={this.props.ML.id}
+            thumbnail={this.props.ML.product.img_url}
+            name={this.props.ML.base}
+            price={this.props.ML.product.price}
+            category="Foundation"
+            form={null}
+            brand={this.props.ML.product.brand}
+          />
+        );
         let redirect = null;
         if (!this.props.isAuthenticated) {
           redirect = <Redirect to="/login" />;
@@ -62,9 +74,10 @@ class SkinToneResult extends Component {
               <div>{this.props.ML.user_id}</div>
               <h2>result</h2>
               <div className="MLresult" style={{ backgroundColor: this.state.result, width: 300, height: 300 }}>{this.state.ML_result}</div>
-            <div className = "recommendation">
+            </div>
+            <div className="recommendation">
               <h2>Foundation Recommendation</h2>
-              <div>{this.props.ML.base}</div>
+              <div>{FoundationResult}</div>
             </div>
           </div>
         );
