@@ -73,7 +73,15 @@ class SkinToneResult extends Component {
                 <h2>User ID</h2>
                 <div>{this.props.ML.user_id}</div>
                 <h2>result</h2>
-                <div className="MLresult" style={{ backgroundColor: this.state.result, width: 150, height: 150, margin: 'auto' }}>{this.state.ML_result}</div>
+                <div
+                  className="MLresult"
+                  style={{
+                    backgroundColor: this.state.result, width: 150, height: 150, margin: 'auto',
+                  }}
+                >
+                  {this.state.ML_result}
+
+                </div>
               </div>
               <div className="recommendation">
                 <h2>Foundation Recommendation</h2>

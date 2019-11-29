@@ -60,7 +60,7 @@ class SkinTone extends Component {
         alert('Please submit a picture with your face');
       }
       const picture = new FormData();
-      picture.append('image', this.state.selectedFile, this.state.selectedFile.name);
+      picture.append('image', this.state.selectedFile);
       picture.append('user_id', '425');
       // user_id state에 저장?
       this.props.send_picture(picture);
