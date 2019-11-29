@@ -36,9 +36,78 @@
     top:2%;
 }
 
-.Content{
-   display: table; 
+ul.Category li.Product {
+    display: inline-block;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #efefef;
+    font-size: 12px;
+    cursor: pointer;
 }
+
+.Menubar {
+    flex: 1;
+    flex-direction:row;
+    align-items:stretch;
+    width:100%;
+    background-color:rgb(255, 220, 226);
+    text-align : center;
+    display : table-row;
+    
+}
+
+.Menubar button {
+    margin : 10px 0;
+    padding: 5px;
+    font : inherit;
+    border : 1px solid #9b45a7;
+    background-color : transparent;
+    color : #9b45a7;
+    cursor : pointer;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.Menubar #Searchmenu {
+    display: inline-table;
+    position: absolute;
+    right : 85%;
+    top : 10%;
+    border:none;
+    background-color: white;
+}
+
+.Menubar #Budgetmenu {
+    display: inline-table;
+    position: absolute;
+    right : 60%;
+    top : 10%;
+    border:none;
+    background-color: white;
+}
+.Menubar #Tonemenu {
+    display: inline-table;
+    position: absolute;
+    right : 35%;
+    top : 10%;
+    border:none;
+    background-color: white;
+}
+.Menubar #Salemenu {
+    display: inline-table;
+    position: absolute;
+    right : 10%;
+    top : 10%;
+    border:none;
+    background-color: white;
+}
+.Content{
+   display: table;
+   text-align: left; 
+}
+/*
 .Result{
     display: inline-table;
     position: absolute;
@@ -46,16 +115,32 @@
     top:10%;
     margin: 0px 0px 0px -100px;
 }
+*/
 .Category {
-    margin:20px;
+    padding-left:30px;
+    display: table-row;
 }
-
+/*
 .Category .buttonFalse:active {
     color:white;
     background-color:#9b45a7;
+} */
+/* ol {
+    list-style-type: none;
+} */
+.Content .Category .Product {
+    background-color : transparent;
+    color : #9b45a7;
+    cursor : pointer;
+    border : 1px solid #9b45a7;
+    text-align: center;
+    margin : 5px;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
-
-.Category Button {
+/* .Category Button {
     display:table;
     font-size: 1.5rem;
     text-align: center;
@@ -68,8 +153,8 @@
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-}
-.Category .buttonTrue {
+} */
+/* .Category .buttonTrue {
     color:white;
     background-color:#9b45a7;
 }
@@ -119,3 +204,4 @@
 }
 
 
+ */

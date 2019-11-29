@@ -7,3 +7,5 @@ export const GET_LIP = 'GET_LIP';
 export const SEND_PICTURE = 'SEND_PICTURE';
 export const GET_ANALYSIS_RESULT = 'GET_ANALYSIS_RESULT';
 export const RUN_ANALYSIS = 'RUN_ANALYSIS';
+export const GET_PRODUCT = 'GET_PRODUCT';
+export const GET_USER = 'GET_USER';

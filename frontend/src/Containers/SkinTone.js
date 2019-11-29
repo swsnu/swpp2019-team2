@@ -67,8 +67,31 @@ class SkinTone extends Component {
       // this.props.run_analysis('425')
     }
 
+    searchHandler = () => {
+      this.props.history.replace('../search');
+    };
+
+    budgetHandler = () => {
+      this.props.history.replace('../budget');
+    };
+
+    toneHandler = () => {
+      this.props.history.replace('../skintone');
+    };
+
+    saleHandler = () => {
+      this.props.history.replace('../sale');
+    };
+
     render() {
       let redirect = null;
+      let infoString = '';
+      try {
+        const { username } = this.props.user[0];
+        infoString = `Hello, ${username}!`;
+      } catch {
+        infoString = 'Hello';
+      }
       if (!this.props.isAuthenticated) {
         redirect = <Redirect to="/login" />;
       }
@@ -83,6 +106,13 @@ class SkinTone extends Component {
                 </div> */}
           <div className="upperbar">
             <h1>Skin Tone Analysis</h1>
+            {infoString}
+            <div className="Menubar">
+              <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
+              <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
+              <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+              <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
+            </div>
             <div className="buttons">
               <button id="back-button" type="button" onClick={() => this.menuHandler()}>
                 <img id="arrow" src={arrow} alt="Back to Main Menu" />
@@ -107,6 +137,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  user: state.cosmos.User,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -114,6 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   send_picture: (img) => dispatch(actionCreators.sendImage(img)),
   run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SkinTone);

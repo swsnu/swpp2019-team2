@@ -71,6 +71,10 @@ ul{
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
+
+.Budget_input button:hover,
+.Budget_input button:active {
 */
 .BudgetSearch button:hover,
 .BudgetSearch button:active {

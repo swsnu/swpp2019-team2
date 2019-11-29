@@ -1,5 +1,5 @@
 export {
-  getLips,
+  getProducts,
   logout,
   authLogin,
   authSignup,
@@ -7,4 +7,5 @@ export {
   sendImage,
   getAnalysisResult,
   runAnalysis,
+  getUser,
 } from './cosmos';
