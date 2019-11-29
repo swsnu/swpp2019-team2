@@ -3,6 +3,8 @@ import json
 from products.lip.models import Lip, LipOption
 from brand.models import Brand
 from products.lip.serializers import LipSerializer, LipOptionSerializer
+from ml.models import ML
+from products.base.models import Base, BaseOption
 
 class LipTestCase(TestCase):
     
@@ -47,3 +49,32 @@ class LipTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         res = json.loads(response.content)
         self.assertEqual(len(res), 1)
+
+class MLTestCase(TestCase):
+    def setUp(self):
+        self.client=Client()
+        self.brand = Brand.objects.create(name="brand1")
+        self.product1 = Base.objects.create(
+            name="base1", price=100, category="F", img_url="tmp_url1", brand=self.brand)
+        self.color1 = BaseOption.objects.create(
+            color="LT", sub_color="color", 
+            color_hex="111111", optionName="option", product=self.product1
+        )
+        self.ml = ML.objects.create(
+            user_id='1', result='result', image='images/test.jpeg', base='base', product = self.product1
+        )
+    def test_get(self):
+        response = self.client.get('/api/ml/')
+        res = json.loads(response.content)
+        self.assertEqual(res[0]['user_id'], self.ml.user_id)
+        self.assertEqual(res[0]['result'], self.ml.result)
+        self.assertEqual(res[0]['base'], self.ml.base)
+    def test_put(self):
+        response = self.client.post('/api/ml/',json.dumps({}),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.put('/api/ml/', json.dumps({'userID': '1'}),
+                                   content_type='application/json')
+        
+
+        
