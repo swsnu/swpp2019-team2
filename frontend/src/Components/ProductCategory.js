@@ -104,7 +104,6 @@ const CATEGORY = {
       Specialcare: 'SP',
     },
   },
-  
 };
 
 export default CATEGORY;

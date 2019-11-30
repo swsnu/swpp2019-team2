@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-import arrow from '../image/화살표.png';
+// import arrow from '../image/화살표.png';
 import CheckBox from './CheckBox';
 import ItemDisplay from './ItemDisplay';
 
@@ -222,16 +222,16 @@ class BudgetSearch extends Component {
 
   render() {
     let infoString = '';
-    if(this.state.render == false) {
-      const userInfo = this.props.user.map((res) => {
-        this.setState({ nick_name: res.nick_name })
-        this.setState({ prefer_color: res.prefer_color })
-        this.setState({ prefer_base: res.prefer_base })
-        this.setState({ prefer_brand: res.prefer_brand })
+    if (this.state.render === false) {
+      this.props.user.map((res) => {
+        this.setState({ nick_name: res.nick_name });
+        this.setState({ prefer_color: res.prefer_color });
+        this.setState({ prefer_base: res.prefer_base });
+        this.setState({ prefer_brand: res.prefer_brand });
       });
       this.setState({ render: true });
-      }
-    infoString = this.state.nick_name + ' 님!' +  ' 오늘도 좋은 하루 되세요~';
+    }
+    infoString = `${this.state.nick_name} 님!` + ' 오늘도 좋은 하루 되세요~';
     const {
       id, itemNum, find1, find2, find3, find4, find5, show, combi,
     } = this.state;

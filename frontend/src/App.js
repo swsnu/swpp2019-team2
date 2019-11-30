@@ -19,7 +19,7 @@ function App({ history }) {
         <Switch>
           <Route path="/login" exact component={LogIn} />
           <Route path="/signup" exact component={Signup} />
-          <Route path = '/mypage' exact component = {MyPage} />
+          <Route path="/mypage" exact component={MyPage} />
           <Route path="/main" exact component={MainPage} />
           <Route path="/search" exact component={Search} />
           <Route path="/budget" exact component={BudgetSearch} />
