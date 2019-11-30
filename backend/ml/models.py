@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here.
 from products.base import models as base_model
 
+
 class ML(models.Model):
     """ model for ML results """
     user_id = models.CharField(max_length=30, default="NONE")

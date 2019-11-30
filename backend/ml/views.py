@@ -13,6 +13,7 @@ from .serializers import FileSerializer
 from .models import ML
 from .find_base import best_match
 
+
 class FileUploadView(APIView):
     """ ML Model View"""
     parser_class = (FileUploadParser,)
@@ -58,6 +59,16 @@ class FileUploadView(APIView):
         ml_object.base = str(final.product) + " " + final.optionName
         ml_object.product = Base_models.Base.objects.get(name=final.product)
         ml_object.save()
-        product_info = {'price':ml_object.product.price, 'brand':ml_object.product.brand.name, 'img_url':ml_object.product.img_url}
-        response_dict = {'id':ml_object.id, 'user_id':ml_object.user_id, 'r':ml_object.result[0], 'g':ml_object.result[1], 'b':ml_object.result[2], 'base':ml_object.base, 'product':product_info}
+        product_info = {
+            'price': ml_object.product.price,
+            'brand': ml_object.product.brand.name,
+            'img_url': ml_object.product.img_url}
+        response_dict = {
+            'id': ml_object.id,
+            'user_id': ml_object.user_id,
+            'r': ml_object.result[0],
+            'g': ml_object.result[1],
+            'b': ml_object.result[2],
+            'base': ml_object.base,
+            'product': product_info}
         return JsonResponse(response_dict, status=201)
