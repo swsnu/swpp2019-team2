@@ -61,15 +61,14 @@ const CATEGORY = {
       'BB & CC': 'B',
     },
     color: {
-      'under 21': ['under21'],
-      '21 ~ 23': ['21~23'],
-      'over 23': ['over23'],
+      '~21': 'LT',
+      21: 'MD',
+      '23+': 'DK',
     },
     subcolor: {
-      Light: 'LT',
-      Middle: 'MD',
-      Dark: 'DK',
-      None: 'NO',
+      Warm: 'WM',
+      Neutral: 'NT',
+      Cool: 'CL',
     },
   },
   eye: {
