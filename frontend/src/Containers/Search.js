@@ -94,6 +94,7 @@ class Search extends Component {
     const search = () => {
       const checked = document.querySelectorAll(`div.detail-category#${selection} input:checked`);
       let queryStr = `${selection}/`;
+      if (checked.length === 0) queryStr = queryStr.concat('all');
       checked.forEach((box) => { queryStr = queryStr.concat(box.id); });
       const { onGetProduct } = this.props;
       onGetProduct(queryStr);
