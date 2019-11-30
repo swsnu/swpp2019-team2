@@ -1,14 +1,15 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import { getMockStore } from '../test-utils/mocks';
 import { history } from '../store/store';
 
 import * as actionCreators from '../store/actions/cosmos';
-import SalesInfo from './SalesInfo';
+// import SalesInfo from './SalesInfo';
 import MyPage from './MyPage';
 
 const stubStateC = {

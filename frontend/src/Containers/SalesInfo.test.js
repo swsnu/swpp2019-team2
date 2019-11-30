@@ -203,7 +203,7 @@ describe('<SkinTone />', () => {
   });
 });
 
-describe('<SkinTone />', () => {
+describe('<SalesInfo />', () => {
   let salesinfo; let spyGetUser; let spylogout; let spyUserInfo;
   let spyUserInfo2; let spyPutInfo2;
   beforeEach(() => {
