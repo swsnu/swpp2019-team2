@@ -54,7 +54,7 @@ class Search extends Component {
     let changePage = '';
     let backLogin = '';
     let infoString = '';
-    if (this.state.render == false) {
+    if (this.state.render === false) {
       this.props.user.map((res) => {
         this.setState({ nick_name: res.nick_name });
         this.setState({ prefer_color: res.prefer_color });

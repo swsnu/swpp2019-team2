@@ -21,7 +21,8 @@ class RegistrationForm extends React.Component {
   }
 
   LoginHandler = () => {
-    this.props.Signup(this.state.username, this.state.email, this.state.nickname, this.state.password);
+    this.props.Signup(this.state.username, this.state.email,
+      this.state.nickname, this.state.password);
     this.props.onTryAutoSignup();
     this.props.getUserInfo();
     this.setState({ signup: true });
@@ -110,8 +111,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 
-  Signup: (username, email, nickname, password) =>
-    dispatch(actionCreators.authSignup(username, email, nickname, password)),
+  Signup: (username, email, nickname, password) => dispatch(actionCreators.authSignup(username,
+    email, nickname, password)),
   Login: (username, password) => dispatch(actionCreators.authLogin(username, password)),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   getUserInfo: () => dispatch(actionCreators.getUser()),
