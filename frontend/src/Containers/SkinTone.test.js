@@ -13,29 +13,24 @@ import { history } from '../store/store';
 import * as actionCreators from '../store/actions/cosmos';
 
 const stubStateC = {
-  Users: [],
+  User: [],
   isAuthenticated: false,
+  token: 'token',
 };
 
 const stubInitialState = {
   selectedUser: {
     id: 1, email: 'TEST_EMAIL', password: 'TEST_PASS', name: 'TEST', logged_in: false,
   },
-  Users: [{
-    id: 1, email: 'TEST_EMAIL', password: 'TEST_PASS', name: 'TEST', logged_in: false,
-  },
-  {
-    id: 2, email: 'TEST_EMAIL2', password: 'TEST_PASS2', name: 'TEST2', logged_in: false,
-  },
-  {
-    id: 3, email: 'TEST_EMAIL3', password: 'TEST_PASS3', name: 'TEST3', logged_in: false,
+  User: [{
+    nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
   }],
 };
 
 const mockStore = getMockStore(stubInitialState);
-
+const mockStore2 = getMockStore(stubStateC);
 describe('<SkinTone />', () => {
-  let skintone; let spyGetUsers; let spyGetUser; let spylogout;
+  let skintone; let spyGetUsers; let spyGetUser; let spylogout; let spyUserInfo;
   beforeEach(() => {
     skintone = (
       <Provider store={mockStore}>
@@ -48,6 +43,7 @@ describe('<SkinTone />', () => {
                   {...props}
                   Logout={spylogout}
                   onTryAutoSignup={spyGetUser}
+                  getUserInfo={spyUserInfo}
                 />
               )}
             />
@@ -104,11 +100,9 @@ describe('<SkinTone />', () => {
   });
 
   it('should not redirect stay when logged in', () => {
-    const component = shallow(
-      <SkinTone.WrappedComponent isAuthenticated={stubStateC} />,
-    );
+    const component = mount(skintone);
     const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(0);
+    expect(redirect.length).toBe(1);
   });
 
   it('should call submitHandler & flag = false', () => {
@@ -171,28 +165,9 @@ describe('<SkinTone />', () => {
         id: 3, email: 'TEST_EMAIL3', password: 'TEST_PASS3', name: 'TEST3', logged_in: false,
       }],
     });
-    const component = mount(
-      <Provider store={mockInitialStore}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route
-              path="/"
-              render={(props) => (
-                <SkinTone
-                  {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
-                />
-              )}
-            />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>,
-    );
+    const component = mount(skintone);
     expect(component.find(Redirect)).toHaveLength(1);
   });
-
   it('does not have a selectedUser', () => {
     const spyHistoryPush = jest.spyOn(history, 'push');
     const mockInitialStore = getMockStore({
@@ -207,25 +182,7 @@ describe('<SkinTone />', () => {
         id: 3, email: 'TEST_EMAIL3', password: 'TEST_PASS3', name: 'TEST3', logged_in: false,
       }],
     });
-    const component = mount(
-      <Provider store={mockInitialStore}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route
-              path="/"
-              render={(props) => (
-                <SkinTone
-                  {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
-                />
-              )}
-            />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>,
-    );
+    const component = mount(skintone);
     expect(component.find(Redirect)).toHaveLength(1);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
@@ -249,38 +206,13 @@ describe('<SkinTone />', () => {
         id: 3, email: 'TEST_EMAIL3', password: 'TEST_PASS3', name: 'TEST3', logged_in: false,
       }],
     });
-    const component = mount(
-      <Provider store={mockInitialStore}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route
-              path="/"
-              render={(props) => (
-                <SkinTone
-                  {...props}
-                  UserLogOut={spylogout}
-                  onGETUSERS={spyGetUsers}
-                  onGETUSER={spyGetUser}
-                />
-              )}
-            />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>,
-    );
+    const component = mount(skintone);
     expect(component.find(Redirect)).toHaveLength(1);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
     expect(spyGetUser).toBeCalledTimes(2);
     expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(0);
-  });
-  it('should click back-button', () => {
-    const component = mount(skintone);
-    const button = component.find('#back-button');
-    button.simulate('click');
-    const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
   });
   it('should call budgetHandler when clicking budget search button', () => {
     const spyHistoryReplace = jest
@@ -308,5 +240,42 @@ describe('<SkinTone />', () => {
     const button = component.find('#Salemenu');
     button.simulate('click');
     expect(spyHistoryReplace).toHaveBeenCalledWith('../sale');
+  });
+});
+
+describe('<SkinTone />', () => {
+  let skintone; let spyGetUser; let spylogout; let spyUserInfo;
+  let spyUserInfo2; let spyPutInfo2;
+  beforeEach(() => {
+    skintone = (
+      <Provider store={mockStore2}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              render={
+                (props) => (
+                  <SkinTone {...props} />
+                )
+              }
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    );
+    spyGetUser = jest.spyOn(actionCreators, 'authCheckState')
+      .mockImplementation(() => (dispatch) => {});
+    spylogout = jest.spyOn(actionCreators, 'logout')
+      .mockImplementation((user) => (dispatch) => {});
+    spyUserInfo = jest.spyOn(actionCreators, 'getUser')
+      .mockImplementation(() => (dispatch) => {});
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should render SkinTone', () => {
+    const component = mount(skintone);
+    const wrapper = component.find('SkinTone');
+    expect(spyUserInfo).toBeCalledTimes(1);
   });
 });

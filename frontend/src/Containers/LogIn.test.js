@@ -13,6 +13,7 @@ import * as actions from '../store/actions/cosmos';
 const stubStateC = {
   Lip: [],
   Users: [],
+  Users2: [],
   token: null,
   loading: false,
   error: null,
@@ -119,7 +120,7 @@ describe('<LogIn />', () => {
   it('should replace to signup when not there is no selected user', () => {
     const component = shallow(<LogIn.WrappedComponent isAuthenticated />);
     const redirect = component.find('Redirect');
-    expect(redirect.props().to).toEqual('/main');
+    expect(redirect.props().to).toEqual('/search');
   });
   it('should not have SelectedUser with its logged_in=false', () => {
     const component = shallow(
