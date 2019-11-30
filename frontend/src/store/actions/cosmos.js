@@ -16,12 +16,12 @@ export const getUser2 = () => (dispatch) => axios.get('/api/signin/')
   .then((res) => dispatch(getUser2_(res.data)));
 
 export const putUser2_ = (User2) => ({ type: actionTypes.PUT_USER2, User2 });
-export const putUser2 = (nick_name, prefer_color, prefer_base, prefer_brand) => (dispatch) => {
+export const putUser2 = (nickName, preferColor, preferBase, preferBrand) => (dispatch) => {
   axios.put('/api/signin/', {
-    nick_name,
-    prefer_color,
-    prefer_base,
-    prefer_brand,
+    nickName,
+    preferColor,
+    preferBase,
+    preferBrand,
   })
     .then((res) => dispatch(putUser2_(res.data)));
 };
