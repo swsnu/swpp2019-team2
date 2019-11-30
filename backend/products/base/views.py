@@ -33,7 +33,7 @@ def search(request, option):
             subcolor_option = None
 
         baseserializer = BaseSerializer(base, many=True, context={'color':color_option, 'sub_color':subcolor_option})
-        #result = [x for x in baseserializer.data if len(x['color']) > 0] 
+        #result = [x for x in baseserializer.data if len(x['color']) > 0]
         return JsonResponse(baseserializer.data, safe=False)
 
     return HttpResponseNotAllowed(['GET'])

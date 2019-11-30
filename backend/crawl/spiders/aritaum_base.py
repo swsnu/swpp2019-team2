@@ -72,7 +72,8 @@ class AritaumSpider(scrapy.Spider):
             callback=self.parse_product,
             dont_filter=True)
 
-    def check_color(self, name):
+    @staticmethod
+    def check_color(name):
         """ check color name and return value"""
         if any(x in name for x in ['11', '13', '19']):
             color = "LT"
