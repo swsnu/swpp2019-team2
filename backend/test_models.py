@@ -3,7 +3,7 @@ from products.base.models import Base, BaseOption
 from brand.models import Brand
 import unittest
 from products.eye.models import CommonProduct
-
+from ml.models import ML
 
 class ItemTest(unittest.TestCase):
 
@@ -32,3 +32,8 @@ class ItemTest(unittest.TestCase):
     def test_eye_class(self):
         i = CommonProduct(name="tmp_name")
         self.assertEqual(str(i), i.name)
+
+    def test_ml_class(self):
+        i = ML(result='0,0,0')
+        i.save()
+        self.assertEqual('0,0,0', i.result)

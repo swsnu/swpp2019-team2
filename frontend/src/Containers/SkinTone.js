@@ -15,6 +15,8 @@ class SkinTone extends Component {
       flag: false,
       render: false,
     };
+    this.submitHandler = this.submitHandler.bind(this);
+    this.fileinputHandler = this.fileinputHandler.bind(this);
   }
 
   componentDidMount() {
@@ -39,9 +41,8 @@ class SkinTone extends Component {
       event.preventDefault();
       const reader = new FileReader();
       const file = event.target.files[0];
+      this.setState({ selectedFile: file });
       reader.onloadend = () => {
-        // TODO : update state after upload
-        this.setState({ selectedFile: file });
         this.setState({ flag: true });
         this.setState({ fileurl: reader.result });
       };
@@ -57,7 +58,12 @@ class SkinTone extends Component {
       if (!this.state.flag) {
         alert('Please submit a picture with your face');
       }
-      // TODO : file backend로 전송
+      const picture = new FormData();
+      picture.append('image', this.state.selectedFile);
+      picture.append('user_id', '425');
+      // user_id state에 저장?
+      this.props.send_picture(picture);
+      // this.props.run_analysis('425')
     }
 
     searchHandler = () => {
@@ -140,6 +146,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  send_picture: (img) => dispatch(actionCreators.sendImage(img)),
+  run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
   getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 

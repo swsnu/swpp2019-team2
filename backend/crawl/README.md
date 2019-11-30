@@ -11,7 +11,8 @@
 cd ./backend
 pip -r install requirements.txt
 cd crawl
-scrapy crawl aritaum
+scrapy crawl aritaum-lip
+scrapy crawl aritaum-base
 ```
 
 then, cralwed data will be automatically saved in Django DB!
@@ -24,3 +25,7 @@ https://www.aritaum.com/main.do
 
 - Scrapy
 - Selenium
+
+### Progress
+ - aritaum-lip : done everything
+ - aritaum-base : done except color categorization

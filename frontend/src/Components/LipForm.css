@@ -7,8 +7,18 @@ li.color-chip {
     float:left;
 }
 
+a.productItem{
+    color:black;
+    text-decoration:none;
+    display:block;
+}
+
 section.info_text {
     margin: 10px 0 10px 0;
+}
+
+section.Lip_name.info_text {
+    height:25px;
 }
 
 span.color-chip {
@@ -21,11 +31,13 @@ span.color-chip {
 section.color {
     display:inline-flex;
     height:35px;
-    overflow:scroll;
+    -ms-overflow-style: none;
+    overflow-y:scroll;
 }
-section.color > ul {
-    overflow:scroll;
-}
+
+section.color::-webkit-scrollbar {
+    display: none;
+  }
 
 .react-tooltip-lite {
     background: #333;

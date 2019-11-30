@@ -15,6 +15,7 @@ describe('<LipForm />', () => {
       ]}
       key="key"
       imgUrl="//:0"
+      productUrl="//:0"
       name="lip_product1"
       price={10000}
       category="L"
