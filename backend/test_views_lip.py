@@ -1,10 +1,11 @@
+""" test views """
 from django.test import TestCase, Client
 import json
 from products.lip.models import Lip, LipOption
 from brand.models import Brand
+from products.lip.serializers import LipSerializer, LipOptionSerializer
 
-class LipTestCase(TestCase):
-    
+class LipTestCase(TestCase):    
     def setUp(self):
         self.client=Client()
         self.brand = Brand.objects.create(name="brand1")
@@ -52,5 +53,6 @@ class LipTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         res = json.loads(response.content)
         self.assertEqual(len(res), 1)
-        
+
+
         

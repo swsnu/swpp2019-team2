@@ -275,4 +275,38 @@ describe('<SkinTone />', () => {
     expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(0);
   });
+  it('should click back-button', () => {
+    const component = mount(skintone);
+    const button = component.find('#back-button');
+    button.simulate('click');
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(1);
+  });
+  it('should call budgetHandler when clicking budget search button', () => {
+    const spyHistoryReplace = jest
+      .spyOn(history, 'replace')
+      .mockImplementation(() => {});
+    const component = mount(skintone);
+    const button = component.find('#Budgetmenu');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../budget');
+  });
+  it('should call toneHandler when clicking tone analysis button', () => {
+    const spyHistoryReplace = jest
+      .spyOn(history, 'replace')
+      .mockImplementation(() => {});
+    const component = mount(skintone);
+    const button = component.find('#Tonemenu');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../skintone');
+  });
+  it('should call saleHandler when clicking sale information button', () => {
+    const spyHistoryReplace = jest
+      .spyOn(history, 'replace')
+      .mockImplementation(() => {});
+    const component = mount(skintone);
+    const button = component.find('#Salemenu');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../sale');
+  });
 });

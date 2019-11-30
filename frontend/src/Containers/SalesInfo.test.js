@@ -228,4 +228,31 @@ describe('<SkinTone />', () => {
     expect(spylogout).toBeCalledTimes(1);
     expect(spyHistoryPush).toBeCalledTimes(0);
   });
+  it('should call budgetHandler when clicking budget search button', () => {
+    const spyHistoryReplace = jest
+      .spyOn(history, 'replace')
+      .mockImplementation(() => {});
+    const component = mount(salesinfo);
+    const button = component.find('#Budgetmenu');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../budget');
+  });
+  it('should call toneHandler when clicking tone analysis button', () => {
+    const spyHistoryReplace = jest
+      .spyOn(history, 'replace')
+      .mockImplementation(() => {});
+    const component = mount(salesinfo);
+    const button = component.find('#Tonemenu');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../skintone');
+  });
+  it('should call searchHandler when clicking sale information button', () => {
+    const spyHistoryReplace = jest
+      .spyOn(history, 'replace')
+      .mockImplementation(() => {});
+    const component = mount(salesinfo);
+    const button = component.find('#Searchmenu');
+    button.simulate('click');
+    expect(spyHistoryReplace).toHaveBeenCalledWith('../search');
+  });
 });
