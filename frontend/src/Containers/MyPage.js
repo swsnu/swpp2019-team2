@@ -102,9 +102,9 @@ class MyPage extends Component {
 
   changeBrand(event) {
     let result = [];
-    event.map((res) => ((
-      result = result.concat(res.value)
-    )));
+    for (let i = 0; i < event.length; i++) {
+      result = result.concat(event[i].value)
+    }
     this.setState({ preferBrand: result });
   }
 

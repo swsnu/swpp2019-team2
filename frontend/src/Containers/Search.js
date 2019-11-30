@@ -18,8 +18,8 @@ class Search extends Component {
   }
 
   componentDidMount() { // initialize state
-    this.props.onTryAutoSignup();
     this.props.getUserInfo();
+    this.props.onTryAutoSignup();
   }
 
   logout = () => {
