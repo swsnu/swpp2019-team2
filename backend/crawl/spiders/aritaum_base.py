@@ -72,6 +72,18 @@ class AritaumSpider(scrapy.Spider):
             callback=self.parse_product,
             dont_filter=True)
 
+    def check_color(self, name):
+        """ check color name and return value"""
+        if any(x in name for x in ['11', '13', '19']):
+            color = "LT"
+        elif '21' in name:
+            color = "MD"
+        elif '23' in name:
+            color = "DK"
+        else:
+            color = None
+        return color
+
     def parse_product(self, response):
         """ parse product information from page """
         #pylint: disable=too-many-locals
@@ -127,11 +139,13 @@ class AritaumSpider(scrapy.Spider):
                         "./span/label/span").value_of_css_property("background-color")
                     color_hex = self.save_color_by_rgb(color_rgb)
                     product = Base_db.objects.filter(name=product_name)[0]
+                    color = self.check_color(color_name)
                     yield BaseColor(
                         color_hex=color_hex,
                         optionName=color_name,
                         product=product,
-                        crawled="base_option"
+                        crawled="base_option",
+                        color=color
                     )
 
         yield scrapy.Request(
@@ -149,11 +163,13 @@ class AritaumSpider(scrapy.Spider):
         img = img.resize((30, 30))
         color_hex = self.getcolors(img, url)
         product = Base_db.objects.filter(name=name)[0]
+        color = self.check_color(response.meta["color"])
         yield BaseColor(
             color_hex=color_hex,
             optionName=response.meta["color"],
             product=product,
-            crawled="base_option"
+            crawled="base_option",
+            color=color
         )
 
     @staticmethod
