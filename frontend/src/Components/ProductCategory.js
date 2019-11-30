@@ -61,9 +61,9 @@ const CATEGORY = {
       'BB & CC': 'B',
     },
     color: {
-      '~21': 'LT',
-      21: 'MD',
-      '23+': 'DK',
+      '19호 이하': 'LT',
+      '21호': 'MD',
+      '23호 이상': 'DK',
     },
     subcolor: {
       Warm: 'WM',
