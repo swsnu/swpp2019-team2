@@ -1,9 +1,12 @@
+from django.test import TestCase, Client
 from urllib.request import urlopen
 from django.core.files import File
 from django.core import files
 from django.core.files.temp import NamedTemporaryFile
 from ml.models import ML
 from brand.models import Brand
+import json
+from products.base.models import Base, BaseOption
 
 
 class MLTestCase(TestCase):
