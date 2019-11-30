@@ -94,11 +94,10 @@ class MyPage extends Component {
   }
 
   confirmHandler = () => {
-    this.props.putUserInfo2(this.state.nickName, this.state.preferColor,
+    this.props.putUserInfo(this.state.nickName, this.state.preferColor,
       this.state.preferBase, this.state.preferBrand);
     window.confirm('정보가 수정되었습니다!');
     this.props.getUserInfo();
-    this.props.getUserInfo2();
   }
 
   changeBrand(event) {
@@ -113,17 +112,17 @@ class MyPage extends Component {
   render() {
     let redirect = null;
     if (this.state.render === false) {
-      this.props.user.map((res) => {
-        this.setState({ nickName: res.nick_name });
-        this.setState({ preferColor: res.prefer_color });
-        this.setState({ preferBase: res.prefer_base });
-        this.setState({ preferBrand: res.prefer_brand });
-      });
-      this.props.user2.map((res) => {
-        this.setState({ userName: res.username });
-        this.setState({ passWord: res.password });
-        this.setState({ email: res.email });
-      });
+      this.props.user.map((res) => ((
+        this.setState({ nickName: res.nick_name }),
+        this.setState({ preferColor: res.prefer_color }),
+        this.setState({ preferBase: res.prefer_base }),
+        this.setState({ preferBrand: res.prefer_brand })
+      )));
+      this.props.user2.map((res) => ((
+        this.setState({ userName: res.username }),
+        this.setState({ passWord: res.password }),
+        this.setState({ email: res.email })
+      )));
       this.setState({ render: true });
     }
     const infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
@@ -138,15 +137,15 @@ class MyPage extends Component {
           <h1>My Page</h1>
           <div className="buttons">
             <button type="button" id="log-out-button" onClick={() => this.logoutHandler()}>Log-out</button>
-            <label id="user_info">{infoString}</label>
+            {infoString}
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler()}>My Page</button>
           </div>
         </div>
         <div className="Menubar">
-          <button id="Searchmenu" type="text" onClick={() => this.searchHandler()}>Search-Tag</button>
-          <button id="Budgetmenu" type="text" onClick={() => this.budgetHandler()}>Budget-Search</button>
-          <button id="Tonemenu" type="text" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-          <button id="Salemenu" type="text" onClick={() => this.saleHandler()}>Sale-Info</button>
+          <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
+          <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
+          <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+          <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
         </div>
         <div className="Menu1">
           <div className="Menu1_Border">
@@ -195,7 +194,7 @@ o 선호 브랜드: &emsp;
           <div className="Menu2_Border">
             <br />
             <br />
-            <label>o 닉네임 변경: </label>
+o 닉네임 변경:
             <input
               id="nickname-input"
               type="text"
@@ -205,7 +204,7 @@ o 선호 브랜드: &emsp;
             />
             <br />
             <br />
-            <label>o 선호 색상 변경: </label>
+o 선호 색상 변경:
             <br />
             <br />
             <Select
@@ -215,7 +214,7 @@ o 선호 브랜드: &emsp;
               styles={customStyles}
             />
             <br />
-            <label>o 선호 베이스 변경: </label>
+o 선호 베이스 변경:
             <br />
             <br />
             <Select
@@ -226,9 +225,11 @@ o 선호 브랜드: &emsp;
             />
             <br />
             <br />
-            <label>o 선호 브랜드 변경:</label>
-            <ReactMultiSelectCheckboxes options={optionsBrand}
-              onChange={(event) => this.changeBrand(event)} />
+o 선호 브랜드 변경:
+            <ReactMultiSelectCheckboxes
+              options={optionsBrand}
+              onChange={(event) => this.changeBrand(event)}
+            />
 
             <div className="button">
               <br />
@@ -260,8 +261,9 @@ const mapDispatchToProps = (dispatch) => ({
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   getUserInfo: () => dispatch(actionCreators.getUser()),
   getUserInfo2: () => dispatch(actionCreators.getUser2()),
-  putUserInfo2: (nickName, preferColor, preferBase, preferBrand) => dispatch(actionCreators.putUser2(nickName,
-    preferColor, preferBase, preferBrand)),
+  putUserInfo: (nickName, preferColor, preferBase, preferBrand) => dispatch(actionCreators.putUser2(
+    nickName, preferColor, preferBase, preferBrand,
+  )),
 });
 
 export default connect(

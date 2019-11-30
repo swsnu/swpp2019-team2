@@ -15,7 +15,7 @@ export const getUser2_ = (User2) => ({ type: actionTypes.GET_USER2, User2 });
 export const getUser2 = () => (dispatch) => axios.get('/api/signin/')
   .then((res) => dispatch(getUser2_(res.data)));
 
-export const putUser2_ = (User2) => ({ type: actionTypes.PUT_USER2, User2 });
+export const putUser2_ = (User) => ({ type: actionTypes.PUT_USER2, User });
 export const putUser2 = (nickName, preferColor, preferBase, preferBrand) => (dispatch) => {
   axios.put('/api/signin/', {
     nickName,
