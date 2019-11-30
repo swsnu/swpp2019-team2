@@ -116,7 +116,7 @@ describe('<Signup />', () => {
   it('should replace to signup when not there is no selected user', () => {
     const component = shallow(<Signup.WrappedComponent isAuthenticated />);
     const redirect = component.find('Redirect');
-    expect(redirect.props().to).toEqual('/main');
+    expect(redirect.props().to).toEqual('/search');
   });
   it('should not have SelectedUser with its logged_in=false', () => {
     const component = shallow(

@@ -13,6 +13,9 @@ const tdUser = {
   id: 0,
   error: null,
   loading: false,
+  token: undefined,
+  User: [],
+  User2: [],
 };
 
 const tdUsertoken = {
@@ -20,6 +23,8 @@ const tdUsertoken = {
   token: null,
   error: null,
   loading: false,
+  User: [],
+  User2: [],
 };
 
 
@@ -179,12 +184,51 @@ describe('article', () => {
       .mockImplementation((url, td) => new Promise((resolve) => {
         const result = {
           status: 200,
-          data: tdUser,
+          data: null,
         };
         resolve(result);
       }));
 
     store.dispatch(articleActions.authCheckState());
+    done();
+  });
+  it('GET_USER', (done) => {
+    const spy = jest.spyOn(axios, 'get')
+      .mockImplementation((url, td) => new Promise((resolve) => {
+        const result = {
+          status: 200,
+          data: tdUser,
+        };
+        resolve(result);
+      }));
+
+    store.dispatch(articleActions.getUser());
+    done();
+  });
+  it('GET_USER2', (done) => {
+    const spy = jest.spyOn(axios, 'get')
+      .mockImplementation((url, td) => new Promise((resolve) => {
+        const result = {
+          status: 200,
+          data: tdUser,
+        };
+        resolve(result);
+      }));
+
+    store.dispatch(articleActions.getUser2());
+    done();
+  });
+  it('PUT_USER2', (done) => {
+    const spy = jest.spyOn(axios, 'put')
+      .mockImplementation((url, td) => new Promise((resolve) => {
+        const result = {
+          status: 200,
+          data: tdUser,
+        };
+        resolve(result);
+      }));
+
+    store.dispatch(articleActions.putUser2());
     done();
   });
 });

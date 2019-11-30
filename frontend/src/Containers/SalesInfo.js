@@ -20,10 +20,6 @@ class SalesInfo extends Component {
     this.props.getUserInfo();
   }
 
-  menuHandler = () => {
-    this.props.history.replace('../main');
-  }
-
   logoutHandler = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();

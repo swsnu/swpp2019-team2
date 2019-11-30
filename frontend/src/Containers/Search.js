@@ -27,8 +27,8 @@ class Search extends Component {
     this.props.onTryAutoSignup();
   }
 
-  // 메인페이지로 넘어가는 state 설정해주기
-  back = () => this.setState({ back: true });
+  // // 메인페이지로 넘어가는 state 설정해주기
+  // back = () => this.setState({ back: true });
 
   mypageHandler = () => {
     this.props.history.replace('../mypage');
@@ -52,7 +52,7 @@ class Search extends Component {
 
   render() {
     let changePage = '';
-    let backLogin = '';
+    const backLogin = '';
     let infoString = '';
     if (this.state.render === false) {
       this.props.user.map((res) => ((
@@ -88,9 +88,9 @@ class Search extends Component {
       changePage = <Redirect to="/login" />;
     }
 
-    if (this.state.back === true) { // 메인페이지로 돌아가기
-      backLogin = <Redirect to="/main" />;
-    }
+    // if (this.state.back === true) { // 메인페이지로 돌아가기
+    //   backLogin = <Redirect to="/main" />;
+    // }
 
     const click = (e) => {
       if (selection !== e.target.id) this.setState({ selection: e.target.id });

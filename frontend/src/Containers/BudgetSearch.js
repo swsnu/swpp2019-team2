@@ -103,9 +103,9 @@ class BudgetSearch extends Component {
     }
   }
 
-  menuHandler = () => {
-    this.props.history.replace('../main');
-  }
+  // menuHandler = () => {
+  //   this.props.history.replace('../main');
+  // }
 
   findFirst(url) {
     this.setState({ find1: url });

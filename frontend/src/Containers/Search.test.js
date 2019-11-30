@@ -18,6 +18,9 @@ const stubSeletedUserT = {
   {
     id: 2, name: 'test_name2', price: 6000, category: '틴트', brand: 1, color: 1,
   }],
+  User: [{
+    nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+  }],
   token: null,
   loading: false,
   error: null,
@@ -29,6 +32,9 @@ const stubSeletedUserF = {
   },
   {
     id: 2, name: 'test_name2', price: 6000, category: '틴트', brand: 1, color: 1,
+  }],
+  User: [{
+    nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
   }],
   token: 'a',
   loading: false,
@@ -87,6 +93,7 @@ describe('<Liplist />', () => {
   let spygetLips;
   let spylogout;
   let spyauthCheckState;
+  let spyuserInfo;
   const mockStore = getMockStore(stubSeletedUserT);
   beforeEach(() => {
     lipList = (
@@ -106,6 +113,8 @@ describe('<Liplist />', () => {
     spylogout = jest.spyOn(actions, 'logout')
       .mockImplementation(() => (dispatch) => {});
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
+      .mockImplementation(() => (dispatch) => {});
+    spyuserInfo = jest.spyOn(actions, 'getUser')
       .mockImplementation(() => (dispatch) => {});
   });
   it('should click logout', () => {
@@ -130,12 +139,33 @@ describe('<Liplist />', () => {
     button.simulate('click');
     expect(spygetLips).toHaveBeenCalledTimes(1);
   });
-  it('should click back-button', () => {
+  it('should click searchtag-button', () => {
     const component = mount(lipList);
-    const button = component.find('#back-button');
+    const button = component.find('#Searchmenu');
     button.simulate('click');
     const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(3);
+    expect(redirect.length).toBe(1);
+  });
+  it('should click budget-button', () => {
+    const component = mount(lipList);
+    const button = component.find('#Budgetmenu');
+    button.simulate('click');
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(1);
+  });
+  it('should click tonemenu-button', () => {
+    const component = mount(lipList);
+    const button = component.find('#Tonemenu');
+    button.simulate('click');
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(1);
+  });
+  it('should click salemenu-button', () => {
+    const component = mount(lipList);
+    const button = component.find('#Salemenu');
+    button.simulate('click');
+    const redirect = component.find('Redirect');
+    expect(redirect.length).toBe(1);
   });
   it('should change visible category when clicked', () => {
     const component = mount(lipList);
@@ -143,9 +173,13 @@ describe('<Liplist />', () => {
     newInstance.setState({ selection: 'lip' });
     const button = component.find('button.Product#eye');
     button.simulate('click');
-    expect(newInstance.state).toEqual({ selection: 'eye' });
+    expect(newInstance.state).toEqual({
+      nickName: 'a', preferBase: '19', preferBrand: '라네즈', preferColor: 'red', render: true, selection: 'eye',
+    });
     button.simulate('click');
-    expect(newInstance.state).toEqual({ selection: 'eye' });
+    expect(newInstance.state).toEqual({
+      nickName: 'a', preferBase: '19', preferBrand: '라네즈', preferColor: 'red', render: true, selection: 'eye',
+    });
   });
 });
 
