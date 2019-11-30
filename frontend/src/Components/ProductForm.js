@@ -28,12 +28,7 @@ const getOptionalInfo = (info, selection) => {
     const categoryInfo = CATEGORY_KOREAN[selection][cg];
     return (
       <section key={`${info.id}_${cg}`} className="info_text">
-        {CATEGORY_KOREAN[cg]}
-        {' '}
-:
-        {' '}
-        {categoryInfo[info[cg]]}
-        {' '}
+        {`${CATEGORY_KOREAN[cg]} : ${categoryInfo[info[cg]]} `}
       </section>
     );
   });

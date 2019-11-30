@@ -143,9 +143,9 @@ describe('<Liplist />', () => {
     newInstance.setState({ selection: 'lip' });
     const button = component.find('button.Product#eye');
     button.simulate('click');
-    expect(newInstance.state).toEqual({ selection: 'eye' });
+    expect(newInstance.state).toEqual({ searched: null, selection: 'eye' });
     button.simulate('click');
-    expect(newInstance.state).toEqual({ selection: 'eye' });
+    expect(newInstance.state).toEqual({ searched: null, selection: 'eye' });
   });
 });
 
