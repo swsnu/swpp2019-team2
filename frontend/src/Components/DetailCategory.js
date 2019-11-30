@@ -13,7 +13,7 @@ class DetailCategory extends React.Component {
     const LargeCategory = CATEGORY[id];
     const keys = Object.keys(LargeCategory);
     const res = keys.map((key) => {
-      if (key === 'color') {
+      if (key === 'color' && id === 'lip') {
         const colorKeys = Object.keys(LargeCategory.color);
         const colors = colorKeys.map((colorKey) => {
           const subcolorID = `${key}=${LargeCategory.color[colorKey][0]}&`;
