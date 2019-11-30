@@ -31,6 +31,10 @@ class Base(models.Model):
         max_length=1,
         choices=CATEGORY,
     )
+    product_url = models.CharField(
+        max_length=255,
+        default="//:0",
+    )
     img_url = models.TextField(default="//:0")
 
     def __str__(self):
@@ -73,6 +77,7 @@ class BaseOption(models.Model):
     optionName = models.CharField(max_length=30)
     product = models.ForeignKey(
         Base,
+        related_name='color',
         on_delete=models.CASCADE
     )
 
