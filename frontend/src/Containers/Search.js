@@ -63,7 +63,7 @@ class Search extends Component {
       )));
       this.setState({ render: true });
     }
-    infoString = `${this.state.nick_name} 님! 오늘도 좋은 하루 되세요~`;
+    infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     const { selection } = this.state;
     const { searchResult } = this.props;
     const searchedProduct = searchResult.map((res) => {

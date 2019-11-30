@@ -231,7 +231,7 @@ class BudgetSearch extends Component {
       )));
       this.setState({ render: true });
     }
-    infoString = `${this.state.nick_name} 님! 오늘도 좋은 하루 되세요~`;
+    infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     const {
       id, itemNum, find1, find2, find3, find4, find5, show, combi,
     } = this.state;

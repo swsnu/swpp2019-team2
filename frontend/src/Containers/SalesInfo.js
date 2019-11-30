@@ -61,7 +61,7 @@ class SalesInfo extends Component {
       )));
       this.setState({ render: true });
     }
-    infoString = `${this.state.nick_name} 님! 오늘도 좋은 하루 되세요~`;
+    infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     if (!this.props.isAuthenticated) {
       redirect = <Redirect to="/login" />;
     }
