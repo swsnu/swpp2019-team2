@@ -13,13 +13,20 @@ class Search extends Component {
     super(props);
     this.state = {
       selection: null,
+      searched: null,
     };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.searched !== nextState.searched) return false;
+    else return true;
   }
 
   componentDidMount() { // initialize state
     this.props.onTryAutoSignup();
     this.props.getUserInfo();
   }
+
 
   logout = () => {
     this.props.Logout();
@@ -49,7 +56,10 @@ class Search extends Component {
     this.props.history.replace('../sale');
   };
 
+  searchResult = [];
+  
   render() {
+    console.log('render');
     let changePage = '';
     let backLogin = '';
     let infoString = '';
@@ -59,25 +69,17 @@ class Search extends Component {
     } catch {
       infoString = 'Hello';
     }
-    const { selection } = this.state;
+    const { selection, searched } = this.state;
     const { searchResult } = this.props;
+
     const searchedProduct = searchResult.map((res) => {
-      if (selection === 'lip') {
         return (
           <LipForm
+            selection={searched}
             key={res.id}
-            imgUrl={res.img_url}
-            name={res.name}
-            price={res.price}
-            category={res.category}
-            form={res.form}
-            brand={res.brand}
-            colors={res.color}
-            productUrl={res.product_url}
+            info={res}
           />
         );
-      }
-      return null;
     });
     if (!this.props.isAuthenticated) {
       changePage = <Redirect to="/login" />;
@@ -91,7 +93,8 @@ class Search extends Component {
       if (selection !== e.target.id) this.setState({ selection: e.target.id });
     };
 
-    const search = () => {
+    const search = (e) => {
+      this.setState({searched : e.target.getAttribute('category')});
       const checked = document.querySelectorAll(`div.detail-category#${selection} input:checked`);
       let queryStr = `${selection}/`;
       if (checked.length === 0) queryStr = queryStr.concat('all');
@@ -101,11 +104,11 @@ class Search extends Component {
     };
 
 
-    const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={() => search()} />;
-    const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={() => search()} />;
-    const eye = <DetailCategory category="eye" selected={(selection === 'eye')} clickSearch={() => search()} />;
-    const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={() => search()} />;
-    const skincare = <DetailCategory category="skincare" selected={(selection === 'skincare')} clickSearch={() => search()} />;
+    const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
+    const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
+    const eye = <DetailCategory category="eye" selected={(selection === 'eye')} clickSearch={search} />;
+    const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
+    const skincare = <DetailCategory category="skincare" selected={(selection === 'skincare')} clickSearch={search} />;
 
     return (
       <div className="Search">
@@ -161,7 +164,6 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),

@@ -1,5 +1,5 @@
 import React from 'react';
-import CATEGORY from './ProductCategory';
+import { CATEGORY } from './ProductCategory';
 import './DetailCategory.css';
 
 class DetailCategory extends React.Component {
@@ -95,7 +95,7 @@ class DetailCategory extends React.Component {
     return (
       <div style={style} className="detail-category" id={category}>
         {sub}
-        <button type="button" className="searchProduct" onClick={clickSearch}> Search </button>
+        <button type="button" className="searchProduct" category={category} onClick={clickSearch}> Search </button>
       </div>
     );
   }
