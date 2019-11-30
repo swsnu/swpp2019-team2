@@ -5,6 +5,7 @@ import { updateObject } from '../utility';
 const initialState = {
   result: [],
   User: [],
+  User2: [],
   token: null,
   error: null,
   loading: false,
@@ -39,6 +40,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_FAIL: return authFail(state, action);
     case actionTypes.AUTH_LOGOUT: return authLogout(state);
     case actionTypes.GET_USER: return { ...state, User: action.User };
+    case actionTypes.GET_USER2: return { ...state, User2: action.User2 };
 
     default:
       break;

@@ -13,6 +13,7 @@ class Search extends Component {
     super(props);
     this.state = {
       selection: null,
+      render: false,
     };
   }
 
@@ -29,8 +30,8 @@ class Search extends Component {
   // 메인페이지로 넘어가는 state 설정해주기
   back = () => this.setState({ back: true });
 
-  mypageHandler = (id) => {
-    this.props.history.replace(`../mypage/${id}`);
+  mypageHandler = () => {
+    this.props.history.replace('../mypage');
   }
 
   searchHandler = () => {
@@ -53,12 +54,17 @@ class Search extends Component {
     let changePage = '';
     let backLogin = '';
     let infoString = '';
-    try {
-      const { username } = this.props.user[0];
-      infoString = `Hello, ${username}!`;
-    } catch {
-      infoString = 'Hello';
-    }
+    if(this.state.render == false) {
+      const userInfo = this.props.user.map((res) => {
+        this.setState({ nick_name: res.nick_name })
+        this.setState({ prefer_color: res.prefer_color })
+        this.setState({ prefer_base: res.prefer_base })
+        this.setState({ prefer_brand: res.prefer_brand })
+      });
+      this.setState({ render: true });
+      }
+    infoString = this.state.nick_name + ' 님!' +  ' 오늘도 좋은 하루 되세요~';
+
     const { selection } = this.state;
     const { searchResult } = this.props;
     const searchedProduct = searchResult.map((res) => {
@@ -112,9 +118,9 @@ class Search extends Component {
           {backLogin}
           <h1>Search</h1>
           <div className="buttons">
-            <button id="back-button" type="button" onClick={() => this.back()}>
+            {/* <button id="back-button" type="button" onClick={() => this.back()}>
               <img id="arrow" src={arrow} alt="Back to Main Menu" />
-            </button>
+            </button> */}
             <button type="button" id="log-out-button" onClick={() => this.logout()}>Log-out</button>
             {backLogin}
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>

@@ -10,6 +10,20 @@ export const getUser_ = (User) => ({ type: actionTypes.GET_USER, User });
 export const getUser = () => (dispatch) => axios.get('/api/signup/')
   .then((res) => dispatch(getUser_(res.data)));
 
+export const getUser2_ = (User2) => ({ type: actionTypes.GET_USER2, User2 });
+export const getUser2 = () => (dispatch) => axios.get('/api/signin/')
+  .then((res) => dispatch(getUser2_(res.data)));
+
+export const putUser2_ = (User2) => ({ type: actionTypes.PUT_USER2, User2 });
+export const putUser2 = (nick_name, prefer_color, prefer_base, prefer_brand) => (dispatch) => {
+  axios.put('/api/signin/', {
+    nick_name,
+    prefer_color,
+    prefer_base,
+    prefer_brand,
+  })
+    .then((res) => dispatch(putUser2_(res.data)));
+};
 
 export const authStart = () => ({
   type: actionTypes.AUTH_START,
@@ -56,11 +70,12 @@ export const logout = () => {
   };
 };
 
-export const authSignup = (username, email, password) => (dispatch) => {
+export const authSignup = (username, email, nickname, password) => (dispatch) => {
   dispatch(authStart());
   axios.post('/api/signup/', {
     username,
     email,
+    nickname,
     password,
 
   })

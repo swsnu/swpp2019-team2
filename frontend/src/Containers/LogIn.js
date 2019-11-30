@@ -40,7 +40,7 @@ class NormalLoginForm extends Component {
         }
 
         if (this.props.isAuthenticated) {
-          changePage = <Redirect to="/main" />;
+          changePage = <Redirect to="/search" />;
         } else changePage = <Redirect to="/login" />;
 
         return (

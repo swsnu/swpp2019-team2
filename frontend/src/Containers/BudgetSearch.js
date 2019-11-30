@@ -42,18 +42,19 @@ class BudgetSearch extends Component {
       show: false,
       itemNum: 2,
       budgetRange: null,
+      render: false,
     };
   }
 
   componentDidMount() {
     this.props.onTryAutoSignup();
+    this.props.getUserInfo();
   }
 
 
   logoutHandler = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
-    this.props.getUserInfo();
   }
 
   mypageHandler = (id) => {
@@ -220,6 +221,17 @@ class BudgetSearch extends Component {
   }
 
   render() {
+    let infoString = '';
+    if(this.state.render == false) {
+      const userInfo = this.props.user.map((res) => {
+        this.setState({ nick_name: res.nick_name })
+        this.setState({ prefer_color: res.prefer_color })
+        this.setState({ prefer_base: res.prefer_base })
+        this.setState({ prefer_brand: res.prefer_brand })
+      });
+      this.setState({ render: true });
+      }
+    infoString = this.state.nick_name + ' 님!' +  ' 오늘도 좋은 하루 되세요~';
     const {
       id, itemNum, find1, find2, find3, find4, find5, show, combi,
     } = this.state;
@@ -239,9 +251,10 @@ class BudgetSearch extends Component {
         <div className="upperbar">
           <h1>Budget Search</h1>
           <div className="buttons">
-            <button id="back-button" type="button" onClick={() => this.menuHandler()}>
+            {/* <button id="back-button" type="button" onClick={() => this.menuHandler()}>
               <img id="arrow" src={arrow} alt="Back to Main Menu" />
-            </button>
+            </button> */}
+            {infoString}
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
           </div>

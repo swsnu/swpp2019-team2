@@ -13,14 +13,13 @@ class SkinTone extends Component {
       selectedFile: null,
       fileurl: '',
       flag: false,
+      render: false,
     };
   }
 
   componentDidMount() {
     this.props.onTryAutoSignup();
-    /* if (this.props.selectedUser) {
-      this.setState({ id: this.props.selectedUser.id });
-    } */
+    this.props.getUserInfo();
   }
 
     logoutHandler = () => {
@@ -28,8 +27,8 @@ class SkinTone extends Component {
       this.props.onTryAutoSignup();
     }
 
-    mypageHandler = (id) => {
-      this.props.history.replace(`../mypage/${id}`);
+    mypageHandler = () => {
+      this.props.history.replace('../mypage');
     }
 
     menuHandler = () => {
@@ -80,12 +79,16 @@ class SkinTone extends Component {
     render() {
       let redirect = null;
       let infoString = '';
-      try {
-        const { username } = this.props.user[0];
-        infoString = `Hello, ${username}!`;
-      } catch {
-        infoString = 'Hello';
+      if(this.state.render == false) {
+        const userInfo = this.props.user.map((res) => {
+          this.setState({ nick_name: res.nick_name })
+          this.setState({ prefer_color: res.prefer_color })
+          this.setState({ prefer_base: res.prefer_base })
+          this.setState({ prefer_brand: res.prefer_brand })
+        });
+        this.setState({ render: true });
       }
+    infoString = this.state.nick_name + ' 님!' +  ' 오늘도 좋은 하루 되세요~';
       if (!this.props.isAuthenticated) {
         redirect = <Redirect to="/login" />;
       }
@@ -108,9 +111,9 @@ class SkinTone extends Component {
               <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
             </div>
             <div className="buttons">
-              <button id="back-button" type="button" onClick={() => this.menuHandler()}>
+              {/* <button id="back-button" type="button" onClick={() => this.menuHandler()}>
                 <img id="arrow" src={arrow} alt="Back to Main Menu" />
-              </button>
+              </button> */}
               <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
               <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
             </div>

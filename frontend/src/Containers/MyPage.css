@@ -1,0 +1,153 @@
+.upperbar {
+    flex: 1;
+    flex-direction:row;
+    align-items:stretch;
+    width:100%;
+    background-color:rgb(255, 220, 226);
+    text-align : center;
+    display : table;
+    
+}
+
+.upperbar #user_info {
+    display: inline-table;
+    position: absolute;
+    right : 10%;
+    top : 4%;
+}
+
+.upperbar .buttons #log-out-button{
+    display: inline-table;
+    position: absolute;
+    left : 2%;
+    top : 2%;
+}
+
+.upperbar .buttons #my-page-button{
+    display: inline-table;
+    position: absolute;
+    right:4%;
+    top:2%;
+}
+.MainPage .buttons{
+    align-content: center;
+}
+.Menu1 {
+    position:absolute;
+    left: 35%;
+    top: 35%;
+    height : 700px;
+    width : 500px;
+    margin: -150px -100px -100px -250px;
+    box-shadow: 0 2px 3px rgb(231, 201, 235);
+    text-align : center;
+    background : rgb(255, 220, 226);
+}
+
+.Menu1_Border {
+    position:absolute;
+    left: 60%;
+    top: 30%;
+    height : 600px;
+    width : 400px;
+    margin: -150px -100px -100px -250px;
+    box-shadow: 25px 20px 20px rgb(231, 201, 235);
+    text-align : center;
+    background : rgb(255, 220, 226);
+    border: purple;
+}
+
+.Menu2_Border {
+    position:absolute;
+    left: 53%;
+    top: 30%;
+    height : 600px;
+    width : 450px;
+    margin: -150px -100px -100px -250px;
+    box-shadow: 25px 20px 20px rgb(231, 201, 235);
+    text-align : center;
+    background : rgb(255, 220, 226);
+    border: purple;
+}
+
+.Menu2 {
+    position:absolute;
+    left: 65%;
+    top: 35%;
+    height : 700px;
+    width : 600px;
+    margin: -150px -100px -100px -250px;
+    box-shadow: 0 2px 3px rgb(231, 201, 235);
+    text-align : center;
+    background : rgb(255, 220, 226);
+}
+
+ul{
+    list-style: none;
+    padding-left:0px;
+    padding-bottom: 0px;
+    margin:0px;
+}
+
+
+/* .MainPage button {
+    background-color : transparent;
+    color : #9b45a7;
+    cursor : pointer;
+    border : 1px solid #9b45a7;
+    text-align: center;
+    margin : 5px;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+} */
+
+.MainPage button:hover,
+.MainPage button:active {
+    color:white;
+    background-color:#9b45a7;
+}
+
+.Menu2 input {
+    width: 35%;
+    height: 20px;
+    border-radius: 3px;
+    position: relative;
+    background-color: white;
+    transition: 0.3s all;
+}
+
+.Menu2 #password-input {
+    width: 33%;
+    height: 20px;
+    border-radius: 3px;
+    position: relative;
+    background-color: white;
+    transition: 0.3s all;
+}
+
+.Select {
+    width: 50%;
+    height: 30px;
+    border-radius: 3px;
+    position: relative;
+    background-color: white;
+    transition: 0.3s all;
+}
+
+.Menu input {
+    width: 90%;
+}
+
+
+h4 {
+    color: purple;
+}
+
+.Menu2 button {
+    width: 25%;
+    height: 40px;
+}
+
+
