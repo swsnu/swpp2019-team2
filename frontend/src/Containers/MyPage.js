@@ -89,10 +89,12 @@ class MyPage extends Component {
     this.props.history.replace('../sale');
   };
 
-  mypageHandler = (id) => {};
+  mypageHandler = () => {
+    this.props.history.replace('../mypage');
+  }
 
   confirmHandler = () => {
-    this.props.putUserInfo2(this.state.nick_name, this.state.prefer_color, this.state.prefer_base, this.state.prefer_brand);
+    this.props.putUserInfo2(this.state.nickName, this.state.preferColor, this.state.preferBase, this.state.preferBrand);
     window.confirm('정보가 수정되었습니다!');
     this.props.getUserInfo();
     this.props.getUserInfo2();
@@ -104,7 +106,7 @@ class MyPage extends Component {
       const string = ` ${res.value} `;
       result = result.concat(string);
     });
-    this.setState({ prefer_brand: result });
+    this.setState({ preferBrand: result });
   }
 
   render() {
@@ -136,7 +138,7 @@ class MyPage extends Component {
           <div className="buttons">
             <button type="button" id="log-out-button" onClick={() => this.logoutHandler()}>Log-out</button>
             <label id="user_info">{infoString}</label>
-            <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
+            <button id="my-page-button" type="button" onClick={() => this.mypageHandler()}>My Page</button>
           </div>
         </div>
         <div className="Menubar">
