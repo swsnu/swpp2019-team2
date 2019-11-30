@@ -4,10 +4,20 @@ from django.http import JsonResponse, HttpResponseNotAllowed
 from .models import Lip, LipOption
 from .serializers import LipSerializer
 
+def getAll(request):
+    """ GET ALL LIP PRODUCTS WITHOUT OPTION """
+    if request.method == "GET":
+        lip = Lip.objects.all()
+        lipserializer = LipSerializer(lip, many=True, context=None)
+        return JsonResponse(lipserializer.data, safe=False)
+    
+    return HttpResponseNotAllowed(['GET'])
+        
 
 def search(request, option):
     """ TODO : DOCSTRING"""
     if request.method == "GET":
+        print("get")
         url = urlparse('?' + option)
         query = parse_qs(url.query)
         lip = Lip.objects.all()
@@ -21,6 +31,7 @@ def search(request, option):
             lip = lip.exclude(
                 color__isnull=True
             )
+            print(lip)
 
             for i in lip:
                 lipss = LipOption.objects.filter(product=i).filter(
