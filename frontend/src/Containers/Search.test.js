@@ -36,7 +36,7 @@ const stubSeletedUserF = {
 };
 
 
-jest.mock('../Components/LipForm', () => jest.fn((props) => (
+jest.mock('../Components/ProductForm', () => jest.fn((props) => (
   <div className="spyLip">
     <div>
       <section className="Index">

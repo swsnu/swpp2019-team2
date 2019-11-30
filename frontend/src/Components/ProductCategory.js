@@ -106,34 +106,34 @@ export const CATEGORY = {
 };
 
 export const CATEGORY_KOREAN = {
-  form : '제형',
-  category : '카테고리',
-  lip:{
+  form: '제형',
+  category: '카테고리',
+  lip: {
     category: {
-        S : '립스틱',
-        G : '립글로즈',
-        B : '립밤',
-        T : '틴트'
-      },
-      form: {
-        M : '매트',
-        G : '글로시',
-        N : '정보없음'
-      },
+      S: '립스틱',
+      G: '립글로즈',
+      B: '립밤',
+      T: '틴트',
+    },
+    form: {
+      M: '매트',
+      G: '글로시',
+      N: '정보없음',
+    },
   },
   base: {
     category: {
-      P : '파우더',
-      CU : '쿠션',
-      C : '컨실러',
-      F : '파운데이션',
-      PR : '프라이머',
-      B : 'BB & CC'
-    }
+      P: '파우더',
+      CU: '쿠션',
+      C: '컨실러',
+      F: '파운데이션',
+      PR: '프라이머',
+      B: 'BB & CC',
+    },
   },
-}
+};
 
 export const CATEGORY_PRIORITY = {
   category: 0,
-  form : 1,
-}
+  form: 1,
+};

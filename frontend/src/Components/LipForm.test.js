@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LipForm from './LipForm';
+import ProductForm from './ProductForm';
 
 
-describe('<LipForm />', () => {
+describe('<ProductForm />', () => {
   it('should render without errors', () => {
-    const component = shallow(<LipForm
+    const component = shallow(<ProductForm
       colors={[{
         color: 'RD',
         color_hex: '#ef3340',
@@ -22,7 +22,7 @@ describe('<LipForm />', () => {
       form="M"
       brand="lip_brand1"
     />);
-    const wrapper = component.find('li.LipContainer');
+    const wrapper = component.find('li.ProductContainer');
     expect(wrapper.length).toBe(1);
   });
 });

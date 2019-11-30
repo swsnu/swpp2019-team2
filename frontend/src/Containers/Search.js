@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import './Search.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-import LipForm from '../Components/LipForm';
+import ProductForm from '../Components/ProductForm';
 import arrow from '../image/화살표.png';
 import DetailCategory from '../Components/DetailCategory';
 
@@ -17,14 +17,14 @@ class Search extends Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.searched !== nextState.searched) return false;
-    else return true;
-  }
-
   componentDidMount() { // initialize state
     this.props.onTryAutoSignup();
     this.props.getUserInfo();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.searched !== nextState.searched) return false;
+    return true;
   }
 
 
@@ -56,10 +56,8 @@ class Search extends Component {
     this.props.history.replace('../sale');
   };
 
-  searchResult = [];
-  
+
   render() {
-    console.log('render');
     let changePage = '';
     let backLogin = '';
     let infoString = '';
@@ -72,15 +70,13 @@ class Search extends Component {
     const { selection, searched } = this.state;
     const { searchResult } = this.props;
 
-    const searchedProduct = searchResult.map((res) => {
-        return (
-          <LipForm
-            selection={searched}
-            key={res.id}
-            info={res}
-          />
-        );
-    });
+    const searchedProduct = searchResult.map((res) => (
+      <ProductForm
+        selection={searched}
+        key={res.id}
+        info={res}
+      />
+    ));
     if (!this.props.isAuthenticated) {
       changePage = <Redirect to="/login" />;
     }
@@ -94,7 +90,7 @@ class Search extends Component {
     };
 
     const search = (e) => {
-      this.setState({searched : e.target.getAttribute('category')});
+      this.setState({ searched: e.target.getAttribute('category') });
       const checked = document.querySelectorAll(`div.detail-category#${selection} input:checked`);
       let queryStr = `${selection}/`;
       if (checked.length === 0) queryStr = queryStr.concat('all');
