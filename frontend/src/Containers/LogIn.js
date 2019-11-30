@@ -23,6 +23,7 @@ class NormalLoginForm extends Component {
       LoginHandler = (e) => {
         this.props.Login(this.state.username, this.state.password);
         this.props.onTryAutoSignup();
+        this.props.getUserInfo();
         this.setState({ signin: true });
       }
 
@@ -93,7 +94,7 @@ const mapDispatchToProps = (dispatch) => ({
 
   Login: (username, password) => dispatch(actionCreators.authLogin(username, password)),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WrappedNormalLoginForm);

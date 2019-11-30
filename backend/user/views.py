@@ -70,10 +70,10 @@ def signin(request):  # Signin function
         user_info = Profile.objects.get(user=request.user)
         try:
             req_data = json.loads(request.body.decode())
-            edit_nick_name = req_data['nick_name']
-            edit_prefer_color = req_data['prefer_color']
-            edit_prefer_base = req_data['prefer_base']
-            edit_prefer_brand = req_data['prefer_brand']
+            edit_nick_name = req_data['nickName']
+            edit_prefer_color = req_data['preferColor']
+            edit_prefer_base = req_data['preferBase']
+            edit_prefer_brand = req_data['preferBrand']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest() 
         user_info.nick_name = edit_nick_name
