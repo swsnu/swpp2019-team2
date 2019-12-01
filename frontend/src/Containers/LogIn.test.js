@@ -3,12 +3,11 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { getMockStore } from '../Mocks/mocks';
 import LogIn from './LogIn';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { history } from '../store/store';
 import * as actions from '../store/actions/cosmos';
-
 
 const stubStateC = {
   Lip: [],
