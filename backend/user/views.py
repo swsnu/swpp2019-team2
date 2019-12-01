@@ -2,12 +2,11 @@
 import json
 from json import JSONDecodeError
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseBadRequest
-from django.contrib.auth.models import User
-from .models import Profile
-from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import login, authenticate, logout
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.db import IntegrityError
+from .models import Profile
 
 
 @csrf_exempt
@@ -16,7 +15,9 @@ def signup(request):
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            user_info = list(Profile.objects.filter(user=request.user).values())
+            user_info = list(
+                Profile.objects.filter(
+                    user=request.user).values())
             return JsonResponse(user_info, safe=False)
 
     if request.method == 'POST':
@@ -42,11 +43,14 @@ def signup(request):
 
 
 def signin(request):  # Signin function
+    #pylint: disable=too-many-return-statements
     """SIGNIN FUNCTION"""
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            user_info = list(User.objects.filter(username=request.user.username).values())
+            user_info = list(
+                User.objects.filter(
+                    username=request.user.username).values())
             return JsonResponse(user_info, safe=False)
 
     if request.method == 'POST':
@@ -74,16 +78,21 @@ def signin(request):  # Signin function
             edit_prefer_color = req_data['preferColor']
             edit_prefer_base = req_data['preferBase']
             edit_prefer_brand = req_data['preferBrand']
+<<<<<<< HEAD
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest() 
+=======
+        except (KeyError, JSONDecodeError):
+            return HttpResponseBadRequest()
+>>>>>>> 808a13412de743abeb29772832afbda3806f68e5
         user_info.nick_name = edit_nick_name
         user_info.prefer_color = edit_prefer_color
         user_info.prefer_base = edit_prefer_base
         user_info.prefer_brand = edit_prefer_brand
-        print(edit_prefer_brand)                                                   
+        print(edit_prefer_brand)
         user_info.save()
         response = user_info.nick_name
-        return HttpResponse(response,status=200)
+        return HttpResponse(response, status=200)
 
     return HttpResponseNotAllowed(['GET', 'POST', 'PUT'])
 

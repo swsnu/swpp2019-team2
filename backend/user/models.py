@@ -3,8 +3,9 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.conf import settings
 from django.dispatch import receiver
-from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
 
 
 class Profile(models.Model):
@@ -13,7 +14,7 @@ class Profile(models.Model):
     prefer_color = models.TextField(max_length=10, null=True, blank=True)
     prefer_base = models.TextField(null=True, blank=True)
     prefer_brand = models.TextField(null=True)
-    nick_name = models.TextField(max_length = 100, null=False, blank=False)
+    nick_name = models.TextField(max_length=100, null=False, blank=False)
 
     def __str__(self):
         return self.user.username

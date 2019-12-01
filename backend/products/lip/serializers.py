@@ -39,4 +39,4 @@ class LipSerializer(serializers.ModelSerializer):
             'brand',
             'color',
             'id'
-            ]
+        ]
