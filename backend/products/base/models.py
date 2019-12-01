@@ -31,6 +31,10 @@ class Base(models.Model):
         max_length=1,
         choices=CATEGORY,
     )
+    product_url = models.CharField(
+        max_length=255,
+        default="//:0",
+    )
     img_url = models.TextField(default="//:0")
 
     def __str__(self):
@@ -42,27 +46,38 @@ class BaseOption(models.Model):
     LIGHT = "LT"
     MIDDLE = "MD"
     DARK = "DK"
-    NONE = "NO"
     COLOR = (
         (LIGHT, "under 21"),
-        (MIDDLE, "21 ~ 23"),
-        (DARK, "over 23"),
-        (NONE, "Other type")
+        (MIDDLE, "21"),
+        (DARK, "23 and over"),
+        (None, None)
     )
     color = models.CharField(
-        default="NO",
+        default=None,
         max_length=2,
-        choices=COLOR
+        choices=COLOR,
+        null=True
+    )
+    WARM = "WM"
+    NEUTRAL = "NT"
+    COOL = "CL"
+    SUBCOLOR = (
+        (WARM, "Warm Tone"),
+        (NEUTRAL, "Neutral Tone"),
+        (COOL, "Cool Tone"),
+        (None, None)
     )
     sub_color = models.CharField(
         default=None,
-        null=True,
-        max_length=30
+        max_length=2,
+        choices=SUBCOLOR,
+        null=True
     )
     color_hex = models.CharField(max_length=10)
     optionName = models.CharField(max_length=30)
     product = models.ForeignKey(
         Base,
+        related_name='color',
         on_delete=models.CASCADE
     )
 

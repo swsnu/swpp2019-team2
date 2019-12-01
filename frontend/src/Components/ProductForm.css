@@ -1,4 +1,4 @@
-li.LipContainer {
+li.ProductContainer {
     width: 250px;
     float: left;
 }
@@ -13,13 +13,18 @@ a.productItem{
     display:block;
 }
 
+section.info_name.info_text {
+    height:25px;
+}
+
 section.info_text {
+    height : 16px;
+}
+section.info_text, section.color {
     margin: 10px 0 10px 0;
 }
 
-section.Lip_name.info_text {
-    height:25px;
-}
+
 
 span.color-chip {
     width:24px;

@@ -42,7 +42,7 @@ const stubSeletedUserF = {
 };
 
 
-jest.mock('../Components/LipForm', () => jest.fn((props) => (
+jest.mock('../Components/ProductForm', () => jest.fn((props) => (
   <div className="spyLip">
     <div>
       <section className="Index">
@@ -173,6 +173,7 @@ describe('<Liplist />', () => {
     newInstance.setState({ selection: 'lip' });
     const button = component.find('button.Product#eye');
     button.simulate('click');
+<<<<<<< HEAD
     expect(newInstance.state).toEqual({
       nickName: 'a', preferBase: '19', preferBrand: '라네즈', preferColor: 'red', render: true, selection: 'eye',
     });
@@ -180,6 +181,11 @@ describe('<Liplist />', () => {
     expect(newInstance.state).toEqual({
       nickName: 'a', preferBase: '19', preferBrand: '라네즈', preferColor: 'red', render: true, selection: 'eye',
     });
+=======
+    expect(newInstance.state).toEqual({ searched: null, selection: 'eye' });
+    button.simulate('click');
+    expect(newInstance.state).toEqual({ searched: null, selection: 'eye' });
+>>>>>>> origin
   });
 });
 

@@ -1,15 +1,9 @@
 """ test views """
-import json
-from urllib.request import urlopen
-from django.core.files import File
-from django.core import files
-from django.core.files.temp import NamedTemporaryFile
 from django.test import TestCase, Client
+import json
 from products.lip.models import Lip, LipOption
 from brand.models import Brand
 from products.lip.serializers import LipSerializer, LipOptionSerializer
-from ml.models import ML
-from products.base.models import Base, BaseOption
 
 class LipTestCase(TestCase):    
     def setUp(self):
@@ -41,6 +35,12 @@ class LipTestCase(TestCase):
         res = json.loads(response.content)
         self.assertEqual(res[0]["name"], self.product1.name)
         self.assertEqual(res[0]["form"], 'M')
+        
+        response = self.client.get('/api/lip/form=M&category=S')
+        self.assertEqual(response.status_code, 200)
+        res = json.loads(response.content)
+        self.assertEqual(res[0]["name"], self.product1.name)
+        self.assertEqual(res[0]["category"], 'S')
 
         response = self.client.get('/api/lip/form=M&color=PK')
         self.assertEqual(response.status_code, 200)
@@ -54,6 +54,7 @@ class LipTestCase(TestCase):
         res = json.loads(response.content)
         self.assertEqual(len(res), 1)
 
+<<<<<<< HEAD:backend/test_views.py
 class MLTestCase(TestCase):
     def setUp(self):
         self.client=Client()
@@ -84,3 +85,7 @@ class MLTestCase(TestCase):
     #     response = self.client.put('/api/ml/', json.dumps({'userID': '1'}),
     #                                content_type='application/json')
         
+=======
+
+        
+>>>>>>> origin:backend/test_views_lip.py
