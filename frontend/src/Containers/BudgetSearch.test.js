@@ -116,10 +116,11 @@ describe('<BudgetSearch />', () => {
   // it('should call handleChange', () => {
   //   const mockHandleChange = jest.fn();
   //   const component = mount(budgetsearch);
-  //   const wrapper = component.find('#select');
-  //   wrapper.props('onChange')(null, mockHandleChange());
-  //   expect(component.state().budgetRange).toBe(null);
-  //   wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
+  //   const wrapper = component.find('#select').at(1);
+  //   // wrapper.simulate('onChange')(null, mockHandleChange());
+  //   wrapper.simulate('change')(null, mockHandleChange());
+  //   expect(component.budgetRange).toBe(null);
+  //   wrapper.prop('change')({ value: 1 }, mockHandleChange());
   //   expect(component.state().budgetRange).toEqual([5000, 10000]);
   // });
   it('should reset result', () => {
