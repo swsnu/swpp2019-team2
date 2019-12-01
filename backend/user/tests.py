@@ -82,9 +82,9 @@ class ModelTestCase(TestCase):
         client.login(username='a', password='123')
         response = client.put('/api/signin/',
                               {'nickName': 'a',
-                                  'preferColor': '1',
-                                  'preferBase': '2',
-                                  'preferBrand': '3'},
+                               'preferColor': '1',
+                               'preferBase': '2',
+                               'preferBrand': '3'},
                               content_type='application/json',
                               HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 200)  # Pass csrf protection
@@ -100,8 +100,8 @@ class ModelTestCase(TestCase):
         client.login(username='a', password='123')
         response = client.put('/api/signin/',
                               {'nickName': 'a',
-                                  'preferBase': '2',
-                                  'preferBrand': '3'},
+                               'preferBase': '2',
+                               'preferBrand': '3'},
                               content_type='application/json',
                               HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 400)  # Pass csrf protection
@@ -117,7 +117,7 @@ class ModelTestCase(TestCase):
         response = client.get('/api/signin/')
         self.assertEqual(response.status_code, 200)  # Pass csrf protection
 
-    def test_signup(self):
+    def test_signup_(self):
         """ TODO : DOCSTRING"""
         client = Client(enforce_csrf_checks=True)
 
@@ -144,9 +144,9 @@ class ModelTestCase(TestCase):
 
         response = client.delete('/api/signup/',
                                  {'username': 'chris',
-                                'email': '1',
-                                'password': '2',
-                                'nickname':'3'},
+                                  'email': '1',
+                                  'password': '2',
+                                  'nickname':'3'},
                                  content_type='application/json',
                                  HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 405)  # Pass csrf protection
