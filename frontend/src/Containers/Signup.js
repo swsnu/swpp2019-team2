@@ -111,7 +111,6 @@ const mapDispatchToProps = (dispatch) => ({
 
   Signup: (username, email, nickname, password) => dispatch(actionCreators.authSignup(username,
     email, nickname, password)),
-  Login: (username, password) => dispatch(actionCreators.authLogin(username, password)),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
 });
 

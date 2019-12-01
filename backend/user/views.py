@@ -14,11 +14,10 @@ def signup(request):
     """SIGNUP FUNCTION"""
 
     if request.method == 'GET':
-        if request.user.is_authenticated:
-            user_info = list(
-                Profile.objects.filter(
-                    user=request.user).values())
-            return JsonResponse(user_info, safe=False)
+        user_info = list(
+            Profile.objects.filter(
+                user=request.user).values())
+        return JsonResponse(user_info, safe=False)
 
     if request.method == 'POST':
         try:
@@ -47,11 +46,10 @@ def signin(request):  # Signin function
     """SIGNIN FUNCTION"""
 
     if request.method == 'GET':
-        if request.user.is_authenticated:
-            user_info = list(
-                User.objects.filter(
-                    username=request.user.username).values())
-            return JsonResponse(user_info, safe=False)
+        user_info = list(
+            User.objects.filter(
+                username=request.user.username).values())
+        return JsonResponse(user_info, safe=False)
 
     if request.method == 'POST':
         try:

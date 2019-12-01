@@ -6,7 +6,6 @@ import swal from 'sweetalert';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-// import arrow from '../image/화살표.png';
 import CheckBox from './CheckBox';
 import ItemDisplay from './ItemDisplay';
 
@@ -102,10 +101,6 @@ class BudgetSearch extends Component {
       this.setState({ budgetRange: chosenBudgetRange });
     }
   }
-
-  // menuHandler = () => {
-  //   this.props.history.replace('../main');
-  // }
 
   findFirst(url) {
     this.setState({ find1: url });
@@ -223,12 +218,9 @@ class BudgetSearch extends Component {
   render() {
     let infoString = '';
     if (this.state.render === false) {
-      this.props.user.map((res) => ((
-        this.setState({ nickName: res.nick_name }),
-        this.setState({ preferColor: res.prefer_color }),
-        this.setState({ preferBase: res.prefer_base }),
-        this.setState({ preferBrand: res.prefer_brand })
-      )));
+      this.props.user.map((res) => (
+        this.setState({ nickName: res.nick_name })
+      ));
       this.setState({ render: true });
     }
     infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
@@ -251,9 +243,6 @@ class BudgetSearch extends Component {
         <div className="upperbar">
           <h1>Budget Search</h1>
           <div className="buttons">
-            {/* <button id="back-button" type="button" onClick={() => this.menuHandler()}>
-              <img id="arrow" src={arrow} alt="Back to Main Menu" />
-            </button> */}
             {infoString}
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>

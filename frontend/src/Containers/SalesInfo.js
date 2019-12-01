@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import BigCalendar from './BigCalendar';
 import './SalesInfo.css';
-// import arrow from '../image/화살표.png';
 
 class SalesInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      render: false,
+      call: false,
     };
   }
 
@@ -48,14 +46,11 @@ class SalesInfo extends Component {
   render() {
     let redirect = null;
     let infoString = '';
-    if (this.state.render === false) {
-      this.props.user.map((res) => ((
-        this.setState({ nickName: res.nick_name }),
-        this.setState({ preferColor: res.prefer_color }),
-        this.setState({ preferBase: res.prefer_base }),
-        this.setState({ preferBrand: res.prefer_brand })
-      )));
-      this.setState({ render: true });
+    if (this.state.call === false) {
+      this.props.user.map((res) => (
+        this.setState({ nickName: res.nick_name })
+      ));
+      this.setState({ call: true });
     }
     infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     if (!this.props.isAuthenticated) {
@@ -74,11 +69,8 @@ class SalesInfo extends Component {
             <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
           </div>
           <div className="buttons">
-            {/* <button id="back-button" type="button" onClick={() => this.menuHandler()}>
-              <img id="arrow" src={arrow} alt="Back to Main Menu" />
-            </button> */}
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
-            <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
+            <button id="my-page-button" type="button" onClick={() => this.mypageHandler()}>My Page</button>
           </div>
         </div>
         <div className="Calendar">

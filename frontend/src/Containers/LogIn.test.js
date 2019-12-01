@@ -2,13 +2,12 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { ConnectedRouter } from 'connected-react-router';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { getMockStore } from '../Mocks/mocks';
 import LogIn from './LogIn';
-
+import { history } from '../store/store';
 import * as actions from '../store/actions/cosmos';
-
 
 const stubStateC = {
   Lip: [],
@@ -24,25 +23,29 @@ const stubSeletedUserF = {
 const stubSeletedUserT = {
   logged_in: true,
 };
+const stubInitialState = {
+  selectedUser: {
+    id: 1, email: 'TEST_EMAIL', password: 'TEST_PASS', name: 'TEST', logged_in: false,
+  },
+  User: [{
+    nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+  }],
+};
+const mockStore = getMockStore(stubInitialState);
 describe('<LogIn />', () => {
   let spygetLips;
-  let spylogout;
+  let spylogin;
   let spyauthCheckState;
   beforeEach(() => {
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
+    spylogin = jest.spyOn(actions, 'authLogin')
+      .mockImplementation(() => (dispatch) => {});
   });
   it('should render and call authLogin', () => {
-    /* let spyauthLogin = jest
-      .spyOn(actionCreators, "authLogin")
-      .mockImplementation(() => {
-        return dispatch => {};
-      }); */
-
-    const mockStore = getMockStore(stubStateC);
-    const history = createBrowserHistory();
+    const mockStore1 = getMockStore(stubStateC);
     const component = mount(
-      <Provider store={mockStore}>
+      <Provider store={mockStore1}>
         <BrowserRouter history={history}>
           <LogIn />
         </BrowserRouter>
@@ -135,5 +138,53 @@ describe('<LogIn />', () => {
     );
     const redirect = component.find('Redirect');
     expect(redirect.props().to).toEqual('/login');
+  });
+});
+
+describe('<Signin />', () => {
+  let signin; let spyGetUsers; let spyGetUser;
+  beforeEach(() => {
+    signin = (
+      <Provider store={mockStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              render={(props) => (
+                <LogIn
+                  {...props}
+                />
+              )}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    );
+    spyGetUsers = jest.spyOn(actions, 'authLogin')
+      .mockImplementation(() => () => {});
+    spyGetUser = jest.spyOn(actions, 'authCheckState')
+      .mockImplementation(() => () => {});
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should call mypageHandler', () => {
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const component = mount(signin);
+    const wrapper = component.find('#sign-up-button');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toBeCalledTimes(2);
+  });
+  it('should call confirm', () => {
+    const component = mount(signin);
+    const usernameInput = component.find('#username-input');
+    usernameInput.simulate('change', { target: { value: 'test_id' } });
+    const pwInput = component.find('#pw-input');
+    pwInput.simulate('change', { target: { value: 'test_password' } });
+    const loginButton = component.find('#login-button');
+    loginButton.simulate('click');
+    expect(spyGetUsers).toHaveBeenCalledTimes(1);
   });
 });

@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import './SkinTone.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-// import arrow from '../image/화살표.png';
 
 class SkinTone extends Component {
   constructor(props) {
@@ -86,12 +85,9 @@ class SkinTone extends Component {
       let redirect = null;
       let infoString = '';
       if (this.state.render === false) {
-        this.props.user.map((res) => ((
-          this.setState({ nickName: res.nick_name }),
-          this.setState({ preferColor: res.prefer_color }),
-          this.setState({ preferBase: res.prefer_base }),
-          this.setState({ preferBrand: res.prefer_brand })
-        )));
+        this.props.user.map((res) => (
+          this.setState({ nickName: res.nick_name })
+        ));
         this.setState({ render: true });
       }
       infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
@@ -117,9 +113,6 @@ class SkinTone extends Component {
               <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
             </div>
             <div className="buttons">
-              {/* <button id="back-button" type="button" onClick={() => this.menuHandler()}>
-                <img id="arrow" src={arrow} alt="Back to Main Menu" />
-              </button> */}
               <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
               <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
             </div>
