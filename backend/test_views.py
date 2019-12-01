@@ -65,9 +65,9 @@ class MLTestCase(TestCase):
             color_hex="111111", optionName="option", product=self.product1
         )
         img_url = 'http://ph.spotvnews.co.kr/news/photo/201905/285546_351974_2458.jpg'
-        # self.img_temp = NamedTemporaryFile(dir='media', suffix='.jpg')
-        # self.img_temp.write(urlopen(img_url).read())
-        # self.img_temp.flush()
+        self.img_temp = NamedTemporaryFile(delete=True, dir='media', suffix='.jpg')
+        self.img_temp.write(urlopen(img_url).read())
+        self.img_temp.flush()
         self.ml_object = ML.objects.create(
             user_id='1', result='result', image='files.File(self.img_temp)', base='base', product = self.product1
         )
@@ -77,10 +77,10 @@ class MLTestCase(TestCase):
         self.assertEqual(res[0]['user_id'], self.ml_object.user_id)
         self.assertEqual(res[0]['result'], self.ml_object.result)
         self.assertEqual(res[0]['base'], self.ml_object.base)
-    # def test_put(self):
-    #     response = self.client.post('/api/ml/', json.dumps({}),
-    #                                 content_type='application/json')
-    #     self.assertEqual(response.status_code, 400)
-    #     response = self.client.put('/api/ml/', json.dumps({'userID': '1'}),
-    #                                content_type='application/json')
+    def test_put(self):
+        response = self.client.post('/api/ml/', json.dumps({}),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.put('/api/ml/', json.dumps({'userID': '1'}),
+                                   content_type='application/json')
         
