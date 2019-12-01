@@ -11,16 +11,16 @@ const stubuser = {
 describe('post reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
-      Lip: [], User: [], error: null, loading: false, token: null,
+      User: [], User2: [], ML: null, error: null, loading: false, token: null, result: [],
     });
   });
 
-  it('should handle GET_LIP', () => {
+  it('should handle GET_PRODUCT', () => {
     const startAction = {
-      type: actionTypes.GET_LIP,
+      type: actionTypes.GET_PRODUCT,
     };
     const expectedActions = {
-      Lip: undefined, User: [], error: null, loading: false, token: null,
+      User: [], User2: [], ML: null, error: null, loading: false, token: null, result: undefined,
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -32,7 +32,17 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_START,
     };
     const expectedActions = {
-      Lip: [], User: [], error: null, loading: true, token: null,
+      User: [], User2: [], ML: null, error: null, loading: true, token: null, result: [],
+    };
+
+    expect(reducer(undefined, startAction)).toEqual(expectedActions);
+  });
+  it('should handle SEND_PICTURE', () => {
+    const startAction = {
+      type: actionTypes.SEND_PICTURE,
+    };
+    const expectedActions = {
+      User: [], User2: [], ML: null, error: null, loading: false, token: null, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -43,7 +53,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_SUCCESS,
     };
     const expectedActions = {
-      Lip: [], User: [], error: null, loading: false, token: undefined,
+      User: [], User2: [], ML: null, error: null, loading: false, token: undefined, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -55,7 +65,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_FAIL,
     };
     const expectedActions = {
-      Lip: [], User: [], error: undefined, loading: false, token: null,
+      User: [], User2: [], error: undefined, loading: false, token: null, ML: null, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -67,9 +77,45 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_LOGOUT,
     };
     const expectedActions = {
-      Lip: [], User: [], error: null, loading: false, token: null,
+      User: [], User2: [], error: null, loading: false, token: null, ML: null, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
   });
+});
+
+it('should handle RUN_ANALYSIS', () => {
+  const startAction = {
+    type: actionTypes.RUN_ANALYSIS,
+  };
+  const expectedActions = {
+    User: [],
+    User2: [],
+    ML: {
+      base: undefined,
+      id: undefined,
+      product: undefined,
+      result_b: undefined,
+      result_g: undefined,
+      result_r: undefined,
+      user_id: undefined,
+    },
+    error: null,
+    loading: false,
+    token: null,
+    result: [],
+  };
+
+  expect(reducer(undefined, startAction)).toEqual(expectedActions);
+});
+
+it('should handle GET_ANALYSIS_RESULT', () => {
+  const startAction = {
+    type: actionTypes.GET_ANALYSIS_RESULT,
+  };
+  const expectedActions = {
+    User: [], User2: [], ML: null, error: null, loading: false, token: null, result: [],
+  };
+
+  expect(reducer(undefined, startAction)).toEqual(expectedActions);
 });

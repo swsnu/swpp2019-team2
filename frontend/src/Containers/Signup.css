@@ -73,3 +73,12 @@ body {
     color:white;
     background-color:#9b45a7;
 }
+
+.SignupBox input#nickname-input {
+    display : block;
+    width : 80%;
+    box-sizing: border-box;
+    outline : none;
+    font : inherit;
+    margin : auto;
+}

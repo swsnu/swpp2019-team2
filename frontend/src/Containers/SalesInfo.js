@@ -4,22 +4,18 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import BigCalendar from './BigCalendar';
 import './SalesInfo.css';
-import arrow from '../image/화살표.png';
 
 class SalesInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
+      call: false,
     };
   }
 
   componentDidMount() {
     this.props.onTryAutoSignup();
-  }
-
-  menuHandler = () => {
-    this.props.history.replace('../main');
+    this.props.getUserInfo();
   }
 
   logoutHandler = () => {
@@ -27,12 +23,36 @@ class SalesInfo extends Component {
     this.props.onTryAutoSignup();
   }
 
-  mypageHandler = (id) => {
-    this.props.history.replace(`../mypage/${id}`);
+  mypageHandler = () => {
+    this.props.history.replace('../mypage');
   }
+
+  searchHandler = () => {
+    this.props.history.replace('../search');
+  };
+
+  budgetHandler = () => {
+    this.props.history.replace('../budget');
+  };
+
+  toneHandler = () => {
+    this.props.history.replace('../skintone');
+  };
+
+  saleHandler = () => {
+    this.props.history.replace('../sale');
+  };
 
   render() {
     let redirect = null;
+    let infoString = '';
+    if (this.state.call === false) {
+      this.props.user.map((res) => (
+        this.setState({ nickName: res.nick_name })
+      ));
+      this.setState({ call: true });
+    }
+    infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     if (!this.props.isAuthenticated) {
       redirect = <Redirect to="/login" />;
     }
@@ -41,12 +61,16 @@ class SalesInfo extends Component {
         {redirect}
         <div className="upperbar">
           <h1> Sales Information </h1>
+          {infoString}
+          <div className="Menubar">
+            <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
+            <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
+            <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+            <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
+          </div>
           <div className="buttons">
-            <button id="back-button" type="button" onClick={() => this.menuHandler()}>
-              <img id="arrow" src={arrow} alt="Back to Main Menu" />
-            </button>
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
-            <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
+            <button id="my-page-button" type="button" onClick={() => this.mypageHandler()}>My Page</button>
           </div>
         </div>
         <div className="Calendar">
@@ -60,11 +84,13 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  user: state.cosmos.User,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
 

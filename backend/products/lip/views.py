@@ -10,11 +10,17 @@ def search(request, option):
     if request.method == "GET":
         url = urlparse('?' + option)
         query = parse_qs(url.query)
-        lip = Lip.objects.all()
-        if 'category' in query:
-            lip = lip.filter(category__in=query['category'])
-        if 'form' in query:
-            lip = lip.filter(form__in=query['form'])
+        if 'category' not in query and 'form' not in query:
+            lip = Lip.objects.all()
+        else:
+            if 'category' in query and 'form' in query:
+                lip = Lip.objects.filter(category__in=query['category']).filter(
+                    form__in=query['form']
+                )
+            elif 'category' in query:
+                lip = Lip.objects.filter(category__in=query['category'])
+            else:
+                lip = Lip.objects.filter(form__in=query['form'])
 
         try:
             color_option = query['color']

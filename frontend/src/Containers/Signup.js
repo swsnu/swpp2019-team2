@@ -20,7 +20,8 @@ class RegistrationForm extends React.Component {
   }
 
   LoginHandler = () => {
-    this.props.Signup(this.state.username, this.state.email, this.state.password);
+    this.props.Signup(this.state.username, this.state.email,
+      this.state.nickname, this.state.password);
     this.props.onTryAutoSignup();
     this.setState({ signup: true });
   }
@@ -39,7 +40,7 @@ class RegistrationForm extends React.Component {
     }
 
     if (this.props.isAuthenticated) {
-      changePage = <Redirect to="/main" />;
+      changePage = <Redirect to="/search" />;
     } else changePage = <Redirect to="/signup" />;
 
 
@@ -53,7 +54,7 @@ class RegistrationForm extends React.Component {
         <div className="SignupBox">
           <h2>Sign Up</h2>
           <label htmlFor="username-input">
-            Username
+            아이디
             <input
               type="text"
               id="username-input"
@@ -62,7 +63,7 @@ class RegistrationForm extends React.Component {
             />
           </label>
           <label htmlFor="email-input">
-            E-mail
+            이메일
             <input
               type="text"
               id="email-input"
@@ -70,10 +71,19 @@ class RegistrationForm extends React.Component {
               onChange={(event) => this.setState({ email: event.target.value })}
             />
           </label>
-          <label htmlFor="pw-input">
-            Password
+          <label htmlFor="nickname-input">
+            닉네임
             <input
               type="text"
+              id="nickname-input"
+              value={this.state.nickname}
+              onChange={(event) => this.setState({ nickname: event.target.value })}
+            />
+          </label>
+          <label htmlFor="pw-input">
+            비밀번호
+            <input
+              type="password"
               id="pw-input"
               value={this.state.password}
               onChange={(event) => this.setState({ password: event.target.value })}
@@ -99,11 +109,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 
-  Signup:
-  (username, email, password) => dispatch(actionCreators.authSignup(username, email, password)),
-  Login: (username, password) => dispatch(actionCreators.authLogin(username, password)),
+  Signup: (username, email, nickname, password) => dispatch(actionCreators.authSignup(username,
+    email, nickname, password)),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(WrappedRegistrationForm);

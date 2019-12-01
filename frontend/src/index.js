@@ -20,14 +20,17 @@ const rootReducer = combineReducers({
 });
 
 
-const logger = (store) => (next) => (action) => {
-  console.log('[Middleware] Dispatching', action);
+/* const logger = (store) => (next) => (action) => {
+  // console.log('[Middleware] Dispatching', action);
   const result = next(action);
-  console.log('[Middleware] Next State', store.getState());
+  // console.log('[Middleware] Next State', store.getState());
   return result;
-};
+}; */
 
-const store = createStore(rootReducer, applyMiddleware(logger, thunk, routerMiddleware(history)));
+const store = createStore(rootReducer, applyMiddleware(thunk, routerMiddleware(history)));
+/* const store = createStore(
+    rootReducer,applyMiddleware(
+      logger, thunk, routerMiddleware(history))); */
 
 ReactDOM.render(<Provider store={store}><App history={history} /></Provider>, document.getElementById('root'));
 

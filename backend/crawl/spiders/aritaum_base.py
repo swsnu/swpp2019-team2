@@ -6,19 +6,18 @@ from selenium.common.exceptions import NoSuchElementException
 import requests
 import webcolors
 from PIL import Image
-from crawl.items import LipProduct, LipColor, Brand, BaseProduct, BaseColor
+from crawl.items import Brand, BaseProduct, BaseColor
 from brand.models import Brand as Brand_db
-from products.lip.models import Lip as Lip_db
 from products.base.models import Base as Base_db
-from .color_tag import cal_color_tag
 from .spider_helper import translate_category
 
 
 class AritaumSpider(scrapy.Spider):
     """ Real Spider extends scrapy.Spider """
-    name = 'aritaum'
+    name = 'aritaum-base'
 
     def __init__(self):
+        print("init")
         scrapy.Spider.__init__(self)
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
@@ -28,13 +27,9 @@ class AritaumSpider(scrapy.Spider):
         link = 'link'
         title = 'title'
 
-        urls = [
-            {
-                title: "lip",
-                link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2200"
-            }, {
-                title: "base",
-                link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2100"
+        urls = [{
+            title: "base",
+            link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2100"
             }]
         for url in urls:
             self.browser.get(url[link])
@@ -77,6 +72,19 @@ class AritaumSpider(scrapy.Spider):
             callback=self.parse_product,
             dont_filter=True)
 
+    @staticmethod
+    def check_color(name):
+        """ check color name and return value"""
+        if any(x in name for x in ['11', '13', '19']):
+            color = "LT"
+        elif '21' in name:
+            color = "MD"
+        elif '23' in name:
+            color = "DK"
+        else:
+            color = None
+        return color
+
     def parse_product(self, response):
         """ parse product information from page """
         #pylint: disable=too-many-locals
@@ -85,6 +93,7 @@ class AritaumSpider(scrapy.Spider):
         for item in response.meta["product"]:
             product_name = item.find_element_by_name(
                 "tagging_productNm").get_property("value")
+            print(product_name)
             brand_name = item.find_element_by_name(
                 "tagging_brandNm").get_property("value")
             price = item.find_element_by_name(
@@ -98,26 +107,14 @@ class AritaumSpider(scrapy.Spider):
             thumb_url = item.find_element_by_css_selector(
                 "div.product-thumb img").get_property("src")
             # case로 나누기
-            if title == 'lip':
-                yield LipProduct(
-                    name=product_name,
-                    price=price,
-                    brand=brand[0],
-                    category=category,
-                    img_url=thumb_url,
-                    crawled=title
-                )
-            elif title == 'base':
-                yield BaseProduct(
-                    name=product_name,
-                    price=price,
-                    brand=brand[0],
-                    category=category,
-                    img_url=thumb_url,
-                    crawled=title
-                )
-            else:
-                pass
+            yield BaseProduct(
+                name=product_name,
+                price=price,
+                brand=brand[0],
+                category=category,
+                img_url=thumb_url,
+                crawled=title
+            )
 
             color_range = item.find_elements_by_class_name(
                 "product-unit__scroller-item")
@@ -132,7 +129,6 @@ class AritaumSpider(scrapy.Spider):
                     yield scrapy.Request(
                         url=color_url,
                         meta={
-                            "title": title,
                             "product": product_name,
                             "color": color_name
                         },
@@ -143,25 +139,15 @@ class AritaumSpider(scrapy.Spider):
                     color_rgb = color.find_element_by_xpath(
                         "./span/label/span").value_of_css_property("background-color")
                     color_hex = self.save_color_by_rgb(color_rgb)
-                    color_tuple = cal_color_tag(title, color_hex[1:])
-                    if title == 'lip':
-                        product = Lip_db.objects.filter(name=product_name)[0]
-                        yield LipColor(
-                            color_hex=color_hex,
-                            color=color_tuple[0],
-                            sub_color=color_tuple[1],
-                            optionName=color_name,
-                            product=product,
-                            crawled="lip_option"
-                        )
-                    elif title == 'base':
-                        product = Base_db.objects.filter(name=product_name)[0]
-                        yield BaseColor(
-                            color_hex=color_hex,
-                            optionName=color_name,
-                            product=product,
-                            crawled="base_option"
-                        )
+                    product = Base_db.objects.filter(name=product_name)[0]
+                    color = self.check_color(color_name)
+                    yield BaseColor(
+                        color_hex=color_hex,
+                        optionName=color_name,
+                        product=product,
+                        crawled="base_option",
+                        color=color
+                    )
 
         yield scrapy.Request(
             url=response.url,
@@ -174,31 +160,18 @@ class AritaumSpider(scrapy.Spider):
         """yield Request for color url"""
         url = response.url
         name = response.meta["product"]
-        title = response.meta["title"]
         img = Image.open(requests.get(url, stream=True).raw)
         img = img.resize((30, 30))
         color_hex = self.getcolors(img, url)
-        color_tuple = cal_color_tag(title, color_hex[1:])  # TODO : 여러 모델 다루도록
-        if title == 'lip':
-            product = Lip_db.objects.filter(name=name)[0]
-            yield LipColor(
-                color_hex=color_hex,
-                color=color_tuple[0],
-                sub_color=color_tuple[1],
-                optionName=response.meta["color"],
-                product=product,
-                crawled="lip_option"
-            )
-        elif title == 'base':
-            product = Base_db.objects.filter(name=name)[0]
-            yield BaseColor(
-                color_hex=color_hex,
-                optionName=response.meta["color"],
-                product=product,
-                crawled="base_option"
-            )
-        else:
-            pass
+        product = Base_db.objects.filter(name=name)[0]
+        color = self.check_color(response.meta["color"])
+        yield BaseColor(
+            color_hex=color_hex,
+            optionName=response.meta["color"],
+            product=product,
+            crawled="base_option",
+            color=color
+        )
 
     @staticmethod
     def save_color_by_rgb(rgba):

@@ -40,7 +40,7 @@ class NormalLoginForm extends Component {
         }
 
         if (this.props.isAuthenticated) {
-          changePage = <Redirect to="/main" />;
+          changePage = <Redirect to="/search" />;
         } else changePage = <Redirect to="/login" />;
 
         return (
@@ -65,7 +65,7 @@ class NormalLoginForm extends Component {
               <label htmlFor="pw-input">
                 Password
                 <input
-                  type="text"
+                  type="password"
                   id="pw-input"
                   value={this.state.password}
                   onChange={(event) => this.setState({ password: event.target.value })}
@@ -90,10 +90,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-
   Login: (username, password) => dispatch(actionCreators.authLogin(username, password)),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WrappedNormalLoginForm);

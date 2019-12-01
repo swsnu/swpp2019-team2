@@ -34,6 +34,9 @@ class LipSerializer(serializers.ModelSerializer):
             'price',
             'form',
             'category',
+            'product_url',
             'img_url',
             'brand',
-            'color']
+            'color',
+            'id'
+        ]

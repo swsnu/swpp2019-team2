@@ -19,5 +19,5 @@ from .base import views as base
 
 urlpatterns = [
     path('lip/<option>', lip.search, name='lip'),
-    #path('base/', base.search, name='base')
+    path('base/<option>', base.search, name='base')
 ]

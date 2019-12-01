@@ -1,0 +1,44 @@
+div.detail-category {
+    display: table-column-group;
+}
+
+label.selectionValue {
+    display: block;
+    padding : 1px;
+}
+
+div.detail-sub-category {
+    display: table-cell;
+    margin: 10px;
+}
+
+input.color-selection-input-box {
+    visibility:hidden;
+}
+div.detail-sub-color-category {
+    display:inline-block;
+}
+
+label.color-selection-chip {
+    width: 20px;
+    height:20px;
+    border-radius: 60%;
+    float:left;
+    opacity:100%;
+}
+
+div.sub-color-visual {
+    width:100px;
+}
+div.detail-caegory button {
+    background-color : transparent;
+    color : #9b45a7;
+    cursor : pointer;
+    border : 1px solid #9b45a7;
+    text-align: center;
+    margin : 5px;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

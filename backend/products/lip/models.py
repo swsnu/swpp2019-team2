@@ -39,7 +39,14 @@ class Lip(models.Model):
         max_length=1,
         choices=CATEGORY,
     )
-    img_url = models.TextField(default="//:0")
+    product_url = models.CharField(
+        max_length=255,
+        default="//:0",
+    )
+    img_url = models.CharField(
+        max_length=255,
+        default="//:0",
+    )
 
     def __str__(self):
         return self.name
@@ -50,18 +57,18 @@ class LipOption(models.Model):
     RED = "RD"
     PINK = "PK"
     ORANGE = "OR"
+    PURPLE = "PU"
     COLOR = (
         (RED, "Red"),
         (PINK, "Pink"),
         (ORANGE, "Orange"),
+        (PURPLE, "Purple"),
     )
     color = models.CharField(
         max_length=2,
         choices=COLOR
     )
     sub_color = models.CharField(
-        default=None,
-        null=True,
         max_length=30
     )
     color_hex = models.CharField(max_length=10)

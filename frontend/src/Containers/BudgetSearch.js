@@ -6,7 +6,6 @@ import swal from 'sweetalert';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-import arrow from '../image/화살표.png';
 import CheckBox from './CheckBox';
 import ItemDisplay from './ItemDisplay';
 
@@ -43,11 +42,14 @@ class BudgetSearch extends Component {
       itemNum: 2,
       budgetRange: null,
       initialized: true,
+      render: false,
+
     };
   }
 
   componentDidMount() {
     this.props.onTryAutoSignup();
+    this.props.getUserInfo();
   }
 
 
@@ -60,6 +62,26 @@ class BudgetSearch extends Component {
     this.props.history.replace(`../mypage/${id}`);
   }
 
+  searchHandler = () => {
+    this.props.history.replace('../search');
+  };
+
+  budgetHandler = () => {
+    this.props.history.replace('../budget');
+  };
+
+  toneHandler = () => {
+    this.props.history.replace('../skintone');
+  };
+
+  saleHandler = () => {
+    this.props.history.replace('../sale');
+  };
+
+  /* set_budget = (event) => {
+      this.setState({budget:event.target.value})
+      this.setState({flag_budget:true})
+  } */
   setItemNum = (event) => {
     this.setState({ itemNum: parseInt(event.target.value, 10) });
   }
@@ -80,10 +102,6 @@ class BudgetSearch extends Component {
       const chosenBudgetRange = [5000 * num, 5000 * (num + 1)];
       this.setState({ budgetRange: chosenBudgetRange });
     }
-  }
-
-  menuHandler = () => {
-    this.props.history.replace('../main');
   }
 
   findFirst(url) {
@@ -213,6 +231,14 @@ class BudgetSearch extends Component {
   }
 
   render() {
+    let infoString = '';
+    if (this.state.render === false) {
+      this.props.user.map((res) => (
+        this.setState({ nickName: res.nick_name })
+      ));
+      this.setState({ render: true });
+    }
+    infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     const {
       id, itemNum, find1, find2, find3, find4, find5, show, combi,
     } = this.state;
@@ -232,13 +258,15 @@ class BudgetSearch extends Component {
         <div className="upperbar">
           <h1>Budget Search</h1>
           <div className="buttons">
-            <button id="back-button" type="button" onClick={() => this.menuHandler()}>
-              <img id="arrow" src={arrow} alt="Back to Main Menu" />
-            </button>
+            {infoString}
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
           </div>
         </div>
+         <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
+         <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
+         <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+         <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
         <div style={{ display: 'flex' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{
@@ -327,7 +355,6 @@ class BudgetSearch extends Component {
               </div>
             </div>
             {show && (<ItemDisplay combinations={combi} />)}
-          </div>
         </div>
       </div>
     );
@@ -337,10 +364,12 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  user: state.cosmos.User,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetSearch);

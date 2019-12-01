@@ -8,11 +8,14 @@ import logo from '../image/LOGO.png';
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { id: '' };
+    this.state = {
+      id: '',
+    };
   }
 
   componentDidMount() {
     this.props.onTryAutoSignup();
+    this.props.getUserInfo();
   }
 
   logoutHandler = () => {
@@ -42,6 +45,14 @@ class MainPage extends Component {
 
   render() {
     let redirect = null;
+    let infoString = '';
+    try {
+      const { username } = this.props.user[0];
+      infoString = `Hello, ${username}!`;
+    } catch {
+      infoString = 'Hello';
+    }
+
     if (!this.props.isAuthenticated) {
       redirect = <Redirect to="/login" />;
     }
@@ -50,6 +61,7 @@ class MainPage extends Component {
         {redirect}
         <div className="main_upperbar">
           <img id="logo" src={logo} alt="COSMOS" width="100" />
+          {infoString}
           <div className="buttons">
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
@@ -87,6 +99,7 @@ class MainPage extends Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
+  user: state.cosmos.User,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
 });
@@ -94,6 +107,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 export default connect(
   mapStateToProps,
