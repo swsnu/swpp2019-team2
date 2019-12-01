@@ -78,13 +78,8 @@ def signin(request):  # Signin function
             edit_prefer_color = req_data['preferColor']
             edit_prefer_base = req_data['preferBase']
             edit_prefer_brand = req_data['preferBrand']
-<<<<<<< HEAD
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest() 
-=======
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
->>>>>>> 808a13412de743abeb29772832afbda3806f68e5
         user_info.nick_name = edit_nick_name
         user_info.prefer_color = edit_prefer_color
         user_info.prefer_base = edit_prefer_base

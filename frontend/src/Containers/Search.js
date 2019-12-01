@@ -3,13 +3,7 @@ import { Redirect } from 'react-router-dom';
 import './Search.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-<<<<<<< HEAD
-import LipForm from '../Components/LipForm';
-// import arrow from '../image/화살표.png';
-=======
 import ProductForm from '../Components/ProductForm';
-import arrow from '../image/화살표.png';
->>>>>>> origin
 import DetailCategory from '../Components/DetailCategory';
 
 
@@ -18,11 +12,8 @@ class Search extends Component {
     super(props);
     this.state = {
       selection: null,
-<<<<<<< HEAD
-      render: false,
-=======
+      call: false,
       searched: null,
->>>>>>> origin
     };
   }
 
@@ -70,21 +61,17 @@ class Search extends Component {
     let changePage = '';
     const backLogin = '';
     let infoString = '';
-    if (this.state.render === false) {
+    if (this.state.call === false) {
       this.props.user.map((res) => ((
         this.setState({ nickName: res.nick_name }),
         this.setState({ preferColor: res.prefer_color }),
         this.setState({ preferBase: res.prefer_base }),
         this.setState({ preferBrand: res.prefer_brand })
       )));
-      this.setState({ render: true });
+      this.setState({ call: true });
     }
-<<<<<<< HEAD
     infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
-    const { selection } = this.state;
-=======
     const { selection, searched } = this.state;
->>>>>>> origin
     const { searchResult } = this.props;
 
     const searchedProduct = searchResult.map((res) => (

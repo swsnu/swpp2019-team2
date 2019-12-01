@@ -173,19 +173,15 @@ describe('<Liplist />', () => {
     newInstance.setState({ selection: 'lip' });
     const button = component.find('button.Product#eye');
     button.simulate('click');
-<<<<<<< HEAD
     expect(newInstance.state).toEqual({
-      nickName: 'a', preferBase: '19', preferBrand: '라네즈', preferColor: 'red', render: true, selection: 'eye',
+      nickName: 'a', preferBase: '19', preferBrand: '라네즈', searched: null,
+      preferColor: 'red', call: true, selection: 'eye',
     });
     button.simulate('click');
     expect(newInstance.state).toEqual({
-      nickName: 'a', preferBase: '19', preferBrand: '라네즈', preferColor: 'red', render: true, selection: 'eye',
+      nickName: 'a', preferBase: '19', preferBrand: '라네즈', 
+      preferColor: 'red', call: true, selection: 'eye', searched: null,
     });
-=======
-    expect(newInstance.state).toEqual({ searched: null, selection: 'eye' });
-    button.simulate('click');
-    expect(newInstance.state).toEqual({ searched: null, selection: 'eye' });
->>>>>>> origin
   });
 });
 
