@@ -66,7 +66,7 @@ class ModelTestCase(TestCase):
         # Get csrf token from cookie
         csrftoken = response.cookies['csrftoken'].value
         user_info = User.objects.create_user(username='a', email='a@a.com', password='123')
-        client.login(username='a',password='123')
+        client.login(username='a', password='123')
         profile = Profile.objects.create(user=user_info, nick_name='test', prefer_color='12345', prefer_base='123', prefer_brand='123')
         response = client.get('/api/signup/')
         self.assertEqual(response.status_code, 200)  # Pass csrf protection
@@ -79,14 +79,14 @@ class ModelTestCase(TestCase):
         csrftoken = response.cookies['csrftoken'].value
         user_info = User.objects.create_user(username='a', email='a@a.com', password='123')
         profile = Profile.objects.create(user=user_info, nick_name='test', prefer_color='12345', prefer_base='123', prefer_brand='123')
-        client.login(username='a',password='123')
+        client.login(username='a', password='123')
         response = client.put('/api/signin/',
-                                 {'nickName': 'a',
+                              {'nickName': 'a',
                                   'preferColor': '1',
                                   'preferBase': '2',
                                   'preferBrand': '3'},
-                                 content_type='application/json',
-                                 HTTP_X_CSRFTOKEN=csrftoken)
+                              content_type='application/json',
+                              HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 200)  # Pass csrf protection
 
     def test_signin_put_wrongdata(self):
@@ -97,13 +97,13 @@ class ModelTestCase(TestCase):
         csrftoken = response.cookies['csrftoken'].value
         user_info = User.objects.create_user(username='a', email='a@a.com', password='123')
         profile = Profile.objects.create(user=user_info, nick_name='test', prefer_color='12345', prefer_base='123', prefer_brand='123')
-        client.login(username='a',password='123')
+        client.login(username='a', password='123')
         response = client.put('/api/signin/',
-                                 {'nickName': 'a',
+                              {'nickName': 'a',
                                   'preferBase': '2',
                                   'preferBrand': '3'},
-                                 content_type='application/json',
-                                 HTTP_X_CSRFTOKEN=csrftoken)
+                              content_type='application/json',
+                              HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 400)  # Pass csrf protection
 
     def test_signin_get(self):
@@ -113,7 +113,7 @@ class ModelTestCase(TestCase):
         # Get csrf token from cookie
         csrftoken = response.cookies['csrftoken'].value
         user_info = User.objects.create_user(username='a', email='a@a.com', password='123')
-        client.login(username='a',password='123')
+        client.login(username='a', password='123')
         response = client.get('/api/signin/')
         self.assertEqual(response.status_code, 200)  # Pass csrf protection
 
@@ -143,12 +143,12 @@ class ModelTestCase(TestCase):
         csrftoken = response.cookies['csrftoken'].value
 
         response = client.delete('/api/signup/',
-                               {'username': 'chris',
+                                 {'username': 'chris',
                                 'email': '1',
                                 'password': '2',
                                 'nickname':'3'},
-                               content_type='application/json',
-                               HTTP_X_CSRFTOKEN=csrftoken)
+                                 content_type='application/json',
+                                 HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 405)  # Pass csrf protection
 
     def test_signup_wrongdata(self):
