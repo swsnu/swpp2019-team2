@@ -263,10 +263,10 @@ class BudgetSearch extends Component {
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
           </div>
         </div>
-         <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
-         <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
-         <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-         <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
+        <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
+        <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
+        <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
+        <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
         <div style={{ display: 'flex' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{
@@ -355,6 +355,7 @@ class BudgetSearch extends Component {
               </div>
             </div>
             {show && (<ItemDisplay combinations={combi} />)}
+          </div>
         </div>
       </div>
     );
