@@ -48,10 +48,7 @@ class SalesInfo extends Component {
     let infoString = '';
     if (this.state.call === false) {
       this.props.user.map((res) => (
-        this.setState({ nickName: res.nick_name }),
-        this.setState({ preferColor: res.prefer_color }),
-        this.setState({ preferBase: res.prefer_base }),
-        this.setState({ preferBrand: res.prefer_brand })
+        this.setState({ nickName: res.nick_name })
       ));
       this.setState({ call: true });
     }
