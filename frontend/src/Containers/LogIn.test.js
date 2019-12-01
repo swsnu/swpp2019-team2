@@ -2,9 +2,9 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 import { getMockStore } from '../Mocks/mocks';
 import LogIn from './LogIn';
-import { ConnectedRouter } from 'connected-react-router';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { history } from '../store/store';
 import * as actions from '../store/actions/cosmos';
@@ -44,9 +44,9 @@ describe('<LogIn />', () => {
       .mockImplementation(() => (dispatch) => {});
   });
   it('should render and call authLogin', () => {
-    const mockStore = getMockStore(stubStateC);
+    const mockStore1 = getMockStore(stubStateC);
     const component = mount(
-      <Provider store={mockStore}>
+      <Provider store={mockStore1}>
         <BrowserRouter history={history}>
           <LogIn />
         </BrowserRouter>
