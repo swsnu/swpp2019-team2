@@ -98,6 +98,9 @@ class AritaumSpider(scrapy.Spider):
                 "tagging_brandNm").get_property("value")
             price = item.find_element_by_name(
                 "tagging_price").get_property("value")
+            product_id = item.find_element_by_name(
+                "i_sProductcd").get_property("value")
+            product_url = "https://www.aritaum.com/shop/pr/shop_pr_product_view.do?i_sProductcd="+product_id
             category_raw = item.find_element_by_name(
                 "tagging_category").get_property("value")
             category = translate_category(category_raw, title)
@@ -113,7 +116,8 @@ class AritaumSpider(scrapy.Spider):
                 brand=brand[0],
                 category=category,
                 img_url=thumb_url,
-                crawled=title
+                crawled=title,
+                product_url=product_url
             )
 
             color_range = item.find_elements_by_class_name(
