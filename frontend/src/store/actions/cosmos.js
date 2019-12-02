@@ -23,7 +23,10 @@ export const putUser2 = (nickName, preferColor, preferBase, preferBrand) => (dis
     preferBase,
     preferBrand,
   })
-    .then((res) => dispatch(putUser2_(res.data)));
+    .then((res) => {
+      dispatch(putUser2_(res.data));
+      dispatch(push('../login/loading'));
+    });
 };
 
 export const authStart = () => ({
@@ -56,6 +59,7 @@ export const authLogin = (username, password) => (dispatch) => {
       localStorage.setItem('username', username);
       localStorage.setItem('password', password);
       dispatch(authSuccess(token));
+      dispatch(push('../login/loading'));
     })
     .catch((err) => {
       dispatch(authFail(err));
@@ -86,6 +90,7 @@ export const authSignup = (username, email, nickname, password) => (dispatch) =>
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
       dispatch(authSuccess(token));
+      dispatch(push('../login/loading'));
     })
     .catch((err) => {
       dispatch(authFail(err));
@@ -153,3 +158,10 @@ export const getAnalysisResult = () => (dispatch) => {
       dispatch(getAnalysisResult_(res.data));
     });
 };
+
+export const getLogin_ = (User) => ({ type: actionTypes.GET_LOGIN, User });
+export const getLogin = () => (dispatch) => axios.get('/api/signup/')
+  .then((res) => {
+    dispatch(getLogin_(res.data));
+    dispatch(push('../search'));
+  });

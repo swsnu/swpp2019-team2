@@ -10,4 +10,5 @@ export {
   getUser,
   getUser2,
   putUser2,
+  getLogin,
 } from './cosmos';

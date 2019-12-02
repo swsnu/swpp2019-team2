@@ -14,6 +14,7 @@ import Signup from './Containers/Signup';
 import MyPage from './Containers/MyPage';
 import SkinToneResult from './Containers/SkinToneResult';
 import SkinToneLoading from './Containers/SkinToneLoading';
+import LoginLoading from './Containers/LoginLoading';
 
 function App({ history }) {
   return (
@@ -22,6 +23,7 @@ function App({ history }) {
         <Switch>
           <Route path="/login" exact component={LogIn} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/login/loading" exact component={LoginLoading} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/main" exact component={MainPage} />
           <Route path="/search" exact component={Search} />

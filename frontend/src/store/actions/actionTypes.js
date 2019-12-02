@@ -9,5 +9,6 @@ export const GET_ANALYSIS_RESULT = 'GET_ANALYSIS_RESULT';
 export const RUN_ANALYSIS = 'RUN_ANALYSIS';
 export const GET_PRODUCT = 'GET_PRODUCT';
 export const GET_USER = 'GET_USER';
+export const GET_LOGIN = 'GET_LOGIN';
 export const GET_USER2 = 'GET_USER2';
 export const PUT_USER2 = 'PUT_USER2';

@@ -56,6 +56,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_ANALYSIS_RESULT: return { ...state };
     case actionTypes.RUN_ANALYSIS: return saveML(state, action);
     case actionTypes.GET_USER: return { ...state, User: action.User };
+    case actionTypes.GET_LOGIN: return { ...state, User: action.User };
     case actionTypes.GET_USER2: return { ...state, User2: action.User2 };
 
     default:
