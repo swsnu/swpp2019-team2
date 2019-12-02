@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, Switch, Router } from 'react-router-dom';
 import { getMockStore } from '../Mocks/mocks';
 import Signup from './Signup';
 import * as actions from '../store/actions/cosmos';
@@ -42,9 +42,9 @@ describe('<Signup />', () => {
     // const history = createBrowserHistory();
     const component = mount(
       <Provider store={mockStore1}>
-        <BrowserRouter history={history}>
+        <Router history={history}>
           <Signup />
-        </BrowserRouter>
+        </Router>
       </Provider>,
     );
     expect(spyauthCheckState).toBeCalledTimes(1);
