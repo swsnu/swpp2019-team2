@@ -107,7 +107,7 @@ class AritaumSpider(scrapy.Spider):
                 crawled="cheek",
                 product_url=product_url
             )
-            if category == "B":
+            if category == "CHK_B":
                 color_range = item.find_elements_by_class_name(
                     "product-unit__scroller-item")
                 for color in color_range:
