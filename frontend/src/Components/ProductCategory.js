@@ -155,25 +155,25 @@ export const CATEGORY_KOREAN = {
   category: '카테고리',
   lip: {
     category: {
-      S: '립스틱',
-      G: '립글로즈',
-      B: '립밤',
-      T: '틴트',
+      LIP_S: '립스틱',
+      LIP_G: '립글로즈',
+      LIP_B: '립밤',
+      LIP_T: '틴트',
     },
     form: {
-      M: '매트',
-      G: '글로시',
-      N: '정보없음',
+      LIP_M: '매트',
+      LIP_G: '글로시',
+      LIP_N: '정보없음',
     },
   },
   base: {
     category: {
-      P: '파우더',
-      CU: '쿠션',
-      C: '컨실러',
-      F: '파운데이션',
-      PR: '프라이머',
-      B: 'BB & CC',
+      BAS_P: '파우더',
+      BAS_CU: '쿠션',
+      BAS_C: '컨실러',
+      BAS_F: '파운데이션',
+      BAS_PR: '프라이머',
+      BAS_B: 'BB & CC',
     },
   },
 };
