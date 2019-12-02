@@ -150,6 +150,13 @@ export const CATEGORY_KOREAN = {
       BAS_B: 'BB & CC',
     },
   },
+  cheek: {
+    category: {
+      CHK_B: '블러셔',
+      CHK_C: '컨투어링',
+      CHK_H: '하이라이터',
+    }
+  }
 };
 
 export const CATEGORY_PRIORITY = {
