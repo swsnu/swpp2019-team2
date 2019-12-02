@@ -6,6 +6,14 @@ import { connect } from 'react-redux';
 import { Form } from 'antd';
 import * as actionCreators from '../store/actions/index';
 import logo from '../image/LOGO.png';
+import Background from '../image/Background.jpeg';
+
+const sectionStyle = {
+  width: '100%',
+  height: '950px',
+  backgroundImage: `url(${Background})`,
+  backgroundSize: 'cover',
+}
 
 class NormalLoginForm extends Component {
   constructor(props) {
@@ -45,6 +53,7 @@ class NormalLoginForm extends Component {
 
         return (
           <div className="Login">
+            <section style={ sectionStyle } />
             {aler}
             {changePage}
             <div className="logo">
