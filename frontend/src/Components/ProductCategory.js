@@ -120,33 +120,7 @@ export const CATEGORY = {
         Contouring: ['CHK_C', []],
         Highlighter: ['CHK_H', []]
       }
-    ],
-    xx: [ // for Test
-      true,
-      'color',
-      {
-        First: ['WM', [
-          '#ff585d',
-          '#e03e52',
-        ]],
-        Second: ['NT', [
-          '#f74a83',
-        '#e10098',
-        ]],
-        Third: ['CL', [
-          '#ffbda7',
-        '#ffbab3',
-        ]],
-      }
-
-    ],
-    yy: [ // For test
-      false, {
-        'abc?': 'LT',
-        'def?': 'MD',
-        'ghi?': 'DK',
-      }
-    ],
+    ]
   },
 };
 
