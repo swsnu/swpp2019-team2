@@ -3,86 +3,95 @@ import { CATEGORY } from './ProductCategory';
 import './DetailCategory.css';
 
 class DetailCategory extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+  
 
   getCategory = (id) => {
-    const LargeCategory = CATEGORY[id];
-    const keys = Object.keys(LargeCategory);
-    const res = keys.map((key) => {
-      if (key === 'color' && id === 'lip') {
-        const colorKeys = Object.keys(LargeCategory.color);
-        const colors = colorKeys.map((colorKey) => {
-          const subcolorID = `${key}=${LargeCategory.color[colorKey][0]}&`;
-          const onClick = (e) => {
-            if (e.target.checked) {
-              document.querySelector(`ul.detail-subcolor-visual#${e.target.value}`).style = 'display:inline-block;';
-            } else { document.querySelector(`ul.detail-subcolor-visual#${e.target.value}`).style = 'display:none;'; }
-          };
-          return (
-            <label className="selectionValue" key={colorKey} htmlFor={subcolorID}>
-              {colorKey}
-              <input type="checkbox" onClick={onClick} value={colorKey} id={subcolorID} />
-            </label>
-          );
-        });
-        const subcolors = colorKeys.filter((colorKey) => {
-          if (LargeCategory.color[colorKey].length > 1) return true;
-          return false;
-        }).map((colorKey) => {
-          const colorData = LargeCategory.color[colorKey];
-          const detailColors = colorData[1];
-
-          const onClick = (e) => {
-            const label = e.target.parentElement;
-            const bg = label.style.backgroundColor;
-            label.style = e.target.checked
-              ? `opacity:40%; background-color:${bg};`
-              : `opacity:100%; background-color:${bg};`;
-          };
-          const detailColorList = detailColors.map((hex) => {
-            const style = { backgroundColor: hex };
-            const colorId = `sub_color=${hex}&`;
-            return (
+    const index = CATEGORY[id];
+    const res = Object.keys(index).map((key) => { // key = category, form, color
+      if (index[key][0]) { // true : subcategory가 있다
+        if (index[key][1] === 'color'){ // string 없이 색상 선택으로
+          const colorData = index[key][2];
+          const colors = Object.keys(colorData).map((colorKey) => {
+            // colorKey : Red, Pink, Orange, Purple
+            // colorData : {Red: [], Pink: [], Orange: [], Purple: []}
+            const subkeyId = `${key}=${colorData[colorKey][0]}&`;
+            const subColors = colorData[colorKey][1].map((hex) => {
+              const style = { backgroundColor: hex };
+              const colorId = `sub_color=${hex}&`;
+              return (
               <label htmlFor={colorId} className="color-selection-chip" key={hex} style={style}>
-                <input onClick={onClick} className="color-selection-input-box" id={colorId} type="checkbox" />
-              </label>
-            );
+                  <input className="color-selection-input-box" id={colorId} type="checkbox" />
+                </label>
+              );
+            });
+            return(
+            <div key={colorKey}>
+              <label className="selectionValue" key={colorKey} htmlFor={subkeyId}>
+        {colorKey}
+        <input type="checkbox" value={colorKey} id={subkeyId}/>
+      </label>
+      <div className="sub-color-visual">{subColors}</div>
+              </div>
+              );
+          }
+          );
+          return (
+            <div className="detail-sub-category" key={key}>
+            <h4>{key}</h4>
+            {colors}
+          </div>
+          );
+        } else {
+          const data = index[key][2];
+          const subres = Object.keys(data).map((value) => {
+            let xxx = null;
+            if (data[value][1].length > 0) {
+              const subdata = data[value][1][1];
+              xxx = Object.keys(subdata).map((x) => {
+                const subKey = `${data[value][1][0]}=${subdata[x]}&`;
+                return (<label key={subKey} htmlFor={subKey}>
+                  <input type="checkbox" value={x} id={subKey} />
+                  {x}
+                </label>)
+              })
+            }
+            const keyId = `${key}=${data[value][0]}&`;
+            return (<div key={keyId}>
+              <label className="selectionValue" htmlFor={keyId}>
+        {value}
+        <input type="checkbox" value={value} id={keyId} />
+      </label>
+              {xxx}</div>)
           });
-          const ulColorKey = `subcolor-${colorData[0]}`;
-          const style = { display: 'none' };
-          return (<ul key={ulColorKey} className="detail-subcolor-visual" style={style} id={colorKey}>{detailColorList}</ul>);
-        });
-
+          
         return (
+          // 카테고리면 카테고리 + 그 옵션. 폼 + 그 옵션 
           <div className="detail-sub-category" key={key}>
-            <div className="detail-sub-color-category">
-              <h4>{key}</h4>
-              <div>{colors}</div>
-            </div>
-            <div className="sub-color-visual">{subcolors}</div>
+            <h4>{key}</h4>
+            {subres}
           </div>
         );
-      }
-      const subkeys = Object.keys(LargeCategory[key]);
-      const subres = subkeys.map((subkey) => {
-        const subkeyId = `${key}=${LargeCategory[key][subkey]}&`;
-        return (
+        }
+      } else { // false : subcategory 없음
+        const data = index[key][1]; // object
+        const subres = Object.keys(data).map((subkey) => {
+          const subkeyId = `${key}=${data[subkey]}&`; 
+          // subres = 체크박스 1개들의 목록
+          return (
           <label className="selectionValue" key={subkey} htmlFor={subkeyId}>
             {subkey}
             <input type="checkbox" id={subkeyId} />
           </label>
+          );
+        });
+        return (
+          // 카테고리면 카테고리 + 그 옵션. 폼 + 그 옵션 
+          <div className="detail-sub-category" key={key}>
+            <h4>{key}</h4>
+            {subres}
+          </div>
         );
-      });
-      return (
-        <div className="detail-sub-category" key={key}>
-          <h4>{key}</h4>
-          {subres}
-        </div>
-      );
+      }
     });
     return res;
   }
