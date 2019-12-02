@@ -113,16 +113,17 @@ describe('<BudgetSearch />', () => {
     wrapper = component.find('.checkbox');
     expect(wrapper.length).toBe(5);
   });
-  // it('should call handleChange', () => {
-  //   const mockHandleChange = jest.fn();
-  //   const component = mount(budgetsearch);
-  //   const wrapper = component.find('#select').at(1);
-  //   // wrapper.simulate('onChange')(null, mockHandleChange());
-  //   wrapper.simulate('change')(null, mockHandleChange());
-  //   expect(component.budgetRange).toBe(null);
-  //   wrapper.prop('change')({ value: 1 }, mockHandleChange());
-  //   expect(component.state().budgetRange).toEqual([5000, 10000]);
-  // });
+  it('should call handleChange', () => {
+    const mockHandleChange = jest.fn();
+    const component = shallow(
+      <BudgetSearch.WrappedComponent isAuthenticated={stubStateC} user={[{ nick_name: 'name' }]} />,
+    );
+    const wrapper = component.find('#select');
+    wrapper.prop('onChange')(null, mockHandleChange());
+    expect(component.state().budgetRange).toBe(null);
+    wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
+    expect(component.state().budgetRange).toEqual([5000, 10000]);
+  });
   it('should reset result', () => {
     const component = mount(budgetsearch);
     const newInstance = component.find(BudgetSearch.WrappedComponent).instance();
@@ -167,25 +168,27 @@ describe('<BudgetSearch />', () => {
   });
   it('should call confirmhandler and call handleClick', () => {
     const mockHandleChange = jest.fn();
-    const component = mount(budgetsearch);
+    const mockSwal = jest.fn();
+    const component = shallow(<BudgetSearch.WrappedComponent user={[{ nick_name: 'name' }]} />);
     const inputBar = component.find('#item_num');
     const wrapper = component.find('#select');
-    // wrapper.prop('onChange')({ value: 6 }, mockHandleChange());
+    wrapper.prop('onChange')({ value: 6 }, mockHandleChange());
     const mockConfirmHandler = jest.fn();
-    const newInstance = component
-      .find(BudgetSearch.WrappedComponent)
-      .instance();
     const button = component.find('#combine-cosmetics-button');
-    expect(newInstance.budgetRange).toEqual(undefined);
+    const resetButton = component.find('#reset-result');
+    expect(component.state().budgetRange).toEqual([30000, 35000]);
     for (let i = 2; i <= 5; i++) {
       inputBar.simulate('change', { target: { value: i } });
       button.prop('onClick')(mockConfirmHandler());
       expect(mockConfirmHandler).toBeCalled();
+      resetButton.simulate('click');
     }
-    // wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
+    wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
     inputBar.simulate('change', { target: { value: 2 } });
     button.prop('onClick')(mockConfirmHandler());
     expect(mockConfirmHandler).toBeCalled();
+    button.prop('onClick')(mockSwal());
+    expect(mockSwal).toBeCalled();
   });
   it('should call set_itemnum', () => {
     const component = mount(budgetsearch);
@@ -307,7 +310,7 @@ describe('<BudgetSearch />', () => {
   it('should call budgetHandler when clicking budget search button', () => {
     const spyHistoryReplace = jest
       .spyOn(history, 'replace')
-      .mockImplementation(() => {});
+      .mockImplementation(() => { });
     const component = mount(budgetsearch);
     const button = component.find('#Budgetmenu');
     button.simulate('click');
@@ -316,7 +319,7 @@ describe('<BudgetSearch />', () => {
   it('should call toneHandler when clicking tone analysis button', () => {
     const spyHistoryReplace = jest
       .spyOn(history, 'replace')
-      .mockImplementation(() => {});
+      .mockImplementation(() => { });
     const component = mount(budgetsearch);
     const button = component.find('#Tonemenu');
     button.simulate('click');
@@ -325,7 +328,7 @@ describe('<BudgetSearch />', () => {
   it('should call searchHandler when clicking sale information button', () => {
     const spyHistoryReplace = jest
       .spyOn(history, 'replace')
-      .mockImplementation(() => {});
+      .mockImplementation(() => { });
     const component = mount(budgetsearch);
     const button = component.find('#Searchmenu');
     button.simulate('click');
@@ -334,7 +337,7 @@ describe('<BudgetSearch />', () => {
   it('should call saleHandler when clicking sale information button', () => {
     const spyHistoryReplace = jest
       .spyOn(history, 'replace')
-      .mockImplementation(() => {});
+      .mockImplementation(() => { });
     const component = mount(budgetsearch);
     const button = component.find('#Salemenu');
     button.simulate('click');
@@ -363,11 +366,11 @@ describe('<Budget />', () => {
       </Provider>
     );
     spyGetUser = jest.spyOn(actionCreators, 'authCheckState')
-      .mockImplementation(() => (dispatch) => {});
+      .mockImplementation(() => (dispatch) => { });
     spylogout = jest.spyOn(actionCreators, 'logout')
-      .mockImplementation((user) => (dispatch) => {});
+      .mockImplementation((user) => (dispatch) => { });
     spyUserInfo = jest.spyOn(actionCreators, 'getUser')
-      .mockImplementation(() => (dispatch) => {});
+      .mockImplementation(() => (dispatch) => { });
   });
   afterEach(() => {
     jest.clearAllMocks();

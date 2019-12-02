@@ -5,20 +5,27 @@ const ItemShow = ({ combination }) => {
   for (let i = 0; i < combination.length; i++) {
     sum += combination[i].price;
   }
-
+  const relativeWidth = 165 * (5 / combination.length);
   return (
     <div>
-      {combination.map((item) => (
-        <p key={item.name + String(item.price)}>
-          {item.name}
-          {' '}
-          :
-          {' '}
-          {item.price}
-          원
-          {' '}
-        </p>
-      ))}
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        {combination.map((item) => (
+          <div key={item.name + String(item.price)} style={{ backgroundColor: '#EEEFFF', borderRadius: 8, padding: 5 }}>
+            <div style={{ height: relativeWidth, width: relativeWidth, backgroundColor: '#EFEFEF' }}><h2>thumbnail</h2></div>
+            <p>
+              이름 :
+              {' '}
+              {item.name}
+            </p>
+            <p>브랜드 : dummy</p>
+            <p>
+              가격:
+              {' '}
+              {item.price}
+            </p>
+          </div>
+        ))}
+      </div>
       <p>
         총
         {' '}
@@ -32,6 +39,13 @@ const ItemShow = ({ combination }) => {
 
 // eslint-disable-next-line arrow-body-style
 const ItemDisplay = ({ combinations }) => {
+  if (combinations.length === 0) {
+    return (
+      <div className="NoResult">
+        <h1>No Result!</h1>
+      </div>
+    );
+  }
   return (
     <div>
       {combinations.map((c) => (<ItemShow className="ItemShow" combination={c} key={c[0].name + c[1].name} />))}
