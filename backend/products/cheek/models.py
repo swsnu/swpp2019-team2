@@ -7,9 +7,9 @@ from brand import models as brand_models
 
 class Cheek(models.Model):
     """ django lip model """
-    BLUSHER = 'B'
-    CONTOURING = 'C'
-    HIGHLIGHT = 'H'
+    BLUSHER = 'CHK_B'
+    CONTOURING = 'CHK_C'
+    HIGHLIGHT = 'CHK_H'
     CATEGORY = (
         (BLUSHER, 'Blusher'),
         (CONTOURING, 'Contouring'),
@@ -22,7 +22,7 @@ class Cheek(models.Model):
         on_delete=models.CASCADE
     )
     category = models.CharField(
-        max_length=1,
+        max_length=5,
         choices=CATEGORY,
     )
     product_url = models.CharField(
@@ -40,16 +40,16 @@ class Cheek(models.Model):
 
 class CheekOption(models.Model):
     """ option of django lip model """
-    RED = "RD"
-    PINK = "PK"
-    ORANGE = "OR"
+    RED = "CHK_RD"
+    PINK = "CHK_PK"
+    ORANGE = "CHK_OR"
     COLOR = (
         (RED, "Red"),
         (PINK, "Pink"),
         (ORANGE, "Orange"),
     )
     color = models.CharField(
-        max_length=2,
+        max_length=6,
         choices=COLOR
     )
     sub_color = models.CharField(

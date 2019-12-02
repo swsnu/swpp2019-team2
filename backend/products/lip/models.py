@@ -6,19 +6,19 @@ from brand import models as brand_models
 
 class Lip(models.Model):
     """ django lip model """
-    STICK = 'S'
-    GLOSS = 'G'
-    BALM = 'B'
-    TINT = 'T'
+    STICK = 'LIP_S'
+    GLOSS = 'LIP_G'
+    BALM = 'LIP_B'
+    TINT = 'LIP_T'
     CATEGORY = (
         (STICK, 'Stick'),
         (GLOSS, 'Gloss'),
         (BALM, 'Balm'),
         (TINT, 'Tint'),
     )
-    MATTE = 'M'
-    GLOSSY = 'G'
-    NONE = 'N'
+    MATTE = 'LIP_M'
+    GLOSSY = 'LIP_G'
+    NONE = 'LIP_N'
     FORM = (
         (MATTE, 'Matte'),
         (GLOSSY, 'Glossy'),
@@ -31,12 +31,12 @@ class Lip(models.Model):
         on_delete=models.CASCADE
     )
     form = models.CharField(
-        max_length=1,
+        max_length=5,
         choices=FORM,
         default=NONE
     )
     category = models.CharField(
-        max_length=1,
+        max_length=5,
         choices=CATEGORY,
     )
     product_url = models.CharField(
@@ -54,10 +54,10 @@ class Lip(models.Model):
 
 class LipOption(models.Model):
     """ option of django lip model """
-    RED = "RD"
-    PINK = "PK"
-    ORANGE = "OR"
-    PURPLE = "PU"
+    RED = "LIP_RD"
+    PINK = "LIP_PK"
+    ORANGE = "LIP_OR"
+    PURPLE = "LIP_PU"
     COLOR = (
         (RED, "Red"),
         (PINK, "Pink"),
@@ -65,7 +65,7 @@ class LipOption(models.Model):
         (PURPLE, "Purple"),
     )
     color = models.CharField(
-        max_length=2,
+        max_length=6,
         choices=COLOR
     )
     sub_color = models.CharField(

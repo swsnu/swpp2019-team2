@@ -4,23 +4,23 @@ export const CATEGORY = {
     category: [
       false, 
       {
-        LipStick: 'S',
-        LipGloss: 'G',
-        LipBalm: 'B',
-        Tint: 'T',
+        LipStick: 'LIP_S',
+        LipGloss: 'LIP_G',
+        LipBalm: 'LIP_B',
+        Tint: 'LIP_T',
       }
-    ],
+    ],  
     form: [false,
       {
-        Matte: 'M',
-        Glossy: 'G',
-        None: 'N',
+        Matte: 'LIP_M',
+        Glossy: 'LIP_G',
+        None: 'LIP_N',
       }
     ],
     color: [true,
       'color',
       {
-        Red:['RD',
+        Red:['LIP_RD',
         [
           '#ff7875',
           '#ff6371',
@@ -34,7 +34,7 @@ export const CATEGORY = {
           '#6f263d',
         ]
       ],
-      Pink: ['PK', [
+      Pink: ['LIP_PK', [
         '#ffcae2',
         '#ecc7cd',
         '#fcaebb',
@@ -47,7 +47,7 @@ export const CATEGORY = {
         '#ec005f',
       ]
     ],
-      Orange: ['OR', [
+      Orange: ['LIP_OR', [
         '#ffbda7',
         '#ffbab3',
         '#ff8d6d',
@@ -59,34 +59,48 @@ export const CATEGORY = {
         '#fe5000',
         '#e1471a',
       ]],
+      Purple: ['LIP_PU', [
+        '#dacfdd',
+        '#c5b4e3',
+        '#8b84d7',
+        '#d79fbf',
+        '#b9578f',
+        '#bb29bb',
+        '#64307a',
+        '#813661',
+        '#653165',
+        '#3f2a56',
+      ]
+
+      ]
     }]
   },
   base: {
     category: [
       false, {
-        Powder: 'P',
-        Cushion: 'CU',
-        Concealer: 'C',
-        Foundation: 'F',
-        Primer: 'PR',
-        'BB & CC': 'B',
+        Powder: 'BAS_P',
+        Cushion: 'BAS_CU',
+        Concealer: 'BAS_C',
+        Foundation: 'BAS_F',
+        Primer: 'BAS_PR',
+        'BB & CC': 'BAS_B',
       }
     ],
     color: [
       false, {
-        '19호 이하': 'LT',
-        '21호': 'MD',
-        '23호 이상': 'DK',
+        '19호 이하': 'BAS_LT',
+        '21호': 'BAS_MD',
+        '23호 이상': 'BAS_DK',
       }
     ],
     subcolor: [
       true,
       'color',
       {
-        Warm: ['WM', [
+        Warm: ['BAS_WM', [
         ]],
-        Neutral: ['NT', []],
-        Cool: ['CL', []],
+        Neutral: ['BAS_NT', []],
+        Cool: ['BAS_CL', []],
       }
     ]
   },
@@ -95,16 +109,16 @@ export const CATEGORY = {
       true,
       'category',
       {
-        Blusher: ['B',[
+        Blusher: ['CHK_B',[
           'color',
           {
-            Red: 'RD',
-            Pink: 'PK',
-            Orange: 'OR'
+            Red: 'CHK_RD',
+            Pink: 'CHK_PK',
+            Orange: 'CHK_OR'
           }
         ]],
-        Contouring: ['C', []],
-        Highlighter: ['H', []]
+        Contouring: ['CHK_C', []],
+        Highlighter: ['CHK_H', []]
       }
     ],
     xx: [ // for Test
@@ -125,7 +139,14 @@ export const CATEGORY = {
         ]],
       }
 
-    ]
+    ],
+    yy: [ // For test
+      false, {
+        'abc?': 'LT',
+        'def?': 'MD',
+        'ghi?': 'DK',
+      }
+    ],
   },
 };
 
