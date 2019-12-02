@@ -67,6 +67,11 @@ class DetailCategory extends React.Component {
               const lb = e.target;
               const styleStr = lb.checked? 'display:block;' : 'display:none;';
               lb.parentElement.nextElementSibling.style = styleStr;
+              if (!lb.checked){
+                lb.parentElement.nextElementSibling.querySelectorAll("input").forEach(i => {
+                  i.checked = false;
+                });
+              }
             }
             return (<div className="select-container" key={keyId}>
               <label className="selectionValue" htmlFor={keyId}>
