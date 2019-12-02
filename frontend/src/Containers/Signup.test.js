@@ -3,7 +3,12 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { BrowserRouter, Route, Switch, Router } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Router,
+} from 'react-router-dom';
 import { getMockStore } from '../Mocks/mocks';
 import Signup from './Signup';
 import * as actions from '../store/actions/cosmos';
