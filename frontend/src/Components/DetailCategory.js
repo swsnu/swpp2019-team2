@@ -24,13 +24,19 @@ class DetailCategory extends React.Component {
                 </label>
               );
             });
+            const style = {display:'none'};
+            const onClick = (e) => {
+              const lb = e.target;
+              const styleStr = lb.checked? 'display:block;' : 'display:none;';
+              lb.parentElement.nextElementSibling.style = styleStr;
+            }
             return(
-            <div key={colorKey}>
+            <div key={colorKey} className="select-container">
               <label className="selectionValue" key={colorKey} htmlFor={subkeyId}>
         {colorKey}
-        <input type="checkbox" value={colorKey} id={subkeyId}/>
+        <input type="checkbox" onClick={onClick} value={colorKey} id={subkeyId}/>
       </label>
-      <div className="sub-color-visual">{subColors}</div>
+      <div style={style} className="sub-color-visual sub-select-container">{subColors}</div>
               </div>
               );
           }
@@ -49,19 +55,26 @@ class DetailCategory extends React.Component {
               const subdata = data[value][1][1];
               xxx = Object.keys(subdata).map((x) => {
                 const subKey = `${data[value][1][0]}=${subdata[x]}&`;
-                return (<label key={subKey} htmlFor={subKey}>
-                  <input type="checkbox" value={x} id={subKey} />
+                return (<label className="sub-selection-chip" key={subKey} htmlFor={subKey}>
+                  <input className="sub-selection-chip" type="checkbox" value={x} id={subKey} />
                   {x}
                 </label>)
               })
             }
             const keyId = `${key}=${data[value][0]}&`;
-            return (<div key={keyId}>
+            const style = {display:'none'};
+            const onClick = (e) => {
+              const lb = e.target;
+              const styleStr = lb.checked? 'display:block;' : 'display:none;';
+              lb.parentElement.nextElementSibling.style = styleStr;
+            }
+            return (<div className="select-container" key={keyId}>
               <label className="selectionValue" htmlFor={keyId}>
         {value}
-        <input type="checkbox" value={value} id={keyId} />
+        <input type="checkbox" onClick={onClick} value={value} id={keyId} />
       </label>
-              {xxx}</div>)
+      <div style={style} className="sub-select-container">{xxx}</div>
+              </div>)
           });
           
         return (
@@ -78,10 +91,12 @@ class DetailCategory extends React.Component {
           const subkeyId = `${key}=${data[subkey]}&`; 
           // subres = 체크박스 1개들의 목록
           return (
-          <label className="selectionValue" key={subkey} htmlFor={subkeyId}>
+            <div key={subkey} className="select-container">
+          <label className="selectionValue" htmlFor={subkeyId}>
             {subkey}
             <input type="checkbox" id={subkeyId} />
           </label>
+          </div>
           );
         });
         return (
@@ -98,13 +113,13 @@ class DetailCategory extends React.Component {
 
   render() {
     const { category, selected } = this.props;
-    const style = selected ? { display: 'inline-flex' } : { display: 'none' };
+    const style = selected ? { display: 'block' } : { display: 'none' };
     const sub = this.getCategory(category, selected);
     const { clickSearch } = this.props;
     return (
       <div style={style} className="detail-category" id={category}>
-        {sub}
         <button type="button" className="searchProduct" category={category} onClick={clickSearch}> Search </button>
+        {sub}
       </div>
     );
   }

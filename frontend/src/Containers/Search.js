@@ -108,7 +108,7 @@ class Search extends Component {
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
     // const eye = <DetailCategory category="eye" selected={(selection === 'eye')} clickSearch={search} />;
     const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
-    const skincare = <DetailCategory category="skincare" selected={(selection === 'skincare')} clickSearch={search} />;
+    // const skincare = <DetailCategory category="skincare" selected={(selection === 'skincare')} clickSearch={search} />;
 
     return (
       <div className="Search">
@@ -127,27 +127,31 @@ class Search extends Component {
           {infoString}
         </div>
         <div className="Menubar">
-          <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
-          <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
-          <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-          <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
+          <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
+          <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
+          <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
+          <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
         </div>
         <div className="Content">
+          <div className="Category">
           <ul className="Category">
-            <button type="button" className="Product" onClick={click} id="lip">Lip</button>
-            <button type="button" className="Product" onClick={click} id="base">Base</button>
+            <div><button type="button" className="Product" onClick={click} id="lip">Lip</button></div>
+            <div><button type="button" className="Product" onClick={click} id="base">Base</button></div>
             {/* <button type="button" className="Product" onClick={click} id="eye">Eye</button> */}
-            <button type="button" className="Product" onClick={click} id="cheek">Cheek</button>
-            <button type="button" className="Product" onClick={click} id="skincare">Skin</button>
+            <div><button type="button" className="Product" onClick={click} id="cheek">Cheek</button></div>
+            {/* <button type="button" className="Product" onClick={click} id="skincare">Skin</button> */}
           </ul>
           {lip}
           {base}
           {/* {eye}  */}
           {cheek}
-          {skincare}
+          {/* {skincare} */}
+          </div>
+          <div className="ResultDiv">
           <ul className="Result">
             {searchedProduct}
           </ul>
+          </div>
         </div>
       </div>
     );
