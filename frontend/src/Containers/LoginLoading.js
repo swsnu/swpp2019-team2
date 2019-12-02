@@ -45,7 +45,7 @@ class LoginLoading extends Component {
               loading={this.state.loading}
             />
           </div>
-          <h4>"하늘 아래 같은 색조 없다."  -- COSMOS</h4>
+          <h4>&quot;하늘 아래 같은 색조 없다.&quot;  -- COSMOS</h4>
         </div>
       </div>
     );

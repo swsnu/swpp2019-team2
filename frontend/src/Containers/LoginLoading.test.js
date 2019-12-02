@@ -3,7 +3,11 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import {
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
 
 import LoginLoading from './LoginLoading';
 
