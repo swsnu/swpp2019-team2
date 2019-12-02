@@ -106,7 +106,7 @@ class Search extends Component {
 
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
-    const eye = <DetailCategory category="eye" selected={(selection === 'eye')} clickSearch={search} />;
+    // const eye = <DetailCategory category="eye" selected={(selection === 'eye')} clickSearch={search} />;
     const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
     const skincare = <DetailCategory category="skincare" selected={(selection === 'skincare')} clickSearch={search} />;
 
@@ -136,13 +136,13 @@ class Search extends Component {
           <ul className="Category">
             <button type="button" className="Product" onClick={click} id="lip">Lip</button>
             <button type="button" className="Product" onClick={click} id="base">Base</button>
-            <button type="button" className="Product" onClick={click} id="eye">Eye</button>
+            {/* <button type="button" className="Product" onClick={click} id="eye">Eye</button> */}
             <button type="button" className="Product" onClick={click} id="cheek">Cheek</button>
             <button type="button" className="Product" onClick={click} id="skincare">Skin</button>
           </ul>
           {lip}
           {base}
-          {eye}
+          {/* {eye}  */}
           {cheek}
           {skincare}
           <ul className="Result">

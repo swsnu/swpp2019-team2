@@ -71,14 +71,6 @@ export const CATEGORY = {
       Cool: 'CL',
     },
   },
-  eye: {
-    category: {
-      EyeShadow: 'S',
-      Mascara: 'M',
-      EyeLiner: 'L',
-      EyeBrow: 'B',
-    },
-  },
   cheek: {
     color: {
       Red: ['RD'],
