@@ -1,8 +1,6 @@
 from django.db import models
-
-# Create your models here.
 """ model for lip cosmetic information """
-from django.db import models
+# Create your models here.
 from brand import models as brand_models
 # Create your models here.
 

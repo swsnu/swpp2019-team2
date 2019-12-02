@@ -53,21 +53,18 @@ def two_point_length_by_euc(tuple1, tuple2):
     return final_len
 
 
-def min_lip_len(hexa):
-    """ find sub_color with minimum length """
-    # pylint: disable=too-many-locals,too-many-return-statements,too-many-branches
-    # 색조 sub-color
-    color_total_list = PINK_LIST + RED_LIST + ORANGE_LIST + PURPLE_LIST
+def cal_similar_color (color_list, hexa):
+    """ calculate similar color """
     len_cie = []
     len_euc = []
     tar_color = -1
-    for idx, color in enumerate(color_total_list):
+    for idx, color in enumerate(color_list):
         len_cie.append((idx, two_point_length_by_cie(hexa, color)))
         len_euc.append((idx, two_point_length_by_euc(hexa, color)))
     len_cie.sort(key=lambda x: x[1])
     len_euc.sort(key=lambda x: x[1])
     len_euc = [x[0] for x in len_euc]
-    rank = [0] * 40
+    rank = [0] * len(color_list)
     for idx, result in enumerate(len_cie):
         rank[result[0]] = idx
         rank[result[0]] += len_euc.index(result[0])
@@ -75,8 +72,16 @@ def min_lip_len(hexa):
         tar_color = rank.index(min(rank))
     else:
         mins = [i for i, x in enumerate(rank) if x == min(rank)]
-        mins_len = [two_point_length_by_cie(hexa, color_total_list[i]) for i in mins]
+        mins_len = [two_point_length_by_cie(hexa, color_list[i]) for i in mins]
         tar_color = mins[mins_len.index(min(mins_len))]
+    return tar_color
+    
+
+def min_lip_len(hexa):
+    """ find sub_color with minimum length """
+    # 색조 sub-color
+    color_total_list = PINK_LIST + RED_LIST + ORANGE_LIST + PURPLE_LIST
+    tar_color = cal_similar_color(color_total_list, hexa)
     if int(tar_color / 10) == 0:
         return ('PK', webcolors.rgb_to_hex(color_total_list[tar_color]))
     if int(tar_color / 10) == 1:
@@ -85,6 +90,17 @@ def min_lip_len(hexa):
         return ('OR', webcolors.rgb_to_hex(color_total_list[tar_color]))
     if int(tar_color / 10) == 3:
         return ('PU', webcolors.rgb_to_hex(color_total_list[tar_color]))
+    return (None, None)
+
+def min_cheek_len(hexa):
+    color_total_list = PINK_LIST + RED_LIST + ORANGE_LIST
+    tar_color = cal_similar_color(color_total_list, hexa)
+    if int(tar_color / 10) == 0:
+        return ('PK', webcolors.rgb_to_hex(color_total_list[tar_color]))
+    if int(tar_color / 10) == 1:
+        return ('RD', webcolors.rgb_to_hex(color_total_list[tar_color]))
+    if int(tar_color / 10) == 2:
+        return ('OR', webcolors.rgb_to_hex(color_total_list[tar_color]))
     return (None, None)
 
 # pylint: disable=pointless-string-statement
@@ -121,4 +137,6 @@ def cal_color_tag(title, hexa):
     item_rgb = webcolors.hex_to_rgb(hexa)
     if title == 'lip':
         return min_lip_len(item_rgb)
+    elif title == 'cheek':
+        return min_cheek_len(item_rgb)
     return -1

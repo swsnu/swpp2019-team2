@@ -8,11 +8,21 @@
 
 import scrapy
 from scrapy_djangoitem import DjangoItem
-from products.lip.models import Lip, LipOption
 from brand.models import Brand as BrandModel
+from products.lip.models import Lip, LipOption
+from products.cheek.models import Cheek, CheekOption
 from products.base.models import Base, BaseOption
 #pylint: disable=ungrouped-imports
 
+class CheekProduct(DjangoItem):
+    """ Cheek Scrapy Item"""
+    django_model = Cheek
+    crawled = scrapy.Field()
+
+class CheekColor(DjangoItem):
+    django_model = CheekOption
+    crawled = scrapy.Field()
+    
 
 class BaseProduct(DjangoItem):
     """BaseProduct Scrapy Item"""
@@ -37,8 +47,8 @@ class LipProduct(DjangoItem):
     django_model = Lip
     crawled = scrapy.Field()
 
-
 class Brand(DjangoItem):
     """Brand Scrapy Item"""
     django_model = BrandModel
     crawled = scrapy.Field()
+

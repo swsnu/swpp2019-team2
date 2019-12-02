@@ -3,7 +3,7 @@
 
 def translate_category(raw_text, category):
     """ get eng value """
-    trim_size = {'lip': 12, 'base': 14}
+    trim_size = {'lip': 12, 'base': 14, 'cheek': 13}
     eng_name = {'lip': {
         "립스틱": "S",
         "립글로즈": "G",
@@ -17,6 +17,10 @@ def translate_category(raw_text, category):
         "프라이머/베이스": "PR",
         "비비/씨씨크림": "B",
         "컨실러": "C"
+    }, 'cheek': {
+        "블러셔": "B",
+        "브론져": "C",
+        "하이라이터": "H"
     }}
     size = trim_size[category]
     category_ko = raw_text[size:]
