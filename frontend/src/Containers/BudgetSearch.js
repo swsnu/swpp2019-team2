@@ -258,103 +258,107 @@ class BudgetSearch extends Component {
         <div className="upperbar">
           <h1>Budget Search</h1>
           <div className="buttons">
-            {infoString}
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
           </div>
+          {infoString}
         </div>
-        <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
-        <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
-        <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-        <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
-        <div style={{ display: 'flex' }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{
-              display: 'flex', flexDirection: 'column', margin: 20, backgroundColor: '#EAEAEA', borderRadius: 10, padding: 10,
-            }}
-            >
-              <h4 style={{ display: 'flex', justifyContent: 'center' }}>{strBudget}</h4>
-              <div>
-                <div style={{ width: 220 }}>
-                  <Select
-                    id="select"
-                    isClearable
-                    placeholder="select budget..."
-                    options={options}
-                    onChange={(selected) => this.handleChange(selected)}
-                  />
+        <div className="Menubar">
+          <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
+          <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
+          <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
+          <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
+        </div>
+        <div className="Content">
+          <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{
+                display: 'flex', flexDirection: 'column', margin: 20, backgroundColor: '#EAEAEA', borderRadius: 10, padding: 10,
+              }}
+              >
+                <h4 style={{ display: 'flex', justifyContent: 'center' }}>{strBudget}</h4>
+                <div>
+                  <div style={{ width: 220 }}>
+                    <Select
+                      id="select"
+                      isClearable
+                      placeholder="select budget..."
+                      options={options}
+                      onChange={(selected) => this.handleChange(selected)}
+                    />
+                  </div>
+                </div>
+                <div className="item_input" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <h4>{strNumItems}</h4>
+                  <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <input type="text" name="item_val" readOnly value={itemNum} style={{ width: 50 }} />
+                    <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} style={{ width: 100 }} />
+                  </div>
+                </div>
+                <div>
+                  <div style={{ margin: 22, width: 180 }}>
+                    <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
+                  </div>
+                  <div style={{ margin: 22, width: 180 }}>
+                    <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
+                  </div>
+                  {itemNum > 2 && (
+                    <div style={{ margin: 22, width: 180 }}>
+                      <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
+                    </div>
+                  )}
+                  {itemNum > 3 && (
+                    <div style={{ margin: 22, width: 180 }}>
+                      <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
+                    </div>
+                  )}
+                  {itemNum > 4 && (
+                    <div style={{ margin: 22, width: 180 }}>
+                      <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className="item_input" style={{ display: 'flex', flexDirection: 'column' }}>
-                <h4>{strNumItems}</h4>
-                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                  <input type="text" name="item_val" readOnly value={itemNum} style={{ width: 50 }} />
-                  <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} style={{ width: 100 }} />
-                </div>
-              </div>
               <div>
-                <div style={{ margin: 22, width: 180 }}>
-                  <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
-                </div>
-                <div style={{ margin: 22, width: 180 }}>
-                  <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
-                </div>
-                {itemNum > 2 && (
-                  <div style={{ margin: 22, width: 180 }}>
-                    <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
-                  </div>
-                )}
-                {itemNum > 3 && (
-                  <div style={{ margin: 22, width: 180 }}>
-                    <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
-                  </div>
-                )}
-                {itemNum > 4 && (
-                  <div style={{ margin: 22, width: 180 }}>
-                    <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
-                  </div>
-                )}
+                <h5>{find1}</h5>
+                <h5>{find2}</h5>
+                <h5>{find3}</h5>
+                <h5>{find4}</h5>
+                <h5>{find5}</h5>
               </div>
             </div>
-            <div>
-              <h5>{find1}</h5>
-              <h5>{find2}</h5>
-              <h5>{find3}</h5>
-              <h5>{find4}</h5>
-              <h5>{find5}</h5>
-            </div>
-          </div>
-          <div style={{ flex: 1, paddingRight: 20 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-              <div>
-                <button
-                  id="combine-cosmetics-button"
-                  type="submit"
-                  onClick={() => this.confirmHandler()}
-                  style={{
-                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3,
-                  }}
-                >
-                  Combine Cosmetics
-                </button>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  id="reset-result"
-                  onClick={() => this.handleReset()}
-                  style={{
-                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3,
-                  }}
-                >
-                  {' '}
-                  초기화
-                  {' '}
+            <div style={{ flex: 1, paddingRight: 20 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
+                <div>
+                  <button
+                    id="combine-cosmetics-button"
+                    type="submit"
+                    onClick={() => this.confirmHandler()}
+                    style={{
+                      widht: 80, height: 40, borderRadius: 8, borderWidth: 3,
+                    }}
+                  >
+                    Combine Cosmetics
+                  </button>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    id="reset-result"
+                    onClick={() => this.handleReset()}
+                    style={{
+                      widht: 80, height: 40, borderRadius: 8, borderWidth: 3,
+                    }}
+                  >
+                    {' '}
+                    초기화
+                    {' '}
 
-                </button>
+                  </button>
+                </div>
               </div>
+              {show && (<ItemDisplay combinations={combi} />)}
             </div>
-            {show && (<ItemDisplay combinations={combi} />)}
           </div>
         </div>
       </div>
