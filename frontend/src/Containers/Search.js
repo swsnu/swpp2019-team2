@@ -73,7 +73,6 @@ class Search extends Component {
     infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     const { selection, searched } = this.state;
     const { searchResult } = this.props;
-
     const searchedProduct = searchResult.map((res) => (
       <ProductForm
         selection={searched}
@@ -90,7 +89,14 @@ class Search extends Component {
     // }
 
     const click = (e) => {
-      if (selection !== e.target.id) this.setState({ selection: e.target.id });
+      if (selection !== e.target.id) {
+        this.setState({ selection: e.target.id });
+        document.querySelectorAll(`label.selectionValue > input:checked,
+      label.sub-selection-chip > input:checked,
+      label.color-selection-chip > input:checked`).forEach((input) => {
+        input.checked = false;
+      });
+      }
     };
 
     const search = (e) => {
