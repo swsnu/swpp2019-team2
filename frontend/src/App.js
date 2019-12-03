@@ -32,7 +32,7 @@ function App({ history }) {
           <Route path="/skintone/result" exact component={SkinToneResult} />
           <Route path="/skintone" exact component={SkinTone} />
           <Route path="/sale" exact component={SalesInfo} />
-          <Redirect path="*" to="/login" />
+          {/* <Redirect path="*" to="/login" /> */}
         </Switch>
       </div>
     </ConnectedRouter>

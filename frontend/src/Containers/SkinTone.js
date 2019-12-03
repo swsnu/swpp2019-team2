@@ -94,7 +94,6 @@ class SkinTone extends Component {
       if (!this.props.isAuthenticated) {
         redirect = <Redirect to="/login" />;
       }
-
       const inputImage = '<Image Input>';
       const { fileurl, id } = this.state;
       return (
