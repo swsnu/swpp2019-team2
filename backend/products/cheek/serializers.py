@@ -17,7 +17,14 @@ class CheekSerializer(serializers.ModelSerializer):
 
     def colors(self, cheek):
         """ TODO : DOCSTRING"""
-        return None
+        if self.context is not None:
+            cheek_colors = CheekOption.objects.filter(product=cheek).filter(
+                color__in=self.context
+                )
+            serializer = CheekOptionSerializer(instance=cheek_colors, many=True)
+            return serializer.data
+        else:
+             return []
 
     class Meta:
         model = Cheek
