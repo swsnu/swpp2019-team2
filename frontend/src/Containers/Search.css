@@ -28,6 +28,7 @@
     position: absolute;
     right : 10%;
     top : 2%;
+    width: 10%;
 }
 
 .upperbar .buttons #my-page-button{
@@ -35,6 +36,7 @@
     position: absolute;
     right:4%;
     top:2%;
+    width: 10%;
 }
 
 li.ProductContainer {

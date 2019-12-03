@@ -58,9 +58,7 @@
     background-color:#9b45a7;
 }
 .image_input{
-    position:absolute;
-    left:50%;
-    top:30%;
+    display : table-cell;
     height : 300px;
     width : 400px;
     margin: -150px 0px 0px -200px;
@@ -74,10 +72,21 @@
   margin: 15px;
   cursor: pointer;
 }
+
+div.SkinTone div.Content {
+  text-align:center;
+}
 .image_preview{
   margin-bottom: 10px;
   text-align: center;
   height: 200px;
   width: 500px;
   width : 100%;
+  display:table;
+  text-align:-webkit-center;
+}
+
+.image_preview > img {
+  width: 40%;
+  display:table-cell;
 }
