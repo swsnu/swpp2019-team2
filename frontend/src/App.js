@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  Route, Redirect, Switch,
+  Route, Switch,
 } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import MainPage from './Containers/MainPage';

@@ -108,7 +108,7 @@ export default function SignInSide(props) {
             <Grid container>
               <Grid item xs />
               <Grid item>
-                <Link id="signup" href="button" variant="body2" onClick={props.clickedSignup}>
+                <Link id="signup" href="signup" variant="body2" onClick={props.clickedSignup}>
                   Don&apos;t have an account? Sign Up
                 </Link>
               </Grid>
