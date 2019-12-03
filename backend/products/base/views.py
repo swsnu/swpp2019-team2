@@ -5,8 +5,6 @@ from .models import Base
 from .serializers import BaseSerializer
 
 
-
-
 def search(request, option):
     """ TODO : DOCSTRING"""
     if request.method == "GET":
@@ -32,7 +30,9 @@ def search(request, option):
         except KeyError:
             subcolor_option = None
 
-        baseserializer = BaseSerializer(base, many=True, context={'color':color_option, 'sub_color':subcolor_option})
+        baseserializer = BaseSerializer(
+            base, many=True, context={
+                'color': color_option, 'sub_color': subcolor_option})
         #result = [x for x in baseserializer.data if len(x['color']) > 0]
         return JsonResponse(baseserializer.data, safe=False)
 

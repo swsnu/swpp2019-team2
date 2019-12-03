@@ -1,44 +1,57 @@
-div.detail-category {
-    display: table-column-group;
-}
+
 
 label.selectionValue {
-    display: block;
     padding : 1px;
 }
 
+div.select-container {
+    width:100%;
+    margin: 10px 0 10px 0;
+}
+
 div.detail-sub-category {
-    display: table-cell;
+    padding-left:10px;
+    
     margin: 10px;
 }
 
 input.color-selection-input-box {
     visibility:hidden;
 }
-div.detail-sub-color-category {
-    display:inline-block;
-}
 
 label.color-selection-chip {
-    width: 20px;
-    height:20px;
+    width: 30px;
+    height:30px;
     border-radius: 60%;
-    float:left;
     opacity:100%;
 }
 
 div.sub-color-visual {
-    width:100px;
+    margin:5px 0 10px 0;
 }
-div.detail-caegory button {
+
+div.detail-sub-category > h4 {
+    
+    margin:0px;
+    padding: 20px 0 10px 0;
+    border-top:1px solid rgba(128,0,128,0.7);
+    
+}
+div.detail-category > button.searchProduct {
+    width: 100%;
+    background:transparent;
+    border:none;
+    font-size:20px;
+    padding : 15px 0 15px 0;
+
+}
+ul.Category > div > button.Product {
+    width:100%;
+    padding: 10px 5px 10px 5px;
     background-color : transparent;
     color : #9b45a7;
     cursor : pointer;
-    border : 1px solid #9b45a7;
+    border-top:none;
+    border-bottom:none;
     text-align: center;
-    margin : 5px;
-    border-top-left-radius: 10px; 
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
 }

@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
 
-
 class Profile(models.Model):
     """PROFILE MODELS"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)

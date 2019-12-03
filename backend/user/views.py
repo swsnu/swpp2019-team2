@@ -42,7 +42,7 @@ def signup(request):
 
 
 def signin(request):  # Signin function
-    #pylint: disable=too-many-return-statements
+    # pylint: disable=too-many-return-statements
     """SIGNIN FUNCTION"""
 
     if request.method == 'GET':

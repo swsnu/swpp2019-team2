@@ -16,8 +16,10 @@ Including another URLconf
 from django.urls import path
 from .lip import views as lip
 from .base import views as base
+from .cheek import views as cheek
 
 urlpatterns = [
     path('lip/<option>', lip.search, name='lip'),
-    path('base/<option>', base.search, name='base')
+    path('base/<option>', base.search, name='base'),
+    path('cheek/<option>', cheek.search, name='cheek')
 ]
