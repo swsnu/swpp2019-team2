@@ -6,6 +6,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from .models import Profile
 
+
 class ModelTestCase(TestCase):
     """ TODO : DOCSTRING"""
 
@@ -65,9 +66,15 @@ class ModelTestCase(TestCase):
         response = client.get('/api/token/')
         # Get csrf token from cookie
         csrftoken = response.cookies['csrftoken'].value
-        user_info = User.objects.create_user(username='a', email='a@a.com', password='123')
+        user_info = User.objects.create_user(
+            username='a', email='a@a.com', password='123')
         client.login(username='a', password='123')
-        profile = Profile.objects.create(user=user_info, nick_name='test', prefer_color='12345', prefer_base='123', prefer_brand='123')
+        profile = Profile.objects.create(
+            user=user_info,
+            nick_name='test',
+            prefer_color='12345',
+            prefer_base='123',
+            prefer_brand='123')
         response = client.get('/api/signup/')
         self.assertEqual(response.status_code, 200)  # Pass csrf protection
 
@@ -77,8 +84,14 @@ class ModelTestCase(TestCase):
         response = client.get('/api/token/')
         # Get csrf token from cookie
         csrftoken = response.cookies['csrftoken'].value
-        user_info = User.objects.create_user(username='a', email='a@a.com', password='123')
-        profile = Profile.objects.create(user=user_info, nick_name='test', prefer_color='12345', prefer_base='123', prefer_brand='123')
+        user_info = User.objects.create_user(
+            username='a', email='a@a.com', password='123')
+        profile = Profile.objects.create(
+            user=user_info,
+            nick_name='test',
+            prefer_color='12345',
+            prefer_base='123',
+            prefer_brand='123')
         client.login(username='a', password='123')
         response = client.put('/api/signin/',
                               {'nickName': 'a',
@@ -95,8 +108,14 @@ class ModelTestCase(TestCase):
         response = client.get('/api/token/')
         # Get csrf token from cookie
         csrftoken = response.cookies['csrftoken'].value
-        user_info = User.objects.create_user(username='a', email='a@a.com', password='123')
-        profile = Profile.objects.create(user=user_info, nick_name='test', prefer_color='12345', prefer_base='123', prefer_brand='123')
+        user_info = User.objects.create_user(
+            username='a', email='a@a.com', password='123')
+        profile = Profile.objects.create(
+            user=user_info,
+            nick_name='test',
+            prefer_color='12345',
+            prefer_base='123',
+            prefer_brand='123')
         client.login(username='a', password='123')
         response = client.put('/api/signin/',
                               {'nickName': 'a',
@@ -112,7 +131,8 @@ class ModelTestCase(TestCase):
         response = client.get('/api/token/')
         # Get csrf token from cookie
         csrftoken = response.cookies['csrftoken'].value
-        user_info = User.objects.create_user(username='a', email='a@a.com', password='123')
+        user_info = User.objects.create_user(
+            username='a', email='a@a.com', password='123')
         client.login(username='a', password='123')
         response = client.get('/api/signin/')
         self.assertEqual(response.status_code, 200)  # Pass csrf protection
@@ -129,7 +149,7 @@ class ModelTestCase(TestCase):
                                {'username': 'chris',
                                 'email': '1',
                                 'password': '2',
-                                'nickname':'3'},
+                                'nickname': '3'},
                                content_type='application/json',
                                HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 201)  # Pass csrf protection
@@ -146,7 +166,7 @@ class ModelTestCase(TestCase):
                                  {'username': 'chris',
                                   'email': '1',
                                   'password': '2',
-                                  'nickname':'3'},
+                                  'nickname': '3'},
                                  content_type='application/json',
                                  HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 405)  # Pass csrf protection
@@ -172,7 +192,8 @@ class ModelTestCase(TestCase):
         response = client.get('/api/token/')
         # Get csrf token from cookie
         csrftoken = response.cookies['csrftoken'].value
-        user_info = User.objects.create_user(username='1', email='1', password='2')
+        user_info = User.objects.create_user(
+            username='1', email='1', password='2')
         response = client.post('/api/signup/',
                                {'username': '1',
                                 'email': '1',

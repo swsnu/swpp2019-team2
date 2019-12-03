@@ -14,9 +14,9 @@ def search(request, option):
             lip = Lip.objects.all()
         else:
             if 'category' in query and 'form' in query:
-                lip = Lip.objects.filter(category__in=query['category']).filter(
-                    form__in=query['form']
-                )
+                lip = Lip.objects.filter(
+                    category__in=query['category']).filter(
+                        form__in=query['form'])
             elif 'category' in query:
                 lip = Lip.objects.filter(category__in=query['category'])
             else:

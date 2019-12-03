@@ -1,7 +1,9 @@
+""" CHEEK VIEWS """
 from urllib.parse import urlparse, parse_qs
 from django.http import JsonResponse, HttpResponseNotAllowed
 from .models import Cheek, CheekOption
 from .serializers import CheekSerializer
+
 
 def search(request, option):
     """ TODO : DOCSTRING"""
@@ -15,7 +17,7 @@ def search(request, option):
                 color_option = query['color']
                 cheek = Cheek.objects.exclude(
                     color__isnull=True
-                ) # only Blusher
+                )  # only Blusher
                 for i in cheek:
                     cheeks = CheekOption.objects.filter(product=i).filter(
                         color__in=color_option
@@ -28,14 +30,13 @@ def search(request, option):
                     category__in=query['category']
                 )
                 data2 = CheekSerializer(cheek, many=True, context=None)
-                return JsonResponse(data1.data+data2.data, safe=False)
-                
+                return JsonResponse(data1.data + data2.data, safe=False)
+
             except KeyError:
                 cheek = Cheek.objects.filter(
                     category__in=query['category']
-                    )
+                )
         cheekserializer = CheekSerializer(cheek, many=True, context=None)
         return JsonResponse(cheekserializer.data, safe=False)
-
 
     return HttpResponseNotAllowed(['GET'])

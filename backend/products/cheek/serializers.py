@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from .models import Cheek, CheekOption
 
+
 class CheekOptionSerializer(serializers.ModelSerializer):
     """ TODO : DOCSTRING"""
     class Meta:
@@ -20,16 +21,16 @@ class CheekSerializer(serializers.ModelSerializer):
         if self.context is not None:
             cheek_colors = CheekOption.objects.filter(product=cheek).filter(
                 color__in=self.context
-                )
-            serializer = CheekOptionSerializer(instance=cheek_colors, many=True)
+            )
+            serializer = CheekOptionSerializer(
+                instance=cheek_colors, many=True)
             return serializer.data
-        else:
-            cheek_colors = CheekOption.objects.filter(product=cheek)
-            if len(cheek_colors) == 0:
-                return []
-            else:
-                serializer = CheekOptionSerializer(instance=cheek_colors, many=True)
-                return serializer.data
+        cheek_colors = CheekOption.objects.filter(product=cheek)
+        if len(cheek_colors) == 0:
+            return []
+        serializer = CheekOptionSerializer(
+            instance=cheek_colors, many=True)
+        return serializer.data
 
     class Meta:
         model = Cheek

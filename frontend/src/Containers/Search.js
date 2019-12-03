@@ -23,7 +23,9 @@ class Search extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.searched !== nextState.searched) return false;
+    const { searched } = this.state;
+    const after = nextState.searched;
+    if (searched !== after) return false;
     return true;
   }
 
@@ -94,8 +96,8 @@ class Search extends Component {
         document.querySelectorAll(`label.selectionValue > input:checked,
       label.sub-selection-chip > input:checked,
       label.color-selection-chip > input:checked`).forEach((input) => {
-        input.checked = false;
-      });
+          input.checked = false;
+        });
       }
     };
 
@@ -112,9 +114,11 @@ class Search extends Component {
 
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
-    // const eye = <DetailCategory category="eye" selected={(selection === 'eye')} clickSearch={search} />;
+    /* const eye = <DetailCategory
+      category="eye" selected={(selection === 'eye')} clickSearch={search} />; */
     const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
-    // const skincare = <DetailCategory category="skincare" selected={(selection === 'skincare')} clickSearch={search} />;
+    /* const skincare = <DetailCategory
+      category="skincare" selected={(selection === 'skincare')} clickSearch={search} />; */
 
     return (
       <div className="Search">
@@ -140,23 +144,25 @@ class Search extends Component {
         </div>
         <div className="Content">
           <div className="Category">
-          <ul className="Category">
-            <div><button type="button" className="Product" onClick={click} id="lip">Lip</button></div>
-            <div><button type="button" className="Product" onClick={click} id="base">Base</button></div>
-            {/* <button type="button" className="Product" onClick={click} id="eye">Eye</button> */}
-            <div><button type="button" className="Product" onClick={click} id="cheek">Cheek</button></div>
-            {/* <button type="button" className="Product" onClick={click} id="skincare">Skin</button> */}
-          </ul>
-          {lip}
-          {base}
-          {/* {eye}  */}
-          {cheek}
-          {/* {skincare} */}
+            <ul className="Category">
+              <div><button type="button" className="Product" onClick={click} id="lip">Lip</button></div>
+              <div><button type="button" className="Product" onClick={click} id="base">Base</button></div>
+              {/* <button type="button"
+                className="Product" onClick={click} id="eye">Eye</button> */}
+              <div><button type="button" className="Product" onClick={click} id="cheek">Cheek</button></div>
+              {/* <button type="button"
+                className="Product" onClick={click} id="skincare">Skin</button> */}
+            </ul>
+            {lip}
+            {base}
+            {/* {eye}  */}
+            {cheek}
+            {/* {skincare} */}
           </div>
           <div className="ResultDiv">
-          <ul className="Result">
-            {searchedProduct}
-          </ul>
+            <ul className="Result">
+              {searchedProduct}
+            </ul>
           </div>
         </div>
       </div>
