@@ -20,6 +20,7 @@ class CrawlPipeline(object):
 
     def process_item(self, item, spider):
         """ processing item depends on its type """
+        # pylint: disable=too-many-return-statements,too-many-branches
         if item["crawled"] == "brand":
             self.process_brand(item, spider)
         elif item["crawled"] == "lip":

@@ -53,7 +53,7 @@ def two_point_length_by_euc(tuple1, tuple2):
     return final_len
 
 
-def cal_similar_color (color_list, hexa):
+def cal_similar_color(color_list, hexa):
     """ calculate similar color """
     len_cie = []
     len_euc = []
@@ -75,10 +75,9 @@ def cal_similar_color (color_list, hexa):
         mins_len = [two_point_length_by_cie(hexa, color_list[i]) for i in mins]
         tar_color = mins[mins_len.index(min(mins_len))]
     return tar_color
-    
 
 def min_lip_len(hexa):
-    """ find sub_color with minimum length """
+    """ find sub_color with minimum length in lip model """
     # 색조 sub-color
     color_total_list = PINK_LIST + RED_LIST + ORANGE_LIST + PURPLE_LIST
     tar_color = cal_similar_color(color_total_list, hexa)
@@ -93,6 +92,7 @@ def min_lip_len(hexa):
     return (None, None)
 
 def min_cheek_len(hexa):
+    """ find sub_color with minimum length in cheek model """
     color_total_list = PINK_LIST + RED_LIST + ORANGE_LIST
     tar_color = cal_similar_color(color_total_list, hexa)
     if int(tar_color / 10) == 0:
@@ -136,7 +136,9 @@ def cal_color_tag(title, hexa):
     """ return closest sub_color with given input """
     item_rgb = webcolors.hex_to_rgb(hexa)
     if title == 'lip':
-        return min_lip_len(item_rgb)
+        result = min_lip_len(item_rgb)
     elif title == 'cheek':
-        return min_cheek_len(item_rgb)
-    return -1
+        result = min_cheek_len(item_rgb)
+    else:
+        result = -1
+    return result
