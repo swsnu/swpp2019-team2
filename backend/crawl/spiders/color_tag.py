@@ -83,24 +83,24 @@ def min_lip_len(hexa):
     color_total_list = PINK_LIST + RED_LIST + ORANGE_LIST + PURPLE_LIST
     tar_color = cal_similar_color(color_total_list, hexa)
     if int(tar_color / 10) == 0:
-        return ('PK', webcolors.rgb_to_hex(color_total_list[tar_color]))
+        return ('LIP_PK', webcolors.rgb_to_hex(color_total_list[tar_color]))
     if int(tar_color / 10) == 1:
-        return ('RD', webcolors.rgb_to_hex(color_total_list[tar_color]))
+        return ('LIP_RD', webcolors.rgb_to_hex(color_total_list[tar_color]))
     if int(tar_color / 10) == 2:
-        return ('OR', webcolors.rgb_to_hex(color_total_list[tar_color]))
+        return ('LIP_OR', webcolors.rgb_to_hex(color_total_list[tar_color]))
     if int(tar_color / 10) == 3:
-        return ('PU', webcolors.rgb_to_hex(color_total_list[tar_color]))
+        return ('LIP_PU', webcolors.rgb_to_hex(color_total_list[tar_color]))
     return (None, None)
 
 def min_cheek_len(hexa):
     color_total_list = PINK_LIST + RED_LIST + ORANGE_LIST
     tar_color = cal_similar_color(color_total_list, hexa)
     if int(tar_color / 10) == 0:
-        return ('PK', webcolors.rgb_to_hex(color_total_list[tar_color]))
+        return ('CHK_PK', webcolors.rgb_to_hex(color_total_list[tar_color]))
     if int(tar_color / 10) == 1:
-        return ('RD', webcolors.rgb_to_hex(color_total_list[tar_color]))
+        return ('CHK_RD', webcolors.rgb_to_hex(color_total_list[tar_color]))
     if int(tar_color / 10) == 2:
-        return ('OR', webcolors.rgb_to_hex(color_total_list[tar_color]))
+        return ('CHK_OR', webcolors.rgb_to_hex(color_total_list[tar_color]))
     return (None, None)
 
 # pylint: disable=pointless-string-statement

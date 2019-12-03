@@ -24,7 +24,12 @@ class CheekSerializer(serializers.ModelSerializer):
             serializer = CheekOptionSerializer(instance=cheek_colors, many=True)
             return serializer.data
         else:
-             return []
+            cheek_colors = CheekOption.objects.filter(product=cheek)
+            if len(cheek_colors) == 0:
+                return []
+            else:
+                serializer = CheekOptionSerializer(instance=cheek_colors, many=True)
+                return serializer.data
 
     class Meta:
         model = Cheek
