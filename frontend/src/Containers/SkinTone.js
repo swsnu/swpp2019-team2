@@ -59,10 +59,9 @@ class SkinTone extends Component {
       }
       const picture = new FormData();
       picture.append('image', this.state.selectedFile);
-      picture.append('user_id', '425');
+      picture.append('user_id', 425);
       // user_id state에 저장?
       this.props.send_picture(picture);
-      // this.props.run_analysis('425')
     }
 
     searchHandler = () => {
