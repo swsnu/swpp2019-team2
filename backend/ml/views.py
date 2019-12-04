@@ -44,7 +44,7 @@ class FileUploadView(APIView):
         ml_object = ML.objects.filter(user_id=u_id).latest('id')
         ml_object.result = tone_analysis(ml_object.image)
         ml_object.save()
-        base_products = Base_models.Base.objects.filter(category='F')
+        base_products = Base_models.Base.objects.filter(category='BAS_F')
         base_products_info = []
         total_base_products_info = Base_models.BaseOption.objects.all()
         for product1 in base_products.all():
