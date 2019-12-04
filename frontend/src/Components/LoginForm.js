@@ -13,7 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from '../image/LOGO.png';
-import signIma from '../image/Signin.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {

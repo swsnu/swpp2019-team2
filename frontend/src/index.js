@@ -8,15 +8,16 @@ import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import axios from 'axios';
+// eslint-disable-next-line import/no-unresolved
+import Cookie from 'js-cookie';
 import cosmosReducer from './store/reducers/cosmos';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import Cookie from 'js-cookie';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.withCredentials = true;
-if(Cookie.get().csrftoken === undefined){
+if (Cookie.get().csrftoken === undefined) {
   axios.get('/api/token/');
 }
 const history = createBrowserHistory();
