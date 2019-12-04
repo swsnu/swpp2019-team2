@@ -62,7 +62,6 @@ class SkinTone extends Component {
       picture.append('user_id', '425');
       // user_id state에 저장?
       this.props.send_picture(picture);
-      // this.props.run_analysis('425')
     }
 
     searchHandler = () => {
