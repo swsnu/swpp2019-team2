@@ -76,6 +76,7 @@ def cal_similar_color(color_list, hexa):
         tar_color = mins[mins_len.index(min(mins_len))]
     return tar_color
 
+
 def min_lip_len(hexa):
     """ find sub_color with minimum length in lip model """
     # 색조 sub-color
@@ -91,6 +92,7 @@ def min_lip_len(hexa):
         return ('LIP_PU', webcolors.rgb_to_hex(color_total_list[tar_color]))
     return (None, None)
 
+
 def min_cheek_len(hexa):
     """ find sub_color with minimum length in cheek model """
     color_total_list = PINK_LIST + RED_LIST + ORANGE_LIST
@@ -102,6 +104,7 @@ def min_cheek_len(hexa):
     if int(tar_color / 10) == 2:
         return ('CHK_OR', webcolors.rgb_to_hex(color_total_list[tar_color]))
     return (None, None)
+
 
 # pylint: disable=pointless-string-statement
 ''' # TODO : FIX
