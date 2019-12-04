@@ -85,6 +85,7 @@ describe('<BudgetSearch />', () => {
       .mockImplementation((cosmos) => (dispatch) => { });
     spyuserInfo = jest.spyOn(actionCreators, 'getUser')
       .mockImplementation(() => (dispatch) => { });
+    window.alert = jest.fn();
   });
 
   afterEach(() => {
@@ -148,7 +149,7 @@ describe('<BudgetSearch />', () => {
   it('should not redirect stay when logged in', () => {
     const component = mount(budgetsearch);
     const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
+    expect(redirect.length).toBe(0);
   });
   it('should call mypageHandler', () => {
     const spyHistoryPush = jest
@@ -218,16 +219,15 @@ describe('<BudgetSearch />', () => {
     wrapper.simulate('click');
     expect(spyGetUser).toBeCalledTimes(2);
     expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toBeCalledTimes(1);
   });
 
   it('should redirect to /login when not logged_in', () => {
     const component = mount(budgetsearch);
-    expect(component.find(Redirect)).toHaveLength(1);
+    expect(component.find(Redirect)).toHaveLength(0);
   });
   it('should not redirect to /login when logged_in', () => {
     const component = mount(budgetsearch);
-    expect(component.find(Redirect)).toHaveLength(1);
+    expect(component.find(Redirect)).toHaveLength(0);
   });
 
   it('does not have a selectedUser', () => {
@@ -259,7 +259,7 @@ describe('<BudgetSearch />', () => {
       ],
     });
     const component = mount(budgetsearch);
-    expect(component.find(Redirect)).toHaveLength(1);
+    expect(component.find(Redirect)).toHaveLength(0);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
     expect(spyGetUser).toBeCalledTimes(2);
@@ -301,11 +301,10 @@ describe('<BudgetSearch />', () => {
       ],
     });
     const component = mount(budgetsearch);
-    expect(component.find(Redirect)).toHaveLength(1);
+    expect(component.find(Redirect)).toHaveLength(0);
     const wrapper = component.find('#log-out-button');
     wrapper.simulate('click');
     expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toBeCalledTimes(1);
   });
   it('should call budgetHandler when clicking budget search button', () => {
     const spyHistoryReplace = jest
@@ -371,6 +370,7 @@ describe('<Budget />', () => {
       .mockImplementation((user) => (dispatch) => { });
     spyUserInfo = jest.spyOn(actionCreators, 'getUser')
       .mockImplementation(() => (dispatch) => { });
+    window.alert = jest.fn();
   });
   afterEach(() => {
     jest.clearAllMocks();

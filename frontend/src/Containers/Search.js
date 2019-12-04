@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import './Search.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
@@ -22,21 +21,11 @@ class Search extends Component {
     this.props.onTryAutoSignup();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const { searched } = this.state;
-    const after = nextState.searched;
-    if (searched !== after) return false;
-    return true;
-  }
-
-
   logout = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
+    localStorage.removeItem('nickname');
   }
-
-  // // 메인페이지로 넘어가는 state 설정해주기
-  // back = () => this.setState({ back: true });
 
   mypageHandler = () => {
     this.props.history.replace('../mypage');
@@ -60,19 +49,11 @@ class Search extends Component {
 
 
   render() {
-    let changePage = '';
     const backLogin = '';
     let infoString = '';
-    if (this.state.call === false) {
-      this.props.user.map((res) => ((
-        this.setState({ nickName: res.nick_name }),
-        this.setState({ preferColor: res.prefer_color }),
-        this.setState({ preferBase: res.prefer_base }),
-        this.setState({ preferBrand: res.prefer_brand })
-      )));
-      this.setState({ call: true });
+    if (localStorage.getItem('nickname')) {
+      infoString = `Hello, ${localStorage.getItem('nickname')}!`;
     }
-    infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     const { selection, searched } = this.state;
     const { searchResult } = this.props;
     const searchedProduct = searchResult.map((res) => (
@@ -82,13 +63,6 @@ class Search extends Component {
         info={res}
       />
     ));
-    if (!this.props.isAuthenticated) {
-      changePage = <Redirect to="/login" />;
-    }
-
-    // if (this.state.back === true) { // 메인페이지로 돌아가기
-    //   backLogin = <Redirect to="/main" />;
-    // }
 
     const click = (e) => {
       if (selection !== e.target.id) {
@@ -122,7 +96,6 @@ class Search extends Component {
 
     return (
       <div className="Search">
-        {changePage}
         <div className="upperbar">
           {backLogin}
           <h1>Search</h1>
@@ -132,7 +105,7 @@ class Search extends Component {
             </button> */}
             <button type="button" id="log-out-button" onClick={() => this.logout()}>Log-out</button>
             {backLogin}
-            <button id="my-page-button" type="button" onClick={() => this.mypageHandler(this.state.id)}>My Page</button>
+            <button id="my-page-button" type="button" onClick={() => this.mypageHandler()}>My Page</button>
           </div>
           {infoString}
         </div>
@@ -173,7 +146,7 @@ class Search extends Component {
 const mapStateToProps = (state) => ({
   searchResult: state.cosmos.result,
   isAuthenticated: state.cosmos.token != null,
-  user: state.cosmos.User,
+  user: state.cosmos.User2,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
 });
@@ -183,7 +156,7 @@ const mapDispatchToProps = (dispatch) => ({
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-  getUserInfo: () => dispatch(actionCreators.getUser()),
+  getUserInfo: () => dispatch(actionCreators.getUser2()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

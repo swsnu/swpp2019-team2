@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  Route, Switch,
+  Route, Switch, Redirect,
 } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import MainPage from './Containers/MainPage';
@@ -14,7 +14,6 @@ import Signup from './Containers/Signup';
 import MyPage from './Containers/MyPage';
 import SkinToneResult from './Containers/SkinToneResult';
 import SkinToneLoading from './Containers/SkinToneLoading';
-import LoginLoading from './Containers/LoginLoading';
 
 function App({ history }) {
   return (
@@ -23,7 +22,6 @@ function App({ history }) {
         <Switch>
           <Route path="/login" exact component={LogIn} />
           <Route path="/signup" exact component={Signup} />
-          <Route path="/login/loading" exact component={LoginLoading} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/main" exact component={MainPage} />
           <Route path="/search" exact component={Search} />
@@ -32,7 +30,7 @@ function App({ history }) {
           <Route path="/skintone/result" exact component={SkinToneResult} />
           <Route path="/skintone" exact component={SkinTone} />
           <Route path="/sale" exact component={SalesInfo} />
-          {/* <Redirect path="*" to="/login" /> */}
+          <Redirect path="*" to="/search" />
         </Switch>
       </div>
     </ConnectedRouter>

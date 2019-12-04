@@ -71,7 +71,6 @@ class ModelTestCase(TestCase):
         client.login(username='a', password='123')
         profile = Profile.objects.create(
             user=user_info,
-            nick_name='test',
             prefer_color='12345',
             prefer_base='123',
             prefer_brand='123')
@@ -88,14 +87,12 @@ class ModelTestCase(TestCase):
             username='a', email='a@a.com', password='123')
         profile = Profile.objects.create(
             user=user_info,
-            nick_name='test',
             prefer_color='12345',
             prefer_base='123',
             prefer_brand='123')
         client.login(username='a', password='123')
         response = client.put('/api/signin/',
-                              {'nickName': 'a',
-                               'preferColor': '1',
+                              {'preferColor': '1',
                                'preferBase': '2',
                                'preferBrand': '3'},
                               content_type='application/json',
@@ -112,7 +109,6 @@ class ModelTestCase(TestCase):
             username='a', email='a@a.com', password='123')
         profile = Profile.objects.create(
             user=user_info,
-            nick_name='test',
             prefer_color='12345',
             prefer_base='123',
             prefer_brand='123')

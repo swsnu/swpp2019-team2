@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
 
 
-describe('<ProductForm />', () => {
+describe('<SignupForm />', () => {
   it('should render without errors', () => {
-    const component = shallow(<LoginForm />);
+    const component = shallow(<SignupForm />);
     const wrapper = component.find('#password-input');
     expect(wrapper.length).toBe(1);
   });

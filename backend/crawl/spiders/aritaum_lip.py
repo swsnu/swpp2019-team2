@@ -23,7 +23,7 @@ class AritaumSpider(scrapy.Spider):
         scrapy.Spider.__init__(self)
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
-        self.browser = webdriver.Chrome('chromedriver', chrome_options=options)
+        self.browser = webdriver.Chrome('C:/Users/이상목/Desktop/chromedriver', chrome_options=options)
 
     def start_requests(self):
         link = 'link'

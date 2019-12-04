@@ -129,7 +129,7 @@ describe('<Liplist />', () => {
     const button = component.find('#my-page-button');
     button.simulate('click');
     const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
+    expect(redirect.length).toBe(0);
   });
   it('should click search-button', () => {
     const component = mount(lipList);
@@ -144,28 +144,28 @@ describe('<Liplist />', () => {
     const button = component.find('#Searchmenu');
     button.simulate('click');
     const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
+    expect(redirect.length).toBe(0);
   });
   it('should click budget-button', () => {
     const component = mount(lipList);
     const button = component.find('#Budgetmenu');
     button.simulate('click');
     const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
+    expect(redirect.length).toBe(0);
   });
   it('should click tonemenu-button', () => {
     const component = mount(lipList);
     const button = component.find('#Tonemenu');
     button.simulate('click');
     const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
+    expect(redirect.length).toBe(0);
   });
   it('should click salemenu-button', () => {
     const component = mount(lipList);
     const button = component.find('#Salemenu');
     button.simulate('click');
     const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
+    expect(redirect.length).toBe(0);
   });
   it('should change visible category when clicked', () => {
     const component = mount(lipList);
@@ -174,21 +174,21 @@ describe('<Liplist />', () => {
     const button = component.find('button.Product#base');
     button.simulate('click');
     expect(newInstance.state).toEqual({
-      nickName: 'a',
-      preferBase: '19',
-      preferBrand: '라네즈',
+      // nickName: 'a',
+      // preferBase: '19',
+      // preferBrand: '라네즈',
       searched: null,
-      preferColor: 'red',
-      call: true,
+      // preferColor: 'red',
+      call: false,
       selection: 'base',
     });
     button.simulate('click');
     expect(newInstance.state).toEqual({
-      nickName: 'a',
-      preferBase: '19',
-      preferBrand: '라네즈',
-      preferColor: 'red',
-      call: true,
+      // nickName: 'a',
+      // preferBase: '19',
+      // preferBrand: '라네즈',
+      // preferColor: 'red',
+      call: false,
       selection: 'base',
       searched: null,
     });

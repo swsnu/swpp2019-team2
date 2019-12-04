@@ -61,16 +61,31 @@ class MyPage extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.props.getUserInfo2();
     this.props.onTryAutoSignup();
     this.props.getUserInfo();
-    this.props.getUserInfo2();
+    if (this.state.render === false) {
+      this.props.user.map((res) => ((
+        this.setState({ preferColor: res.prefer_color }),
+        this.setState({ preferBase: res.prefer_base }),
+        this.setState({ preferBrand: res.prefer_brand })
+      )));
+      this.props.user2.map((res) => ((
+        this.setState({ userName: res.username }),
+        this.setState({ passWord: res.password }),
+        this.setState({ email: res.email })
+      )));
+      this.setState({ render: true });
+    }
   }
 
   logoutHandler = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
     this.props.getUserInfo2();
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('email');
   };
 
   searchHandler = () => {
@@ -94,10 +109,9 @@ class MyPage extends Component {
   }
 
   confirmHandler = () => {
-    this.props.putUserInfo(this.state.nickName, this.state.preferColor,
+    this.props.putUserInfo(this.state.preferColor,
       this.state.preferBase, this.state.preferBrand);
     window.confirm('정보가 수정되었습니다!');
-    this.props.getUserInfo();
   }
 
   changeBrand(event) {
@@ -112,7 +126,6 @@ class MyPage extends Component {
     let redirect = null;
     if (this.state.render === false) {
       this.props.user.map((res) => ((
-        this.setState({ nickName: res.nick_name }),
         this.setState({ preferColor: res.prefer_color }),
         this.setState({ preferBase: res.prefer_base }),
         this.setState({ preferBrand: res.prefer_brand })
@@ -124,8 +137,8 @@ class MyPage extends Component {
       )));
       this.setState({ render: true });
     }
-    const infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
-    if (!this.props.isAuthenticated) {
+    const infoString = `Hello, ${localStorage.getItem('username')}!`;
+    if (!localStorage.getItem('token')) {
       redirect = <Redirect to="/login" />;
     }
 
@@ -152,18 +165,11 @@ class MyPage extends Component {
             <div className="info">
               <br />
 o 아이디: &emsp;
-              {this.state.userName}
+              {localStorage.getItem('username')}
               <br />
               <br />
 o 이메일: &emsp;
               {this.state.email}
-              <br />
-              <br />
-o 비밀번호: &emsp;*비공개
-              <br />
-              <br />
-o 닉네임: &emsp;
-              {this.state.nickName}
               <br />
               <br />
 o 선호 색상: &emsp;
@@ -191,16 +197,6 @@ o 선호 브랜드: &emsp;
         </div>
         <div className="Menu2">
           <div className="Menu2_Border">
-            <br />
-            <br />
-o 닉네임 변경:
-            <input
-              id="nickname-input"
-              type="text"
-              value={this.state.nickName}
-              onChange={(event) => this.setState({ nickName: event.target.value })}
-              styles={customStyles}
-            />
             <br />
             <br />
 o 선호 색상 변경:
@@ -260,8 +256,8 @@ const mapDispatchToProps = (dispatch) => ({
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   getUserInfo: () => dispatch(actionCreators.getUser()),
   getUserInfo2: () => dispatch(actionCreators.getUser2()),
-  putUserInfo: (nickName, preferColor, preferBase, preferBrand) => dispatch(actionCreators.putUser2(
-    nickName, preferColor, preferBase, preferBrand,
+  putUserInfo: (preferColor, preferBase, preferBrand) => dispatch(actionCreators.putUser2(
+    preferColor, preferBase, preferBrand,
   )),
 });
 

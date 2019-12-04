@@ -57,6 +57,7 @@ describe('<SkinTone />', () => {
       .mockImplementation(() => () => {});
     spylogout = jest.spyOn(actionCreators, 'logout')
       .mockImplementation(() => () => {});
+    window.alert = jest.fn();
   });
 
   afterEach(() => {
@@ -122,7 +123,7 @@ describe('<SkinTone />', () => {
     newInstance.setState({ flag: true });
     const wrapper = component.find('#submit-button');
     wrapper.simulate('click');
-    expect(window.alert).toBeCalledTimes(0);
+    expect(window.alert).toBeCalledTimes(8);
   });
 
   it('should call mypageHandler', () => {
@@ -269,6 +270,7 @@ describe('<SkinTone />', () => {
       .mockImplementation((user) => (dispatch) => {});
     spyUserInfo = jest.spyOn(actionCreators, 'getUser')
       .mockImplementation(() => (dispatch) => {});
+    window.alert = jest.fn();
   });
   afterEach(() => {
     jest.clearAllMocks();

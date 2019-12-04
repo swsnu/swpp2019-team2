@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import './BudgetSearch.css';
 import swal from 'sweetalert';
 import Select from 'react-select';
@@ -56,6 +55,7 @@ class BudgetSearch extends Component {
   logoutHandler = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
+    localStorage.removeItem('nickname');
   }
 
   mypageHandler = (id) => {
@@ -238,20 +238,16 @@ class BudgetSearch extends Component {
       ));
       this.setState({ render: true });
     }
-    infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
+    if (localStorage.getItem('nickname')) {
+      infoString = `Hello, ${localStorage.getItem('nickname')}!`;
+    }
     const {
       id, itemNum, find1, find2, find3, find4, find5, show, combi,
     } = this.state;
-    const { isAuthenticated } = this.props;
-    let redirect = null;
-    if (!isAuthenticated) {
-      redirect = <Redirect to="/login" />;
-    }
     const strNumItems = '<Choose Number of Items>';
     const strBudget = '<Choose Your Budget Range>';
     return (
       <div className="BudgetSearch">
-        {redirect}
         {/* <div id = "LOGO">
                     <img src = {logo} alt = "COSMOS" width = "100" />
                 </div> */}

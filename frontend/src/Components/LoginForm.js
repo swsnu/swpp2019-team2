@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from '../image/LOGO.png';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
@@ -111,14 +112,28 @@ export default function SignInSide(props) {
                 <Link id="signup" href="signup" variant="body2" onClick={props.clickedSignup}>
                   Don&apos;t have an account? Sign Up
                 </Link>
+                <br/><br/>
+                <Link id="main" href="search" variant="body2" onClick={props.clickedBack}>
+                  Back to main page
+                </Link>
               </Grid>
-            </Grid>
+              </Grid>
             <Box mt={5} />
           </form>
         </div>
         <Typography component="h1" variant="h5">
           <img id="logo" src={logo} alt="COSMOS" width="100" />
         </Typography>
+        <Box mt={5}>
+          <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://material-ui.com/">
+              Cosmos
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+          </Typography>
+        </Box>
       </Grid>
     </Grid>
   );

@@ -7,7 +7,6 @@ import { getMockStore } from '../Mocks/mocks';
 import LogIn from './LogIn';
 import { history } from '../store/store';
 import * as actions from '../store/actions/cosmos';
-import LoginForm from '../Components/LoginForm';
 
 jest.mock('../Components/LoginForm', () => jest.fn((props) => (
   <div className="spyLogin">
@@ -111,7 +110,7 @@ describe('<LogIn />', () => {
     loginButton.simulate('click');
     const veriButton = component.find('#checkbox');
     veriButton.simulate('change', { target: { value: 'test_password' } });
-    expect(spyauthCheckState).toBeCalledTimes(2);
+    expect(spyauthCheckState).toBeCalledTimes(1);
   });
 
   it('should render', () => {
@@ -170,7 +169,7 @@ describe('<LogIn />', () => {
     // signupButton.simulate('click');
     const veriButton = component.find('#checkbox');
     veriButton.simulate('change', { target: { value: 'test_password' } });
-    expect(mockonTryAutoSignup).toHaveBeenCalledTimes(2);
+    expect(mockonTryAutoSignup).toHaveBeenCalledTimes(1);
     expect(mockonLogin).toHaveBeenCalledTimes(1);
   });
   it('should have login button and button should work when inputs are corrent', () => {
@@ -186,28 +185,9 @@ describe('<LogIn />', () => {
       </BrowserRouter>,
     );
   });
-  it('should redirect to login when not there is no selected user', () => {
-    const component = shallow(<LogIn.WrappedComponent selectedUser={null} />);
-    const redirect = component.find('Redirect');
-    expect(redirect.props().to).toEqual('/login');
-  });
   it('should replace to signup when not there is no selected user', () => {
     const component = shallow(<LogIn.WrappedComponent isAuthenticated />);
     const redirect = component.find('Redirect');
     expect(redirect.props().to).toEqual('/search');
-  });
-  it('should not have SelectedUser with its logged_in=false', () => {
-    const component = shallow(
-      <LogIn.WrappedComponent selectedUser={stubSeletedUserF} />,
-    );
-    const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
-  });
-  it('should go to main page when logged in', () => {
-    const component = shallow(
-      <LogIn.WrappedComponent selectedUser={stubSeletedUserT} />,
-    );
-    const redirect = component.find('Redirect');
-    expect(redirect.props().to).toEqual('/login');
   });
 });
