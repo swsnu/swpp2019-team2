@@ -6,21 +6,31 @@ import { connect } from 'react-redux';
 import { Form } from 'antd';
 import * as actionCreators from '../store/actions/index';
 import logo from '../image/LOGO.png';
+import LoginForm from '../Components/LoginForm';
 
 class NormalLoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       sigin: false,
+      check: false,
     };
   }
 
   componentDidMount() {
     this.props.onTryAutoSignup();
+    if (localStorage.getItem('username')) this.setState({ username: localStorage.getItem('username') });
+    if (localStorage.getItem('password')) this.setState({ password: localStorage.getItem('password') });
   }
 
-
       LoginHandler = (e) => {
+        if (this.state.check === true) {
+          localStorage.setItem('username', this.state.username);
+          localStorage.setItem('password', this.state.password);
+        } else {
+          localStorage.removeItem('username');
+          localStorage.removeItem('password');
+        }
         this.props.Login(this.state.username, this.state.password);
         this.props.onTryAutoSignup();
         this.setState({ signin: true });
@@ -29,6 +39,14 @@ class NormalLoginForm extends Component {
 
       signupHandler = () => {
         this.props.history.replace('../signup');
+      }
+
+      verifiedChange = () => {
+        if (this.state.check) {
+          this.setState({ check: false });
+        } else {
+          this.setState({ check: true });
+        }
       }
 
       render() {
@@ -40,41 +58,24 @@ class NormalLoginForm extends Component {
         }
 
         if (this.props.isAuthenticated) {
+          window.alert('로그인 성공');
           changePage = <Redirect to="/search" />;
         } else changePage = <Redirect to="/login" />;
 
         return (
           <div className="Login">
+            <LoginForm
+              clickedSignup={() => this.signupHandler()}
+              clickedSignin={() => this.LoginHandler()}
+              usernameChange={(event) => this.setState({ username: event.target.value })}
+              passwordChange={(event) => this.setState({ password: event.target.value })}
+              verifiedChange={() => this.verifiedChange()}
+              check={this.state.check}
+              username={this.state.username}
+              password={this.state.password}
+            />
             {aler}
             {changePage}
-            <div className="logo">
-              <img id="logo" src={logo} alt="COSMOS" width="100" />
-            </div>
-            <div className="LogInBox">
-              <h2>Log In</h2>
-              <label htmlFor="username-input">
-                 Username
-                <input
-                  type="text"
-                  id="username-input"
-                  value={this.state.email}
-                  onChange={(event) => this.setState({ username: event.target.value })}
-                />
-              </label>
-
-              <label htmlFor="pw-input">
-                Password
-                <input
-                  type="password"
-                  id="pw-input"
-                  value={this.state.password}
-                  onChange={(event) => this.setState({ password: event.target.value })}
-                />
-              </label>
-
-              <button type="button" id="login-button" onClick={() => this.LoginHandler()}>Log-in</button>
-              <button type="button" id="sign-up-button" onClick={() => this.signupHandler()}>Sign Up</button>
-            </div>
           </div>
         );
       }

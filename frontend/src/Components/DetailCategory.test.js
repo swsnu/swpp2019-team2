@@ -14,17 +14,37 @@ describe('<DetailCategory />', () => {
     expect(wrapper.length).toBe(1);
   });
 
-  it('should do when click color category', () => {
+  it('should do when click sub-color category', () => {
     const component = mount(<DetailCategory
       category="lip"
       selected
     />, { attachTo: document.body });
-    const wrapper = component.find('input[id="color=RD&"]');
-    const subColor = component.find('ul.detail-subcolor-visual#Red');
+    const wrapper = component.find('input[id="color=LIP_RD&"]');
+    const subColor = component.find('div.sub-color-visual').at(0);
     wrapper.simulate('click');
     expect(subColor.instance().style.display).toEqual('none');
     wrapper.instance().checked = true;
     wrapper.simulate('click');
-    expect(subColor.instance().style.display).toEqual('inline-block');
+    expect(subColor.instance().style.display).toEqual('block');
+    wrapper.simulate('click');
+    component.detach();
+  });
+});
+
+
+describe('<DetailCategory />', () => {
+  it('should do when click sub-color category', () => {
+    const component = mount(<DetailCategory
+      category="cheek"
+      selected
+    />, { attachTo: document.body });
+    const wrapper = component.find('input[id="category=CHK_B&"]');
+    const subColor = component.find('.detail-category#cheek .sub-select-container').at(0);
+    wrapper.simulate('click');
+    expect(subColor.instance().style.display).toEqual('none');
+    wrapper.instance().checked = true;
+    wrapper.simulate('click');
+    expect(subColor.instance().style.display).toEqual('block');
+    wrapper.simulate('click');
   });
 });

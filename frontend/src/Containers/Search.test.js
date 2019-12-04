@@ -13,10 +13,10 @@ import Search from './Search';
 
 const stubSeletedUserT = {
   result: [{
-    id: 1, name: 'test_name', price: 5000, category: '립스틱', brand: 1, color: 1,
+    id: 1, name: 'test_name', price: 5000, category: 'LIP_S', brand: 1, color: 1,
   },
   {
-    id: 2, name: 'test_name2', price: 6000, category: '틴트', brand: 1, color: 1,
+    id: 2, name: 'test_name2', price: 6000, category: 'LIP_T', brand: 1, color: 1,
   }],
   User: [{
     nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
@@ -28,10 +28,10 @@ const stubSeletedUserT = {
 
 const stubSeletedUserF = {
   result: [{
-    id: 1, name: 'test_name', price: 5000, category: '립스틱', brand: 1, color: 1,
+    id: 1, name: 'test_name', price: 5000, category: 'LIP_S', brand: 1, color: 1,
   },
   {
-    id: 2, name: 'test_name2', price: 6000, category: '틴트', brand: 1, color: 1,
+    id: 2, name: 'test_name2', price: 6000, category: 'LIP_T', brand: 1, color: 1,
   }],
   User: [{
     nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
@@ -171,7 +171,7 @@ describe('<Liplist />', () => {
     const component = mount(lipList);
     const newInstance = component.find(Search.WrappedComponent).instance();
     newInstance.setState({ selection: 'lip' });
-    const button = component.find('button.Product#eye');
+    const button = component.find('button.Product#base');
     button.simulate('click');
     expect(newInstance.state).toEqual({
       nickName: 'a',
@@ -180,7 +180,7 @@ describe('<Liplist />', () => {
       searched: null,
       preferColor: 'red',
       call: true,
-      selection: 'eye',
+      selection: 'base',
     });
     button.simulate('click');
     expect(newInstance.state).toEqual({
@@ -189,7 +189,7 @@ describe('<Liplist />', () => {
       preferBrand: '라네즈',
       preferColor: 'red',
       call: true,
-      selection: 'eye',
+      selection: 'base',
       searched: null,
     });
   });
@@ -222,6 +222,7 @@ describe('<Liplist />', () => {
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
   });
+  afterEach(() => { jest.clearAllMocks(); });
   it('should click mypage', () => {
     const component = mount(lipList);
     const button = component.find('#my-page-button');
@@ -229,12 +230,18 @@ describe('<Liplist />', () => {
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
   });
-  it('should render CategoryList', () => {
+  it('should call with proper query string', () => {
     const component = mount(lipList, { attachTo: document.body });
-    const wrapper = component.find('.color-selection-input-box');
-    const label = component.find('label.color-selection-chip').at(0);
-    wrapper.at(0).simulate('click');
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    newInstance.setState({ selection: 'cheek', searched: 'cheek' });
+    const button = component.find('button.Product#cheek');
+    button.simulate('click');
+    const wrapper = component.find('input.sub-selection-chip');
+    wrapper.at(0).simulate('change', { target: { checked: true } });
     wrapper.at(0).instance().checked = true;
-    wrapper.at(0).simulate('click');
+    const buttons = component.find('.searchProduct').at(0);
+    buttons.simulate('click');
+    expect(spygetLips).toHaveBeenLastCalledWith('cheek/color=CHK_RD&');
+    component.find('button.Product#lip').simulate('click');
   });
 });

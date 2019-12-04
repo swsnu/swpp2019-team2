@@ -1,6 +1,8 @@
 """ Face Color Machine Learning code """
 from collections import Counter
 import pprint
+import base64
+from io import BytesIO
 from facenet_pytorch import MTCNN, InceptionResnetV1, extract_face
 from PIL import Image, ImageDraw
 import numpy as np
@@ -8,7 +10,7 @@ import cv2
 from sklearn.cluster import KMeans
 import imutils
 from matplotlib import pyplot as plt
-
+#from matplotlib.figure import Figure
 #path = 'backend/ml/image/anne-marie'
 
 resnet = InceptionResnetV1(pretrained='vggface2').eval()
@@ -21,7 +23,7 @@ def img_to_face(image_path):
     img = Image.open(final_path).convert('RGB')
     mtcnn = MTCNN(image_size=100)
     # Get cropped and prewhitened image tensor
-    img_cropped = mtcnn(img, save_path='backend/image/face.png')
+    img_cropped = mtcnn(img, save_path='media/output/face.png')
     # Calculate embedding (unsqueeze to add batch dimension)
     img_embedding = resnet(img_cropped.unsqueeze(0))
     # Or, if using for VGGFace2 classification
@@ -41,7 +43,7 @@ def extractSkin(image):
 #     upper_threshold = np.array([255, 255, 255], dtype=np.uint8) # 26 255 255
 
     lower_threshold = np.array([0, 48, 80], dtype=np.uint8) # 0 48 80 0 133 77
-    upper_threshold = np.array([20,255,255], dtype=np.uint8) # 26 255 255 255 173 127
+    upper_threshold = np.array([20, 255, 255], dtype=np.uint8) # 26 255 255 255 173 127
 
     # Single Channel mask,denoting presence of colours in the about threshold
     skinMask = cv2.inRange(img, lower_threshold, upper_threshold)
@@ -163,10 +165,50 @@ def extractDominantColor(image, number_of_colors= 20, hasThresholding=False):
         estimator.labels_, estimator.cluster_centers_, hasThresholding)
     return colorInformation
 
+def savepic():
+    """save pictures """
+    image = cv2.imread("media/output/face.png")
+    plt.subplot(3, 1, 1)
+    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+    skin = extractSkin(image)
+    plt.subplot(3, 1, 2)
+    plt.imshow(cv2.cvtColor(skin, cv2.COLOR_BGR2RGB))
+    dominantcolors = extractDominantColor(skin, hasThresholding=True)
+    colour_bar = plotColorBar(dominantcolors)
+    plt.subplot(3, 1, 3)
+    plt.axis("off")
+    plt.imshow(colour_bar)
+    plt.savefig('media/output/colorbar.png')
+    plt.close()
+    #fig = Figure()
+    #ax = fig.subplots()
+    #ax.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), cv2.cvtColor(skin, cv2.COLOR_BGR2RGB), 
+    # colour_bar)
+    #buf = BytesIO()
+    #fig.savefig('color_bar', format="png")
+    return
+
+def plotColorBar(colorInformation):
+    """ create a 500*100 color bar """
+    color_bar = np.zeros((100, 500, 3), dtype="uint8")
+
+    top_x = 0
+    for x in colorInformation:
+        bottom_x = top_x + (x["color_percentage"] * color_bar.shape[1])
+
+        color = tuple(map(int, (x['color'])))
+
+        cv2.rectangle(color_bar, (int(top_x), 0),
+                      (int(bottom_x), color_bar.shape[0]), color, -1)
+        top_x = bottom_x
+    return color_bar
 
 def tone_analysis(img_path):
+    """ tone_analysis method """
+    # pylint: disable=line-too-long,no-member,too-many-locals,no-self-use
     img_to_face(img_path)
-    image = cv2.imread("backend/image/face.png")
+    image = cv2.imread("media/output/face.png")
+    savepic()
     image = imutils.resize(image, width=250)
     skin = extractSkin(image)
     dominantColors = extractDominantColor(skin, hasThresholding=True)
@@ -193,3 +235,4 @@ def tone_analysis(img_path):
             sel_color[2] = dominantColors[i].get('color')[2]
             site2 = i
     return sel_color
+

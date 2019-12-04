@@ -6,12 +6,12 @@ from brand import models as brand_models
 
 class Base(models.Model):
     """ django Base model """
-    POWDER = 'P'
-    CUSHION = 'CU'
-    FOUNDATION = 'F'
-    PRIMER = 'PR'
-    BB = 'B'
-    CONCEALER = 'C'
+    POWDER = 'BAS_P'
+    CUSHION = 'BAS_CU'
+    FOUNDATION = 'BAS_F'
+    PRIMER = 'BAS_PR'
+    BB = 'BAS_B'
+    CONCEALER = 'BAS_C'
     CATEGORY = (
         (POWDER, 'Powder'),
         (CUSHION, 'Cushion'),
@@ -28,7 +28,7 @@ class Base(models.Model):
         on_delete=models.CASCADE
     )
     category = models.CharField(
-        max_length=1,
+        max_length=6,
         choices=CATEGORY,
     )
     product_url = models.CharField(
@@ -43,9 +43,9 @@ class Base(models.Model):
 
 class BaseOption(models.Model):
     """ option of django base model """
-    LIGHT = "LT"
-    MIDDLE = "MD"
-    DARK = "DK"
+    LIGHT = "BAS_LT"
+    MIDDLE = "BAS_MD"
+    DARK = "BAS_DK"
     COLOR = (
         (LIGHT, "under 21"),
         (MIDDLE, "21"),
@@ -54,13 +54,13 @@ class BaseOption(models.Model):
     )
     color = models.CharField(
         default=None,
-        max_length=2,
+        max_length=6,
         choices=COLOR,
         null=True
     )
-    WARM = "WM"
-    NEUTRAL = "NT"
-    COOL = "CL"
+    WARM = "BAS_WM"
+    NEUTRAL = "BAS_NT"
+    COOL = "BAS_CL"
     SUBCOLOR = (
         (WARM, "Warm Tone"),
         (NEUTRAL, "Neutral Tone"),
@@ -69,7 +69,7 @@ class BaseOption(models.Model):
     )
     sub_color = models.CharField(
         default=None,
-        max_length=2,
+        max_length=6,
         choices=SUBCOLOR,
         null=True
     )

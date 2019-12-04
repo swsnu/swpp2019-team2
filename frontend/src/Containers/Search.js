@@ -23,7 +23,9 @@ class Search extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.searched !== nextState.searched) return false;
+    const { searched } = this.state;
+    const after = nextState.searched;
+    if (searched !== after) return false;
     return true;
   }
 
@@ -73,7 +75,6 @@ class Search extends Component {
     infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
     const { selection, searched } = this.state;
     const { searchResult } = this.props;
-
     const searchedProduct = searchResult.map((res) => (
       <ProductForm
         selection={searched}
@@ -90,7 +91,14 @@ class Search extends Component {
     // }
 
     const click = (e) => {
-      if (selection !== e.target.id) this.setState({ selection: e.target.id });
+      if (selection !== e.target.id) {
+        this.setState({ selection: e.target.id });
+        document.querySelectorAll(`label.selectionValue > input:checked,
+      label.sub-selection-chip > input:checked,
+      label.color-selection-chip > input:checked`).forEach((input) => {
+          input.checked = false;
+        });
+      }
     };
 
     const search = (e) => {
@@ -106,9 +114,11 @@ class Search extends Component {
 
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
-    const eye = <DetailCategory category="eye" selected={(selection === 'eye')} clickSearch={search} />;
+    /* const eye = <DetailCategory
+      category="eye" selected={(selection === 'eye')} clickSearch={search} />; */
     const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
-    const skincare = <DetailCategory category="skincare" selected={(selection === 'skincare')} clickSearch={search} />;
+    /* const skincare = <DetailCategory
+      category="skincare" selected={(selection === 'skincare')} clickSearch={search} />; */
 
     return (
       <div className="Search">
@@ -127,27 +137,33 @@ class Search extends Component {
           {infoString}
         </div>
         <div className="Menubar">
-          <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
-          <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
-          <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-          <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
+          <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
+          <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
+          <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
+          <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
         </div>
         <div className="Content">
-          <ul className="Category">
-            <button type="button" className="Product" onClick={click} id="lip">Lip</button>
-            <button type="button" className="Product" onClick={click} id="base">Base</button>
-            <button type="button" className="Product" onClick={click} id="eye">Eye</button>
-            <button type="button" className="Product" onClick={click} id="cheek">Cheek</button>
-            <button type="button" className="Product" onClick={click} id="skincare">Skin</button>
-          </ul>
-          {lip}
-          {base}
-          {eye}
-          {cheek}
-          {skincare}
-          <ul className="Result">
-            {searchedProduct}
-          </ul>
+          <div className="Category">
+            <ul className="Category">
+              <div><button type="button" className="Product" onClick={click} id="lip">Lip</button></div>
+              <div><button type="button" className="Product" onClick={click} id="base">Base</button></div>
+              {/* <button type="button"
+                className="Product" onClick={click} id="eye">Eye</button> */}
+              <div><button type="button" className="Product" onClick={click} id="cheek">Cheek</button></div>
+              {/* <button type="button"
+                className="Product" onClick={click} id="skincare">Skin</button> */}
+            </ul>
+            {lip}
+            {base}
+            {/* {eye}  */}
+            {cheek}
+            {/* {skincare} */}
+          </div>
+          <div className="ResultDiv">
+            <ul className="Result">
+              {searchedProduct}
+            </ul>
+          </div>
         </div>
       </div>
     );

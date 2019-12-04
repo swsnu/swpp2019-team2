@@ -6,34 +6,38 @@ from selenium.common.exceptions import NoSuchElementException
 import requests
 import webcolors
 from PIL import Image
-from crawl.items import Brand, BaseProduct, BaseColor
+from crawl.items import CheekProduct, CheekColor, Brand
 from brand.models import Brand as Brand_db
-from products.base.models import Base as Base_db
+from products.cheek.models import Cheek as Cheek_db
 from .spider_helper import translate_category
+
+
+from .color_tag import cal_color_tag
 
 
 class AritaumSpider(scrapy.Spider):
     """ Real Spider extends scrapy.Spider """
-    name = 'aritaum-base'
+    name = 'aritaum-cheek'
 
     def __init__(self):
-        print("init")
         scrapy.Spider.__init__(self)
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
         self.browser = webdriver.Chrome('chromedriver', chrome_options=options)
+        print('init')
 
     def start_requests(self):
         link = 'link'
-        title = 'title'
+        idx = 'category'
 
-        urls = [{
-            title: "base",
-            link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2100"
-        }]
+        urls = [
+            {idx: "cheek",
+             link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2400"
+             },
+        ]
         for url in urls:
             self.browser.get(url[link])
-            yield scrapy.Request(url=url[link], meta={"title": url["title"]}, callback=self.parse)
+            yield scrapy.Request(url=url[link], meta={idx: url[idx]}, callback=self.parse)
 
     def parse(self, response):
         driver = self.browser
@@ -43,12 +47,11 @@ class AritaumSpider(scrapy.Spider):
         brand_name = driver.find_elements_by_css_selector("span.goods-brand")
         yield scrapy.Request(
             url=response.url,
-            meta={
-                "brand": brand_list,
-                "brand_name": brand_name,
-                "product": product_list,
-                "title": response.meta["title"],
-            },
+            meta={"brand": brand_list,
+                  "brand_name": brand_name,
+                  "product": product_list,
+                  "category": response.meta["category"],
+                  },
             callback=self.parse_brand,
             dont_filter=True)
 
@@ -67,29 +70,14 @@ class AritaumSpider(scrapy.Spider):
             url=response.url,
             meta={
                 "product": response.meta["product"],
-                "title": response.meta["title"]
+                "category": response.meta["category"]
             },
             callback=self.parse_product,
             dont_filter=True)
 
-    @staticmethod
-    def check_color(name):
-        """ check color name and return value"""
-        if any(x in name for x in ['11', '13', '19']):
-            color = "BAS_LT"
-        elif '21' in name:
-            color = "BAS_MD"
-        elif '23' in name:
-            color = "BAS_DK"
-        else:
-            color = None
-        return color
-
     def parse_product(self, response):
         """ parse product information from page """
         #pylint: disable=too-many-locals
-        title = response.meta["title"]
-
         for item in response.meta["product"]:
             product_name = item.find_element_by_name(
                 "tagging_productNm").get_property("value")
@@ -103,59 +91,60 @@ class AritaumSpider(scrapy.Spider):
             product_url = "https://www.aritaum.com/shop/pr/shop_pr_product_view.do?i_sProductcd=" + product_id
             category_raw = item.find_element_by_name(
                 "tagging_category").get_property("value")
-            category = translate_category(category_raw, title)
+            category = translate_category(category_raw, "cheek")
             if category == -1:
                 pass
             brand = Brand_db.objects.filter(name=brand_name)
             thumb_url = item.find_element_by_css_selector(
                 "div.product-thumb img").get_property("src")
-            # case로 나누기
-            yield BaseProduct(
+
+            yield CheekProduct(
                 name=product_name,
                 price=price,
                 brand=brand[0],
                 category=category,
                 img_url=thumb_url,
-                crawled=title,
+                crawled="cheek",
                 product_url=product_url
             )
-
-            color_range = item.find_elements_by_class_name(
-                "product-unit__scroller-item")
-            for color in color_range:
-                color_name = color.find_element_by_tag_name(
-                    "label").get_attribute("data-tooltip")
-                if color_name is None:
-                    continue
-                try:
-                    color_url = color.find_element_by_tag_name(
-                        "img").get_property("src")
-                    yield scrapy.Request(
-                        url=color_url,
-                        meta={
-                            "product": product_name,
-                            "color": color_name
-                        },
-                        callback=self.save_color_by_url,
-                        dont_filter=True
-                    )
-                except NoSuchElementException:
-                    color_rgb = color.find_element_by_xpath(
-                        "./span/label/span").value_of_css_property("background-color")
-                    color_hex = self.save_color_by_rgb(color_rgb)
-                    product = Base_db.objects.filter(name=product_name)[0]
-                    color = self.check_color(color_name)
-                    yield BaseColor(
-                        color_hex=color_hex,
-                        optionName=color_name,
-                        product=product,
-                        crawled="base_option",
-                        color=color
-                    )
+            if category == "CHK_B":
+                color_range = item.find_elements_by_class_name(
+                    "product-unit__scroller-item")
+                for color in color_range:
+                    color_name = color.find_element_by_tag_name(
+                        "label").get_attribute("data-tooltip")
+                    if color_name is None:
+                        continue
+                    try:
+                        color_url = color.find_element_by_tag_name(
+                            "img").get_property("src")
+                        yield scrapy.Request(
+                            url=color_url,
+                            meta={
+                                "product": product_name,
+                                "color": color_name
+                            },
+                            callback=self.save_color_by_url,
+                            dont_filter=True
+                        )
+                    except NoSuchElementException:
+                        color_rgb = color.find_element_by_xpath(
+                            "./span/label/span").value_of_css_property("background-color")
+                        product = Cheek_db.objects.filter(name=product_name)[0]
+                        color_hex = self.save_color_by_rgb(color_rgb)
+                        color_tuple = cal_color_tag("cheek", color_hex)
+                        yield CheekColor(
+                            color_hex=color_hex,
+                            color=color_tuple[0],
+                            sub_color=color_tuple[1],
+                            optionName=color_name,
+                            product=product,
+                            crawled="cheek_option"
+                        )
 
         yield scrapy.Request(
             url=response.url,
-            meta={"title": title},
+            meta={"category": response.meta["category"]},
             callback=self.go_next,
             dont_filter=True
         )
@@ -164,17 +153,19 @@ class AritaumSpider(scrapy.Spider):
         """yield Request for color url"""
         url = response.url
         name = response.meta["product"]
+        color_name = response.meta["color"]
         img = Image.open(requests.get(url, stream=True).raw)
         img = img.resize((30, 30))
         color_hex = self.getcolors(img, url)
-        product = Base_db.objects.filter(name=name)[0]
-        color = self.check_color(response.meta["color"])
-        yield BaseColor(
+        color_tuple = cal_color_tag("cheek", color_hex)
+        product = Cheek_db.objects.filter(name=name)[0]
+        yield CheekColor(
             color_hex=color_hex,
-            optionName=response.meta["color"],
+            color=color_tuple[0],
+            sub_color=color_tuple[1],
+            optionName=color_name,
             product=product,
-            crawled="base_option",
-            color=color
+            crawled="cheek_option"
         )
 
     @staticmethod
@@ -224,7 +215,7 @@ class AritaumSpider(scrapy.Spider):
             driver.implicitly_wait(10)
             yield scrapy.Request(
                 url=response.url,
-                meta={"title": response.meta["title"]},
+                meta={"category": response.meta["category"]},
                 callback=self.parse,
                 dont_filter=True
             )
@@ -236,7 +227,7 @@ class AritaumSpider(scrapy.Spider):
                 driver.implicitly_wait(5)
                 yield scrapy.Request(
                     url=response.url,
-                    meta={"title": response.meta["title"]},
+                    meta={"category": response.meta["category"]},
                     callback=self.parse,
                     dont_filter=True
                 )

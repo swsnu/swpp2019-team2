@@ -61,19 +61,19 @@ class SalesInfo extends Component {
         {redirect}
         <div className="upperbar">
           <h1> Sales Information </h1>
-          {infoString}
-          <div className="Menubar">
-            <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
-            <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
-            <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-            <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
-          </div>
           <div className="buttons">
             <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
             <button id="my-page-button" type="button" onClick={() => this.mypageHandler()}>My Page</button>
           </div>
+          {infoString}
         </div>
-        <div className="Calendar">
+        <div className="Menubar">
+          <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
+          <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
+          <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
+          <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
+        </div>
+        <div className="Content">
           <BigCalendar />
         </div>
       </div>

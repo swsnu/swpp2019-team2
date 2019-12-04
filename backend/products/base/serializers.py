@@ -22,7 +22,7 @@ class BaseSerializer(serializers.ModelSerializer):
         if self.context['color'] is not None:
             base_colors = base_colors.filter(
                 color__in=self.context['color']
-                )
+            )
         if self.context['sub_color'] is not None:
             base_colors = base_colors.filter(
                 sub_color__in=self.context['sub_color']
@@ -41,5 +41,4 @@ class BaseSerializer(serializers.ModelSerializer):
             'brand',
             'color',
             'id'
-            ]
- 
+        ]

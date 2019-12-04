@@ -54,15 +54,15 @@ const ProductForm = (props) => {
           {' / '}
           {info.brand}
         </section>
-        <section className="color">
-          <ul>{subcolor}</ul>
-        </section>
         <section className="info_text">
           가격 :
           {` ${info.price} `}
 원
         </section>
         {optionalInfo}
+        <section className="color">
+          <ul>{subcolor}</ul>
+        </section>
       </a>
     </li>
 

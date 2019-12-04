@@ -31,12 +31,12 @@ const stubInitialState = {
     id: 3, email: 'TEST_EMAIL3', password: 'TEST_PASS3', name: 'TEST3', logged_in: false,
   }],
   ML: {
-    id: 1, product: { img_url: '', price: 0, brand: 'test' }, base: 'test',
+    id: 1, product: { img_url: '', price: 0, brand: 'test' }, base: 'test', result_r: 0, result_g: 0, result_b: 0,
   },
 };
 
 const stubML = {
-  id: 1, product: { img_url: '', price: 0, brand: 'test' }, base: 'test',
+  id: 1, product: { img_url: '', price: 0, brand: 'test' }, base: 'test', result_r: 0, result_g: 0, result_b: 0,
 };
 
 const mockStore = getMockStore(stubInitialState);

@@ -50,20 +50,17 @@ class BigCalendar extends Component {
   render() {
     const { events } = this.state;
     return (
-      <div>
-        <div className="Calendar">
-          <Calendar
-            id="BigCalendar"
-            localizer={localizer}
-            defaultDate={new Date()}
-            defaultView="month"
-            events={events}
-            style={{ height: '80vh', width: '140vh' }}
-            onSelectEvent={(event) => swal(event.title, event.detail)}
-          />
-        </div>
+      <div className="Calendar" style={{ display: 'table-cell' }}>
+        <Calendar
+          id="BigCalendar"
+          localizer={localizer}
+          defaultDate={new Date()}
+          defaultView="month"
+          events={events}
+          style={{ height: '80vh', width: '140vh', margin: 'auto' }}
+          onSelectEvent={(event) => swal(event.title, event.detail)}
+        />
       </div>
-
     );
   }
 }

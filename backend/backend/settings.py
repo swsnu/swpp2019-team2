@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'products.lip',
     'products.base',
     'products.eye',
+    'products.cheek',
     'ml',
 ]
 REST_FRAMEWORK = {

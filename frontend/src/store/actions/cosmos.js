@@ -56,8 +56,6 @@ export const authLogin = (username, password) => (dispatch) => {
       const expirationDate = new Date().getTime() + 3600 * 1000;
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
       dispatch(authSuccess(token));
       dispatch(push('../login/loading'));
     })

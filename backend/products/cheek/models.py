@@ -1,39 +1,23 @@
 """ model for lip cosmetic information """
 from django.db import models
 from brand import models as brand_models
-# Create your models here.
 
 
-class Lip(models.Model):
+class Cheek(models.Model):
     """ django lip model """
-    STICK = 'LIP_S'
-    GLOSS = 'LIP_G'
-    BALM = 'LIP_B'
-    TINT = 'LIP_T'
+    BLUSHER = 'CHK_B'
+    CONTOURING = 'CHK_C'
+    HIGHLIGHT = 'CHK_H'
     CATEGORY = (
-        (STICK, 'Stick'),
-        (GLOSS, 'Gloss'),
-        (BALM, 'Balm'),
-        (TINT, 'Tint'),
-    )
-    MATTE = 'LIP_M'
-    GLOSSY = 'LIP_G'
-    NONE = 'LIP_N'
-    FORM = (
-        (MATTE, 'Matte'),
-        (GLOSSY, 'Glossy'),
-        (NONE, 'None')
+        (BLUSHER, 'Blusher'),
+        (CONTOURING, 'Contouring'),
+        (HIGHLIGHT, 'Highlighter'),
     )
     name = models.CharField(max_length=20)
     price = models.IntegerField()
     brand = models.ForeignKey(
         brand_models.Brand,
         on_delete=models.CASCADE
-    )
-    form = models.CharField(
-        max_length=5,
-        choices=FORM,
-        default=NONE
     )
     category = models.CharField(
         max_length=5,
@@ -52,17 +36,15 @@ class Lip(models.Model):
         return self.name
 
 
-class LipOption(models.Model):
+class CheekOption(models.Model):
     """ option of django lip model """
-    RED = "LIP_RD"
-    PINK = "LIP_PK"
-    ORANGE = "LIP_OR"
-    PURPLE = "LIP_PU"
+    RED = "CHK_RD"
+    PINK = "CHK_PK"
+    ORANGE = "CHK_OR"
     COLOR = (
         (RED, "Red"),
         (PINK, "Pink"),
         (ORANGE, "Orange"),
-        (PURPLE, "Purple"),
     )
     color = models.CharField(
         max_length=6,
@@ -74,7 +56,7 @@ class LipOption(models.Model):
     color_hex = models.CharField(max_length=10)
     optionName = models.CharField(max_length=30)
     product = models.ForeignKey(
-        Lip,
+        Cheek,
         related_name='color',
         on_delete=models.CASCADE
     )

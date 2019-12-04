@@ -8,6 +8,7 @@
 
 from products.lip.models import Lip, LipOption
 from products.base.models import Base, BaseOption
+from products.cheek.models import Cheek, CheekOption
 from brand.models import Brand
 
 
@@ -19,6 +20,7 @@ class CrawlPipeline(object):
 
     def process_item(self, item, spider):
         """ processing item depends on its type """
+        # pylint: disable=too-many-return-statements,too-many-branches
         if item["crawled"] == "brand":
             self.process_brand(item, spider)
         elif item["crawled"] == "lip":
@@ -38,6 +40,17 @@ class CrawlPipeline(object):
                 return item
         elif item["crawled"] == "base_option":
             if len(BaseOption.objects.filter(
+                    optionName=item["optionName"]
+                ).filter(
+                    product=item["product"])) == 0:
+                item.save()
+                return item
+        elif item["crawled"] == "cheek":
+            if len(Cheek.objects.filter(name=item["name"])) == 0:
+                item.save()
+                return item
+        elif item["crawled"] == "cheek_option":
+            if len(CheekOption.objects.filter(
                     optionName=item["optionName"]
                 ).filter(
                     product=item["product"])) == 0:

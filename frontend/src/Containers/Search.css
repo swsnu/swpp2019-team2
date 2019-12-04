@@ -7,6 +7,7 @@
     background-color:rgb(255, 220, 226);
     text-align : center;
     display : table;
+    padding-bottom:20px;
     
 }
 
@@ -27,6 +28,7 @@
     position: absolute;
     right : 10%;
     top : 2%;
+    width: 10%;
 }
 
 .upperbar .buttons #my-page-button{
@@ -34,174 +36,73 @@
     position: absolute;
     right:4%;
     top:2%;
+    width: 10%;
 }
 
-ul.Category li.Product {
-    display: inline-block;
-    padding: 10px;
+li.ProductContainer {
+    display:table-cell;
+}
+
+ul.Category  {
+    /* display: inline-block; */
+    padding: 10px 0 10px 0;
     margin-bottom: 5px;
     border: 1px solid #efefef;
     font-size: 12px;
     cursor: pointer;
+    width:100%;
+    display:table;
+    table-layout: fixed;
+}
+
+ul.Category > div {
+    display:table-cell;
+    text-align:center;
 }
 
 .Menubar {
-    flex: 1;
-    flex-direction:row;
-    align-items:stretch;
     width:100%;
     background-color:rgb(255, 220, 226);
-    text-align : center;
-    display : table-row;
+    display : table;
+    table-layout: fixed;
     
+}
+
+.Menubar > div {
+    display:table-cell;
+    border-left: 3px solid rgb(255, 220, 226);
+    background-color:rgba(256,256,256,0.2);
+    vertical-align: middle; 
+    text-align: center;
 }
 
 .Menubar button {
     margin : 10px 0;
     padding: 5px;
     font : inherit;
-    border : 1px solid #9b45a7;
     background-color : transparent;
     color : #9b45a7;
     cursor : pointer;
-    border-top-left-radius: 10px; 
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border:none;
 }
 
-.Menubar #Searchmenu {
-    display: inline-table;
-    position: absolute;
-    right : 85%;
-    top : 10%;
-    border:none;
-    background-color: white;
-}
-
-.Menubar #Budgetmenu {
-    display: inline-table;
-    position: absolute;
-    right : 60%;
-    top : 10%;
-    border:none;
-    background-color: white;
-}
-.Menubar #Tonemenu {
-    display: inline-table;
-    position: absolute;
-    right : 35%;
-    top : 10%;
-    border:none;
-    background-color: white;
-}
-.Menubar #Salemenu {
-    display: inline-table;
-    position: absolute;
-    right : 10%;
-    top : 10%;
-    border:none;
-    background-color: white;
-}
-.Content{
-   display: table;
-   text-align: left; 
-}
-/*
-.Result{
-    display: inline-table;
-    position: absolute;
-    left:50%;
-    top:10%;
-    margin: 0px 0px 0px -100px;
-}
-*/
-.Category {
-    padding-left:30px;
-    display: table-row;
-}
-/*
-.Category .buttonFalse:active {
-    color:white;
-    background-color:#9b45a7;
-} */
-/* ol {
-    list-style-type: none;
-} */
-.Content .Category .Product {
-    background-color : transparent;
-    color : #9b45a7;
-    cursor : pointer;
-    border : 1px solid #9b45a7;
-    text-align: center;
-    margin : 5px;
-    border-top-left-radius: 10px; 
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-/* .Category Button {
+div.Content {
     display:table;
-    font-size: 1.5rem;
-    text-align: center;
-    font-weight: 500;
-    background: rgb(255, 220, 226);
-    color: #9b45a7;
-    border: 1px solid rgb(255, 220, 226);
-    width: 4cm;
-    border-top-left-radius: 10px; 
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-} */
-/* .Category .buttonTrue {
-    color:white;
-    background-color:#9b45a7;
+   text-align: left; 
+   table-layout: fixed;
+   width:100%;
+}
+div.ResultDiv {
+    display:table-cell;
+    padding-top:50px;
+}
+ul.Result {
+    display:table;
 }
 
-
-
-
-.Sub_category {
-    display: table-row-group;
-    text-align: center;
-}
-.Sub_category #search_result{
-    padding: 5px;
-    margin:10px;
-    margin-right:15px;
-    font-size: 1.5rem;
-    font-weight: 300;
-
+div.Category {
+    display:table-cell;
+    vertical-align: top;
+    width:25%;
 }
 
-.Sub_category Button {                     
-    padding: 3px;
-    font: inherit;
-    background-color: transparent;
-    color: #9b45a7;
-    border: 1px solid #9b45a7;
-    cursor: pointer;
-    border-top-left-radius: 10px; 
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-  
-.Sub_category Button:active {
-    color:white;
-    background-color:#9b45a7;
-  }
-
-.Sub_category .buttonTrue {
-    color:white;
-    background-color:#9b45a7;
-}
-
-.Lip_form .buttonTrue {
-    color:white;
-    background-color:#9b45a7;
-}
-
-
- */
