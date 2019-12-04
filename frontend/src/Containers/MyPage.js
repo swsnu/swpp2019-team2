@@ -61,21 +61,21 @@ class MyPage extends Component {
     };
   }
 
-  async componentDidMount() {
-    this.props.getUserInfo2();
+  componentDidMount() {
     this.props.onTryAutoSignup();
     this.props.getUserInfo();
+    this.props.getUserInfo2();
     if (this.state.render === false) {
-      this.props.user.map((res) => ((
+      this.props.user.map((res) => (
         this.setState({ preferColor: res.prefer_color }),
         this.setState({ preferBase: res.prefer_base }),
         this.setState({ preferBrand: res.prefer_brand })
-      )));
-      this.props.user2.map((res) => ((
+      ));
+      this.props.user2.map((res) => (
         this.setState({ userName: res.username }),
         this.setState({ passWord: res.password }),
         this.setState({ email: res.email })
-      )));
+      ));
       this.setState({ render: true });
     }
   }
@@ -83,9 +83,7 @@ class MyPage extends Component {
   logoutHandler = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
-    this.props.getUserInfo2();
     localStorage.removeItem('nickname');
-    localStorage.removeItem('email');
   };
 
   searchHandler = () => {
@@ -137,7 +135,7 @@ class MyPage extends Component {
       )));
       this.setState({ render: true });
     }
-    const infoString = `Hello, ${localStorage.getItem('username')}!`;
+    const infoString = `Hello, ${localStorage.getItem('nickname')}!`;
     if (!localStorage.getItem('token')) {
       redirect = <Redirect to="/login" />;
     }

@@ -22,9 +22,9 @@ class Search extends Component {
   }
 
   logout = () => {
+    localStorage.removeItem('nickname');
     this.props.Logout();
     this.props.onTryAutoSignup();
-    localStorage.removeItem('nickname');
   }
 
   mypageHandler = () => {
@@ -146,9 +146,9 @@ class Search extends Component {
 const mapStateToProps = (state) => ({
   searchResult: state.cosmos.result,
   isAuthenticated: state.cosmos.token != null,
-  user: state.cosmos.User2,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  user: state.cosmos.User2,
 });
 
 
