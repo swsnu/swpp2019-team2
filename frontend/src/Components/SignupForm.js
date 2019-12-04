@@ -4,24 +4,31 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStylesSignup } from '@material-ui/core/styles';
 import logo from '../image/LOGO.png';
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100vh',
-  },
+const useStyleSignup = makeStylesSignup((theme) => ({
   image: {
     backgroundImage: 'url(https://previews.123rf.com/images/martm/martm1505/martm150500192/40659190-%EB%A7%A4%EB%A0%A5%EC%A0%81%EC%9D%B8-%EC%88%98%EC%B1%84%ED%99%94-%ED%99%94%EC%9E%A5%ED%92%88-%EB%B0%B0%EA%B2%BD%EC%9D%84-%EA%B5%AC%EC%84%B1%ED%95%98%EB%8A%94.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+  },
+  root: {
+    height: '100vh',
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -29,21 +36,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '80%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
 }));
 
 export default function SignInSide(props) {
-  const classes = useStyles();
+  const classes = useStyleSignup();
 
   return (
     <Grid container component="main" className={classes.root}>
