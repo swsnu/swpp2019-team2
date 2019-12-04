@@ -65,19 +65,6 @@ class MyPage extends Component {
     this.props.onTryAutoSignup();
     this.props.getUserInfo();
     this.props.getUserInfo2();
-    if (this.state.render === false) {
-      this.props.user.map((res) => ((
-        this.setState({ preferColor: res.prefer_color }),
-        this.setState({ preferBase: res.prefer_base }),
-        this.setState({ preferBrand: res.prefer_brand })
-      )));
-      this.props.user2.map((res) => ((
-        this.setState({ userName: res.username }),
-        this.setState({ passWord: res.password }),
-        this.setState({ email: res.email })
-      )));
-      this.setState({ render: true });
-    }
   }
 
   logoutHandler = () => {
