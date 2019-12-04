@@ -32,7 +32,7 @@ class AritaumSpider(scrapy.Spider):
 
         urls = [
             {idx: "cheek",
-             link:"https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2400"
+             link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2400"
              },
         ]
         for url in urls:
@@ -88,7 +88,7 @@ class AritaumSpider(scrapy.Spider):
                 "tagging_price").get_property("value")
             product_id = item.find_element_by_name(
                 "i_sProductcd").get_property("value")
-            product_url = "https://www.aritaum.com/shop/pr/shop_pr_product_view.do?i_sProductcd="+product_id
+            product_url = "https://www.aritaum.com/shop/pr/shop_pr_product_view.do?i_sProductcd=" + product_id
             category_raw = item.find_element_by_name(
                 "tagging_category").get_property("value")
             category = translate_category(category_raw, "cheek")
@@ -121,8 +121,8 @@ class AritaumSpider(scrapy.Spider):
                         yield scrapy.Request(
                             url=color_url,
                             meta={
-                                "product":product_name,
-                                "color":color_name
+                                "product": product_name,
+                                "color": color_name
                             },
                             callback=self.save_color_by_url,
                             dont_filter=True
@@ -140,7 +140,7 @@ class AritaumSpider(scrapy.Spider):
                             optionName=color_name,
                             product=product,
                             crawled="cheek_option"
-                            )
+                        )
 
         yield scrapy.Request(
             url=response.url,
@@ -191,21 +191,19 @@ class AritaumSpider(scrapy.Spider):
         count = 0
         for pixel in colors:
             red, green, blue = pixel[1]
-            if (red+green+blue)/3 >= 250:
+            if (red + green + blue) / 3 >= 250:
                 count += pixel[0]
                 continue
-            r_total += pixel[0]*red
-            g_total += pixel[0]*green
-            b_total += pixel[0]*blue
+            r_total += pixel[0] * red
+            g_total += pixel[0] * green
+            b_total += pixel[0] * blue
         try:
-            r_sum = int(r_total/(width*height - count))
-            g_sum = int(g_total/(width*height - count))
-            b_sum = int(b_total/(width*height - count))
+            r_sum = int(r_total / (width * height - count))
+            g_sum = int(g_total / (width * height - count))
+            b_sum = int(b_total / (width * height - count))
             return webcolors.rgb_to_hex((r_sum, g_sum, b_sum))
         except ZeroDivisionError:
             print(url)
-
-
 
     def go_next(self, response):
         """ click next button on page """

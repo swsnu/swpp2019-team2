@@ -30,7 +30,7 @@ class AritaumSpider(scrapy.Spider):
         urls = [{
             title: "base",
             link: "https://www.aritaum.com/shop/pr/shop_pr_product_list.do?i_sCategorycd1=CTGA2000&i_sCategorycd2=CTGA2100"
-            }]
+        }]
         for url in urls:
             self.browser.get(url[link])
             yield scrapy.Request(url=url[link], meta={"title": url["title"]}, callback=self.parse)
@@ -76,11 +76,11 @@ class AritaumSpider(scrapy.Spider):
     def check_color(name):
         """ check color name and return value"""
         if any(x in name for x in ['11', '13', '19']):
-            color = "LT"
+            color = "BAS_LT"
         elif '21' in name:
-            color = "MD"
+            color = "BAS_MD"
         elif '23' in name:
-            color = "DK"
+            color = "BAS_DK"
         else:
             color = None
         return color
@@ -100,7 +100,7 @@ class AritaumSpider(scrapy.Spider):
                 "tagging_price").get_property("value")
             product_id = item.find_element_by_name(
                 "i_sProductcd").get_property("value")
-            product_url = "https://www.aritaum.com/shop/pr/shop_pr_product_view.do?i_sProductcd="+product_id
+            product_url = "https://www.aritaum.com/shop/pr/shop_pr_product_view.do?i_sProductcd=" + product_id
             category_raw = item.find_element_by_name(
                 "tagging_category").get_property("value")
             category = translate_category(category_raw, title)

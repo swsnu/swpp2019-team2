@@ -13,6 +13,9 @@ a.productItem{
     display:block;
 }
 
+a.productItem > section.thumbnail {
+    height:200px;
+}
 section.info_name.info_text {
     height:25px;
 }
