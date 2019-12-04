@@ -11,6 +11,7 @@ class ML(models.Model):
     result = models.CharField(max_length=30, default="NONE")
     image = models.ImageField(upload_to='images')
     base = models.CharField(max_length=100, default="NONE")
+    output_image = models.ImageField(null=True)
     product = models.ForeignKey(
         base_model.Base,
         on_delete=models.CASCADE,
