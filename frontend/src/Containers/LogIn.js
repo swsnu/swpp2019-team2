@@ -19,26 +19,32 @@ class NormalLoginForm extends Component {
 
   componentDidMount() {
     this.props.onTryAutoSignup();
-    if (localStorage.getItem('username')) this.setState({ username: localStorage.getItem('username') });
-    if (localStorage.getItem('password')) this.setState({ password: localStorage.getItem('password') });
+    if (localStorage.getItem('storeuser')) {
+      this.setState({ username: localStorage.getItem('username') });
+      this.setState({ password: localStorage.getItem('password') });
+    }
   }
 
       LoginHandler = (e) => {
         if (this.state.check === true) {
-          localStorage.setItem('username', this.state.username);
-          localStorage.setItem('password', this.state.password);
+          localStorage.setItem('storeuser', 'Yes');
         } else {
-          localStorage.removeItem('username');
-          localStorage.removeItem('password');
+          localStorage.removeItem('storeuser');
         }
         this.props.Login(this.state.username, this.state.password);
-        this.props.onTryAutoSignup();
+        localStorage.setItem('username', this.state.username);
+        localStorage.setItem('password', this.state.password);
+        localStorage.setItem('nickname', this.state.username);
         this.setState({ signin: true });
       }
 
 
       signupHandler = () => {
         this.props.history.replace('../signup');
+      }
+
+      mainHandler = () => {
+        this.props.history.replace('../search');
       }
 
       verifiedChange = () => {
@@ -58,15 +64,15 @@ class NormalLoginForm extends Component {
         }
 
         if (this.props.isAuthenticated) {
-          window.alert('로그인 성공');
           changePage = <Redirect to="/search" />;
-        } else changePage = <Redirect to="/login" />;
+        }
 
         return (
           <div className="Login">
             <LoginForm
-              clickedSignup={() => this.signupHandler()}
+              clickedSign={() => this.signupHandler()}
               clickedSignin={() => this.LoginHandler()}
+              clickedMain={() => this.mainHandler()}
               usernameChange={(event) => this.setState({ username: event.target.value })}
               passwordChange={(event) => this.setState({ password: event.target.value })}
               verifiedChange={() => this.verifiedChange()}
@@ -87,6 +93,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  user: state.cosmos.User2,
 
 });
 

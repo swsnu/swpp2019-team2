@@ -89,8 +89,9 @@ class SkinTone extends Component {
         ));
         this.setState({ render: true });
       }
-      infoString = `${this.state.nickName} 님! 오늘도 좋은 하루 되세요~`;
-      if (!this.props.isAuthenticated) {
+      infoString = `Hello, ${localStorage.getItem('nickname')}!`;
+      if (!localStorage.getItem('token')) {
+        window.alert('로그인을 먼저 진행해주세요');
         redirect = <Redirect to="/login" />;
       }
       const inputImage = '<Image Input>';

@@ -13,6 +13,7 @@ const mockStore = getMockStore({
   selectedComment: null,
   Users: [],
   selectedUser: null,
+  result: [],
 });
 
 

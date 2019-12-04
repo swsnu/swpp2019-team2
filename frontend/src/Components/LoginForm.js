@@ -108,17 +108,29 @@ export default function SignInSide(props) {
             <Grid container>
               <Grid item xs />
               <Grid item>
-                <Link id="signup" href="signup" variant="body2" onClick={props.clickedSignup}>
+                <Link id="signup" href="signup" variant="body1" onClick={props.clickedSign}>
                   Don&apos;t have an account? Sign Up
+                </Link>
+                <br />
+                <Link id="main" href="search" variant="body1" onClick={props.clickedMain}>
+                  Back to main page
                 </Link>
               </Grid>
             </Grid>
-            <Box mt={5} />
+            <Box mt={4} />
           </form>
         </div>
-        <Typography component="h1" variant="h5">
+        <Typography component="h2" variant="h5">
           <img id="logo" src={logo} alt="COSMOS" width="100" />
         </Typography>
+        <Box mt={5}>
+          <Typography variant="body2" color="textSecondary" align="center">
+            &apos;Copyright ©&apos;Cosmos
+            {' '}
+            {new Date().getFullYear()}
+            {'.'}
+          </Typography>
+        </Box>
       </Grid>
     </Grid>
   );

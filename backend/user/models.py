@@ -13,7 +13,6 @@ class Profile(models.Model):
     prefer_color = models.TextField(max_length=10, null=True, blank=True)
     prefer_base = models.TextField(null=True, blank=True)
     prefer_brand = models.TextField(null=True)
-    nick_name = models.TextField(max_length=100, null=False, blank=False)
 
     def __str__(self):
         return self.user.username

@@ -3,23 +3,68 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Router,
-} from 'react-router-dom';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { getMockStore } from '../Mocks/mocks';
 import Signup from './Signup';
-import * as actions from '../store/actions/cosmos';
 import { history } from '../store/store';
+import * as actions from '../store/actions/cosmos';
+
+jest.mock('../Components/SignupForm', () => jest.fn((props) => (
+  <div className="spySignup">
+    <input
+      autoComplete="fname"
+      name="firstName"
+      variant="outlined"
+      required
+      id="username-input"
+      label="Username"
+      value={props.username}
+      onChange={props.usernameChange}
+    />
+    <input
+      variant="outlined"
+      required
+      id="email-input"
+      label="Email Address"
+      name="email"
+      autoComplete="email"
+      value={props.email}
+      onChange={props.emailChange}
+    />
+    <input
+      variant="outlined"
+      required
+      name="password"
+      label="Password"
+      type="password"
+      id="password-input"
+      autoComplete="current-password"
+      value={props.password}
+      onChange={props.passwordChange}
+    />
+    <input
+      id="signup"
+      type="button"
+      variant="contained"
+      color="primary"
+      onClick={props.clickedSignup}
+    />
+    <button id="signin" type="button" href="login" variant="body2" onClick={props.clickedSignin}>
+Signin
+    </button>
+    <button id="main" type="button" href="search" variant="body2" onClick={props.clickedBack}>
+Back to main page
+    </button>
+  </div>
+)));
 
 const stubStateC = {
   Lip: [],
   Users: [],
+  Users2: [],
   token: null,
   loading: false,
-  error: null,
+  error: 'test',
 };
 const stubSeletedUserF = {
   logged_in: false,
@@ -36,122 +81,110 @@ const stubInitialState = {
   }],
 };
 const mockStore = getMockStore(stubInitialState);
-describe('<Signup />', () => {
+describe('<LogIn />', () => {
+  let spygetLips;
+  let spylogin;
   let spyauthCheckState;
   beforeEach(() => {
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
+    spylogin = jest.spyOn(actions, 'authSignup')
+      .mockImplementation(() => (dispatch) => {});
   });
   it('should render and call authLogin', () => {
     const mockStore1 = getMockStore(stubStateC);
-    // const history = createBrowserHistory();
     const component = mount(
       <Provider store={mockStore1}>
-        <Router history={history}>
+        <BrowserRouter history={history}>
           <Signup />
-        </Router>
+        </BrowserRouter>
       </Provider>,
     );
-    expect(spyauthCheckState).toBeCalledTimes(1);
+    const usernameInput = component.find('#username-input');
+    usernameInput.simulate('change', { target: { value: 'test_id' } });
+    const emailInput = component.find('#email-input');
+    emailInput.simulate('change', { target: { value: 'test_id' } });
+    const pwInput = component.find('#password-input');
+    pwInput.simulate('change', { target: { value: 'test_password' } });
+    const newInstance = component.find(Signup.WrappedComponent).instance();
+    newInstance.setState({ check: false });
+    newInstance.setState({ signin: true });
+    newInstance.setState({ error: 'test' });
+    const loginButton = component.find('#signup');
+    loginButton.simulate('click');
+    expect(spyauthCheckState).toBeCalledTimes(2);
   });
+
   it('should render', () => {
     const component = shallow(<Signup.WrappedComponent />);
     const wrapper = component.find('.Signup');
     expect(wrapper.length).toBe(1);
   });
-  it('should have input for email and should change state', () => {
-    const component = shallow(<Signup.WrappedComponent />);
-    const usernameInput = component.find('#username-input');
-    usernameInput.simulate('change', { target: { value: 'test' } });
-    expect(usernameInput.length).toBe(1);
-    expect(component.state().username).toEqual('test');
-  });
-  it('should have input for password and should change state', () => {
-    const component = shallow(<Signup.WrappedComponent />);
-    const pwInput = component.find('#pw-input');
-    pwInput.simulate('change', { target: { value: 'ptest' } });
-    expect(pwInput.length).toBe(1);
-    expect(component.state().password).toEqual('ptest');
-  });
   it('should have login button and button should show alert when id or pw is incorrect', () => {
     jest.spyOn(window, 'alert').mockImplementation(() => {});
     const mockonTryAutoSignup = jest.fn();
     const mockonLogin = jest.fn();
-    const mockSignup = jest.fn();
     const component = mount(
       <BrowserRouter>
         <Signup.WrappedComponent
-          Signup={mockSignup}
           onTryAutoSignup={mockonTryAutoSignup}
-          Login={mockonLogin}
-          getUserInfo={jest.fn()}
+          Signup={mockonLogin}
         />
       </BrowserRouter>,
     );
-    const emailInput = component.find('#username-input');
-    emailInput.simulate('change', { target: { value: 'etest' } });
-    const pwInput = component.find('#pw-input');
-    pwInput.simulate('change', { target: { value: 'ptest' } });
-    const loginButton = component.find('#login-button');
-    loginButton.simulate('click');
-    expect(window.alert).toHaveBeenCalledTimes(0);
   });
-  it('should have login button and button should work when inputs are corrent', () => {
+  it('should have login button and button should work when inputs are incorrect', () => {
     const mockonTryAutoSignup = jest.fn();
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+      .mockImplementation((path) => {});
     const mockonLogin = jest.fn();
-    const mockSignup = jest.fn();
     const component = mount(
-      <BrowserRouter>
+      <BrowserRouter history={history}>
         <Signup.WrappedComponent
-          Signup={mockSignup}
-          error={!null}
           onTryAutoSignup={mockonTryAutoSignup}
-          Login={mockonLogin}
-          getUserInfo={jest.fn()}
+          Signup={mockonLogin}
         />
       </BrowserRouter>,
     );
     const usernameInput = component.find('#username-input');
     usernameInput.simulate('change', { target: { value: 'test_id' } });
     const emailInput = component.find('#email-input');
-    emailInput.simulate('change', { target: { value: 'test_' } });
-    const pwInput = component.find('#pw-input');
+    emailInput.simulate('change', { target: { value: 'test_id' } });
+    const pwInput = component.find('#password-input');
     pwInput.simulate('change', { target: { value: 'test_password' } });
-    const nickInput = component.find('#nickname-input');
-    nickInput.simulate('change', { target: { value: 'nick_password' } });
-    const loginButton = component.find('#login-button');
+    const newInstance = component.find(Signup.WrappedComponent).instance();
+    newInstance.setState({ signin: true });
+    newInstance.setState({ error: 'test' });
+    const loginButton = component.find('#signup');
     loginButton.simulate('click');
+    // const mainButton = component.find('#main');
+    // mainButton.simulate('click');
     expect(mockonTryAutoSignup).toHaveBeenCalledTimes(2);
-    expect(mockSignup).toHaveBeenCalledTimes(1);
+    expect(mockonLogin).toHaveBeenCalledTimes(1);
+    expect(spyHistoryPush).toHaveBeenCalledTimes(0);
   });
-  it('should redirect to login when not there is no selected user', () => {
-    const component = shallow(<Signup.WrappedComponent selectedUser={null} />);
-    const redirect = component.find('Redirect');
-    expect(redirect.props().to).toEqual('/signup');
+  it('should have login button and button should work when inputs are corrent', () => {
+    const mockonTryAutoSignup = jest.fn();
+    const mockonLogin = jest.fn();
+    const component = mount(
+      <BrowserRouter>
+        <Signup.WrappedComponent
+          error={!null}
+          onTryAutoSignup={mockonTryAutoSignup}
+          Login={mockonLogin}
+        />
+      </BrowserRouter>,
+    );
   });
   it('should replace to signup when not there is no selected user', () => {
     const component = shallow(<Signup.WrappedComponent isAuthenticated />);
     const redirect = component.find('Redirect');
     expect(redirect.props().to).toEqual('/search');
   });
-  it('should not have SelectedUser with its logged_in=false', () => {
-    const component = shallow(
-      <Signup.WrappedComponent selectedUser={stubSeletedUserF} />,
-    );
-    const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(1);
-  });
-  it('should go to main page when logged in', () => {
-    const component = shallow(
-      <Signup.WrappedComponent selectedUser={stubSeletedUserT} />,
-    );
-    const redirect = component.find('Redirect');
-    expect(redirect.props().to).toEqual('/signup');
-  });
 });
 
 describe('<Signup />', () => {
-  let signup; let spyGetUsers; let spyGetUser;
+  let signup; let spyGetUsers; let spyGetUser; let spylogout; let spyUserInfo;
   beforeEach(() => {
     signup = (
       <Provider store={mockStore}>
@@ -173,6 +206,7 @@ describe('<Signup />', () => {
       .mockImplementation(() => () => {});
     spyGetUser = jest.spyOn(actions, 'authCheckState')
       .mockImplementation(() => () => {});
+    window.alert = jest.fn();
   });
 
   afterEach(() => {
@@ -182,22 +216,10 @@ describe('<Signup />', () => {
     const spyHistoryPush = jest.spyOn(history, 'replace')
       .mockImplementation((path) => {});
     const component = mount(signup);
-    const wrapper = component.find('#sign-up-button');
+    const wrapper = component.find('#main');
     wrapper.simulate('click');
+    const sign = component.find('#signin');
+    sign.simulate('click');
     expect(spyHistoryPush).toBeCalledTimes(2);
-  });
-  it('should call confirm', () => {
-    const component = mount(signup);
-    const usernameInput = component.find('#username-input');
-    usernameInput.simulate('change', { target: { value: 'test_id' } });
-    const emailInput = component.find('#email-input');
-    emailInput.simulate('change', { target: { value: 'test_' } });
-    const pwInput = component.find('#pw-input');
-    pwInput.simulate('change', { target: { value: 'test_password' } });
-    const nickInput = component.find('#nickname-input');
-    nickInput.simulate('change', { target: { value: 'nick_password' } });
-    const loginButton = component.find('#login-button');
-    loginButton.simulate('click');
-    expect(spyGetUsers).toHaveBeenCalledTimes(1);
   });
 });

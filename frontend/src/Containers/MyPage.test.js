@@ -176,11 +176,4 @@ describe('<SkinTone />', () => {
     const wrapper = component.find('MainPage');
     expect(spyUserInfo).toBeCalledTimes(1);
   });
-  it('should have input for nickname and should change state', () => {
-    const component = mount(mypage);
-    const nickInput = component.find('#nickname-input');
-    nickInput.simulate('change', { target: { value: 'test' } });
-    expect(nickInput.length).toBe(1);
-    expect(component.nickName).toEqual(undefined);
-  });
 });

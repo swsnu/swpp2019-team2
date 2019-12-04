@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actionCreators from '../store/actions/index';
 import './Signup.css';
-import logo from '../image/LOGO.png';
-
+import SignupForm from '../Components/SignupForm';
 
 class RegistrationForm extends React.Component {
   constructor(props) {
@@ -20,12 +19,17 @@ class RegistrationForm extends React.Component {
   }
 
   LoginHandler = () => {
-    this.props.Signup(this.state.username, this.state.email,
-      this.state.nickname, this.state.password);
+    this.props.Signup(this.state.username, this.state.email, this.state.password);
     this.props.onTryAutoSignup();
+    localStorage.setItem('username', this.state.username);
+    localStorage.setItem('password', this.state.password);
+    localStorage.setItem('nickname', this.state.username);
     this.setState({ signup: true });
   }
 
+  mainHandler = () => {
+    this.props.history.replace('../search');
+  }
 
   signinHandler = () => {
     this.props.history.replace('../login');
@@ -41,57 +45,24 @@ class RegistrationForm extends React.Component {
 
     if (this.props.isAuthenticated) {
       changePage = <Redirect to="/search" />;
-    } else changePage = <Redirect to="/signup" />;
+    }
 
 
     return (
       <div className="Signup">
+        <SignupForm
+          clickedSignup={() => this.LoginHandler()}
+          clickedSignin={() => this.signinHandler()}
+          clickedBack={() => this.mainHandler()}
+          usernameChange={(event) => this.setState({ username: event.target.value })}
+          emailChange={(event) => this.setState({ email: event.target.value })}
+          passwordChange={(event) => this.setState({ password: event.target.value })}
+          username={this.state.username}
+          email={this.state.email}
+          password={this.state.password}
+        />
         {aler}
         {changePage}
-        <div className="logo">
-          <img id="logo" src={logo} alt="COSMOS" width="100" />
-        </div>
-        <div className="SignupBox">
-          <h2>Sign Up</h2>
-          <label htmlFor="username-input">
-            아이디
-            <input
-              type="text"
-              id="username-input"
-              value={this.state.username}
-              onChange={(event) => this.setState({ username: event.target.value })}
-            />
-          </label>
-          <label htmlFor="email-input">
-            이메일
-            <input
-              type="text"
-              id="email-input"
-              value={this.state.email}
-              onChange={(event) => this.setState({ email: event.target.value })}
-            />
-          </label>
-          <label htmlFor="nickname-input">
-            닉네임
-            <input
-              type="text"
-              id="nickname-input"
-              value={this.state.nickname}
-              onChange={(event) => this.setState({ nickname: event.target.value })}
-            />
-          </label>
-          <label htmlFor="pw-input">
-            비밀번호
-            <input
-              type="password"
-              id="pw-input"
-              value={this.state.password}
-              onChange={(event) => this.setState({ password: event.target.value })}
-            />
-          </label>
-          <button type="button" id="login-button" onClick={() => this.LoginHandler()}>Join Now!</button>
-          <button type="button" id="sign-up-button" onClick={() => this.signinHandler()}>Sign In</button>
-        </div>
       </div>
     );
   }
@@ -109,8 +80,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 
-  Signup: (username, email, nickname, password) => dispatch(actionCreators.authSignup(username,
-    email, nickname, password)),
+  Signup: (username, email, password) => dispatch(actionCreators.authSignup(username,
+    email, password)),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
 });
 

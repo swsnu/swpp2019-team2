@@ -16,16 +16,14 @@ export const getUser2 = () => (dispatch) => axios.get('/api/signin/')
   .then((res) => dispatch(getUser2_(res.data)));
 
 export const putUser2_ = (User) => ({ type: actionTypes.PUT_USER2, User });
-export const putUser2 = (nickName, preferColor, preferBase, preferBrand) => (dispatch) => {
+export const putUser2 = (preferColor, preferBase, preferBrand) => (dispatch) => {
   axios.put('/api/signin/', {
-    nickName,
     preferColor,
     preferBase,
     preferBrand,
   })
     .then((res) => {
       dispatch(putUser2_(res.data));
-      dispatch(push('../login/loading'));
     });
 };
 
@@ -57,7 +55,6 @@ export const authLogin = (username, password) => (dispatch) => {
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
       dispatch(authSuccess(token));
-      dispatch(push('../login/loading'));
     })
     .catch((err) => {
       dispatch(authFail(err));
@@ -66,21 +63,20 @@ export const authLogin = (username, password) => (dispatch) => {
 
 
 export const logout = () => {
-  localStorage.removeItem('user');
+  localStorage.removeItem('token');
+  localStorage.removeItem('nickname');
   localStorage.removeItem('expirationDate');
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
 };
 
-export const authSignup = (username, email, nickname, password) => (dispatch) => {
+export const authSignup = (username, email, password) => (dispatch) => {
   dispatch(authStart());
   axios.post('/api/signup/', {
     username,
     email,
-    nickname,
     password,
-
   })
     .then((res) => {
       const token = res;
@@ -88,7 +84,6 @@ export const authSignup = (username, email, nickname, password) => (dispatch) =>
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
       dispatch(authSuccess(token));
-      dispatch(push('../login/loading'));
     })
     .catch((err) => {
       dispatch(authFail(err));
@@ -156,10 +151,3 @@ export const getAnalysisResult = () => (dispatch) => {
       dispatch(getAnalysisResult_(res.data));
     });
 };
-
-export const getLogin_ = (User) => ({ type: actionTypes.GET_LOGIN, User });
-export const getLogin = () => (dispatch) => axios.get('/api/signup/')
-  .then((res) => {
-    dispatch(getLogin_(res.data));
-    dispatch(push('../search'));
-  });

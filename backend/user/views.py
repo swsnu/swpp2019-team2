@@ -34,8 +34,7 @@ def signup(request):
             return HttpResponseBadRequest()
         user = authenticate(request, username=username, password=password)
         login(request, user)
-        nickname = req_data['nickname']
-        Profile.objects.create(user=request.user, nick_name=nickname)
+        Profile.objects.create(user=request.user)
         return HttpResponse(status=201)
 
     return HttpResponseNotAllowed(['GET', 'POST'])
@@ -72,19 +71,17 @@ def signin(request):  # Signin function
         user_info = Profile.objects.get(user=request.user)
         try:
             req_data = json.loads(request.body.decode())
-            edit_nick_name = req_data['nickName']
             edit_prefer_color = req_data['preferColor']
             edit_prefer_base = req_data['preferBase']
             edit_prefer_brand = req_data['preferBrand']
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
-        user_info.nick_name = edit_nick_name
         user_info.prefer_color = edit_prefer_color
         user_info.prefer_base = edit_prefer_base
         user_info.prefer_brand = edit_prefer_brand
         print(edit_prefer_brand)
         user_info.save()
-        response = user_info.nick_name
+        response = user_info.prefer_color
         return HttpResponse(response, status=200)
 
     return HttpResponseNotAllowed(['GET', 'POST', 'PUT'])
