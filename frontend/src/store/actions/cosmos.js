@@ -150,4 +150,3 @@ export const getAnalysisResult = () => (dispatch) => {
       dispatch(getAnalysisResult_(res.data));
     });
 };
-

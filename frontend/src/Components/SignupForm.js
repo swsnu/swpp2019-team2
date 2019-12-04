@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -53,91 +51,93 @@ export default function SignInSide(props) {
       <Grid item xs={false} sm={4} md={6} className={classes.image} />
       <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="username-input"
-                label="Username"
-                autoFocus
-                value={props.username}
-                onChange={props.usernameChange}
-              />
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="username-input"
+                  label="Username"
+                  autoFocus
+                  value={props.username}
+                  onChange={props.usernameChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email-input"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  value={props.email}
+                  onChange={props.emailChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password-input"
+                  autoComplete="current-password"
+                  value={props.password}
+                  onChange={props.passwordChange}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email-input"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={props.email}
-                onChange={props.emailChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password-input"
-                autoComplete="current-password"
-                value={props.password}
-                onChange={props.passwordChange}
-              />
-            </Grid>
-          </Grid>
-          <br/><br/>
-          <Button
-            id="signup"
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={props.clickedSignup}
-          >
-            Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <br/>
-              <Link id="signin" href="login" variant="body2"onClick={props.clickedSignin}>
-                Already have an account? Sign in
-              </Link>
-              <br/>
-              <br/>
+            <br />
+            <br />
+            <Button
+              id="signup"
+              type="button"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={props.clickedSignup}
+            >
+              Sign Up
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <br />
+                <Link id="signin" href="login" variant="body2" onClick={props.clickedSignin}>
+                  Already have an account? Sign in
+                </Link>
+                <br />
+                <br />
                 <Link id="main" href="search" variant="body2" onClick={props.clickedBack}>
                   Back to main page
                 </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
+          </form>
         </div>
         <Typography component="h1" variant="h5">
           <img id="logo" src={logo} alt="COSMOS" width="100" />
         </Typography>
         <Box mt={5}>
           <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
+            &apos;Copyright ©&apos;
             <Link color="inherit" href="https://material-ui.com/">
               Cosmos
-            </Link>{' '}
+            </Link>
+            {' '}
             {new Date().getFullYear()}
             {'.'}
           </Typography>

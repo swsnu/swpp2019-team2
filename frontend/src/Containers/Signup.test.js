@@ -48,7 +48,9 @@ jest.mock('../Components/SignupForm', () => jest.fn((props) => (
       color="primary"
       onClick={props.clickedSignup}
     />
-    <button id="signin" type="button" href="login" variant="body2" onClick={props.clickedSignin} />
+    <button id="signin" type="button" href="login" variant="body2" onClick={props.clickedSignin}>
+Signin
+    </button>
     <button id="main" type="button" href="search" variant="body2" onClick={props.clickedBack}>
 Back to main page
     </button>
