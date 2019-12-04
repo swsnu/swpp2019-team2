@@ -2,6 +2,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { getMockStore } from '../Mocks/mocks';
 import Signup from './Signup';
@@ -156,8 +157,11 @@ describe('<LogIn />', () => {
     newInstance.setState({ error: 'test' });
     const loginButton = component.find('#signup');
     loginButton.simulate('click');
+    // const mainButton = component.find('#main');
+    // mainButton.simulate('click');
     expect(mockonTryAutoSignup).toHaveBeenCalledTimes(2);
     expect(mockonLogin).toHaveBeenCalledTimes(1);
+    expect(spyHistoryPush).toHaveBeenCalledTimes(0);
   });
   it('should have login button and button should work when inputs are corrent', () => {
     const mockonTryAutoSignup = jest.fn();
@@ -176,5 +180,46 @@ describe('<LogIn />', () => {
     const component = shallow(<Signup.WrappedComponent isAuthenticated />);
     const redirect = component.find('Redirect');
     expect(redirect.props().to).toEqual('/search');
+  });
+});
+
+describe('<Signup />', () => {
+  let signup; let spyGetUsers; let spyGetUser; let spylogout; let spyUserInfo;
+  beforeEach(() => {
+    signup = (
+      <Provider store={mockStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              render={(props) => (
+                <Signup
+                  {...props}
+                />
+              )}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    );
+    spyGetUsers = jest.spyOn(actions, 'authSignup')
+      .mockImplementation(() => () => {});
+    spyGetUser = jest.spyOn(actions, 'authCheckState')
+      .mockImplementation(() => () => {});
+    window.alert = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should call mypageHandler', () => {
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const component = mount(signup);
+    const wrapper = component.find('#main');
+    wrapper.simulate('click');
+    const sign = component.find('#signin');
+    sign.simulate('click');
+    expect(spyHistoryPush).toBeCalledTimes(2);
   });
 });
