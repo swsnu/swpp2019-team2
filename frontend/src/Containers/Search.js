@@ -17,17 +17,15 @@ class Search extends Component {
   }
 
   componentDidMount() { // initialize state
-    this.props.getUserInfo();
     this.props.onTryAutoSignup();
   }
 
   logout = () => {
-    localStorage.removeItem('nickname');
     this.props.Logout();
     this.props.onTryAutoSignup();
   }
 
-  mypageHandler = () => {
+  mypage = () => {
     this.props.history.replace('../mypage');
   }
 
@@ -105,7 +103,7 @@ class Search extends Component {
             </button> */}
             <button type="button" id="log-out-button" onClick={() => this.logout()}>Log-out</button>
             {backLogin}
-            <button id="my-page-button" type="button" onClick={() => this.mypageHandler()}>My Page</button>
+            <button id="my-page-button" type="button" onClick={() => this.mypage()}>My Page</button>
           </div>
           {infoString}
         </div>
@@ -148,7 +146,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
-  user: state.cosmos.User2,
 });
 
 
@@ -156,7 +153,6 @@ const mapDispatchToProps = (dispatch) => ({
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-  getUserInfo: () => dispatch(actionCreators.getUser2()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

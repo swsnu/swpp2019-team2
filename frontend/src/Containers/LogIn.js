@@ -70,9 +70,9 @@ class NormalLoginForm extends Component {
         return (
           <div className="Login">
             <LoginForm
-              clickedSignup={() => this.signupHandler()}
+              clickedSign={() => this.signupHandler()}
               clickedSignin={() => this.LoginHandler()}
-              clickedBack={() => this.mainHandler()}
+              clickedMain={() => this.mainHandler()}
               usernameChange={(event) => this.setState({ username: event.target.value })}
               passwordChange={(event) => this.setState({ password: event.target.value })}
               verifiedChange={() => this.verifiedChange()}

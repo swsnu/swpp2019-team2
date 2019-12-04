@@ -55,7 +55,6 @@ class BudgetSearch extends Component {
   logoutHandler = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
-    localStorage.removeItem('nickname');
   }
 
   mypageHandler = (id) => {

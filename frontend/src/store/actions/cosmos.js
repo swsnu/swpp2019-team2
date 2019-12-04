@@ -64,6 +64,7 @@ export const authLogin = (username, password) => (dispatch) => {
 
 export const logout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('nickname');
   localStorage.removeItem('expirationDate');
   return {
     type: actionTypes.AUTH_LOGOUT,
