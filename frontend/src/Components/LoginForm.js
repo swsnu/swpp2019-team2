@@ -127,7 +127,7 @@ export default function SignInSide(props) {
         </Typography>
         <Box mt={5}>
           <Typography variant="body2" color="textSecondary" align="center">
-            'Copyright © '
+            &apos;Copyright ©&apos;
             <Link color="inherit" href="https://material-ui.com/">
               Cosmos
             </Link>
