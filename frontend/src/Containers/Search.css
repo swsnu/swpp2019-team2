@@ -35,7 +35,7 @@ a.side {
     text-decoration: none; 
 }
 
-.headerMenu a:hover,r
+.headerMenu a:hover,
 .headerMenu a:active {
     text-decoration: underline;
 }
