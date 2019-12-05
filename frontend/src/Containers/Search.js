@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import './Search.css';
 import { connect } from 'react-redux';
+import { Slide } from 'react-slideshow-image';
 import * as actionCreators from '../store/actions/index';
 import ProductForm from '../Components/ProductForm';
 import DetailCategory from '../Components/DetailCategory';
-import { Slide } from 'react-slideshow-image';
 import Logo1 from '../image/slide1.jpg';
 import Logo2 from '../image/slide2.jpg';
 import Logo3 from '../image/slide3.jpg';
-import { width } from '@material-ui/system';
 
 const slideImages = [
   Logo1,
   Logo2,
-  Logo3
+  Logo3,
 ];
- 
+
 const properties = {
   duration: 5000,
   transitionDuration: 500,
@@ -23,10 +22,7 @@ const properties = {
   indicators: true,
   arrows: true,
   width: 50,
-  onChange: (oldIndex, newIndex) => {
-    console.log(`slide transition from ${oldIndex} to ${newIndex}`);
-  }
-}
+};
 
 class Search extends Component {
   constructor(props) {
@@ -54,23 +50,6 @@ class Search extends Component {
   mypage = () => {
     this.props.history.replace('../mypage');
   }
-
-  searchHandler = () => {
-    this.props.history.replace('../search');
-  };
-
-  budgetHandler = () => {
-    this.props.history.replace('../budget');
-  };
-
-  toneHandler = () => {
-    this.props.history.replace('../skintone');
-  };
-
-  saleHandler = () => {
-    this.props.history.replace('../sale');
-  };
-
 
   render() {
     let menu;
@@ -125,11 +104,14 @@ class Search extends Component {
     return (
       <div className="Search">
         <div className="header">
-          <a className="search">Cosmos&emsp;│</a>
+          <div className="search">Cosmos&emsp;│</div>
           <div className="headerMenu">
-            <a className="sel_side" href="search">Search</a>&emsp;&emsp;&emsp;&emsp;
-            <a className="side" href="budget">Budget Search</a>&emsp;&emsp;&emsp;&emsp;
-            <a className="side" href="skintone">Tone Analysis</a>&emsp;&emsp;&emsp;&emsp;
+            <a className="sel_side" href="search">Search</a>
+&emsp;&emsp;&emsp;&emsp;
+            <a className="side" href="budget">Budget Search</a>
+&emsp;&emsp;&emsp;&emsp;
+            <a className="side" href="skintone">Tone Analysis</a>
+&emsp;&emsp;&emsp;&emsp;
             <a className="side" href="sale">Sales Info</a>
           </div>
           <div className="headerUser">
@@ -141,23 +123,23 @@ class Search extends Component {
             {backLogin}
           </div>
         </div>
-        
+
         <div className="slide-container">
           <Slide {...properties}>
             <div className="each-slide">
-              <div style={{'backgroundImage': `url(${slideImages[0]})`}} />
+              <div style={{ backgroundImage: `url(${slideImages[0]})` }} />
             </div>
             <div className="each-slide">
-              <div style={{'backgroundImage': `url(${slideImages[1]})`}} />
+              <div style={{ backgroundImage: `url(${slideImages[1]})` }} />
             </div>
             <div className="each-slide">
-              <div style={{'backgroundImage': `url(${slideImages[2]})`}} />
+              <div style={{ backgroundImage: `url(${slideImages[2]})` }} />
             </div>
           </Slide>
         </div>
-        
+
         <div className="Content">
-          
+
           <div className="Category">
             <ul className="Category">
               <div><button type="button" className="Product" onClick={click} id="lip">Lip</button></div>

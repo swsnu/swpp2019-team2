@@ -1,16 +1,26 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import {
-  BrowserRouter, Route, Router, Switch,
+  Route, Router, Switch,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
-
+import 'jest-localstorage-mock';
 import * as actions from '../store/actions/cosmos';
 import { getMockStore } from '../Mocks/mocks';
 import Search from './Search';
-import { Slide } from 'react-slideshow-image';
+
+jest.mock('react-slideshow-image', () => ({
+  Slide({ children }) {
+    return (
+      <div>
+Hello
+        {children}
+      </div>
+    );
+  },
+}));
 
 const stubSeletedUserT = {
   result: [{
@@ -118,12 +128,12 @@ describe('<Liplist />', () => {
     spyuserInfo = jest.spyOn(actions, 'getUser')
       .mockImplementation(() => (dispatch) => {});
   });
-  it('should click logout', () => {
+  it('should click login', () => {
     const component = mount(lipList);
-    const button = component.find('#log-out-button');
+    const button = component.find('#log-in-button');
     button.simulate('click');
     const wrapper = component.find('.spyLip');
-    expect(spyauthCheckState).toHaveBeenCalledTimes(2);
+    expect(spyauthCheckState).toHaveBeenCalledTimes(1);
   });
   it('should click mypage', () => {
     const component = mount(lipList);
@@ -140,34 +150,6 @@ describe('<Liplist />', () => {
     button.simulate('click');
     expect(spygetLips).toHaveBeenCalledTimes(1);
   });
-  it('should click searchtag-button', () => {
-    const component = mount(lipList);
-    const button = component.find('#Searchmenu');
-    button.simulate('click');
-    const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(0);
-  });
-  it('should click budget-button', () => {
-    const component = mount(lipList);
-    const button = component.find('#Budgetmenu');
-    button.simulate('click');
-    const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(0);
-  });
-  it('should click tonemenu-button', () => {
-    const component = mount(lipList);
-    const button = component.find('#Tonemenu');
-    button.simulate('click');
-    const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(0);
-  });
-  it('should click salemenu-button', () => {
-    const component = mount(lipList);
-    const button = component.find('#Salemenu');
-    button.simulate('click');
-    const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(0);
-  });
   it('should change visible category when clicked', () => {
     const component = mount(lipList);
     const newInstance = component.find(Search.WrappedComponent).instance();
@@ -175,11 +157,7 @@ describe('<Liplist />', () => {
     const button = component.find('button.Product#base');
     button.simulate('click');
     expect(newInstance.state).toEqual({
-      // nickName: 'a',
-      // preferBase: '19',
-      // preferBrand: '라네즈',
       searched: null,
-      // preferColor: 'red',
       call: false,
       selection: 'base',
     });
