@@ -1,5 +1,5 @@
 
-header {
+.header {
     position: fixed;
     top: 0;
     left: 0;
@@ -14,8 +14,32 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 2;
 }
 
+
+a.search {
+    color: white;
+    font-size: 40px; 
+    text-decoration: none;
+    padding-bottom: 5px;
+    padding-left: 30px;
+}
+a.sel_side {
+    color: rgb(245, 168, 228);
+    font-size: 30px;
+    text-decoration: none;
+}
+a.side {
+    color: white;
+    font-size: 30px;
+    text-decoration: none; 
+}
+
+.headerMenu a:hover,r
+.headerMenu a:active {
+    text-decoration: underline;
+}
 .upperbar {
     flex: 1;
     flex-direction:row;
@@ -25,7 +49,7 @@ header {
     text-align : center;
     display : table;
     padding-bottom:20px;
-    
+  
 }
 
 .upperbar .buttons #back-button{
@@ -70,6 +94,7 @@ ul.Category  {
     width:100%;
     display:table;
     table-layout: fixed;
+
 }
 
 ul.Category > div {
@@ -93,25 +118,32 @@ ul.Category > div {
     text-align: center;
 }
 
-.Menubar button {
-    margin : 10px 0;
-    padding: 5px;
+.headerButton button {
+    margin : 10px 10px;
+    padding: 10px;
     font : inherit;
     background-color : transparent;
-    color : #9b45a7;
+    color : white;
     cursor : pointer;
-    border:none;
+    border: 1px solid #efefef;
+}
+.headerButton button:hover,
+.headerButton button:active {
+    color:black;
+    background-color:white;
 }
 
 div.Content {
-    display:table;
+   display:table;
    text-align: left; 
    table-layout: fixed;
    width:100%;
+   padding-top: 540px;
 }
 div.ResultDiv {
     display:table-cell;
-    padding-top:50px;
+    width: 75%;
+
 }
 ul.Result {
     display:table;
@@ -120,6 +152,50 @@ ul.Result {
 div.Category {
     display:table-cell;
     vertical-align: top;
-    width:25%;
+    width:24%;
 }
+
+.slide-container {
+    padding-top: 115px;
+    height: 100px;
+    z-index: 1;
+}
+
+.each-slide > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    height: 600px;
+    margin: auto;
+  }
+  
+  .each-slide span {
+    padding: 20px;
+    font-size: 20px;
+    background: #efefef;
+    text-align: center;
+  }
+  
+  .each-fade {
+    display: flex;
+  }
+  
+  .each-fade .image-container {
+    width: 50%;
+    overflow: hidden;
+  }
+  
+  .each-fade .image-container img {
+    width: 100%;
+  }
+  
+  .each-fade h2 {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background: #adceed;
+  }
 

@@ -63,6 +63,7 @@ describe('<SkinTone />', () => {
       .mockImplementation(() => (dispatch) => {});
     spyPutInfo2 = jest.spyOn(actionCreators, 'putUser2')
       .mockImplementation(() => (dispatch) => {});
+    window.alert = jest.fn();
   });
   afterEach(() => {
     jest.clearAllMocks();
@@ -167,6 +168,7 @@ describe('<SkinTone />', () => {
       .mockImplementation(() => (dispatch) => {});
     spyPutInfo2 = jest.spyOn(actionCreators, 'putUser2')
       .mockImplementation(() => (dispatch) => {});
+    window.alert = jest.fn();
   });
   afterEach(() => {
     jest.clearAllMocks();
