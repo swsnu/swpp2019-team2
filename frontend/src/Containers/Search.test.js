@@ -12,8 +12,7 @@ import { getMockStore } from '../Mocks/mocks';
 import Search from './Search';
 
 jest.mock('react-slideshow-image', () => ({
-  displayName: 'Hello',
-  Slide(children) {
+  Slide({ children }) {
     return (
       <div>
 Hello

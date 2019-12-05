@@ -7,7 +7,14 @@ import { getMockStore } from './test-utils/mocks';
 import { history } from './store/store';
 
 jest.mock('react-slideshow-image', () => ({
-  Slide: ({ children }) => <div>{children}</div>,
+  Slide({ children }) {
+    return (
+      <div>
+Hello
+        {children}
+      </div>
+    );
+  },
 }));
 
 const mockStore = getMockStore({
