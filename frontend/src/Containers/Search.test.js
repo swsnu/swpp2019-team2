@@ -10,6 +10,7 @@ import { createBrowserHistory } from 'history';
 import * as actions from '../store/actions/cosmos';
 import { getMockStore } from '../Mocks/mocks';
 import Search from './Search';
+import { Slide } from 'react-slideshow-image';
 
 const stubSeletedUserT = {
   result: [{

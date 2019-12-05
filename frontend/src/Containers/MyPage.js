@@ -124,6 +124,7 @@ class MyPage extends Component {
     }
     const infoString = `Hello, ${localStorage.getItem('nickname')}!`;
     if (!localStorage.getItem('token')) {
+      window.alert("로그인 후 이용해주세요")
       redirect = <Redirect to="/login" />;
     }
 

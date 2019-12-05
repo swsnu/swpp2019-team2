@@ -4,7 +4,27 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import ProductForm from '../Components/ProductForm';
 import DetailCategory from '../Components/DetailCategory';
+import { Slide } from 'react-slideshow-image';
+import Logo1 from '../image/slide1.jpg';
+import Logo2 from '../image/slide2.jpg';
+import Logo3 from '../image/slide3.jpg';
 
+const slideImages = [
+  Logo1,
+  Logo2,
+  Logo3
+];
+ 
+const properties = {
+  duration: 5000,
+  transitionDuration: 500,
+  infinite: true,
+  indicators: true,
+  arrows: true,
+  onChange: (oldIndex, newIndex) => {
+    console.log(`slide transition from ${oldIndex} to ${newIndex}`);
+  }
+}
 
 class Search extends Component {
   constructor(props) {
@@ -23,6 +43,10 @@ class Search extends Component {
   logout = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
+  }
+
+  login = () => {
+    this.props.history.replace('../login');
   }
 
   mypage = () => {
@@ -47,6 +71,13 @@ class Search extends Component {
 
 
   render() {
+    let menu;
+    if (localStorage.getItem('token')) {
+      menu = <button type="button" id="log-out-button" onClick={() => this.logout()}>Log-out</button>;
+    } else {
+      menu = <button type="button" id="log-in-button" onClick={() => this.login()}>Log-in</button>;
+    }
+
     const backLogin = '';
     let infoString = '';
     if (localStorage.getItem('nickname')) {
@@ -72,7 +103,6 @@ class Search extends Component {
         });
       }
     };
-
     const search = (e) => {
       this.setState({ searched: e.target.getAttribute('category') });
       const checked = document.querySelectorAll(`div.detail-category#${selection} input:checked`);
@@ -82,8 +112,6 @@ class Search extends Component {
       const { onGetProduct } = this.props;
       onGetProduct(queryStr);
     };
-
-
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
     /* const eye = <DetailCategory
@@ -94,34 +122,39 @@ class Search extends Component {
 
     return (
       <div className="Search">
-        {/* <header>
-          <h1>&emsp;Search</h1>
-          <nav>
-            <span>Menu1</span>
-            <span>Menu2</span>
-            <span>Menu3</span>
+        <div className="header">
+          <a className="search" href="search">Search&emsp;│</a>
+          <nav className="headerMenu">
+            <a className="side" href="budget">Budget Search</a>&emsp;&emsp;&emsp;&emsp;
+            <a className="side" href="skintone">Tone Analysis</a>&emsp;&emsp;&emsp;&emsp;
+            <a className="side" href="sale">Sales Info</a>
           </nav>
-        </header> */}
-        <div className="upperbar">
-          {backLogin}
-          <h1>Search</h1>
-          <div className="buttons">
-            {/* <button id="back-button" type="button" onClick={() => this.back()}>
-              <img id="arrow" src={arrow} alt="Back to Main Menu" />
-            </button> */}
-            <button type="button" id="log-out-button" onClick={() => this.logout()}>Log-out</button>
-            {backLogin}
-            <button id="my-page-button" type="button" onClick={() => this.mypage()}>My Page</button>
+          <div className="headerUser">
+            {infoString}
           </div>
-          {infoString}
+          <div className="headerButton">
+            <button id="my-page-button" type="button" onClick={() => this.mypage()}>My Page</button>
+            {menu}
+            {backLogin}
+          </div>
         </div>
-        <div className="Menubar">
-          <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
-          <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
-          <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
-          <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
-        </div>
+        
+        <div className="slide-container">
+          <Slide {...properties}>
+            <div className="each-slide">
+              <div style={{'backgroundImage': `url(${slideImages[0]})`}} />
+            </div>
+            <div className="each-slide">
+              <div style={{'backgroundImage': `url(${slideImages[1]})`}} />
+            </div>
+            <div className="each-slide">
+              <div style={{'backgroundImage': `url(${slideImages[2]})`}} />
+            </div>
+        </Slide>
+      </div>
+        
         <div className="Content">
+          
           <div className="Category">
             <ul className="Category">
               <div><button type="button" className="Product" onClick={click} id="lip">Lip</button></div>

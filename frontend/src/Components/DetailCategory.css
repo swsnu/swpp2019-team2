@@ -45,6 +45,11 @@ div.detail-category > button.searchProduct {
     padding : 15px 0 15px 0;
 
 }
+
+.detail-category {
+    padding : 15px 0 15px 0;
+}
+
 ul.Category > div > button.Product {
     width:100%;
     padding: 10px 5px 10px 5px;
