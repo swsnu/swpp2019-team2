@@ -12,10 +12,16 @@ import { getMockStore } from '../Mocks/mocks';
 import Search from './Search';
 
 jest.mock('react-slideshow-image', () => ({
-  // eslint-disable-next-line react/display-name
-  Slide: ({ children }) => <div>{children}</div>,
+  displayName: 'Hello',
+  Slide(children) {
+    return (
+      <div>
+Hello
+        {children}
+      </div>
+    );
+  },
 }));
-
 
 const stubSeletedUserT = {
   result: [{
