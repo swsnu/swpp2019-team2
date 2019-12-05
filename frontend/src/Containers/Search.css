@@ -8,8 +8,8 @@ header {
     height: 75px;
     padding: 1rem;
     color: white;
-    background: 'transparent';
-    background: linear-gradient(to bottom right, black, grey);;
+    opacity: 0.8;
+    background: black;
     font-weight: bold;
     display: flex;
     justify-content: space-between;

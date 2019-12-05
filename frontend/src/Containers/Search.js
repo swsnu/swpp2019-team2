@@ -94,6 +94,14 @@ class Search extends Component {
 
     return (
       <div className="Search">
+        {/* <header>
+          <h1>&emsp;Search</h1>
+          <nav>
+            <span>Menu1</span>
+            <span>Menu2</span>
+            <span>Menu3</span>
+          </nav>
+        </header> */}
         <div className="upperbar">
           {backLogin}
           <h1>Search</h1>
