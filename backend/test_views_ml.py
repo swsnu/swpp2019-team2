@@ -14,7 +14,7 @@ class MLTestCase(TestCase):
         self.client=Client()
         self.brand = Brand.objects.create(name="brand1")
         self.product1 = Base.objects.create(
-            name="base1", price=100, category="F", img_url="tmp_url1", brand=self.brand)
+            name="base1", price=100, category="BAS_F", img_url="tmp_url1", brand=self.brand)
         self.color1 = BaseOption.objects.create(
             color="LT", sub_color="color", 
             color_hex="111111", optionName="option", product=self.product1

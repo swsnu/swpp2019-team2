@@ -11,11 +11,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from '../image/LOGO.png';
+import signupLogo from '../image/Signup.jpg';
 
 
 const useStyleSignup = makeStyles((theme) => ({
   image: {
-    backgroundImage: 'url(https://previews.123rf.com/images/martm/martm1505/martm150500192/40659190-%EB%A7%A4%EB%A0%A5%EC%A0%81%EC%9D%B8-%EC%88%98%EC%B1%84%ED%99%94-%ED%99%94%EC%9E%A5%ED%92%88-%EB%B0%B0%EA%B2%BD%EC%9D%84-%EA%B5%AC%EC%84%B1%ED%95%98%EB%8A%94.jpg)',
+    backgroundImage: `url(${signupLogo})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
