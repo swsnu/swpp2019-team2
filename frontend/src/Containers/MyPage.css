@@ -150,4 +150,28 @@ h4 {
     height: 40px;
 }
 
+.Menubar {
+    width:100%;
+    background-color:rgb(255, 220, 226);
+    display : table;
+    table-layout: fixed;
+    
+}
 
+.Menubar > div {
+    display:table-cell;
+    border-left: 3px solid rgb(255, 220, 226);
+    background-color:rgba(256,256,256,0.2);
+    vertical-align: middle; 
+    text-align: center;
+}
+
+.Menubar button {
+    margin : 10px 0;
+    padding: 5px;
+    font : inherit;
+    background-color : transparent;
+    color : #9b45a7;
+    cursor : pointer;
+    border:none;
+}
