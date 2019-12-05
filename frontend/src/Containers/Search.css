@@ -17,8 +17,7 @@
     z-index: 2;
 }
 
-
-a.search {
+.search {
     color: white;
     font-size: 40px; 
     text-decoration: none;

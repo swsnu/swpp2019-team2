@@ -6,6 +6,10 @@ import App from './App';
 import { getMockStore } from './test-utils/mocks';
 import { history } from './store/store';
 
+jest.mock('react-slideshow-image', () => ({
+  Slide: ({ children }) => <div>{children}</div>,
+}));
+
 const mockStore = getMockStore({
   Articles: [],
   selectedArticle: null,
