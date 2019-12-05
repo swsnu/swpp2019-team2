@@ -8,6 +8,7 @@ import { Slide } from 'react-slideshow-image';
 import Logo1 from '../image/slide1.jpg';
 import Logo2 from '../image/slide2.jpg';
 import Logo3 from '../image/slide3.jpg';
+import { width } from '@material-ui/system';
 
 const slideImages = [
   Logo1,
@@ -21,6 +22,7 @@ const properties = {
   infinite: true,
   indicators: true,
   arrows: true,
+  width: 50,
   onChange: (oldIndex, newIndex) => {
     console.log(`slide transition from ${oldIndex} to ${newIndex}`);
   }
@@ -123,12 +125,13 @@ class Search extends Component {
     return (
       <div className="Search">
         <div className="header">
-          <a className="search" href="search">Search&emsp;│</a>
-          <nav className="headerMenu">
+          <a className="search">Cosmos&emsp;│</a>
+          <div className="headerMenu">
+            <a className="sel_side" href="search">Search</a>&emsp;&emsp;&emsp;&emsp;
             <a className="side" href="budget">Budget Search</a>&emsp;&emsp;&emsp;&emsp;
             <a className="side" href="skintone">Tone Analysis</a>&emsp;&emsp;&emsp;&emsp;
             <a className="side" href="sale">Sales Info</a>
-          </nav>
+          </div>
           <div className="headerUser">
             {infoString}
           </div>
@@ -150,8 +153,8 @@ class Search extends Component {
             <div className="each-slide">
               <div style={{'backgroundImage': `url(${slideImages[2]})`}} />
             </div>
-        </Slide>
-      </div>
+          </Slide>
+        </div>
         
         <div className="Content">
           

@@ -25,13 +25,18 @@ a.search {
     padding-bottom: 5px;
     padding-left: 30px;
 }
+a.sel_side {
+    color: rgb(245, 168, 228);
+    font-size: 30px;
+    text-decoration: none;
+}
 a.side {
     color: white;
     font-size: 30px;
     text-decoration: none; 
 }
 
-.headerMenu a:hover,
+.headerMenu a:hover,r
 .headerMenu a:active {
     text-decoration: underline;
 }
