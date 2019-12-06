@@ -70,7 +70,7 @@ export const logout = () => {
   localStorage.removeItem('preferColor');
   localStorage.removeItem('preferBase');
   localStorage.removeItem('preferBrand');
-  
+
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
