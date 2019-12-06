@@ -34,8 +34,18 @@ class Search extends Component {
     };
   }
 
-  componentDidMount() { // initialize state
+  async componentDidMount() { // initialize state
     this.props.onTryAutoSignup();
+    await this.props.getUserProfile();
+    await this.props.getUserInfo();
+    this.props.userProfile.map((res) => ((
+      localStorage.setItem('preferColor', res.prefer_color),
+      localStorage.setItem('preferBase', res.prefer_base),
+      localStorage.setItem('preferBrand', res.prefer_brand)
+    )));
+    this.props.userInfo.map((res) => (
+      localStorage.setItem('email', res.email)
+    ));
   }
 
   logout = () => {
@@ -58,7 +68,6 @@ class Search extends Component {
     } else {
       menu = <button type="button" id="log-in-button" onClick={() => this.login()}>Log-in</button>;
     }
-
     const backLogin = '';
     let infoString = '';
     if (localStorage.getItem('nickname')) {
@@ -172,6 +181,8 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  userProfile: state.cosmos.User,
+  userInfo: state.cosmos.User2,
 });
 
 
@@ -179,6 +190,8 @@ const mapDispatchToProps = (dispatch) => ({
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserProfile: () => dispatch(actionCreators.getUser()),
+  getUserInfo: () => dispatch(actionCreators.getUser2()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

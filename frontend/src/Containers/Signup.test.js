@@ -79,6 +79,7 @@ const stubInitialState = {
   User: [{
     nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
   }],
+  error: 'test',
 };
 const mockStore = getMockStore(stubInitialState);
 describe('<LogIn />', () => {
@@ -112,7 +113,7 @@ describe('<LogIn />', () => {
     newInstance.setState({ error: 'test' });
     const loginButton = component.find('#signup');
     loginButton.simulate('click');
-    expect(spyauthCheckState).toBeCalledTimes(2);
+    expect(spyauthCheckState).toBeCalledTimes(1);
   });
 
   it('should render', () => {
@@ -157,10 +158,8 @@ describe('<LogIn />', () => {
     newInstance.setState({ error: 'test' });
     const loginButton = component.find('#signup');
     loginButton.simulate('click');
-    // const mainButton = component.find('#main');
-    // mainButton.simulate('click');
-    expect(mockonTryAutoSignup).toHaveBeenCalledTimes(2);
-    expect(mockonLogin).toHaveBeenCalledTimes(1);
+    expect(mockonTryAutoSignup).toHaveBeenCalledTimes(1);
+    expect(mockonLogin).toHaveBeenCalledTimes(0);
     expect(spyHistoryPush).toHaveBeenCalledTimes(0);
   });
   it('should have login button and button should work when inputs are corrent', () => {
@@ -180,6 +179,32 @@ describe('<LogIn />', () => {
     const component = shallow(<Signup.WrappedComponent isAuthenticated />);
     const redirect = component.find('Redirect');
     expect(redirect.props().to).toEqual('/search');
+  });
+  it('should replace to signup', () => {
+    const mockonTryAutoSignup = jest.fn();
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const mockonLogin = jest.fn();
+    const mockStore1 = getMockStore(stubStateC);
+    const component = mount(
+      <Provider store={mockStore1}>
+        <BrowserRouter history={history}>
+          <Signup />
+        </BrowserRouter>
+      </Provider>,
+    );
+    const usernameInput = component.find('#username-input');
+    usernameInput.simulate('change', { target: { value: 'test_id' } });
+    const emailInput = component.find('#email-input');
+    emailInput.simulate('change', { target: { value: 'test@test.com' } });
+    const pwInput = component.find('#password-input');
+    pwInput.simulate('change', { target: { value: 'test_password' } });
+    const newInstance = component.find(Signup.WrappedComponent).instance();
+    newInstance.setState({ signup: true });
+    newInstance.setState({ error: 'test' });
+    const loginButton = component.find('#signup');
+    loginButton.simulate('click');
+    expect(spyHistoryPush).toHaveBeenCalledTimes(0);
   });
 });
 

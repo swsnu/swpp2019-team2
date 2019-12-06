@@ -66,6 +66,11 @@ export const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('nickname');
   localStorage.removeItem('expirationDate');
+  localStorage.removeItem('email');
+  localStorage.removeItem('preferColor');
+  localStorage.removeItem('preferBase');
+  localStorage.removeItem('preferBrand');
+  
   return {
     type: actionTypes.AUTH_LOGOUT,
   };

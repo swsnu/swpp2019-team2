@@ -63,8 +63,6 @@ class MyPage extends Component {
 
   componentDidMount() {
     this.props.onTryAutoSignup();
-    this.props.getUserInfo();
-    this.props.getUserInfo2();
   }
 
   logoutHandler = () => {
@@ -94,34 +92,22 @@ class MyPage extends Component {
   }
 
   confirmHandler = () => {
-    this.props.putUserInfo(this.state.preferColor,
-      this.state.preferBase, this.state.preferBrand);
+    this.props.putUserInfo(localStorage.getItem('preferColor'),
+      localStorage.getItem('preferBase'), localStorage.getItem('preferBrand'));
     window.confirm('정보가 수정되었습니다!');
+    this.props.history.push('../mypage');
   }
 
-  changeBrand(event) {
+  changeBrand = (event) => {
     let result = [];
     for (let i = 0; i < event.length; i++) {
       result = result.concat(event[i].value);
     }
-    this.setState({ preferBrand: result });
+    localStorage.setItem('preferBrand', result);
   }
 
   render() {
     let redirect = null;
-    if (this.state.render === false) {
-      this.props.user.map((res) => ((
-        this.setState({ preferColor: res.prefer_color }),
-        this.setState({ preferBase: res.prefer_base }),
-        this.setState({ preferBrand: res.prefer_brand })
-      )));
-      this.props.user2.map((res) => ((
-        this.setState({ userName: res.username }),
-        this.setState({ passWord: res.password }),
-        this.setState({ email: res.email })
-      )));
-      this.setState({ render: true });
-    }
     const infoString = `Hello, ${localStorage.getItem('nickname')}!`;
     if (!localStorage.getItem('token')) {
       window.alert('로그인 후 이용해주세요');
@@ -155,20 +141,20 @@ o 아이디: &emsp;
               <br />
               <br />
 o 이메일: &emsp;
-              {this.state.email}
+              {localStorage.getItem('email')}
               <br />
               <br />
 o 선호 색상: &emsp;
-              {this.state.preferColor}
+              {localStorage.getItem('preferColor')}
               <br />
               <br />
 o 선호 베이스: &emsp;
-              {this.state.preferBase}
+              {localStorage.getItem('preferBase')}
 호
               <br />
               <br />
 o 선호 브랜드: &emsp;
-              {this.state.preferBrand}
+              {localStorage.getItem('preferBrand')}
               <br />
               <br />
               <br />
@@ -191,7 +177,7 @@ o 선호 색상 변경:
             <Select
               id="color-input"
               options={optionsColor}
-              onChange={(event) => this.setState({ preferColor: event.label })}
+              onChange={(event) => localStorage.setItem('preferColor', event.label)}
               styles={customStyles}
             />
             <br />
@@ -201,7 +187,7 @@ o 선호 베이스 변경:
             <Select
               id="base-input"
               options={optionsBase}
-              onChange={(event) => this.setState({ preferBase: event.label })}
+              onChange={(event) => localStorage.setItem('preferBase', event.label)}
               styles={customStyles}
             />
             <br />
@@ -219,7 +205,7 @@ o 선호 브랜드 변경:
               <br />
               <br />
               <br />
-              <button id="modify-button" type="submit" onClick={() => this.confirmHandler()}>수 정</button>
+              <button id="modify-button" type="button" onClick={() => this.confirmHandler()}>수 정</button>
             </div>
           </div>
         </div>
@@ -240,8 +226,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-  getUserInfo: () => dispatch(actionCreators.getUser()),
-  getUserInfo2: () => dispatch(actionCreators.getUser2()),
   putUserInfo: (preferColor, preferBase, preferBrand) => dispatch(actionCreators.putUser2(
     preferColor, preferBase, preferBrand,
   )),

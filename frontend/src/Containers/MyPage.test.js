@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { getMockStore } from '../test-utils/mocks';
 import { history } from '../store/store';
@@ -32,7 +32,7 @@ const stubInitialState = {
 };
 
 const mockStore = getMockStore(stubInitialState);
-const mockStore2 = getMockStore(stubStateC);
+const mockStore1 = getMockStore(stubStateC);
 describe('<SkinTone />', () => {
   let mypage; let spyGetUser; let spylogout; let spyUserInfo;
   let spyUserInfo2; let spyPutInfo2;
@@ -68,11 +68,27 @@ describe('<SkinTone />', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('should render MyPage', () => {
-    const component = mount(mypage);
-    const wrapper = component.find('MainPage');
-    expect(spyUserInfo).toBeCalledTimes(1);
-  });
+  // it('should render and call MyPage', () => {
+  //   const mockStore1 = getMockStore(stubStateC);
+  //   const component = mount(
+  //     <Provider store={mockStore1}>
+  //       <BrowserRouter history={history}>
+  //         <MyPage />
+  //       </BrowserRouter>
+  //     </Provider>,
+  //   );
+  //   const colorInput = component.find('#color-input');///////
+  //   colorInput.simulate('change', { label: 'red' });
+  //   // const baseInput = component.find('#base-input');
+  //   // baseInput.simulate('change', { label: '19' });
+  //   // const loginButton = component.find('#signin');
+  //   // loginButton.simulate('click');
+  //   // const veriButton = component.find('#checkbox');
+  //   // veriButton.simulate('change', { target: { value: 'test_password' } });
+  //   const button = component.find('#modify-button');
+  //   button.simulate('click');
+  //   expect(spyPutInfo2).toBeCalledTimes(1);
+  // });
   it('should call budgetHandler when clicking budget search button', () => {
     const spyHistoryReplace = jest
       .spyOn(history, 'replace')
@@ -138,44 +154,39 @@ describe('<SkinTone />', () => {
   });
 });
 
-describe('<SkinTone />', () => {
-  let mypage; let spyGetUser; let spylogout; let spyUserInfo;
-  let spyUserInfo2; let spyPutInfo2;
-  beforeEach(() => {
-    mypage = (
-      <Provider store={mockStore2}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route
-              path="/"
-              render={
-                (props) => (
-                  <MyPage {...props} />
-                )
-              }
-            />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>
-    );
-    spyGetUser = jest.spyOn(actionCreators, 'authCheckState')
-      .mockImplementation(() => (dispatch) => {});
-    spylogout = jest.spyOn(actionCreators, 'logout')
-      .mockImplementation((user) => (dispatch) => {});
-    spyUserInfo = jest.spyOn(actionCreators, 'getUser')
-      .mockImplementation(() => (dispatch) => {});
-    spyUserInfo2 = jest.spyOn(actionCreators, 'getUser2')
-      .mockImplementation(() => (dispatch) => {});
-    spyPutInfo2 = jest.spyOn(actionCreators, 'putUser2')
-      .mockImplementation(() => (dispatch) => {});
-    window.alert = jest.fn();
-  });
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-  it('should render SkinTone', () => {
-    const component = mount(mypage);
-    const wrapper = component.find('MainPage');
-    expect(spyUserInfo).toBeCalledTimes(1);
-  });
-});
+// describe('<SkinTone />', () => {
+//   let mypage; let spyGetUser; let spylogout; let spyUserInfo;
+//   let spyUserInfo2; let spyPutInfo2;
+//   beforeEach(() => {
+//     mypage = (
+//       <Provider store={mockStore2}>
+//         <ConnectedRouter history={history}>
+//           <Switch>
+//             <Route
+//               path="/"
+//               render={
+//                 (props) => (
+//                   <MyPage {...props} />
+//                 )
+//               }
+//             />
+//           </Switch>
+//         </ConnectedRouter>
+//       </Provider>
+//     );
+//     spyGetUser = jest.spyOn(actionCreators, 'authCheckState')
+//       .mockImplementation(() => (dispatch) => {});
+//     spylogout = jest.spyOn(actionCreators, 'logout')
+//       .mockImplementation((user) => (dispatch) => {});
+//     spyUserInfo = jest.spyOn(actionCreators, 'getUser')
+//       .mockImplementation(() => (dispatch) => {});
+//     spyUserInfo2 = jest.spyOn(actionCreators, 'getUser2')
+//       .mockImplementation(() => (dispatch) => {});
+//     spyPutInfo2 = jest.spyOn(actionCreators, 'putUser2')
+//       .mockImplementation(() => (dispatch) => {});
+//     window.alert = jest.fn();
+//   });
+//   afterEach(() => {
+//     jest.clearAllMocks();
+//   });
+// });
