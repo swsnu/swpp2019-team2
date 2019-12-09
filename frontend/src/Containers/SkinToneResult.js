@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import './SkinToneResult.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-import arrow from '../image/화살표.png';
 
 class SkinToneResult extends Component {
   constructor(props) {
@@ -23,20 +22,36 @@ class SkinToneResult extends Component {
       } */
   }
 
-      logoutHandler = () => {
-        this.props.Logout();
-        this.props.onTryAutoSignup();
-      }
+      searchHandler = () => {
+        this.props.history.replace('../search');
+      };
 
-      mypageHandler = (id) => {
-        this.props.history.replace(`../mypage/${id}`);
-      }
+      budgetHandler = () => {
+        this.props.history.replace('../budget');
+      };
 
-      menuHandler = () => {
-        this.props.history.replace('../main');
-      }
+      toneHandler = () => {
+        this.props.history.replace('../skintone');
+      };
+
+      saleHandler = () => {
+        this.props.history.replace('../sale');
+      };
 
       render() {
+        let redirect = null;
+        let infoString = '';
+        if (this.state.render === false) {
+          this.props.user.map((res) => (
+            this.setState({ nickName: res.nick_name })
+          ));
+          this.setState({ render: true });
+        }
+        infoString = `Hello, ${localStorage.getItem('nickname')}!`;
+        if (!localStorage.getItem('token')) {
+          window.alert('로그인을 먼저 진행해주세요');
+          redirect = <Redirect to="/login" />;
+        }
         const productUrl = '';
         const FoundationResult = (
           <a target="_blank" rel="noopener noreferrer" className="productItem" href={productUrl}>
@@ -55,7 +70,6 @@ class SkinToneResult extends Component {
             </section>
           </a>
         );
-        let redirect = null;
         if (!this.props.isAuthenticated) {
           redirect = <Redirect to="/login" />;
         }
@@ -67,19 +81,23 @@ class SkinToneResult extends Component {
                       <img src = {logo} alt = "COSMOS" width = "100" />
                   </div> */}
             <div className="upperbar">
-              <h1>Skin Tone Analysis Result</h1>
+              <h1>Skin Tone Analysis</h1>
               <div className="buttons">
-                <button id="back-button" type="button" onClick={() => this.menuHandler()}>
-                  <img id="arrow" src={arrow} alt="Back to Main Menu" />
-                </button>
                 <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
                 <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
               </div>
+              {infoString}
+            </div>
+            <div className="Menubar">
+              <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
+              <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
+              <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
+              <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
             </div>
             <div className="resultbox">
               <div className="result">
                 <h2>Result</h2>
-                <img id="colorbar" src="/media/output/colorbar.png" alt="ColorBar" width="300px" height="300px" margin="auto" />
+                <img id="colorbar" src="localhost:8000/media/output/colorbar.png" alt="ColorBar" width="300px" height="300px" margin="auto" />
                 <div
                   className="MLresult"
                   style={{
