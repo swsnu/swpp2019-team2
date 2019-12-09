@@ -11,45 +11,25 @@
   
 }
 
-.upperbar .buttons #back-button{
-  display: inline-table;
-  position: absolute;
-  left : 2%;
-  top: 0%;
-  align-content: center;
-  border:none;
-}
 #arrow{
   width:50px;
   height: 40px;
 }
 
-.upperbar .buttons #log-out-button{
-  display: inline-table;
-  position: absolute;
-  right : 10%;
-  top : 2%;
-}
-
-.upperbar .buttons #my-page-button{
-  display: inline-table;
-  position: absolute;
-  right:4%;
-  top:2%;
-}
 
 .SkinTone button {
     margin : 10px 0;
     padding: 5px;
     font : inherit;
-    border : 1px solid #9b45a7;
     background-color : transparent;
-    color : #9b45a7;
+    color : black;
     cursor : pointer;
-    border-top-left-radius: 10px; 
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-color:#9b45a7;
+}
+.SkinTone .StartButton button:hover,
+.SkinTone .StartButton button:active {
+    color:white;
+    background-color:#9b45a7;
 }
 
 .SkinTone .image_preview button:hover,
@@ -58,16 +38,14 @@
     background-color:#9b45a7;
 }
 .image_input{
-    display : table-cell;
-    height : 300px;
-    width : 400px;
-    margin: -150px 0px 0px -200px;
+    margin:auto;
+    padding:30px;
 }
 .SkinTone .image_preview input{
-  border-bottom: 1px solid #9b45a7;
-  border-right: 1px solid #9b45a7;
-  border-top: 1px solid #9b45a7;
-  border-left: 1px solid #9b45a7;
+  border-bottom: 1px solid rgb(245, 168, 228);
+  border-right: 1px solid rgb(245, 168, 228);
+  border-top: 1px solid rgb(245, 168, 228);
+  border-left: 1px solid rgb(245, 168, 228);
   padding: 10px;
   margin: 15px;
   cursor: pointer;

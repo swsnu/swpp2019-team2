@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './SkinTone.css';
 import { connect } from 'react-redux';
+import Popup from 'reactjs-popup';
 import * as actionCreators from '../store/actions/index';
+import check from '../image/check.png';
+import infoJpg from '../image/ML_intro.jpg';
 
 class SkinTone extends Component {
   constructor(props) {
@@ -59,7 +62,7 @@ class SkinTone extends Component {
       }
       const picture = new FormData();
       picture.append('image', this.state.selectedFile);
-      picture.append('user_id', 425);
+      picture.append('user_id', localStorage.getItem('nickname'));
       // user_id state에 저장?
       this.props.send_picture(picture);
     }
@@ -79,6 +82,7 @@ class SkinTone extends Component {
     saleHandler = () => {
       this.props.history.replace('../sale');
     };
+
 
     render() {
       let redirect = null;
@@ -116,15 +120,29 @@ class SkinTone extends Component {
             <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
             <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
           </div>
-          <div className="Content">
-            <div className="image_input">
-              <h2>{inputImage}</h2>
-              <div className="image_preview">
-                <img src={fileurl} alt="Please upload" />
-                <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
-                <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
-              </div>
+          <div className="Intro">
+            <img src={infoJpg} alt="SkinTone Analysis" width="300px" style={{ padding: '50px' }} />
+            <div style={{ display: 'table', alignContent: 'center', margin: 'auto' }}>
+              <img src={check} alt="1. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
+              <div style={{ display: 'inline-table' }}>사진을 넣어 머신 러닝을 통해 당신의 피부색을 분석해보세요!</div>
             </div>
+            <div style={{
+              padding: '30px', display: 'table', alignContent: 'center', margin: 'auto',
+            }}
+            >
+              <img src={check} alt="2. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
+              <div style={{ display: 'inline-table' }}>당신에 톤에 딱 맞는 맞춤 파운데이션 추천을 받아보세요!</div>
+            </div>
+            <Popup trigger={<button type="button">Start!</button>} modal>
+              <div className="image_input">
+                <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
+                <div className="image_preview">
+                  <img src={fileurl} alt="Please upload a Selfie! :)" />
+                  <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
+                  <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+                </div>
+              </div>
+            </Popup>
           </div>
         </div>
       );
