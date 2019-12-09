@@ -95,9 +95,9 @@ class SkinToneResult extends Component {
               <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
             </div>
             <div className="resultbox">
+              <h2>Result</h2>
               <div className="result">
-                <h2>Result</h2>
-                <img id="colorbar" src="localhost:8000/media/output/colorbar.png" alt="ColorBar" width="300px" height="300px" margin="auto" />
+                <img id="colorbar" src="http://52.141.1.157:8000/media/output/colorbar.png" alt="ColorBar" width="300px" height="300px" margin="auto" style={{ paddingTop: '30px' }} />
                 <div
                   className="MLresult"
                   style={{
