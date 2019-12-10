@@ -39,6 +39,8 @@ class SkinToneResult extends Component {
       };
 
       render() {
+        // const colorbarSrc = `http://52.141.1.157:8000/media/output/colorbar${localStorage.getItem('nickname')}.png`;
+        const src = `/media/output/colorbar${localStorage.getItem('nickname')}.png`;
         let redirect = null;
         let infoString = '';
         if (this.state.render === false) {
@@ -97,7 +99,7 @@ class SkinToneResult extends Component {
             <div className="resultbox">
               <h2>Result</h2>
               <div className="result">
-                <img id="colorbar" src="http://52.141.1.157:8000/media/output/colorbar.png" alt="ColorBar" width="300px" height="300px" margin="auto" style={{ paddingTop: '30px' }} />
+                <img id="colorbar" src={src} alt="ColorBar" width="300px" height="300px" margin="auto" style={{ paddingTop: '30px' }} />
                 <div
                   className="MLresult"
                   style={{

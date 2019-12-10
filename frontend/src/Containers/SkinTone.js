@@ -3,9 +3,11 @@ import { Redirect } from 'react-router-dom';
 import './SkinTone.css';
 import { connect } from 'react-redux';
 import Popup from 'reactjs-popup';
+import Webcam from 'react-webcam';
 import * as actionCreators from '../store/actions/index';
 import check from '../image/check.png';
 import infoJpg from '../image/ML_intro.jpg';
+
 
 class SkinTone extends Component {
   constructor(props) {
@@ -83,6 +85,16 @@ class SkinTone extends Component {
       this.props.history.replace('../sale');
     };
 
+    setRef = (webcam) => {
+      this.webcam = webcam;
+    };
+
+    capture = () => {
+      const picture = this.webcam.getScreenshot();
+      this.setState({ selectedFile: picture });
+      this.setState({ flag: true });
+    }
+
 
     render() {
       let redirect = null;
@@ -133,7 +145,7 @@ class SkinTone extends Component {
               <img src={check} alt="2. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
               <div style={{ display: 'inline-table' }}>당신에 톤에 딱 맞는 맞춤 파운데이션 추천을 받아보세요!</div>
             </div>
-            <Popup trigger={<button type="button">Start!</button>} modal>
+            <Popup trigger={<button type="button">Submit</button>} modal>
               <div className="image_input">
                 <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
                 <div className="image_preview">
@@ -141,6 +153,19 @@ class SkinTone extends Component {
                   <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
                   <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
                 </div>
+              </div>
+            </Popup>
+            <Popup trigger={<button type="button">Take</button>} modal>
+              <div className="image_input">
+                <Webcam
+                  audio={false}
+                  height={350}
+                  ref={this.setRef}
+                  screenshotFormat="image/jpeg"
+                  width={350}
+                />
+                <button id="photo-input" type="button" onClick={this.capture}>Capture!</button>
+                <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
               </div>
             </Popup>
           </div>

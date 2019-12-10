@@ -12,6 +12,7 @@ import imutils
 from matplotlib import pyplot as plt
 #from matplotlib.figure import Figure
 #path = 'backend/ml/image/anne-marie'
+plt.switch_backend('Agg')
 
 resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
@@ -165,7 +166,7 @@ def extractDominantColor(image, number_of_colors= 20, hasThresholding=False):
         estimator.labels_, estimator.cluster_centers_, hasThresholding)
     return colorInformation
 
-def savepic():
+def savepic(user_id):
     """save pictures """
     image = cv2.imread("media/output/face.png")
     plt.subplot(3, 1, 1)
@@ -178,7 +179,7 @@ def savepic():
     plt.subplot(3, 1, 3)
     plt.axis("off")
     plt.imshow(colour_bar)
-    plt.savefig('media/output/colorbar.png')
+    plt.savefig('media/output/colorbar' + user_id + '.png')
     plt.close()
     #fig = Figure()
     #ax = fig.subplots()
@@ -203,12 +204,12 @@ def plotColorBar(colorInformation):
         top_x = bottom_x
     return color_bar
 
-def tone_analysis(img_path):
+def tone_analysis(img_path, user_id):
     """ tone_analysis method """
     # pylint: disable=line-too-long,no-member,too-many-locals,no-self-use
     img_to_face(img_path)
     image = cv2.imread("media/output/face.png")
-    savepic()
+    savepic(user_id)
     image = imutils.resize(image, width=250)
     skin = extractSkin(image)
     dominantColors = extractDominantColor(skin, hasThresholding=True)

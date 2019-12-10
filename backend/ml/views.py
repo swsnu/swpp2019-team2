@@ -42,7 +42,7 @@ class FileUploadView(APIView):
         except(KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         ml_object = ML.objects.filter(user_id=u_id).latest('id')
-        ml_object.result = tone_analysis(ml_object.image)
+        ml_object.result = tone_analysis(ml_object.image, u_id)
         ml_object.save()
         base_products = Base_models.Base.objects.filter(category='BAS_F')
         base_products_info = []
