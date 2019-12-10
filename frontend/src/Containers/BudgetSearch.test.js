@@ -151,15 +151,6 @@ describe('<BudgetSearch />', () => {
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
   });
-  it('should call mypageHandler', () => {
-    const spyHistoryPush = jest
-      .spyOn(history, 'replace')
-      .mockImplementation((path) => { });
-    const component = mount(budgetsearch);
-    const wrapper = component.find('#my-page-button');
-    wrapper.simulate('click');
-    expect(spyHistoryPush).toHaveBeenCalledWith('../mypage/');
-  });
   it('should call confirmhandler and alert', () => {
     const mockSwal = jest.fn();
     const component = mount(budgetsearch);
@@ -210,16 +201,7 @@ describe('<BudgetSearch />', () => {
     expect(newInstance.state.itemNum).toEqual(1);
   });
 
-  it('should call logoutHandler', () => {
-    const spyHistoryPush = jest
-      .spyOn(history, 'replace')
-      .mockImplementation((path) => { });
-    const component = mount(budgetsearch);
-    const wrapper = component.find('#log-out-button');
-    wrapper.simulate('click');
-    expect(spyGetUser).toBeCalledTimes(2);
-    expect(spylogout).toBeCalledTimes(1);
-  });
+  
 
   it('should redirect to /login when not logged_in', () => {
     const component = mount(budgetsearch);
@@ -260,11 +242,6 @@ describe('<BudgetSearch />', () => {
     });
     const component = mount(budgetsearch);
     expect(component.find(Redirect)).toHaveLength(0);
-    const wrapper = component.find('#log-out-button');
-    wrapper.simulate('click');
-    expect(spyGetUser).toBeCalledTimes(2);
-    expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toBeCalledTimes(0);
   });
   it('does have a selectedUser && logged_in ', () => {
     const spyHistoryPush = jest.spyOn(history, 'replace');
@@ -302,45 +279,6 @@ describe('<BudgetSearch />', () => {
     });
     const component = mount(budgetsearch);
     expect(component.find(Redirect)).toHaveLength(0);
-    const wrapper = component.find('#log-out-button');
-    wrapper.simulate('click');
-    expect(spylogout).toBeCalledTimes(1);
-  });
-  it('should call budgetHandler when clicking budget search button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => { });
-    const component = mount(budgetsearch);
-    const button = component.find('#Budgetmenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../budget');
-  });
-  it('should call toneHandler when clicking tone analysis button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => { });
-    const component = mount(budgetsearch);
-    const button = component.find('#Tonemenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../skintone');
-  });
-  it('should call searchHandler when clicking sale information button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => { });
-    const component = mount(budgetsearch);
-    const button = component.find('#Searchmenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../search');
-  });
-  it('should call saleHandler when clicking sale information button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => { });
-    const component = mount(budgetsearch);
-    const button = component.find('#Salemenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../sale');
   });
 });
 
