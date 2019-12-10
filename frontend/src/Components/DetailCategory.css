@@ -37,26 +37,11 @@ div.detail-sub-category > h4 {
     border-top:1px solid rgba(128,0,128,0.7);
     
 }
-div.detail-category > button.searchProduct {
-    width: 100%;
-    background:transparent;
-    border:none;
-    font-size:20px;
-    padding : 15px 0 15px 0;
 
+div.Search div.detail-category {
+    padding : 5px 0 15px 0;
 }
 
-.detail-category {
-    padding : 15px 0 15px 0;
-}
-
-ul.Category > div > button.Product {
-    width:100%;
-    padding: 10px 5px 10px 5px;
-    background-color : transparent;
-    color : #9b45a7;
-    cursor : pointer;
-    border-top:none;
-    border-bottom:none;
-    text-align: center;
+div.Search > div.Content > div.Category.fixed > div.detail-category {
+    overflow:scroll;
 }
