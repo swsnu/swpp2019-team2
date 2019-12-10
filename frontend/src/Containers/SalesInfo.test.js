@@ -65,38 +65,6 @@ describe('<SkinTone />', () => {
     expect(wrapper.length).toBe(1);
   });
 
-  it('should call mypageHandler', () => {
-    const spyHistoryPush = jest.spyOn(history, 'replace')
-      .mockImplementation((path) => {});
-    const component = mount(salesinfo);
-    const wrapper = component.find('#my-page-button');
-    wrapper.simulate('click');
-    expect(spyHistoryPush).toBeCalledTimes(2);
-  });
-  it('should call logoutHandler', () => {
-    const spyHistoryPush = jest.spyOn(history, 'replace')
-      .mockImplementation((path) => {});
-    const component = mount(salesinfo);
-    const wrapper = component.find('#log-out-button');
-    wrapper.simulate('click');
-    expect(spyGetUser).toBeCalledTimes(2);
-    expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toBeCalledTimes(1);
-  });
-  // it('should not redirect stay when logged in', () => {
-  //   const component = shallow(
-  //     <SalesInfo.WrappedComponent isAuthenticated={stubStateC} user={stubStateC} />,
-  //   );
-  //   const redirect = component.find('Redirect');
-  //   expect(redirect.length).toBe(0);
-  // });
-  // it('should redirect stay when logged in', () => {
-  //   const component = shallow(
-  //     <SalesInfo.WrappedComponent isAuthenticated={stubStateC} user={stubStateC} />,
-  //   );
-  //   const redirect = component.find('Redirect');
-  //   expect(redirect.length).toBe(1);
-  // });
   it('should redirect to /login when not logged_in', () => {
     const component = mount(salesinfo);
     expect(component.find(Redirect)).toHaveLength(1);
@@ -136,11 +104,6 @@ describe('<SkinTone />', () => {
     });
     const component = mount(salesinfo);
     expect(component.find(Redirect)).toHaveLength(1);
-    const wrapper = component.find('#log-out-button');
-    wrapper.simulate('click');
-    expect(spyGetUser).toBeCalledTimes(2);
-    expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toBeCalledTimes(0);
   });
   it('does have a selectedUser && logged_in ', () => {
     const spyHistoryPush = jest.spyOn(history, 'push');
@@ -160,47 +123,6 @@ describe('<SkinTone />', () => {
     });
     const component = mount(salesinfo);
     expect(component.find(Redirect)).toHaveLength(1);
-    const wrapper = component.find('#log-out-button');
-    wrapper.simulate('click');
-    expect(spyGetUser).toBeCalledTimes(2);
-    expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryPush).toBeCalledTimes(0);
-  });
-  it('should call budgetHandler when clicking budget search button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(salesinfo);
-    const button = component.find('#Budgetmenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../budget');
-  });
-  it('should call toneHandler when clicking tone analysis button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(salesinfo);
-    const button = component.find('#Tonemenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../skintone');
-  });
-  it('should call searchHandler when clicking sale information button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(salesinfo);
-    const button = component.find('#Searchmenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../search');
-  });
-  it('should call saleHandler when clicking sale information button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(salesinfo);
-    const button = component.find('#Salemenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../sale');
   });
 });
 

@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import './SkinTone.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
+import Header from '../Components/Header';
 
 class SkinTone extends Component {
   constructor(props) {
@@ -22,19 +23,6 @@ class SkinTone extends Component {
     this.props.onTryAutoSignup();
     this.props.getUserInfo();
   }
-
-    logoutHandler = () => {
-      this.props.Logout();
-      this.props.onTryAutoSignup();
-    }
-
-    mypageHandler = () => {
-      this.props.history.replace('../mypage');
-    }
-
-    menuHandler = () => {
-      this.props.history.replace('../main');
-    }
 
     fileinputHandler = (event) => {
       event.preventDefault();
@@ -64,58 +52,23 @@ class SkinTone extends Component {
       this.props.send_picture(picture);
     }
 
-    searchHandler = () => {
-      this.props.history.replace('../search');
-    };
-
-    budgetHandler = () => {
-      this.props.history.replace('../budget');
-    };
-
-    toneHandler = () => {
-      this.props.history.replace('../skintone');
-    };
-
-    saleHandler = () => {
-      this.props.history.replace('../sale');
-    };
 
     render() {
       let redirect = null;
-      let infoString = '';
-      if (this.state.render === false) {
-        this.props.user.map((res) => (
-          this.setState({ nickName: res.nick_name })
-        ));
-        this.setState({ render: true });
-      }
-      infoString = `Hello, ${localStorage.getItem('nickname')}!`;
       if (!localStorage.getItem('token')) {
         window.alert('로그인을 먼저 진행해주세요');
         redirect = <Redirect to="/login" />;
       }
+      const { history } = this.props;
       const inputImage = '<Image Input>';
-      const { fileurl, id } = this.state;
+      const { fileurl } = this.state;
       return (
         <div className="SkinTone">
           {redirect}
           {/* <div id = "LOGO">
                     <img src = {logo} alt = "COSMOS" width = "100" />
                 </div> */}
-          <div className="upperbar">
-            <h1>Skin Tone Analysis</h1>
-            <div className="buttons">
-              <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
-              <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
-            </div>
-            {infoString}
-          </div>
-          <div className="Menubar">
-            <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
-            <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
-            <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
-            <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
-          </div>
+          <Header history={history} selected={2} />
           <div className="Content">
             <div className="image_input">
               <h2>{inputImage}</h2>
@@ -138,7 +91,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   send_picture: (img) => dispatch(actionCreators.sendImage(img)),
   run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
