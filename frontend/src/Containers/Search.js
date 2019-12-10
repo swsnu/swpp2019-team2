@@ -37,7 +37,8 @@ class Search extends Component {
   }
 
   componentDidMount() { // initialize state
-    this.props.onTryAutoSignup();
+    const { onTryAutoSignup } = this.props;
+    onTryAutoSignup();
     window.addEventListener('scroll', this.onScroll);
   }
 
@@ -58,21 +59,17 @@ class Search extends Component {
 
   onScroll = () => {
     if (window.scrollY > 300 && this.tick && this.state.searched) {
-      if (document.querySelector('div.Category') && document.querySelector('div.ResultDiv')) {
-        const size = window.screen.availHeight - 230;
-        if (size > document.querySelector('div.ResultDiv').offsetHeight) return;
-        document.querySelector('div.Category').classList.add('fixed');
-        const category = document.querySelectorAll('div.detail-category');
-        category.forEach((cat) => {
-          cat.style.height = `${size}px`;
-        });
-        this.tick = false;
-      }
+      const size = window.screen.availHeight - 230;
+      if (size > document.querySelector('div.ResultDiv').offsetHeight) return;
+      document.querySelector('div.Category').classList.add('fixed');
+      const category = document.querySelectorAll('div.detail-category');
+      category.forEach((cat) => {
+        cat.style.height = `${size}px`;
+      });
+      this.tick = false;
     } else if (!this.tick && window.scrollY < 300) {
-      if (document.querySelector('div.Category')) {
-        document.querySelector('div.Category').classList.remove('fixed');
-        this.tick = true;
-      }
+      document.querySelector('div.Category').classList.remove('fixed');
+      this.tick = true;
     }
   }
 

@@ -158,7 +158,6 @@ describe('<Liplist />', () => {
     button.simulate('click');
     expect(newInstance.state).toEqual({
       searched: null,
-      call: false,
       selection: 'base',
     });
     button.simulate('click');
@@ -167,7 +166,6 @@ describe('<Liplist />', () => {
       // preferBase: '19',
       // preferBrand: '라네즈',
       // preferColor: 'red',
-      call: false,
       selection: 'base',
       searched: null,
     });
@@ -222,5 +220,47 @@ describe('<Liplist />', () => {
     buttons.simulate('click');
     expect(spygetLips).toHaveBeenLastCalledWith('cheek/color=CHK_RD&');
     component.find('button.Product#lip').simulate('click');
+  });
+});
+
+
+describe('<Liplist />', () => {
+  const history = createBrowserHistory();
+  let lipList;
+  const resultState = {
+    result: [{
+      id: 1, name: 'test_name', price: 5000, category: 'LIP_S', brand: 1, color: 1,
+    },
+    {
+      id: 2, name: 'test_name2', price: 6000, category: 'LIP_T', brand: 1, color: 1,
+    },
+    ],
+  };
+  beforeEach(() => {
+    lipList = (
+      <Provider store={getMockStore(resultState)}>
+        <Router history={history}>
+          <Switch>
+            <Route
+              path="/"
+              render={(props) => <Search {...props} />}
+            />
+          </Switch>
+        </Router>
+      </Provider>
+    );
+  });
+  afterEach(() => { jest.clearAllMocks(); });
+  it('on scroll event', () => {
+    const component = mount(lipList);
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    newInstance.componentDidMount();
+    newInstance.setState({ selection: 'lip', searched: 'lip' });
+    Object.defineProperty(window, 'scrollY', { value: 500, writable: true });
+    const customEvent = new Event('scroll');
+    window.dispatchEvent(customEvent);
+    Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
+    window.dispatchEvent(customEvent);
+    newInstance.componentWillUnmount();
   });
 });
