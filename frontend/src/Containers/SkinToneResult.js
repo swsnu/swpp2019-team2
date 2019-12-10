@@ -16,7 +16,7 @@ class SkinToneResult extends Component {
   componentDidMount() {
     this.props.onTryAutoSignup();
     this.setState({ result: `rgb(${this.props.ML.result_r},${this.props.ML.result_g},${this.props.ML.result_b})` });
-    this.setState({ rgb_result: `rgb(${this.props.ML.result_r.toFixed(5)} , ${this.props.ML.result_g.toFixed(5)} , ${this.props.ML.result_b.toFixed(5)})` });
+    this.setState({ rgb_result: `rgb( ${this.props.ML.result_r.toFixed(5)} , ${this.props.ML.result_g.toFixed(5)} , ${this.props.ML.result_b.toFixed(5)} )` });
     /* if (this.props.selectedUser) {
         this.setState({ id: this.props.selectedUser.id });
       } */
@@ -99,20 +99,22 @@ class SkinToneResult extends Component {
             <div className="resultbox">
               <h2>Result</h2>
               <div className="result">
-                <img id="colorbar" src={src} alt="ColorBar" width="300px" height="300px" margin="auto" style={{ paddingTop: '30px' }} />
+                <h4>Skintone</h4>
+                <img id="colorbar" src={src} alt="ColorBar" width="300px" height="300px" margin="auto" />
                 <div
                   className="MLresult"
                   style={{
-                    backgroundColor: this.state.result, width: 100, height: 100,
+                    backgroundColor: this.state.result, width: 80, height: 80,
                   }}
                 />
                 <div>{this.state.rgb_result}</div>
               </div>
               <div className="recommendation">
-                <h2>User ID</h2>
+                <h4>User ID</h4>
                 <div>{this.props.ML.user_id}</div>
-                <h2>Foundation Recommendation</h2>
+                <h4>Foundation Recommendation</h4>
                 <div>{FoundationResult}</div>
+                <div className="retry"><button id="Retry" type="button" onClick={() => this.toneHandler()}>Re-try!</button></div>
               </div>
             </div>
           </div>

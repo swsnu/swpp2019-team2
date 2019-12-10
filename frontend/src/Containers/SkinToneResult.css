@@ -7,9 +7,11 @@
     height:500px;
     position: absolute;
     top:35;
-    left:22%;
-    background-color: rgb(255, 220, 226);
+    left:25%;
+    background-color: white;
     margin: auto;
+    border: medium lightgray solid;
+
 }
 .result #colorbar {
     margin-bottom: 10px;
@@ -26,6 +28,22 @@
     height:500px;
     position: absolute;
     top:35;
-    right:22%;
-    background-color: rgb(255, 220, 226);
+    right:25%;
+    background-color: white;
+    border: medium lightgray solid;
+}
+
+.retry button {
+    margin : 30px;
+    padding: 5px;
+    font : inherit;
+    background-color : transparent;
+    color : black;
+    cursor : pointer;
+    border-color:#9b45a7;
+}
+.retry button:hover,
+.retry button:active {
+    color:white;
+    background-color:#9b45a7;
 }

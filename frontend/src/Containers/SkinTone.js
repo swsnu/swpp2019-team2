@@ -91,10 +91,18 @@ class SkinTone extends Component {
 
     capture = () => {
       const picture = this.webcam.getScreenshot();
-      this.setState({ selectedFile: picture });
-      this.setState({ flag: true });
+      this.saveImage(picture);
+      // this.setState({ selectedFile: picture });
+      // this.setState({ flag: true });
     }
 
+    saveImage = (base64string) => {
+      const imageData = base64string.split(',')[1];
+      const a = document.createElement('a'); // Create <a>
+      a.href = `data:image/png;base64,${imageData}`; // Image Base64 Goes here
+      a.download = 'Image.png'; // File name Here
+      a.click(); // Downloaded file
+    }
 
     render() {
       let redirect = null;
@@ -145,29 +153,33 @@ class SkinTone extends Component {
               <img src={check} alt="2. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
               <div style={{ display: 'inline-table' }}>당신에 톤에 딱 맞는 맞춤 파운데이션 추천을 받아보세요!</div>
             </div>
-            <Popup trigger={<button type="button">Submit</button>} modal>
-              <div className="image_input">
-                <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
-                <div className="image_preview">
-                  <img src={fileurl} alt="Please upload a Selfie! :)" />
-                  <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
-                  <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+            <div className="takephoto">
+              <Popup trigger={<button type="button">사진이 없으신가요?</button>} modal>
+                <div className="image_input">
+                  <Webcam
+                    audio={false}
+                    height={540}
+                    ref={this.setRef}
+                    screenshotFormat="image/jpeg"
+                    width={650}
+                    mirrored
+                  />
+                  <button id="photo-input" type="button" onClick={this.capture}>Take Photo</button>
                 </div>
-              </div>
-            </Popup>
-            <Popup trigger={<button type="button">Take</button>} modal>
-              <div className="image_input">
-                <Webcam
-                  audio={false}
-                  height={350}
-                  ref={this.setRef}
-                  screenshotFormat="image/jpeg"
-                  width={350}
-                />
-                <button id="photo-input" type="button" onClick={this.capture}>Capture!</button>
-                <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
-              </div>
-            </Popup>
+              </Popup>
+            </div>
+            <div className="submit">
+              <Popup trigger={<button type="button">Submit</button>} modal>
+                <div className="image_input">
+                  <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
+                  <div className="image_preview">
+                    <img src={fileurl} alt="Please upload a Selfie! :)" />
+                    <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
+                    <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+                  </div>
+                </div>
+              </Popup>
+            </div>
           </div>
         </div>
       );

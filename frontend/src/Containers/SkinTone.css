@@ -15,10 +15,36 @@
   width:50px;
   height: 40px;
 }
+.takephoto button {
+  margin: 10px;
+  font:inherit;
+  background-color:transparent;
+  border:none;
+  cursor: pointer;
+}
 
+.takephoto button:hover,
+.takephoto button:active {
+  color:#9b45a7;
 
-.SkinTone button {
-    margin : 10px 0;
+}
+
+.submit button {
+  margin : 5px;
+  padding: 5px;
+  font : inherit;
+  background-color : transparent;
+  color : black;
+  cursor : pointer;
+  border-color:#9b45a7;
+}
+.submit button:hover,
+.submit button:active {
+    color:white;
+    background-color:#9b45a7;
+}
+.SkinTone .image_input button {
+    margin : 5px;
     padding: 5px;
     font : inherit;
     background-color : transparent;
