@@ -1,6 +1,5 @@
 .header {
     width:100%;
-    padding: 10px;
     height: 60px;
     padding: 1.3rem 1rem 1.3rem 1rem;
     color: white;
@@ -20,7 +19,7 @@
     font-size: 40px; 
     text-decoration: none;
     margin: 0 20px 0 20px;
-    font-family:"Big Caslon";
+    font-family:"Big Caslon", cursive;
     letter-spacing:.15rem;
 
 }
