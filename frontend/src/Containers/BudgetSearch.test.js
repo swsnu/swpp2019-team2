@@ -201,7 +201,6 @@ describe('<BudgetSearch />', () => {
     expect(newInstance.state.itemNum).toEqual(1);
   });
 
-  
 
   it('should redirect to /login when not logged_in', () => {
     const component = mount(budgetsearch);

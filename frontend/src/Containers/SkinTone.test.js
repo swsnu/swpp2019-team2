@@ -126,7 +126,6 @@ describe('<SkinTone />', () => {
     expect(window.alert).toBeCalledTimes(8);
   });
 
-  
 
   it('should redirect to /login when not logged_in', () => {
     const component = mount(skintone);
