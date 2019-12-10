@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import CheckBox from './CheckBox';
 import ItemDisplay from './ItemDisplay';
+import Header from '../Components/Header';
 
 const options = [
   { value: 0, label: '0원 ~ 5000원' }, // 삭제가능
@@ -41,7 +42,6 @@ class BudgetSearch extends Component {
       itemNum: 2,
       budgetRange: null,
       initialized: true,
-      render: false,
 
     };
   }
@@ -51,31 +51,6 @@ class BudgetSearch extends Component {
     this.props.getUserInfo();
   }
 
-
-  logoutHandler = () => {
-    this.props.Logout();
-    this.props.onTryAutoSignup();
-  }
-
-  mypageHandler = (id) => {
-    this.props.history.replace(`../mypage/${id}`);
-  }
-
-  searchHandler = () => {
-    this.props.history.replace('../search');
-  };
-
-  budgetHandler = () => {
-    this.props.history.replace('../budget');
-  };
-
-  toneHandler = () => {
-    this.props.history.replace('../skintone');
-  };
-
-  saleHandler = () => {
-    this.props.history.replace('../sale');
-  };
 
   /* set_budget = (event) => {
       this.setState({budget:event.target.value})
@@ -230,40 +205,15 @@ class BudgetSearch extends Component {
   }
 
   render() {
-    let infoString = '';
-    if (this.state.render === false) {
-      this.props.user.map((res) => (
-        this.setState({ nickName: res.nick_name })
-      ));
-      this.setState({ render: true });
-    }
-    if (localStorage.getItem('nickname')) {
-      infoString = `Hello, ${localStorage.getItem('nickname')}!`;
-    }
+    const { history } = this.props;
     const {
-      id, itemNum, find1, find2, find3, find4, find5, show, combi,
+      itemNum, find1, find2, find3, find4, find5, show, combi,
     } = this.state;
     const strNumItems = '<Choose Number of Items>';
     const strBudget = '<Choose Your Budget Range>';
     return (
       <div className="BudgetSearch">
-        {/* <div id = "LOGO">
-                    <img src = {logo} alt = "COSMOS" width = "100" />
-                </div> */}
-        <div className="upperbar">
-          <h1>Budget Search</h1>
-          <div className="buttons">
-            <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
-            <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
-          </div>
-          {infoString}
-        </div>
-        <div className="Menubar">
-          <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
-          <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
-          <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
-          <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
-        </div>
+        <Header history={history} selected={1} />
         <div className="Content">
           <div style={{ display: 'flex' }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
