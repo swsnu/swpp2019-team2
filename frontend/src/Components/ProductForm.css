@@ -19,6 +19,10 @@ a.productItem > section.thumbnail {
 section.info_name.info_text {
     height:25px;
     overflow-y:scroll;
+    -ms-overflow-style: none;
+}
+section.info_name.info_text::-webkit-scrollbar {
+    display:none;
 }
 
 section.info_text {
