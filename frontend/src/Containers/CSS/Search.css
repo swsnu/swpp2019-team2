@@ -123,13 +123,13 @@ li.ProductContainer {
 div.Search div.Category > ul.Category  {
     /* display: inline-block; */
     padding: 10px 0 10px 0;
-    border: 1px solid #efefef;
     font-size: 15px;
     cursor: pointer;
     width:100%;
     display:table;
     table-layout: fixed;
-    border-bottom: 1px solid rgba(97, 1, 97, 0.7);
+    border-bottom: 2px solid lightgrey;
+    border-top:2px solid lightgrey;
 
 }
 
@@ -144,6 +144,7 @@ div.Search > div.Content {
    text-align: left; 
    table-layout: fixed;
    width:100%;
+   margin-left:25px;
 }
 div.Search div.ResultDiv {
     display:table-cell;
@@ -160,7 +161,8 @@ div.Search div.Category button#remove-all-selection.clearAll {
 }
 
 ul.Category > div > button.Product:hover {
-    background-color:rgb(255, 238, 255);
+    background-color:transparent;
+    color:black;
 }
 
 
@@ -182,20 +184,23 @@ div.Search > div.Content > div.Category > button.searchProduct {
     width: 100%;
     background:transparent;
     border:none;
+    font-weight: bold;
     font-size:20px;
-    padding : 5px 0 15px 0;
+    padding : 15px 0 15px 0;
 }
 
 div.Search > div.Content > div.Category > button.searchProduct:hover {
     color:rgb(122, 14, 168);
     cursor:pointer;
-    background-color:rgb(255, 238, 255);
+    background-color:white;
 }
 
 div.Search > div.Content > div.Category {
     display:table-cell;
     vertical-align: top;
-    width:24%;
+    width:20%;
+    border : #bfbdbd 1.5px solid;
+    background-color:#fbf8f8;
 }
 
 div.Search > div.Content > div.Category.fixed {
@@ -225,4 +230,5 @@ div.Search div.Category > div.Delete-Area > div.delete-button > button {
     width:100%;
     border:none;
     font-size:15px;
+    background-color:#fbf8f8;
 }
