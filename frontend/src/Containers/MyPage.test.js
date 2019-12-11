@@ -126,8 +126,8 @@ describe('<SkinTone />', () => {
   });
   it('should call confirmHandler', () => {
     const spyHistoryReplace = jest
-    .spyOn(history, 'push')
-    .mockImplementation(() => {});
+      .spyOn(history, 'push')
+      .mockImplementation(() => {});
     const component = mount(mypage);
     const wrapper = component.find('#modify-button');
     wrapper.simulate('click');
@@ -135,4 +135,3 @@ describe('<SkinTone />', () => {
     expect(spyPutInfo2).toBeCalledTimes(1);
   });
 });
-

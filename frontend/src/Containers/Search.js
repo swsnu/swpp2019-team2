@@ -68,7 +68,6 @@ class Search extends Component {
     } else {
       menu = <button type="button" id="log-in-button" onClick={() => this.login()}>Log-in</button>;
     }
-    const backLogin = '';
     let infoString = '';
     if (localStorage.getItem('nickname')) {
       infoString = `Hello, ${localStorage.getItem('nickname')}!`;
@@ -129,7 +128,6 @@ class Search extends Component {
           <div className="headerButton">
             <button id="my-page-button" type="button" onClick={() => this.mypage()}>My Page</button>
             {menu}
-            {backLogin}
           </div>
         </div>
 
