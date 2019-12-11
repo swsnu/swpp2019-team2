@@ -37,12 +37,21 @@ class Search extends Component {
     };
   }
 
-  componentDidMount() { // initialize state
+  async componentDidMount() { // initialize state
     const { onTryAutoSignup } = this.props;
     onTryAutoSignup();
+    await this.props.getUserProfile();
+    await this.props.getUserInfo();
+    this.props.userProfile.map((res) => ((
+      localStorage.setItem('preferColor', res.prefer_color),
+      localStorage.setItem('preferBase', res.prefer_base),
+      localStorage.setItem('preferBrand', res.prefer_brand)
+    )));
+    this.props.userInfo.map((res) => (
+      localStorage.setItem('email', res.email)
+    ));
     window.addEventListener('scroll', this.onScroll);
   }
-
 
   shouldComponentUpdate(nextProps, nextState) {
     const { searchResult } = this.props;
@@ -165,12 +174,16 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  userProfile: state.cosmos.User,
+  userInfo: state.cosmos.User2,
 });
 
 
 const mapDispatchToProps = (dispatch) => ({
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserProfile: () => dispatch(actionCreators.getUser()),
+  getUserInfo: () => dispatch(actionCreators.getUser2()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

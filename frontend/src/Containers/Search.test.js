@@ -30,7 +30,10 @@ const stubSeletedUserT = {
     id: 2, name: 'test_name2', price: 6000, category: 'LIP_T', brand: 1, color: 1,
   }],
   User: [{
-    nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+    prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+  }],
+  User2: [{
+    email: 'a',
   }],
   token: null,
   loading: false,
@@ -45,7 +48,10 @@ const stubSeletedUserF = {
     id: 2, name: 'test_name2', price: 6000, category: 'LIP_T', brand: 1, color: 1,
   }],
   User: [{
-    nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+    prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+  }],
+  User2: [{
+    email: 'a',
   }],
   token: 'a',
   loading: false,
@@ -97,6 +103,7 @@ const stubInitState = {
   token: null,
   loading: false,
   error: null,
+  User2: [],
 };
 describe('<Liplist />', () => {
   const history = createBrowserHistory();
@@ -105,6 +112,7 @@ describe('<Liplist />', () => {
   let spylogout;
   let spyauthCheckState;
   let spyuserInfo;
+  let spyuserInfo2;
   const mockStore = getMockStore(stubSeletedUserT);
   beforeEach(() => {
     lipList = (
@@ -119,6 +127,8 @@ describe('<Liplist />', () => {
         </Router>
       </Provider>
     );
+    jest.spyOn(window.localStorage, 'getItem');
+    jest.spyOn(window.localStorage, 'setItem');
     spygetLips = jest.spyOn(actions, 'getProducts')
       .mockImplementation(() => (dispatch) => {});
     spylogout = jest.spyOn(actions, 'logout')
@@ -127,13 +137,25 @@ describe('<Liplist />', () => {
       .mockImplementation(() => (dispatch) => {});
     spyuserInfo = jest.spyOn(actions, 'getUser')
       .mockImplementation(() => (dispatch) => {});
+    spyuserInfo2 = jest.spyOn(actions, 'getUser2')
+      .mockImplementation(() => (dispatch) => {});
+  });
+  it('should click logout', () => {
+    localStorage.setItem('token', 'test-token');
+    localStorage.setItem('nickname', 'test_nickname');
+    const component = mount(lipList);
+    const button = component.find('#log-out-button');
+    button.simulate('click');
+    const wrapper = component.find('.spyLip');
+    expect(spyauthCheckState).toHaveBeenCalledTimes(2);
   });
   it('should click login', () => {
+    localStorage.removeItem('token');
     const component = mount(lipList);
     const button = component.find('#log-in-button');
     button.simulate('click');
     const wrapper = component.find('.spyLip');
-    expect(spyauthCheckState).toHaveBeenCalledTimes(1);
+    expect(spyauthCheckState).toHaveBeenCalledTimes(3);
   });
   it('should click mypage', () => {
     const component = mount(lipList);

@@ -73,6 +73,7 @@
 
 div.Search > div.slide-container {
     z-index: 1;
+    padding-top: 110px;
 }
 
 .each-slide > div {
@@ -80,7 +81,7 @@ div.Search > div.slide-container {
     align-items: center;
     justify-content: center;
     background-size: cover;
-    height: 400px;
+    height: 500px;
     margin: auto;
   }
   
