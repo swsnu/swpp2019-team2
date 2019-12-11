@@ -1,4 +1,4 @@
-.header {
+p.header {
     width:100%;
     height: 60px;
     padding: 1.3rem 1rem 1.3rem 1rem;
@@ -73,7 +73,6 @@
 
 div.Search > div.slide-container {
     z-index: 1;
-    padding-top: 110px;
 }
 
 .each-slide > div {
@@ -81,7 +80,7 @@ div.Search > div.slide-container {
     align-items: center;
     justify-content: center;
     background-size: cover;
-    height: 500px;
+    height: 400px;
     margin: auto;
   }
   
