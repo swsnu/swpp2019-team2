@@ -37,10 +37,6 @@ class SkinTone extends Component {
       this.props.history.replace('../mypage');
     }
 
-    menuHandler = () => {
-      this.props.history.replace('../main');
-    }
-
     fileinputHandler = (event) => {
       event.preventDefault();
       const reader = new FileReader();
@@ -154,7 +150,7 @@ class SkinTone extends Component {
               <div style={{ display: 'inline-table' }}>당신에 톤에 딱 맞는 맞춤 파운데이션 추천을 받아보세요!</div>
             </div>
             <div className="takephoto">
-              <Popup trigger={<button type="button">사진이 없으신가요?</button>} modal>
+              <Popup className="webcam-modal" trigger={<button id="webcammodal" type="button">사진이 없으신가요?</button>} modal>
                 <div className="image_input">
                   <Webcam
                     audio={false}
@@ -169,7 +165,7 @@ class SkinTone extends Component {
               </Popup>
             </div>
             <div className="submit">
-              <Popup trigger={<button type="button">Submit</button>} modal>
+              <Popup className="submit-modal" trigger={<button id="submitmodal" type="button">Submit</button>} modal>
                 <div className="image_input">
                   <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
                   <div className="image_preview">

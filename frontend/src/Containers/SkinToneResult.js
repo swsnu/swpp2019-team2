@@ -22,6 +22,15 @@ class SkinToneResult extends Component {
       } */
   }
 
+      logoutHandler = () => {
+        this.props.Logout();
+        this.props.onTryAutoSignup();
+      }
+
+      mypageHandler = (id) => {
+        this.props.history.replace(`../mypage/${id}`);
+      }
+
       searchHandler = () => {
         this.props.history.replace('../search');
       };
