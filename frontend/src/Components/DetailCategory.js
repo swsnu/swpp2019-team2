@@ -1,6 +1,7 @@
 import React from 'react';
 import { CATEGORY } from './ProductCategory';
 import './DetailCategory.css';
+import check from '../image/checkmark.png';
 
 class DetailCategory extends React.Component {
   getCategory = (id) => {
@@ -15,10 +16,20 @@ class DetailCategory extends React.Component {
             const subkeyId = `${key}=${colorData[colorKey][0]}&`;
             const subColors = colorData[colorKey][1].map((hex) => {
               const style = { backgroundColor: hex };
-              const colorId = `sub_color=${hex}&`;
+              const colorId = `sub_color=${hex.replace('#', '')}&`;
+              const onClickColor = (e) => {
+                if (e.target.checked) {
+                  e.target.nextElementSibling.firstChild.classList.add('on');
+                } else {
+                  e.target.nextElementSibling.firstChild.classList.remove('on');
+                }
+              };
               return (
-                <label htmlFor={colorId} className="color-selection-chip" key={hex} style={style}>
-                  <input className="color-selection-input-box" id={colorId} type="checkbox" />
+                <label key={hex} htmlFor={colorId} className="color-selection-chip">
+                  <input className="color-selection-input-box" onClick={onClickColor} id={colorId} type="checkbox" />
+                  <span className="color-circle" style={style}>
+                    <img className="checkmark" src={check} alt="" />
+                  </span>
                 </label>
               );
             });
@@ -29,10 +40,12 @@ class DetailCategory extends React.Component {
               lb.parentElement.nextElementSibling.style = styleStr;
             };
             return (
-              <div key={colorKey} className="select-container">
-                <label className="selectionValue" key={colorKey} htmlFor={subkeyId}>
-                  {colorKey}
-                  <input type="checkbox" onClick={onClick} value={colorKey} id={subkeyId} />
+              <div key={colorKey} className="page__toggle">
+                <label htmlFor={subkeyId} key={colorKey} className="toggle">
+                  <input className="toggle__input" onClick={onClick} type="checkbox" value={colorKey} id={subkeyId} />
+                  <span className="toggle__label">
+                    <span className="toggle__text">{colorKey}</span>
+                  </span>
                 </label>
                 <div style={style} className="sub-color-visual sub-select-container">{subColors}</div>
               </div>
@@ -53,9 +66,11 @@ class DetailCategory extends React.Component {
             xxx = Object.keys(subdata).map((x) => {
               const subKey = `${data[value][1][0]}=${subdata[x]}&`;
               return (
-                <label className="sub-selection-chip" key={subKey} htmlFor={subKey}>
-                  <input className="sub-selection-chip" type="checkbox" value={x} id={subKey} />
-                  {x}
+                <label key={subKey} htmlFor={subKey} className="sub-toggle">
+                  <input className="sub-toggle__input" type="checkbox" value={x} id={subKey} />
+                  <span className="sub-toggle__label">
+                    <span className="sub-toggle__text">{x}</span>
+                  </span>
                 </label>
               );
             });
@@ -73,10 +88,12 @@ class DetailCategory extends React.Component {
             }
           };
           return (
-            <div className="select-container" key={keyId}>
-              <label className="selectionValue" htmlFor={keyId}>
-                {value}
-                <input type="checkbox" onClick={onClick} value={value} id={keyId} />
+            <div key={keyId} className="page__toggle">
+              <label htmlFor={keyId} className="toggle">
+                <input className="toggle__input" onClick={onClick} type="checkbox" value={value} id={keyId} />
+                <span className="toggle__label">
+                  <span className="toggle__text">{value}</span>
+                </span>
               </label>
               <div style={style} className="sub-select-container">{xxx}</div>
             </div>
@@ -96,10 +113,12 @@ class DetailCategory extends React.Component {
         const subkeyId = `${key}=${data[subkey]}&`;
         // subres = 체크박스 1개들의 목록
         return (
-          <div key={subkey} className="select-container">
-            <label className="selectionValue" htmlFor={subkeyId}>
-              {subkey}
-              <input type="checkbox" id={subkeyId} />
+          <div key={subkey} className="page__toggle">
+            <label htmlFor={subkeyId} className="toggle">
+              <input className="toggle__input" type="checkbox" id={subkeyId} />
+              <span className="toggle__label">
+                <span className="toggle__text">{subkey}</span>
+              </span>
             </label>
           </div>
         );

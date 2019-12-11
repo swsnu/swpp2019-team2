@@ -179,6 +179,10 @@ div.Search > div.Content > div.Category > button.searchProduct {
     padding : 5px 0 15px 0;
 }
 
+div.Search > div.Content > div.Category > button.searchProduct:hover {
+    color:rgb(122, 14, 168);
+}
+
 div.Search > div.Content > div.Category {
     display:table-cell;
     vertical-align: top;
