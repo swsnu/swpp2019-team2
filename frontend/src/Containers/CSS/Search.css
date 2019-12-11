@@ -207,7 +207,6 @@ div.Search > div.Content > div.Category.fixed {
 
 div.Search div.Category > div.Delete-Area {
     display:table;
-    margin:0 10px 0 10px;
     table-layout:auto;
     margin: 5px auto 5px auto;
     vertical-align:middle;
