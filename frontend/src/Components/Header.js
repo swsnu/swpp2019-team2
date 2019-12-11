@@ -6,8 +6,14 @@ class Header extends Component {
   logout = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('token');
+    this.forceUpdate();
+    const { selected } = this.props;
+    if (selected === 2 || selected === -1) {
+      this.props.update();
+    }
   }
-
 
   render() {
     const { history, selected } = this.props;
@@ -27,7 +33,6 @@ class Header extends Component {
         </div>
       );
     }
-    // `box ${isBoxVisible ? "" : " hidden"}
     return (
       <div className="header">
         <div className="title"><a className="title-link" href=".">COSMOS</a></div>

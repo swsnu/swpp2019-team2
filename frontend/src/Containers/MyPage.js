@@ -1,12 +1,14 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { Component } from 'react';
 import Select from 'react-select';
 import { Redirect } from 'react-router-dom';
 import './MyPage.css';
 import { connect } from 'react-redux';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
+import { isUndefined, isNull } from 'util';
 import * as actionCreators from '../store/actions/index';
 import logo from '../image/LOGO.png';
-
+import Header from '../Components/Header';
 
 const optionsColor = [
   { value: 'Red', label: 'red' },
@@ -42,54 +44,20 @@ const customStyles = {
     ...base,
     width: 150,
     height: 30,
-    left: 155,
   }),
   menu: (base) => ({
     ...base,
-    left: 155,
     width: 150,
   }),
 };
 
 class MyPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: '',
-      username: '',
-      render: false,
-    };
-  }
-
   componentDidMount() {
-    this.props.onTryAutoSignup();
+    const { onTryAutoSignup } = this.props;
+    onTryAutoSignup();
+    this.forceUpdate = this.forceUpdate.bind(this);
   }
 
-  logoutHandler = () => {
-    this.props.Logout();
-    this.props.onTryAutoSignup();
-    localStorage.removeItem('nickname');
-  };
-
-  searchHandler = () => {
-    this.props.history.replace('../search');
-  };
-
-  budgetHandler = () => {
-    this.props.history.replace('../budget');
-  };
-
-  toneHandler = () => {
-    this.props.history.replace('../skintone');
-  };
-
-  saleHandler = () => {
-    this.props.history.replace('../sale');
-  };
-
-  mypageHandler = () => {
-    this.props.history.replace('../mypage');
-  }
 
   confirmHandler = () => {
     localStorage.setItem('preferColor', this.state.preferColor);
@@ -110,126 +78,81 @@ class MyPage extends Component {
 
   render() {
     let redirect = null;
-    const infoString = `Hello, ${localStorage.getItem('nickname')}!`;
     if (!localStorage.getItem('token')) {
       window.alert('로그인 후 이용해주세요');
       redirect = <Redirect to="/login" />;
     }
-
+    const { history } = this.props;
+    const username = localStorage.getItem('username');
+    const email = localStorage.getItem('email');
+    const preferColor = localStorage.getItem('preferColor');
+    const preferBase = localStorage.getItem('preferBase');
+    const preferBrand = localStorage.getItem('preferBrand');
     return (
-      <div className="MainPage">
+      <div className="MyPage">
         {redirect}
-        <div className="upperbar">
-          <h1>My Page</h1>
-          <div className="buttons">
-            <button type="button" id="log-out-button" onClick={() => this.logoutHandler()}>Log-out</button>
-            {infoString}
-            <button id="my-page-button" type="button" onClick={() => this.mypageHandler()}>My Page</button>
-          </div>
-        </div>
-        <div className="Menubar">
-          <button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button>
-          <button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button>
-          <button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button>
-          <button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button>
-        </div>
-        <div className="Menu1">
-          <div className="Menu1_Border">
-            <h1>내 정보</h1>
+        <Header history={history} selected={-1} update={this.forceUpdate.bind(this)} />
+        <div className="Content">
+          <div className="Menu1">
+            <h1>Information</h1>
             <div className="info">
-              <br />
-o 아이디: &emsp;
-              {localStorage.getItem('username')}
-              <br />
-              <br />
-o 이메일: &emsp;
-              {localStorage.getItem('email')}
-              <br />
-              <br />
-o 선호 색상: &emsp;
-              {localStorage.getItem('preferColor')}
-              <br />
-              <br />
-o 선호 베이스: &emsp;
-              {localStorage.getItem('preferBase')}
-호
-              <br />
-              <br />
-o 선호 브랜드: &emsp;
-              {localStorage.getItem('preferBrand')}
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
+              <div className="info_text">{`o 아이디 : ${username}`}</div>
+              <div className="info_text">{`o 이메일 : ${email}`}</div>
+              <div className="info_text">{`o 선호 색상 : ${(isUndefined(preferColor) || isNull(preferColor)) ? '선호 색상 없음' : preferColor}`}</div>
+              <div className="info_text">{`o 선호 베이스 : ${(isUndefined(preferBase) || isNull(preferBase)) ? '선호 베이스 없음' : preferBase}`}</div>
+              <div className="info_text">{`o 선호 브랜드 : ${(isUndefined(preferBrand) || isNull(preferBrand)) ? '선호 브랜드 없음' : preferBrand}`}</div>
               <div>
                 <img id="logo" src={logo} alt="COSMOS" width="100" />
               </div>
             </div>
           </div>
-        </div>
-        <div className="Menu2">
-          <div className="Menu2_Border">
-            <br />
-            <br />
-o 선호 색상 변경:
-            <br />
-            <br />
-            <Select
-              id="color-input"
-              options={optionsColor}
-              // onChange={(event) => localStorage.setItem('preferColor', event.label)}
-              onChange={(event) => this.setState({ preferColor: event.label })}
-              styles={customStyles}
-            />
-            <br />
-o 선호 베이스 변경:
-            <br />
-            <br />
-            <Select
-              id="base-input"
-              options={optionsBase}
-              // onChange={(event) => localStorage.setItem('preferBase', event.label)}
-              onChange={(event) => this.setState({ preferBase: event.label })}
-              styles={customStyles}
-            />
-            <br />
-            <br />
-o 선호 브랜드 변경:
-            <ReactMultiSelectCheckboxes
-              id="brand-input"
-              options={optionsBrand}
-              onChange={(event) => this.changeBrand(event)}
-            />
-
+          <div className="Menu2">
+            <div className="selection_list">
+              <div className="info_change">
+                o 선호 색상 변경:
+                <div className="info_select_box">
+                  <Select
+                    id="color-input"
+                    options={optionsColor}
+                    onChange={(event) => this.setState({ preferColor: event.label })}
+                    styles={customStyles}
+                  />
+                </div>
+              </div>
+              <div className="info_change">
+                o 선호 베이스 변경:
+                <div className="info_select_box">
+                  <Select
+                    id="base-input"
+                    options={optionsBase}
+                    onChange={(event) => this.setState({ preferBase: event.label })}
+                    styles={customStyles}
+                  />
+                </div>
+              </div>
+              <div className="info_change">
+                o 선호 브랜드 변경:
+                <div className="info_multi_select_box">
+                  <ReactMultiSelectCheckboxes
+                    id="brand-input"
+                    options={optionsBrand}
+                    onChange={(event) => this.changeBrand(event)}
+                  />
+                </div>
+              </div>
+            </div>
             <div className="button">
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <button id="modify-button" type="button" onClick={() => this.confirmHandler()}>수 정</button>
+              <button id="modify-button" type="button" onClick={() => this.confirmHandler()}>save information</button>
             </div>
           </div>
         </div>
-
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.cosmos.token != null,
-  user: state.cosmos.User,
-  user2: state.cosmos.User2,
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
-});
 
 const mapDispatchToProps = (dispatch) => ({
-  Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   putUserInfo: (preferColor, preferBase, preferBrand) => dispatch(actionCreators.putUser2(
     preferColor, preferBase, preferBrand,
@@ -237,6 +160,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(MyPage);
