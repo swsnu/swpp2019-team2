@@ -10,6 +10,7 @@ import Logo2 from '../image/slide2.jpg';
 import Logo3 from '../image/slide3.jpg';
 import Header from '../Components/Header';
 import removeIcon from '../image/remove-icon.png';
+import myIcon from '../image/king.png';
 
 const slideImages = [
   Logo1,
@@ -151,6 +152,10 @@ class Search extends Component {
             <div className="Delete-Area">
               <div className="delete-image"><img src={removeIcon} alt="" /></div>
               <div className="delete-button"><button type="button" onClick={click} id="remove-all-selection"> Remove All Selection  </button></div>
+            </div>
+            <div className="Personal-Area">
+              <div className="personal-image"><img src={myIcon} width='30' /></div>
+              <div className="personal-button"><button type="button" onClick={click} id="personal-selection"> 나만의 상점  </button></div>
             </div>
             {lip}
             {base}
