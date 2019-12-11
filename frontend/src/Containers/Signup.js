@@ -19,12 +19,18 @@ class RegistrationForm extends React.Component {
   }
 
   LoginHandler = () => {
-    this.props.Signup(this.state.username, this.state.email, this.state.password);
-    this.props.onTryAutoSignup();
-    localStorage.setItem('username', this.state.username);
-    localStorage.setItem('password', this.state.password);
-    localStorage.setItem('nickname', this.state.username);
-    this.setState({ signup: true });
+    const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (!this.state.email.match(regExp)) {
+      window.alert('이메일 형식이 올바르지 않습니다');
+    } else {
+      this.props.Signup(this.state.username, this.state.email, this.state.password);
+      this.props.onTryAutoSignup();
+      localStorage.setItem('username', this.state.username);
+      localStorage.setItem('password', this.state.password);
+      localStorage.setItem('nickname', this.state.username);
+      this.setState({ signup: true });
+      window.alert('회원가입이 완료되었습니다.');
+    }
   }
 
   mainHandler = () => {

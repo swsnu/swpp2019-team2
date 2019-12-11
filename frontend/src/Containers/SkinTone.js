@@ -8,6 +8,7 @@ import * as actionCreators from '../store/actions/index';
 import check from '../image/check.png';
 import infoJpg from '../image/ML_intro.jpg';
 
+import Header from '../Components/Header';
 
 class SkinTone extends Component {
   constructor(props) {
@@ -27,15 +28,6 @@ class SkinTone extends Component {
     this.props.onTryAutoSignup();
     this.props.getUserInfo();
   }
-
-    logoutHandler = () => {
-      this.props.Logout();
-      this.props.onTryAutoSignup();
-    }
-
-    mypageHandler = () => {
-      this.props.history.replace('../mypage');
-    }
 
     fileinputHandler = (event) => {
       event.preventDefault();
@@ -65,21 +57,6 @@ class SkinTone extends Component {
       this.props.send_picture(picture);
     }
 
-    searchHandler = () => {
-      this.props.history.replace('../search');
-    };
-
-    budgetHandler = () => {
-      this.props.history.replace('../budget');
-    };
-
-    toneHandler = () => {
-      this.props.history.replace('../skintone');
-    };
-
-    saleHandler = () => {
-      this.props.history.replace('../sale');
-    };
 
     setRef = (webcam) => {
       this.webcam = webcam;
@@ -102,79 +79,59 @@ class SkinTone extends Component {
 
     render() {
       let redirect = null;
-      let infoString = '';
-      if (this.state.render === false) {
-        this.props.user.map((res) => (
-          this.setState({ nickName: res.nick_name })
-        ));
-        this.setState({ render: true });
-      }
-      infoString = `Hello, ${localStorage.getItem('nickname')}!`;
       if (!localStorage.getItem('token')) {
         window.alert('로그인을 먼저 진행해주세요');
         redirect = <Redirect to="/login" />;
       }
+      const { history } = this.props;
       const inputImage = '<Image Input>';
-      const { fileurl, id } = this.state;
+      const { fileurl } = this.state;
       return (
         <div className="SkinTone">
           {redirect}
-          {/* <div id = "LOGO">
-                    <img src = {logo} alt = "COSMOS" width = "100" />
-                </div> */}
-          <div className="upperbar">
-            <h1>Skin Tone Analysis</h1>
-            <div className="buttons">
-              <button id="log-out-button" type="button" onClick={() => this.logoutHandler()}>Log-Out</button>
-              <button id="my-page-button" type="button" onClick={() => this.mypageHandler(id)}>My Page</button>
-            </div>
-            {infoString}
-          </div>
-          <div className="Menubar">
-            <div><button id="Searchmenu" type="button" onClick={() => this.searchHandler()}>Search-Tag</button></div>
-            <div><button id="Budgetmenu" type="button" onClick={() => this.budgetHandler()}>Budget-Search</button></div>
-            <div><button id="Tonemenu" type="button" onClick={() => this.toneHandler()}>Tone-Analysis</button></div>
-            <div><button id="Salemenu" type="button" onClick={() => this.saleHandler()}>Sale-Info</button></div>
-          </div>
-          <div className="Intro">
-            <img src={infoJpg} alt="SkinTone Analysis" width="300px" style={{ padding: '50px' }} />
-            <div style={{ display: 'table', alignContent: 'center', margin: 'auto' }}>
-              <img src={check} alt="1. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
-              <div style={{ display: 'inline-table' }}>사진을 넣어 머신 러닝을 통해 당신의 피부색을 분석해보세요!</div>
-            </div>
-            <div style={{
-              padding: '30px', display: 'table', alignContent: 'center', margin: 'auto',
-            }}
-            >
-              <img src={check} alt="2. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
-              <div style={{ display: 'inline-table' }}>당신에 톤에 딱 맞는 맞춤 파운데이션 추천을 받아보세요!</div>
-            </div>
-            <div className="takephoto">
-              <Popup className="webcam-modal" trigger={<button id="webcammodal" type="button">사진이 없으신가요?</button>} modal>
-                <div className="image_input">
-                  <Webcam
-                    audio={false}
-                    height={540}
-                    ref={this.setRef}
-                    screenshotFormat="image/jpeg"
-                    width={650}
-                    mirrored
-                  />
-                  <button id="photo-input" type="button" onClick={this.capture}>Take Photo</button>
-                </div>
-              </Popup>
-            </div>
-            <div className="submit">
-              <Popup className="submit-modal" trigger={<button id="submitmodal" type="button">Submit</button>} modal>
-                <div className="image_input">
-                  <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
-                  <div className="image_preview">
-                    <img src={fileurl} alt="Please upload a Selfie! :)" />
-                    <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
-                    <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+          <Header history={history} selected={2} />
+          <div className="Content">
+
+            <div className="Intro">
+              <img src={infoJpg} alt="SkinTone Analysis" width="300px" style={{ padding: '50px' }} />
+              <div style={{ display: 'table', alignContent: 'center', margin: 'auto' }}>
+                <img src={check} alt="1. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
+                <div style={{ display: 'inline-table' }}>사진을 넣어 머신 러닝을 통해 당신의 피부색을 분석해보세요!</div>
+              </div>
+              <div style={{
+                padding: '30px', display: 'table', alignContent: 'center', margin: 'auto',
+              }}
+              >
+                <img src={check} alt="2. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
+                <div style={{ display: 'inline-table' }}>당신에 톤에 딱 맞는 맞춤 파운데이션 추천을 받아보세요!</div>
+              </div>
+              <div className="takephoto">
+                <Popup className="webcam-modal" trigger={<button id="webcammodal" type="button">사진이 없으신가요?</button>} modal>
+                  <div className="image_input">
+                    <Webcam
+                      audio={false}
+                      height={540}
+                      ref={this.setRef}
+                      screenshotFormat="image/jpeg"
+                      width={650}
+                      mirrored
+                    />
+                    <button id="photo-input" type="button" onClick={this.capture}>Take Photo</button>
                   </div>
-                </div>
-              </Popup>
+                </Popup>
+              </div>
+              <div className="submit">
+                <Popup className="submit-modal" trigger={<button id="submitmodal" type="button">Submit</button>} modal>
+                  <div className="image_input">
+                    <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
+                    <div className="image_preview">
+                      <img src={fileurl} alt="Please upload a Selfie! :)" />
+                      <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
+                      <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+                    </div>
+                  </div>
+                </Popup>
+              </div>
             </div>
           </div>
         </div>
@@ -189,7 +146,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   send_picture: (img) => dispatch(actionCreators.sendImage(img)),
   run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),

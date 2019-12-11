@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Search.css';
+import './CSS/Search.css';
 import { connect } from 'react-redux';
 import { Slide } from 'react-slideshow-image';
 import * as actionCreators from '../store/actions/index';
@@ -8,6 +8,8 @@ import DetailCategory from '../Components/DetailCategory';
 import Logo1 from '../image/slide1.jpg';
 import Logo2 from '../image/slide2.jpg';
 import Logo3 from '../image/slide3.jpg';
+import Header from '../Components/Header';
+import removeIcon from '../image/remove-icon.png';
 
 const slideImages = [
   Logo1,
@@ -25,47 +27,65 @@ const properties = {
 };
 
 class Search extends Component {
+  tick = true;
+
   constructor(props) {
     super(props);
     this.state = {
-      selection: null,
-      call: false,
+      selection: 'lip',
       searched: null,
     };
   }
 
-  componentDidMount() { // initialize state
-    this.props.onTryAutoSignup();
+  async componentDidMount() { // initialize state
+    const { onTryAutoSignup } = this.props;
+    onTryAutoSignup();
+    await this.props.getUserProfile();
+    await this.props.getUserInfo();
+    this.props.userProfile.map((res) => ((
+      localStorage.setItem('preferColor', res.prefer_color),
+      localStorage.setItem('preferBase', res.prefer_base),
+      localStorage.setItem('preferBrand', res.prefer_brand)
+    )));
+    this.props.userInfo.map((res) => (
+      localStorage.setItem('email', res.email)
+    ));
+    window.addEventListener('scroll', this.onScroll);
   }
 
-  logout = () => {
-    this.props.Logout();
-    this.props.onTryAutoSignup();
+  shouldComponentUpdate(nextProps, nextState) {
+    const { searchResult } = this.props;
+    const nextResult = nextProps.searchResult;
+    if (searchResult !== nextResult) {
+      const { selection } = this.state;
+      nextState.searched = selection;
+    }
+    return true;
   }
 
-  login = () => {
-    this.props.history.replace('../login');
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
   }
 
-  mypage = () => {
-    this.props.history.replace('../mypage');
+  onScroll = () => {
+    if (window.scrollY > 300 && this.tick && this.state.searched) {
+      const size = window.screen.availHeight - 270;
+      if (size > document.querySelector('div.ResultDiv').offsetHeight) return;
+      document.querySelector('div.Category').classList.add('fixed');
+      const category = document.querySelectorAll('div.detail-category');
+      category.forEach((cat) => {
+        cat.style.height = `${size}px`;
+      });
+      this.tick = false;
+    } else if (!this.tick && window.scrollY < 300) {
+      document.querySelector('div.Category').classList.remove('fixed');
+      this.tick = true;
+    }
   }
 
   render() {
-    let menu;
-    if (localStorage.getItem('token')) {
-      menu = <button type="button" id="log-out-button" onClick={() => this.logout()}>Log-out</button>;
-    } else {
-      menu = <button type="button" id="log-in-button" onClick={() => this.login()}>Log-in</button>;
-    }
-
-    const backLogin = '';
-    let infoString = '';
-    if (localStorage.getItem('nickname')) {
-      infoString = `Hello, ${localStorage.getItem('nickname')}!`;
-    }
     const { selection, searched } = this.state;
-    const { searchResult } = this.props;
+    const { searchResult, history } = this.props;
     const searchedProduct = searchResult.map((res) => (
       <ProductForm
         selection={searched}
@@ -76,16 +96,15 @@ class Search extends Component {
 
     const click = (e) => {
       if (selection !== e.target.id) {
-        this.setState({ selection: e.target.id });
-        document.querySelectorAll(`label.selectionValue > input:checked,
-      label.sub-selection-chip > input:checked,
+        if (e.target.id !== 'remove-all-selection') this.setState({ selection: e.target.id });
+        document.querySelectorAll(`label.toggle > input.toggle__input:checked,
+      label.sub-toggle > input.sub-toggle__input:checked,
       label.color-selection-chip > input:checked`).forEach((input) => {
-          input.checked = false;
+          input.click();
         });
       }
     };
-    const search = (e) => {
-      this.setState({ searched: e.target.getAttribute('category') });
+    const search = () => {
       const checked = document.querySelectorAll(`div.detail-category#${selection} input:checked`);
       let queryStr = `${selection}/`;
       if (checked.length === 0) queryStr = queryStr.concat('all');
@@ -100,30 +119,9 @@ class Search extends Component {
     const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
     /* const skincare = <DetailCategory
       category="skincare" selected={(selection === 'skincare')} clickSearch={search} />; */
-
     return (
       <div className="Search">
-        <div className="header">
-          <div className="search">Cosmos&emsp;│</div>
-          <div className="headerMenu">
-            <a className="sel_side" href="search">Search</a>
-&emsp;&emsp;&emsp;&emsp;
-            <a className="side" href="budget">Budget Search</a>
-&emsp;&emsp;&emsp;&emsp;
-            <a className="side" href="skintone">Tone Analysis</a>
-&emsp;&emsp;&emsp;&emsp;
-            <a className="side" href="sale">Sales Info</a>
-          </div>
-          <div className="headerUser">
-            {infoString}
-          </div>
-          <div className="headerButton">
-            <button id="my-page-button" type="button" onClick={() => this.mypage()}>My Page</button>
-            {menu}
-            {backLogin}
-          </div>
-        </div>
-
+        <Header history={history} selected={0} />
         <div className="slide-container">
           <Slide {...properties}>
             <div className="each-slide">
@@ -139,8 +137,8 @@ class Search extends Component {
         </div>
 
         <div className="Content">
-
           <div className="Category">
+            <button type="button" className="searchProduct" onClick={search}> Search </button>
             <ul className="Category">
               <div><button type="button" className="Product" onClick={click} id="lip">Lip</button></div>
               <div><button type="button" className="Product" onClick={click} id="base">Base</button></div>
@@ -150,6 +148,10 @@ class Search extends Component {
               {/* <button type="button"
                 className="Product" onClick={click} id="skincare">Skin</button> */}
             </ul>
+            <div className="Delete-Area">
+              <div className="delete-image"><img src={removeIcon} alt="" /></div>
+              <div className="delete-button"><button type="button" onClick={click} id="remove-all-selection"> Remove All Selection  </button></div>
+            </div>
             {lip}
             {base}
             {/* {eye}  */}
@@ -172,13 +174,16 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
+  userProfile: state.cosmos.User,
+  userInfo: state.cosmos.User2,
 });
 
 
 const mapDispatchToProps = (dispatch) => ({
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
-  Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  getUserProfile: () => dispatch(actionCreators.getUser()),
+  getUserInfo: () => dispatch(actionCreators.getUser2()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

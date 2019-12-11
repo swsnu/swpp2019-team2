@@ -3,11 +3,11 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { getMockStore } from '../test-utils/mocks';
 import { history } from '../store/store';
-
+import 'jest-localstorage-mock';
 import * as actionCreators from '../store/actions/cosmos';
 // import SalesInfo from './SalesInfo';
 import MyPage from './MyPage';
@@ -32,7 +32,7 @@ const stubInitialState = {
 };
 
 const mockStore = getMockStore(stubInitialState);
-const mockStore2 = getMockStore(stubStateC);
+const mockStore1 = getMockStore(stubStateC);
 describe('<SkinTone />', () => {
   let mypage; let spyGetUser; let spylogout; let spyUserInfo;
   let spyUserInfo2; let spyPutInfo2;
@@ -67,11 +67,6 @@ describe('<SkinTone />', () => {
   });
   afterEach(() => {
     jest.clearAllMocks();
-  });
-  it('should render MyPage', () => {
-    const component = mount(mypage);
-    const wrapper = component.find('MainPage');
-    expect(spyUserInfo).toBeCalledTimes(1);
   });
   it('should call budgetHandler when clicking budget search button', () => {
     const spyHistoryReplace = jest
@@ -130,52 +125,20 @@ describe('<SkinTone />', () => {
     expect(spyHistoryReplace).toBeCalledTimes(1);
   });
   it('should call confirmHandler', () => {
+    const mockFn = jest.fn();
+    localStorage.setItem('token', 'testToken');
+    localStorage.setItem('preferColor', 'testColor');
+    localStorage.setItem('preferBase', 'testBase');
+    localStorage.setItem('preferBrand', 'testBrand');
+    const spyHistoryReplace = jest
+      .spyOn(history, 'push')
+      .mockImplementation(() => {});
     const component = mount(mypage);
-    const wrapper = component.find('#modify-button');
-    wrapper.simulate('click');
-    expect(spyGetUser).toBeCalledTimes(1);
+    const wrapper = component.find('#brand-input');
+    wrapper.at(0).simulate('click');
+    const wrapper2 = component.find('#modify-button');
+    wrapper2.simulate('click');
+    expect(spyHistoryReplace).toBeCalledTimes(1);
     expect(spyPutInfo2).toBeCalledTimes(1);
-  });
-});
-
-describe('<SkinTone />', () => {
-  let mypage; let spyGetUser; let spylogout; let spyUserInfo;
-  let spyUserInfo2; let spyPutInfo2;
-  beforeEach(() => {
-    mypage = (
-      <Provider store={mockStore2}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route
-              path="/"
-              render={
-                (props) => (
-                  <MyPage {...props} />
-                )
-              }
-            />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>
-    );
-    spyGetUser = jest.spyOn(actionCreators, 'authCheckState')
-      .mockImplementation(() => (dispatch) => {});
-    spylogout = jest.spyOn(actionCreators, 'logout')
-      .mockImplementation((user) => (dispatch) => {});
-    spyUserInfo = jest.spyOn(actionCreators, 'getUser')
-      .mockImplementation(() => (dispatch) => {});
-    spyUserInfo2 = jest.spyOn(actionCreators, 'getUser2')
-      .mockImplementation(() => (dispatch) => {});
-    spyPutInfo2 = jest.spyOn(actionCreators, 'putUser2')
-      .mockImplementation(() => (dispatch) => {});
-    window.alert = jest.fn();
-  });
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-  it('should render SkinTone', () => {
-    const component = mount(mypage);
-    const wrapper = component.find('MainPage');
-    expect(spyUserInfo).toBeCalledTimes(1);
   });
 });

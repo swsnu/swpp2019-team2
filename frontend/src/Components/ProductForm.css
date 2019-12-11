@@ -18,6 +18,7 @@ a.productItem > section.thumbnail {
 }
 section.info_name.info_text {
     height:25px;
+    overflow-y:scroll;
 }
 
 section.info_text {

@@ -22,9 +22,10 @@ const mockStore = getMockStore({
   selectedArticle: null,
   Comments: [],
   selectedComment: null,
-  Users: [],
+  User: [],
   selectedUser: null,
   result: [],
+  User2: [],
 });
 
 

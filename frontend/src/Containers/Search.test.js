@@ -30,7 +30,10 @@ const stubSeletedUserT = {
     id: 2, name: 'test_name2', price: 6000, category: 'LIP_T', brand: 1, color: 1,
   }],
   User: [{
-    nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+    prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+  }],
+  User2: [{
+    email: 'a',
   }],
   token: null,
   loading: false,
@@ -45,7 +48,10 @@ const stubSeletedUserF = {
     id: 2, name: 'test_name2', price: 6000, category: 'LIP_T', brand: 1, color: 1,
   }],
   User: [{
-    nick_name: 'a', prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+    prefer_color: 'red', prefer_base: '19', prefer_brand: '라네즈',
+  }],
+  User2: [{
+    email: 'a',
   }],
   token: 'a',
   loading: false,
@@ -97,6 +103,7 @@ const stubInitState = {
   token: null,
   loading: false,
   error: null,
+  User2: [],
 };
 describe('<Liplist />', () => {
   const history = createBrowserHistory();
@@ -105,6 +112,7 @@ describe('<Liplist />', () => {
   let spylogout;
   let spyauthCheckState;
   let spyuserInfo;
+  let spyuserInfo2;
   const mockStore = getMockStore(stubSeletedUserT);
   beforeEach(() => {
     lipList = (
@@ -119,6 +127,8 @@ describe('<Liplist />', () => {
         </Router>
       </Provider>
     );
+    jest.spyOn(window.localStorage, 'getItem');
+    jest.spyOn(window.localStorage, 'setItem');
     spygetLips = jest.spyOn(actions, 'getProducts')
       .mockImplementation(() => (dispatch) => {});
     spylogout = jest.spyOn(actions, 'logout')
@@ -127,13 +137,25 @@ describe('<Liplist />', () => {
       .mockImplementation(() => (dispatch) => {});
     spyuserInfo = jest.spyOn(actions, 'getUser')
       .mockImplementation(() => (dispatch) => {});
+    spyuserInfo2 = jest.spyOn(actions, 'getUser2')
+      .mockImplementation(() => (dispatch) => {});
+  });
+  it('should click logout', () => {
+    localStorage.setItem('token', 'test-token');
+    localStorage.setItem('nickname', 'test_nickname');
+    const component = mount(lipList);
+    const button = component.find('#log-out-button');
+    button.simulate('click');
+    const wrapper = component.find('.spyLip');
+    expect(spyauthCheckState).toHaveBeenCalledTimes(2);
   });
   it('should click login', () => {
+    localStorage.removeItem('token');
     const component = mount(lipList);
     const button = component.find('#log-in-button');
     button.simulate('click');
     const wrapper = component.find('.spyLip');
-    expect(spyauthCheckState).toHaveBeenCalledTimes(1);
+    expect(spyauthCheckState).toHaveBeenCalledTimes(3);
   });
   it('should click mypage', () => {
     const component = mount(lipList);
@@ -158,7 +180,6 @@ describe('<Liplist />', () => {
     button.simulate('click');
     expect(newInstance.state).toEqual({
       searched: null,
-      call: false,
       selection: 'base',
     });
     button.simulate('click');
@@ -167,7 +188,6 @@ describe('<Liplist />', () => {
       // preferBase: '19',
       // preferBrand: '라네즈',
       // preferColor: 'red',
-      call: false,
       selection: 'base',
       searched: null,
     });
@@ -209,18 +229,70 @@ describe('<Liplist />', () => {
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
   });
-  it('should call with proper query string', () => {
+  it('should call with proper query string & remove see', () => {
     const component = mount(lipList, { attachTo: document.body });
     const newInstance = component.find(Search.WrappedComponent).instance();
     newInstance.setState({ selection: 'cheek', searched: 'cheek' });
     const button = component.find('button.Product#cheek');
     button.simulate('click');
-    const wrapper = component.find('input.sub-selection-chip');
+    const wrapper = component.find('input.sub-toggle__input');
     wrapper.at(0).simulate('change', { target: { checked: true } });
     wrapper.at(0).instance().checked = true;
     const buttons = component.find('.searchProduct').at(0);
     buttons.simulate('click');
     expect(spygetLips).toHaveBeenLastCalledWith('cheek/color=CHK_RD&');
     component.find('button.Product#lip').simulate('click');
+    component.detach();
+  });
+  it('should click remove all selection', () => {
+    const component = mount(lipList, { attachTo: document.body });
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    newInstance.setState({ selection: 'cheek', searched: 'cheek' });
+    const button = component.find('button#remove-all-selection');
+    component.find('.searchProduct').at(0).simulate('click');
+    button.simulate('click');
+    component.detach();
+  });
+});
+
+
+describe('<Liplist />', () => {
+  const history = createBrowserHistory();
+  let lipList;
+  const resultState = {
+    result: [{
+      id: 1, name: 'test_name', price: 5000, category: 'LIP_S', brand: 1, color: 1,
+    },
+    {
+      id: 2, name: 'test_name2', price: 6000, category: 'LIP_T', brand: 1, color: 1,
+    },
+    ],
+  };
+  beforeEach(() => {
+    lipList = (
+      <Provider store={getMockStore(resultState)}>
+        <Router history={history}>
+          <Switch>
+            <Route
+              path="/"
+              render={(props) => <Search {...props} />}
+            />
+          </Switch>
+        </Router>
+      </Provider>
+    );
+  });
+  afterEach(() => { jest.clearAllMocks(); });
+  it('on scroll event', () => {
+    const component = mount(lipList, { attachTo: document.body });
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    newInstance.componentDidMount();
+    newInstance.setState({ selection: 'lip', searched: 'lip' });
+    Object.defineProperty(window, 'scrollY', { value: 500, writable: true });
+    const customEvent = new Event('scroll');
+    window.dispatchEvent(customEvent);
+    Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
+    window.dispatchEvent(customEvent);
+    newInstance.componentWillUnmount();
   });
 });
