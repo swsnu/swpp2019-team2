@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { Component } from 'react';
 import Select from 'react-select';
 import { Redirect } from 'react-router-dom';
@@ -54,7 +55,9 @@ class MyPage extends Component {
   componentDidMount() {
     const { onTryAutoSignup } = this.props;
     onTryAutoSignup();
+    this.forceUpdate = this.forceUpdate.bind(this);
   }
+
 
   confirmHandler = () => {
     console.log(this.state);
@@ -86,11 +89,10 @@ class MyPage extends Component {
     const preferColor = localStorage.getItem('preferColor');
     const preferBase = localStorage.getItem('preferBase');
     const preferBrand = localStorage.getItem('preferBrand');
-
     return (
       <div className="MyPage">
         {redirect}
-        <Header history={history} selected={-1} />
+        <Header history={history} selected={-1} update={this.forceUpdate.bind(this)} />
         <div className="Content">
           <div className="Menu1">
             <h1>Information</h1>

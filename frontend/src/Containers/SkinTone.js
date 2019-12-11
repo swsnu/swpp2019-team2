@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './SkinTone.css';
@@ -87,7 +88,7 @@ class SkinTone extends Component {
       return (
         <div className="SkinTone">
           {redirect}
-          <Header history={history} selected={2} />
+          <Header history={history} selected={2} update={this.forceUpdate.bind(this)} />
           <div className="Content">
 
             <div className="Intro">
