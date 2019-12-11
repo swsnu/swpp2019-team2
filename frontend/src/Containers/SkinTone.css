@@ -1,44 +1,10 @@
-
-.upperbar {
-  flex: 1;
-  flex-direction:row;
-  align-items:stretch;
+div.SkinTone > div.Content {
+  padding-top:110px;
   width:100%;
-  background-color:rgb(255, 220, 226);
-  text-align : center;
-  display : table;
-  /* margin-bottom: 30px; */
-  
+  display:table;
 }
 
-.upperbar .buttons #back-button{
-  display: inline-table;
-  position: absolute;
-  left : 2%;
-  top: 0%;
-  align-content: center;
-  border:none;
-}
-#arrow{
-  width:50px;
-  height: 40px;
-}
-
-.upperbar .buttons #log-out-button{
-  display: inline-table;
-  position: absolute;
-  right : 10%;
-  top : 2%;
-}
-
-.upperbar .buttons #my-page-button{
-  display: inline-table;
-  position: absolute;
-  right:4%;
-  top:2%;
-}
-
-.SkinTone button {
+div.SkinTone > div.Content button {
     margin : 10px 0;
     padding: 5px;
     font : inherit;
@@ -73,9 +39,6 @@
   cursor: pointer;
 }
 
-div.SkinTone div.Content {
-  text-align:center;
-}
 .image_preview{
   margin-bottom: 10px;
   height: 200px;
