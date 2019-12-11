@@ -75,7 +75,6 @@ class SkinToneResult extends Component {
               <div>{ML.user_id}</div>
               <h4>Foundation Recommendation</h4>
               <div>{FoundationResult}</div>
-              <div className="retry"><button id="Retry" type="button" onClick={() => this.toneHandler()}>Re-try!</button></div>
             </div>
           </div>
         </div>

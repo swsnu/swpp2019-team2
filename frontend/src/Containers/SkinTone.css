@@ -1,7 +1,7 @@
 div.SkinTone > div.Content {
   padding-top:110px;
   width:100%;
-  background-color:rgb(255, 220, 226);
+  background-color:white;
   text-align : center;
   display : table;
   /* margin-bottom: 30px; */
@@ -13,7 +13,7 @@ div.SkinTone > div.Content {
   height: 40px;
 }
 .takephoto button {
-  margin: 10px;
+  margin: auto;
   font:inherit;
   background-color:transparent;
   border:none;
@@ -27,7 +27,7 @@ div.SkinTone > div.Content {
 }
 
 .submit button {
-  margin : 5px;
+  margin : 15px;
   padding: 5px;
   font : inherit;
   background-color : transparent;
@@ -41,19 +41,19 @@ div.SkinTone > div.Content {
     background-color:#9b45a7;
 }
 .SkinTone .image_input button {
-    margin : 5px;
+    margin : auto;
   display:table;
 }
 
-div.SkinTone > div.Content button {
-    margin : 10px 0;
+/*div.SkinTone > div.Content button {
+    margin : auto;
     padding: 5px;
     font : inherit;
     background-color : transparent;
     color : black;
     cursor : pointer;
     border-color:#9b45a7;
-}
+}*/
 .SkinTone .StartButton button:hover,
 .SkinTone .StartButton button:active {
     color:white;
@@ -70,10 +70,6 @@ div.SkinTone > div.Content button {
     padding:30px;
 }
 .SkinTone .image_preview input{
-  border-bottom: 1px solid rgb(245, 168, 228);
-  border-right: 1px solid rgb(245, 168, 228);
-  border-top: 1px solid rgb(245, 168, 228);
-  border-left: 1px solid rgb(245, 168, 228);
   padding: 10px;
   margin: 15px;
   cursor: pointer;
@@ -91,4 +87,8 @@ div.SkinTone > div.Content button {
 .image_preview > img {
   width: 40%;
   display:table-cell;
+}
+.INPUT {
+  border: 2px solid thistle;
+  margin: auto;
 }
