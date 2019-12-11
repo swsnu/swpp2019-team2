@@ -30,7 +30,7 @@ class Header extends Component {
     // `box ${isBoxVisible ? "" : " hidden"}
     return (
       <div className="header">
-        <div className="title">COSMOS</div>
+        <div className="title"><a className="title-link" href=".">COSMOS</a></div>
         <div className="header-menu">
           <div className={`menu-container ${selected === 0 ? 'selected' : ''} `}><a className="menu-item" href="search">Search</a></div>
           <div className={`menu-container ${selected === 1 ? 'selected' : ''} `}><a className="menu-item" href="budget">Budget Search</a></div>
