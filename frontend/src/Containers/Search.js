@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Search.css';
+import './CSS/Search.css';
 import { connect } from 'react-redux';
 import { Slide } from 'react-slideshow-image';
 import * as actionCreators from '../store/actions/index';
@@ -8,6 +8,7 @@ import DetailCategory from '../Components/DetailCategory';
 import Logo1 from '../image/slide1.jpg';
 import Logo2 from '../image/slide2.jpg';
 import Logo3 from '../image/slide3.jpg';
+import Header from '../Components/Header';
 
 const slideImages = [
   Logo1,
@@ -48,18 +49,6 @@ class Search extends Component {
     ));
   }
 
-  logout = () => {
-    this.props.Logout();
-    this.props.onTryAutoSignup();
-  }
-
-  login = () => {
-    this.props.history.replace('../login');
-  }
-
-  mypage = () => {
-    this.props.history.replace('../mypage');
-  }
 
   render() {
     let menu;
@@ -74,7 +63,7 @@ class Search extends Component {
       infoString = `Hello, ${localStorage.getItem('nickname')}!`;
     }
     const { selection, searched } = this.state;
-    const { searchResult } = this.props;
+    const { searchResult, history } = this.props;
     const searchedProduct = searchResult.map((res) => (
       <ProductForm
         selection={searched}
@@ -109,30 +98,9 @@ class Search extends Component {
     const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
     /* const skincare = <DetailCategory
       category="skincare" selected={(selection === 'skincare')} clickSearch={search} />; */
-
     return (
       <div className="Search">
-        <div className="header">
-          <div className="search">Cosmos&emsp;│</div>
-          <div className="headerMenu">
-            <a className="sel_side" href="search">Search</a>
-&emsp;&emsp;&emsp;&emsp;
-            <a className="side" href="budget">Budget Search</a>
-&emsp;&emsp;&emsp;&emsp;
-            <a className="side" href="skintone">Tone Analysis</a>
-&emsp;&emsp;&emsp;&emsp;
-            <a className="side" href="sale">Sales Info</a>
-          </div>
-          <div className="headerUser">
-            {infoString}
-          </div>
-          <div className="headerButton">
-            <button id="my-page-button" type="button" onClick={() => this.mypage()}>My Page</button>
-            {menu}
-            {backLogin}
-          </div>
-        </div>
-
+        <Header history={history} selected={0} />
         <div className="slide-container">
           <Slide {...properties}>
             <div className="each-slide">
@@ -188,7 +156,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onGetProduct: (searchQuery) => dispatch(actionCreators.getProducts(searchQuery)),
-  Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   getUserProfile: () => dispatch(actionCreators.getUser()),
   getUserInfo: () => dispatch(actionCreators.getUser2()),
