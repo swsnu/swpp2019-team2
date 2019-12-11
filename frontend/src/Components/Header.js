@@ -6,8 +6,10 @@ class Header extends Component {
   logout = () => {
     this.props.Logout();
     this.props.onTryAutoSignup();
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('token');
+    this.forceUpdate();
   }
-
 
   render() {
     const { history, selected } = this.props;
