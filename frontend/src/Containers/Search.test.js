@@ -112,6 +112,7 @@ describe('<Liplist />', () => {
   let spylogout;
   let spyauthCheckState;
   let spyuserInfo;
+  let spyuserInfo2;
   const mockStore = getMockStore(stubSeletedUserT);
   beforeEach(() => {
     lipList = (
@@ -135,6 +136,8 @@ describe('<Liplist />', () => {
     spyauthCheckState = jest.spyOn(actions, 'authCheckState')
       .mockImplementation(() => (dispatch) => {});
     spyuserInfo = jest.spyOn(actions, 'getUser')
+      .mockImplementation(() => (dispatch) => {});
+    spyuserInfo2 = jest.spyOn(actions, 'getUser2')
       .mockImplementation(() => (dispatch) => {});
   });
   it('should click logout', () => {

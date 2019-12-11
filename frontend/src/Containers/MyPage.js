@@ -92,6 +92,8 @@ class MyPage extends Component {
   }
 
   confirmHandler = () => {
+    localStorage.setItem('preferColor', this.state.preferColor);
+    localStorage.setItem('preferBase', this.state.preferBase);
     this.props.putUserInfo(localStorage.getItem('preferColor'),
       localStorage.getItem('preferBase'), localStorage.getItem('preferBrand'));
     window.confirm('정보가 수정되었습니다!');
@@ -177,7 +179,8 @@ o 선호 색상 변경:
             <Select
               id="color-input"
               options={optionsColor}
-              onChange={(event) => localStorage.setItem('preferColor', event.label)}
+              // onChange={(event) => localStorage.setItem('preferColor', event.label)}
+              onChange={(event) => this.setState({ preferColor: event.label })}
               styles={customStyles}
             />
             <br />
@@ -187,7 +190,8 @@ o 선호 베이스 변경:
             <Select
               id="base-input"
               options={optionsBase}
-              onChange={(event) => localStorage.setItem('preferBase', event.label)}
+              // onChange={(event) => localStorage.setItem('preferBase', event.label)}
+              onChange={(event) => this.setState({ preferBase: event.label })}
               styles={customStyles}
             />
             <br />

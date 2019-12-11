@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { getMockStore } from '../test-utils/mocks';
 import { history } from '../store/store';
-
+import 'jest-localstorage-mock';
 import * as actionCreators from '../store/actions/cosmos';
 // import SalesInfo from './SalesInfo';
 import MyPage from './MyPage';
@@ -125,12 +125,18 @@ describe('<SkinTone />', () => {
     expect(spyHistoryReplace).toBeCalledTimes(1);
   });
   it('should call confirmHandler', () => {
+    localStorage.setItem('token', 'testToken');
+    localStorage.setItem('preferColor', 'testColor');
+    localStorage.setItem('preferBase', 'testBase');
+    localStorage.setItem('preferBrand', 'testBrand');
     const spyHistoryReplace = jest
       .spyOn(history, 'push')
       .mockImplementation(() => {});
     const component = mount(mypage);
-    const wrapper = component.find('#modify-button');
-    wrapper.simulate('click');
+    const wrapper = component.find('#color-input');
+    wrapper.at(0).simulate('change', { target: { value: 'test' } });
+    const wrapper2 = component.find('#modify-button');
+    wrapper2.simulate('click');
     expect(spyHistoryReplace).toBeCalledTimes(1);
     expect(spyPutInfo2).toBeCalledTimes(1);
   });
