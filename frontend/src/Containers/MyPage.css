@@ -1,88 +1,25 @@
-.upperbar {
-    flex: 1;
-    flex-direction:row;
-    align-items:stretch;
-    width:100%;
-    background-color:rgb(255, 220, 226);
-    text-align : center;
-    display : table;
-    
-}
 
-.upperbar #user_info {
-    display: inline-table;
-    position: absolute;
-    right : 10%;
-    top : 4%;
-}
 
-.upperbar .buttons #log-out-button{
-    display: inline-table;
-    position: absolute;
-    left : 2%;
-    top : 2%;
-}
-
-.upperbar .buttons #my-page-button{
-    display: inline-table;
-    position: absolute;
-    right:4%;
-    top:2%;
-}
-.MainPage .buttons{
-    align-content: center;
-}
-.Menu1 {
-    position:absolute;
-    left: 35%;
-    top: 35%;
-    height : 700px;
-    width : 500px;
-    margin: -150px -100px -100px -250px;
+div.MyPage .Menu1,
+div.MyPage .Menu2 {
+    display:table-cell;
     box-shadow: 0 2px 3px rgb(231, 201, 235);
     text-align : center;
-    background : rgb(255, 220, 226);
 }
 
-.Menu1_Border {
-    position:absolute;
-    left: 60%;
-    top: 30%;
-    height : 600px;
-    width : 400px;
-    margin: -150px -100px -100px -250px;
-    box-shadow: 25px 20px 20px rgb(231, 201, 235);
-    text-align : center;
-    background : rgb(255, 220, 226);
-    border: purple;
+div.Mypage .Menu1{
+    padding-top:0px;
 }
 
-.Menu2_Border {
-    position:absolute;
-    left: 53%;
-    top: 30%;
-    height : 600px;
-    width : 450px;
-    margin: -150px -100px -100px -250px;
-    box-shadow: 25px 20px 20px rgb(231, 201, 235);
-    text-align : center;
-    background : rgb(255, 220, 226);
-    border: purple;
+div.Content > div.Menu1 > div > div:nth-child(6) {
+    padding: 40px 0 40px 0;
 }
 
-.Menu2 {
-    position:absolute;
-    left: 65%;
-    top: 35%;
-    height : 700px;
-    width : 600px;
-    margin: -150px -100px -100px -250px;
-    box-shadow: 0 2px 3px rgb(231, 201, 235);
-    text-align : center;
-    background : rgb(255, 220, 226);
+div.Menu2 > div.selection_list {
+    text-indent:10%;
 }
 
-ul{
+div.MyPage ul{
     list-style: none;
     padding-left:0px;
     padding-bottom: 0px;
@@ -90,88 +27,68 @@ ul{
 }
 
 
-/* .MainPage button {
-    background-color : transparent;
-    color : #9b45a7;
-    cursor : pointer;
-    border : 1px solid #9b45a7;
-    text-align: center;
-    margin : 5px;
-    border-top-left-radius: 10px; 
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-} */
+div.MyPage > div.Content {
+    display:table;
+    margin:auto;
+    margin-top:160px;
+    width:60%;
+    table-layout:fixed;
+    }
 
-.MainPage button:hover,
-.MainPage button:active {
-    color:white;
-    background-color:#9b45a7;
+
+div.Menu2 > div.selection_list > div.info_change > div.info_select_box,
+div.Menu2 > div.selection_list > div.info_change > div.info_multi_select_box{
+    display:inline-block !important;
+    width:150px;
+    padding-left:10px;
+}
+div.Content > div.Menu2 > div.selection_list > div:nth-child(1) > div {
+    padding-left:20px;
+
 }
 
-.Menu2 input {
-    width: 35%;
-    height: 20px;
-    border-radius: 3px;
-    position: relative;
-    background-color: white;
-    transition: 0.3s all;
+div.Content > div.Menu2 > div.button {
+    margin: 0 25px 0 25px;
+    border-top:1px solid #9a60bc;
 }
-
-.Menu2 #password-input {
-    width: 33%;
-    height: 20px;
-    border-radius: 3px;
-    position: relative;
-    background-color: white;
-    transition: 0.3s all;
-}
-
-.Select {
-    width: 50%;
-    height: 30px;
-    border-radius: 3px;
-    position: relative;
-    background-color: white;
-    transition: 0.3s all;
-}
-
-.Menu input {
-    width: 90%;
-}
-
-
-h4 {
-    color: purple;
-}
-
-.Menu2 button {
-    width: 25%;
-    height: 40px;
-}
-
-.Menubar {
-    width:100%;
-    background-color:rgb(255, 220, 226);
-    display : table;
-    table-layout: fixed;
+div.Content > div.Menu2 > div.button > button#modify-button{
     
+        color: #9a60bc !important;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 20px;
+        display: inline-block;
+        border: none;
+        transition: all 0.4s ease 0s;
+        font-size:20px;
 }
 
-.Menubar > div {
-    display:table-cell;
-    border-left: 3px solid rgb(255, 220, 226);
-    background-color:rgba(256,256,256,0.2);
-    vertical-align: middle; 
-    text-align: center;
+div.Menu2 > div.selection_list > div.info_change > div.info_multi_select_box > div > button {
+    width:150px;
+}
+div.Menu2 > div.selection_list > div.info_change > div.info_multi_select_box > div {
+    text-indent:0;
+}
+div.Menu2 > div.selection_list > div.info_change {
+    display:block;
+    text-align:left;
+    padding-top:20px;
 }
 
-.Menubar button {
-    margin : 10px 0;
-    padding: 5px;
-    font : inherit;
-    background-color : transparent;
-    color : #9b45a7;
-    cursor : pointer;
-    border:none;
+
+div.MyPage h1 {
+    margin:auto;
+    padding-bottom:15px;
 }
+
+div.Menu2 > div.selection_list {
+    margin-bottom:30px;
+}
+
+div.MyPage  div.info > div.info_text {
+    padding: 10px 0 10px 0;
+    text-align:left;
+    text-indent:20%;
+}
+
+
