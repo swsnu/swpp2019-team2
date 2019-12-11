@@ -4,10 +4,10 @@ import { Redirect } from 'react-router-dom';
 import './MyPage.css';
 import { connect } from 'react-redux';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
+import { isUndefined, isNull } from 'util';
 import * as actionCreators from '../store/actions/index';
 import logo from '../image/LOGO.png';
 import Header from '../Components/Header';
-
 
 const optionsColor = [
   { value: 'Red', label: 'red' },
@@ -86,7 +86,7 @@ class MyPage extends Component {
     const preferColor = localStorage.getItem('preferColor');
     const preferBase = localStorage.getItem('preferBase');
     const preferBrand = localStorage.getItem('preferBrand');
-    
+
     return (
       <div className="MyPage">
         {redirect}
@@ -97,9 +97,9 @@ class MyPage extends Component {
             <div className="info">
               <div className="info_text">{`o 아이디 : ${username}`}</div>
               <div className="info_text">{`o 이메일 : ${email}`}</div>
-              <div className="info_text">{`o 선호 색상 : ${preferColor !== null ? preferColor : '선택하지 않음'}`}</div>
-              <div className="info_text">{`o 선호 베이스 : ${preferBase !== null ? preferBase : '선택하지 않음'}`}</div>
-              <div className="info_text">{`o 선호 브랜드 : ${preferBrand !== null ? preferBrand : '선택하지 않음'}`}</div>
+              <div className="info_text">{`o 선호 색상 : ${(isUndefined(preferColor) || isNull(preferColor)) ? '선호 색상 없음' : preferColor}`}</div>
+              <div className="info_text">{`o 선호 베이스 : ${(isUndefined(preferBase) || isNull(preferBase)) ? '선호 베이스 없음' : preferBase}`}</div>
+              <div className="info_text">{`o 선호 브랜드 : ${(isUndefined(preferBrand) || isNull(preferBrand)) ? '선호 브랜드 없음' : preferBrand}`}</div>
               <div>
                 <img id="logo" src={logo} alt="COSMOS" width="100" />
               </div>
