@@ -218,9 +218,20 @@ div.Search div.Category > div.Personal-Area {
     vertical-align:middle;
 }
 
-div.Search div.Category > div.Personal-Area > div.personal-button > button:hover {
-    color:rgb(128, 0, 0);
+div.Search div.Category > div.Personal-Area >div.personal-button {
+    width: 85%;
+    background:transparent;
+    border:none;
+    font-size:20px;
+    padding : 5px 0 15px 0;
+    background-color: white;
 }
+
+div.Search div.Category > div.Personal-Area > div.personal-button > button:hover {
+    cursor:pointer;
+    background-color:rgb(255, 238, 255);
+}
+
 
 div.Search div.Category > div.Delete-Area > div.delete-button > button:hover {
     color:rgb(128, 0, 0);
