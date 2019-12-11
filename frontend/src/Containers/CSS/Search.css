@@ -38,7 +38,7 @@
 }
 .header > div.header-menu > div.menu-container > a.menu-item {
     color: white;
-    font-size: 2.4vw;
+    font-size: 1.8vw;
     text-decoration: none;
 }
 .header > div.header-menu > div.menu-container > a.menu-item:hover {
@@ -59,7 +59,7 @@
     border-top: 1px solid #efefef;
 }
 .header > div.header-personal {
-    padding-right:20px;
+    padding-right:30px;
     font-size:1.3vw;
 }
 .header > div.header-personal > div.header-user > text {
