@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import { getMockStore } from '../test-utils/mocks';
 import { history } from '../store/store';
@@ -67,62 +67,7 @@ describe('<SkinTone />', () => {
   });
   afterEach(() => {
     jest.clearAllMocks();
-  });
-  it('should call budgetHandler when clicking budget search button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(mypage);
-    const button = component.find('#Budgetmenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../budget');
-  });
-  it('should call toneHandler when clicking tone analysis button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(mypage);
-    const button = component.find('#Tonemenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../skintone');
-  });
-  it('should call searchHandler when clicking sale information button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(mypage);
-    const button = component.find('#Searchmenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../search');
-  });
-  it('should call saleHandler when clicking sale information button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(mypage);
-    const button = component.find('#Salemenu');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../sale');
-  });
-  it('should call saleHandler when clicking sale information button', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(mypage);
-    const button = component.find('#my-page-button');
-    button.simulate('click');
-    expect(spyHistoryReplace).toHaveBeenCalledWith('../mypage');
-  });
-  it('should call logoutHandler', () => {
-    const spyHistoryReplace = jest
-      .spyOn(history, 'replace')
-      .mockImplementation(() => {});
-    const component = mount(mypage);
-    const wrapper = component.find('#log-out-button');
-    wrapper.simulate('click');
-    expect(spyGetUser).toBeCalledTimes(2);
-    expect(spylogout).toBeCalledTimes(1);
-    expect(spyHistoryReplace).toBeCalledTimes(1);
+    localStorage.clear();
   });
   it('should call confirmHandler', () => {
     const mockFn = jest.fn();
@@ -137,8 +82,17 @@ describe('<SkinTone />', () => {
     const wrapper = component.find('#brand-input');
     wrapper.at(0).simulate('click');
     const wrapper2 = component.find('#modify-button');
+    const newInstance = component.find(MyPage.WrappedComponent).instance();
+    newInstance.setState({ preferBase: '21', preferColor: 'red' });
     wrapper2.simulate('click');
     expect(spyHistoryReplace).toBeCalledTimes(1);
     expect(spyPutInfo2).toBeCalledTimes(1);
+  });
+  it('should render with null data && without login', () => {
+    localStorage.setItem('token', 'testToken');
+    const component = mount(mypage);
+    const wrapper = component.find('div.info_text');
+    localStorage.removeItem('token');
+    const logoutComponent = mount(mypage);
   });
 });

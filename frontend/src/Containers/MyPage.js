@@ -60,7 +60,6 @@ class MyPage extends Component {
 
 
   confirmHandler = () => {
-    console.log(this.state);
     localStorage.setItem('preferColor', this.state.preferColor);
     localStorage.setItem('preferBase', this.state.preferBase);
     this.props.putUserInfo(localStorage.getItem('preferColor'),
