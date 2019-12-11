@@ -130,6 +130,7 @@ div.Search div.Category > ul.Category  {
     width:100%;
     display:table;
     table-layout: fixed;
+    border-bottom: 1px solid rgba(97, 1, 97, 0.7);
 
 }
 
@@ -153,6 +154,10 @@ div.Search div.ResultDiv {
 }
 ul.Result {
     display:table;
+}
+
+div.Search div.Category button#remove-all-selection.clearAll {
+    width:100%;
 }
 
 
@@ -194,3 +199,24 @@ div.Search > div.Content > div.Category.fixed {
     top:127px; 
 }
 
+
+div.Search div.Category > div.Delete-Area {
+    display:table;
+    margin:0 10px 0 10px;
+    table-layout:auto;
+    margin: 5px auto 5px auto;
+    vertical-align:middle;
+
+}
+
+div.Search div.Category > div.Delete-Area > div.delete-image, 
+div.Search div.Category > div.Delete-Area > div.delete-button {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+div.Search div.Category > div.Delete-Area > div.delete-button > button {
+    width:100%;
+    border:none;
+    font-size:15px;
+}

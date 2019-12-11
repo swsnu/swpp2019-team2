@@ -9,6 +9,7 @@ import Logo1 from '../image/slide1.jpg';
 import Logo2 from '../image/slide2.jpg';
 import Logo3 from '../image/slide3.jpg';
 import Header from '../Components/Header';
+import removeIcon from '../image/remove-icon.png';
 
 const slideImages = [
   Logo1,
@@ -59,7 +60,7 @@ class Search extends Component {
 
   onScroll = () => {
     if (window.scrollY > 300 && this.tick && this.state.searched) {
-      const size = window.screen.availHeight - 230;
+      const size = window.screen.availHeight - 270;
       if (size > document.querySelector('div.ResultDiv').offsetHeight) return;
       document.querySelector('div.Category').classList.add('fixed');
       const category = document.querySelectorAll('div.detail-category');
@@ -86,11 +87,11 @@ class Search extends Component {
 
     const click = (e) => {
       if (selection !== e.target.id) {
-        this.setState({ selection: e.target.id });
-        document.querySelectorAll(`label.selectionValue > input:checked,
-      label.sub-selection-chip > input:checked,
+        if (e.target.id !== 'remove-all-selection') this.setState({ selection: e.target.id });
+        document.querySelectorAll(`label.toggle > input.toggle__input:checked,
+      label.sub-toggle > input.sub-toggle__input:checked,
       label.color-selection-chip > input:checked`).forEach((input) => {
-          input.checked = false;
+          input.click();
         });
       }
     };
@@ -138,6 +139,10 @@ class Search extends Component {
               {/* <button type="button"
                 className="Product" onClick={click} id="skincare">Skin</button> */}
             </ul>
+            <div className="Delete-Area">
+              <div className="delete-image"><img src={removeIcon} alt="" /></div>
+              <div className="delete-button"><button type="button" onClick={click} id="remove-all-selection"> Remove All Selection  </button></div>
+            </div>
             {lip}
             {base}
             {/* {eye}  */}

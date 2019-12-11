@@ -64,11 +64,14 @@ div.detail-sub-category > h4 {
 }
 
 div.Search div.detail-category {
-    padding : 5px 0 15px 0;
+    padding : 0 0 15px 0;
+    border-top: 1px solid rgba(97, 1, 97, 0.7);
+
 }
 
 div.Search > div.Content > div.Category.fixed > div.detail-category {
     overflow:scroll;
+    
 }
 
 /* CSS : https://codepen.io/melnik909/pen/YjGZqQ */
