@@ -16,7 +16,7 @@ class SkinToneLoading extends Component {
 
   componentDidMount() {
     this.props.onTryAutoSignup();
-    setTimeout(this.props.run_analysis('425'), 4000);
+    setTimeout(this.props.run_analysis(localStorage.getItem('nickname')), 4000);
   }
 
 

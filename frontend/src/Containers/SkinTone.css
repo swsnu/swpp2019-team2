@@ -1,6 +1,47 @@
 div.SkinTone > div.Content {
   padding-top:110px;
   width:100%;
+  background-color:rgb(255, 220, 226);
+  text-align : center;
+  display : table;
+  /* margin-bottom: 30px; */
+  
+}
+
+#arrow{
+  width:50px;
+  height: 40px;
+}
+.takephoto button {
+  margin: 10px;
+  font:inherit;
+  background-color:transparent;
+  border:none;
+  cursor: pointer;
+}
+
+.takephoto button:hover,
+.takephoto button:active {
+  color:#9b45a7;
+
+}
+
+.submit button {
+  margin : 5px;
+  padding: 5px;
+  font : inherit;
+  background-color : transparent;
+  color : black;
+  cursor : pointer;
+  border-color:#9b45a7;
+}
+.submit button:hover,
+.submit button:active {
+    color:white;
+    background-color:#9b45a7;
+}
+.SkinTone .image_input button {
+    margin : 5px;
   display:table;
 }
 
@@ -8,14 +49,15 @@ div.SkinTone > div.Content button {
     margin : 10px 0;
     padding: 5px;
     font : inherit;
-    border : 1px solid #9b45a7;
     background-color : transparent;
-    color : #9b45a7;
+    color : black;
     cursor : pointer;
-    border-top-left-radius: 10px; 
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-color:#9b45a7;
+}
+.SkinTone .StartButton button:hover,
+.SkinTone .StartButton button:active {
+    color:white;
+    background-color:#9b45a7;
 }
 
 .SkinTone .image_preview button:hover,
@@ -24,16 +66,14 @@ div.SkinTone > div.Content button {
     background-color:#9b45a7;
 }
 .image_input{
-    display : table-cell;
-    height : 300px;
-    width : 400px;
-    margin: -150px 0px 0px -200px;
+    margin:auto;
+    padding:30px;
 }
 .SkinTone .image_preview input{
-  border-bottom: 1px solid #9b45a7;
-  border-right: 1px solid #9b45a7;
-  border-top: 1px solid #9b45a7;
-  border-left: 1px solid #9b45a7;
+  border-bottom: 1px solid rgb(245, 168, 228);
+  border-right: 1px solid rgb(245, 168, 228);
+  border-top: 1px solid rgb(245, 168, 228);
+  border-left: 1px solid rgb(245, 168, 228);
   padding: 10px;
   margin: 15px;
   cursor: pointer;

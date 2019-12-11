@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './SkinTone.css';
 import { connect } from 'react-redux';
+import Popup from 'reactjs-popup';
+import Webcam from 'react-webcam';
 import * as actionCreators from '../store/actions/index';
+import check from '../image/check.png';
+import infoJpg from '../image/ML_intro.jpg';
+
 import Header from '../Components/Header';
 
 class SkinTone extends Component {
@@ -47,11 +52,30 @@ class SkinTone extends Component {
       }
       const picture = new FormData();
       picture.append('image', this.state.selectedFile);
-      picture.append('user_id', 425);
+      picture.append('user_id', localStorage.getItem('nickname'));
       // user_id state에 저장?
       this.props.send_picture(picture);
     }
 
+
+    setRef = (webcam) => {
+      this.webcam = webcam;
+    };
+
+    capture = () => {
+      const picture = this.webcam.getScreenshot();
+      this.saveImage(picture);
+      // this.setState({ selectedFile: picture });
+      // this.setState({ flag: true });
+    }
+
+    saveImage = (base64string) => {
+      const imageData = base64string.split(',')[1];
+      const a = document.createElement('a'); // Create <a>
+      a.href = `data:image/png;base64,${imageData}`; // Image Base64 Goes here
+      a.download = 'Image.png'; // File name Here
+      a.click(); // Downloaded file
+    }
 
     render() {
       let redirect = null;
@@ -65,17 +89,48 @@ class SkinTone extends Component {
       return (
         <div className="SkinTone">
           {redirect}
-          {/* <div id = "LOGO">
-                    <img src = {logo} alt = "COSMOS" width = "100" />
-                </div> */}
           <Header history={history} selected={2} />
           <div className="Content">
-            <div className="image_input">
-              <h2>{inputImage}</h2>
-              <div className="image_preview">
-                <img src={fileurl} alt="Please upload" />
-                <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
-                <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+
+            <div className="Intro">
+              <img src={infoJpg} alt="SkinTone Analysis" width="300px" style={{ padding: '50px' }} />
+              <div style={{ display: 'table', alignContent: 'center', margin: 'auto' }}>
+                <img src={check} alt="1. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
+                <div style={{ display: 'inline-table' }}>사진을 넣어 머신 러닝을 통해 당신의 피부색을 분석해보세요!</div>
+              </div>
+              <div style={{
+                padding: '30px', display: 'table', alignContent: 'center', margin: 'auto',
+              }}
+              >
+                <img src={check} alt="2. " width="20px" style={{ margin: 'auto', paddingRight: '30px', display: 'inline-table' }} />
+                <div style={{ display: 'inline-table' }}>당신에 톤에 딱 맞는 맞춤 파운데이션 추천을 받아보세요!</div>
+              </div>
+              <div className="takephoto">
+                <Popup className="webcam-modal" trigger={<button id="webcammodal" type="button">사진이 없으신가요?</button>} modal>
+                  <div className="image_input">
+                    <Webcam
+                      audio={false}
+                      height={540}
+                      ref={this.setRef}
+                      screenshotFormat="image/jpeg"
+                      width={650}
+                      mirrored
+                    />
+                    <button id="photo-input" type="button" onClick={this.capture}>Take Photo</button>
+                  </div>
+                </Popup>
+              </div>
+              <div className="submit">
+                <Popup className="submit-modal" trigger={<button id="submitmodal" type="button">Submit</button>} modal>
+                  <div className="image_input">
+                    <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
+                    <div className="image_preview">
+                      <img src={fileurl} alt="Please upload a Selfie! :)" />
+                      <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
+                      <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+                    </div>
+                  </div>
+                </Popup>
               </div>
             </div>
           </div>

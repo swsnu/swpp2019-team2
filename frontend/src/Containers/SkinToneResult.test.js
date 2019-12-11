@@ -84,22 +84,44 @@ describe('<SkinToneResult />', () => {
     expect(spyGetUser).toBeCalledTimes(1);
   });
 
-  it('should not redirect stay when logged in', () => {
-    const component = shallow(
-      <SkinToneResult.WrappedComponent
-        isAuthenticated={stubStateC}
-        ML={stubML}
-      />,
-    );
-    const redirect = component.find('Redirect');
-    expect(redirect.length).toBe(0);
-  });
-
   it('should call mypageHandler', () => {
     const spyHistoryPush = jest.spyOn(history, 'replace')
       .mockImplementation((path) => {});
     const component = mount(skintoneresult);
     const wrapper = component.find('#my-page-button');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toBeCalledTimes(2);
+  });
+
+  it('should call searchHandler', () => {
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const component = mount(skintoneresult);
+    const wrapper = component.find('#Searchmenu');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toBeCalledTimes(2);
+  });
+  it('should call budgetHandler', () => {
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const component = mount(skintoneresult);
+    const wrapper = component.find('#Budgetmenu');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toBeCalledTimes(2);
+  });
+  it('should call toneHandler', () => {
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const component = mount(skintoneresult);
+    const wrapper = component.find('#Tonemenu');
+    wrapper.simulate('click');
+    expect(spyHistoryPush).toBeCalledTimes(2);
+  });
+  it('should call saleHandler', () => {
+    const spyHistoryPush = jest.spyOn(history, 'replace')
+      .mockImplementation((path) => {});
+    const component = mount(skintoneresult);
+    const wrapper = component.find('#Salemenu');
     wrapper.simulate('click');
     expect(spyHistoryPush).toBeCalledTimes(2);
   });
