@@ -125,6 +125,7 @@ describe('<SkinTone />', () => {
     expect(spyHistoryReplace).toBeCalledTimes(1);
   });
   it('should call confirmHandler', () => {
+    const mockFn = jest.fn();
     localStorage.setItem('token', 'testToken');
     localStorage.setItem('preferColor', 'testColor');
     localStorage.setItem('preferBase', 'testBase');
@@ -133,8 +134,8 @@ describe('<SkinTone />', () => {
       .spyOn(history, 'push')
       .mockImplementation(() => {});
     const component = mount(mypage);
-    const wrapper = component.find('#color-input');
-    wrapper.at(0).simulate('change', { target: { value: 'test' } });
+    const wrapper = component.find('#brand-input');
+    wrapper.at(0).simulate('click');
     const wrapper2 = component.find('#modify-button');
     wrapper2.simulate('click');
     expect(spyHistoryReplace).toBeCalledTimes(1);

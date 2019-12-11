@@ -121,16 +121,16 @@ li.ProductContainer {
     display:table-cell;
 }
 
-ul.Category  {
+div.Search div.Category > ul.Category  {
     /* display: inline-block; */
     padding: 10px 0 10px 0;
-    margin-bottom: 5px;
     border: 1px solid #efefef;
-    font-size: 12px;
+    font-size: 15px;
     cursor: pointer;
     width:100%;
     display:table;
     table-layout: fixed;
+    border-bottom: 1px solid rgba(97, 1, 97, 0.7);
 
 }
 
@@ -140,27 +140,83 @@ ul.Category > div {
 }
 
 
-
-
 div.Search > div.Content {
    display:table;
    text-align: left; 
    table-layout: fixed;
    width:100%;
 }
-div.ResultDiv {
+div.Search div.ResultDiv {
     display:table-cell;
     width: 75%;
-
+    position: absolute;
+    left: 25%;
 }
 ul.Result {
     display:table;
 }
 
-div.Category {
+div.Search div.Category button#remove-all-selection.clearAll {
+    width:100%;
+}
+
+
+
+ul.Category > div > button.Product {
+    width:100%;
+    padding: 10px 5px 10px 5px;
+    background-color : transparent;
+    color : #9b45a7;
+    cursor : pointer;
+    border-top:none;
+    border-bottom:none;
+    text-align: center;
+    font-size:15px;
+    letter-spacing:1px;
+    font-weight:700;
+}
+
+div.Search > div.Content > div.Category > button.searchProduct {
+    width: 100%;
+    background:transparent;
+    border:none;
+    font-size:20px;
+    padding : 5px 0 15px 0;
+}
+
+div.Search > div.Content > div.Category > button.searchProduct:hover {
+    color:rgb(122, 14, 168);
+}
+
+div.Search > div.Content > div.Category {
     display:table-cell;
     vertical-align: top;
     width:24%;
 }
 
+div.Search > div.Content > div.Category.fixed {
+    position:fixed;
+    top:127px; 
+}
 
+
+div.Search div.Category > div.Delete-Area {
+    display:table;
+    margin:0 10px 0 10px;
+    table-layout:auto;
+    margin: 5px auto 5px auto;
+    vertical-align:middle;
+
+}
+
+div.Search div.Category > div.Delete-Area > div.delete-image, 
+div.Search div.Category > div.Delete-Area > div.delete-button {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+div.Search div.Category > div.Delete-Area > div.delete-button > button {
+    width:100%;
+    border:none;
+    font-size:15px;
+}

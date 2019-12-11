@@ -198,6 +198,7 @@ o 선호 베이스 변경:
             <br />
 o 선호 브랜드 변경:
             <ReactMultiSelectCheckboxes
+              id="brand-input"
               options={optionsBrand}
               onChange={(event) => this.changeBrand(event)}
             />
