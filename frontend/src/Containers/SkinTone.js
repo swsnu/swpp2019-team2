@@ -14,11 +14,9 @@ class SkinTone extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
       selectedFile: null,
       fileurl: '',
       flag: false,
-      render: false,
     };
     this.submitHandler = this.submitHandler.bind(this);
     this.fileinputHandler = this.fileinputHandler.bind(this);
@@ -139,7 +137,6 @@ class SkinTone extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
   user: state.cosmos.User,
