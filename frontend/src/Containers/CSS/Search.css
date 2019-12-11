@@ -15,15 +15,15 @@
     top: 0;
 }
 
-.header > div.title {
+.header > div.title > a {
     color: white;
     font-size: 40px; 
     text-decoration: none;
     margin: 0 20px 0 20px;
     font-family:"Big Caslon";
     letter-spacing:.15rem;
-
 }
+
 .header > div.header-menu {
     width:65%;
     display : table;
@@ -160,6 +160,9 @@ div.Search div.Category button#remove-all-selection.clearAll {
     width:100%;
 }
 
+ul.Category > div > button.Product:hover {
+    background-color:rgb(255, 238, 255);
+}
 
 
 ul.Category > div > button.Product {
@@ -186,6 +189,8 @@ div.Search > div.Content > div.Category > button.searchProduct {
 
 div.Search > div.Content > div.Category > button.searchProduct:hover {
     color:rgb(122, 14, 168);
+    cursor:pointer;
+    background-color:rgb(255, 238, 255);
 }
 
 div.Search > div.Content > div.Category {
@@ -206,7 +211,10 @@ div.Search div.Category > div.Delete-Area {
     table-layout:auto;
     margin: 5px auto 5px auto;
     vertical-align:middle;
+}
 
+div.Search div.Category > div.Delete-Area > div.delete-button > button:hover {
+    color:rgb(128, 0, 0);
 }
 
 div.Search div.Category > div.Delete-Area > div.delete-image, 
