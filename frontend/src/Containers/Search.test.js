@@ -207,19 +207,29 @@ describe('<Liplist />', () => {
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
   });
-  it('should call with proper query string', () => {
+  it('should call with proper query string & remove see', () => {
     const component = mount(lipList, { attachTo: document.body });
     const newInstance = component.find(Search.WrappedComponent).instance();
     newInstance.setState({ selection: 'cheek', searched: 'cheek' });
     const button = component.find('button.Product#cheek');
     button.simulate('click');
-    const wrapper = component.find('input.sub-selection-chip');
+    const wrapper = component.find('input.sub-toggle__input');
     wrapper.at(0).simulate('change', { target: { checked: true } });
     wrapper.at(0).instance().checked = true;
     const buttons = component.find('.searchProduct').at(0);
     buttons.simulate('click');
     expect(spygetLips).toHaveBeenLastCalledWith('cheek/color=CHK_RD&');
     component.find('button.Product#lip').simulate('click');
+    component.detach();
+  });
+  it('should click remove all selection', () => {
+    const component = mount(lipList, { attachTo: document.body });
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    newInstance.setState({ selection: 'cheek', searched: 'cheek' });
+    const button = component.find('button#remove-all-selection');
+    component.find('.searchProduct').at(0).simulate('click');
+    button.simulate('click');
+    component.detach();
   });
 });
 
@@ -252,7 +262,7 @@ describe('<Liplist />', () => {
   });
   afterEach(() => { jest.clearAllMocks(); });
   it('on scroll event', () => {
-    const component = mount(lipList);
+    const component = mount(lipList, { attachTo: document.body });
     const newInstance = component.find(Search.WrappedComponent).instance();
     newInstance.componentDidMount();
     newInstance.setState({ selection: 'lip', searched: 'lip' });

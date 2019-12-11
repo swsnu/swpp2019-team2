@@ -27,6 +27,10 @@ describe('<DetailCategory />', () => {
     wrapper.simulate('click');
     expect(subColor.instance().style.display).toEqual('block');
     wrapper.simulate('click');
+    const subColorIn = component.find('input.color-selection-input-box').at(0);
+    subColorIn.simulate('click');
+    subColorIn.instance().checked = true;
+    subColorIn.simulate('click');
     component.detach();
   });
 });
