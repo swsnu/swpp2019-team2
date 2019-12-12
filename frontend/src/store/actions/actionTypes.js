@@ -12,3 +12,4 @@ export const GET_USER = 'GET_USER';
 export const GET_LOGIN = 'GET_LOGIN';
 export const GET_USER2 = 'GET_USER2';
 export const PUT_USER2 = 'PUT_USER2';
+export const GETMANYPRODUCTS = 'GET_MANY_PRODUCTS';

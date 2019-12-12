@@ -29,11 +29,17 @@ describe('<CheckBox />', () => {
   it('shoudl call onCheck and findUrl', () => {
     const mockFind = jest.fn();
     const mockOnCheck = jest.fn();
+    const mockHandleSelect = jest.fn();
     const component = shallow(<CheckBox findUrl={mockFind} />);
-    const wrapper = component.find('.CheckboxTree');
-    wrapper.prop('onCheck')('checked', mockOnCheck());
-    expect(mockOnCheck).toHaveBeenCalledTimes(1);
-    expect(mockFind).toHaveBeenCalledTimes(1);
+    const wrapper1 = component.find('Select');
+    const wrapper2 = component.find('.CheckboxTree');
+    for (let i = 0; i < 3; i++) {
+      wrapper1.prop('onChange')({ value: i }, mockHandleSelect());
+      wrapper2.prop('onCheck')('checked', mockOnCheck());
+      expect(mockFind).toHaveBeenCalledWith('');
+    }
+
+    // expect(mockOnCheck).toHaveBeenCalledTimes(1);
   });
   it('shoudl call onExpand', () => {
     const mockOnExpand = jest.fn();

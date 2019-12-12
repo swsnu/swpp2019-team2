@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 
 import reducer from './cosmos';
 import * as actionTypes from '../actions/actionTypes';
@@ -11,7 +12,14 @@ const stubuser = {
 describe('post reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
-      User: [], User2: [], ML: null, error: null, loading: false, token: null, result: [],
+      User: [],
+      User2: [],
+      budgetResult: [[], [], [], [], []],
+      ML: null,
+      error: null,
+      loading: false,
+      token: null,
+      result: [],
     });
   });
 
@@ -20,7 +28,7 @@ describe('post reducer', () => {
       type: actionTypes.GET_PRODUCT,
     };
     const expectedActions = {
-      User: [], User2: [], ML: null, error: null, loading: false, token: null, result: undefined,
+      User: [], User2: [], budgetResult: [[], [], [], [], []], ML: null, error: null, loading: false, token: null, result: undefined,
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -32,7 +40,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_START,
     };
     const expectedActions = {
-      User: [], User2: [], ML: null, error: null, loading: true, token: null, result: [],
+      User: [], User2: [], budgetResult: [[], [], [], [], []], ML: null, error: null, loading: true, token: null, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -42,7 +50,7 @@ describe('post reducer', () => {
       type: actionTypes.SEND_PICTURE,
     };
     const expectedActions = {
-      User: [], User2: [], ML: null, error: null, loading: false, token: null, result: [],
+      User: [], User2: [], budgetResult: [[], [], [], [], []], ML: null, error: null, loading: false, token: null, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -53,7 +61,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_SUCCESS,
     };
     const expectedActions = {
-      User: [], User2: [], ML: null, error: null, loading: false, token: undefined, result: [],
+      User: [], User2: [], budgetResult: [[], [], [], [], []], ML: null, error: null, loading: false, token: undefined, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -65,7 +73,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_FAIL,
     };
     const expectedActions = {
-      User: [], User2: [], error: undefined, loading: false, token: null, ML: null, result: [],
+      User: [], User2: [], budgetResult: [[], [], [], [], []], error: undefined, loading: false, token: null, ML: null, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -77,7 +85,7 @@ describe('post reducer', () => {
       type: actionTypes.AUTH_LOGOUT,
     };
     const expectedActions = {
-      User: [], User2: [], error: null, loading: false, token: null, ML: null, result: [],
+      User: [], User2: [], budgetResult: [[], [], [], [], []], error: null, loading: false, token: null, ML: null, result: [],
     };
 
     expect(reducer(undefined, startAction)).toEqual(expectedActions);
@@ -91,6 +99,7 @@ it('should handle RUN_ANALYSIS', () => {
   const expectedActions = {
     User: [],
     User2: [],
+    budgetResult: [[], [], [], [], []],
     ML: {
       base: undefined,
       id: undefined,
@@ -114,7 +123,7 @@ it('should handle GET_ANALYSIS_RESULT', () => {
     type: actionTypes.GET_ANALYSIS_RESULT,
   };
   const expectedActions = {
-    User: [], User2: [], ML: null, error: null, loading: false, token: null, result: [],
+    User: [], User2: [], budgetResult: [[], [], [], [], []], ML: null, error: null, loading: false, token: null, result: [],
   };
 
   expect(reducer(undefined, startAction)).toEqual(expectedActions);

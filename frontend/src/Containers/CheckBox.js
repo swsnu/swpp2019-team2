@@ -9,76 +9,96 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const selectOptions = [
-  { value: 0, label: 'Face' },
-  { value: 1, label: 'Skin' },
-  { value: 2, label: 'Lip' },
+  { value: 0, label: 'Lip' },
+  { value: 1, label: 'Base' },
+  { value: 2, label: 'Cheek' },
 ];
 
-const faceNode = [
+const baseNode = [
   {
-    value: '/Face/SkinType',
-    label: 'SkinType',
+    value: '/Base/Category',
+    label: 'Category',
     children: [
       {
-        value: 'Alpha',
-        label: 'Dry',
+        value: 'category=BAS_P&',
+        label: 'Powder',
       },
       {
-        value: 'Beta',
-        label: 'Oily',
+        value: 'category=BAS_CU&',
+        label: 'Cushion',
+      },
+      {
+        value: 'category=BAS_C&',
+        label: 'Concealer',
+      },
+      {
+        value: 'category=BAS_F&',
+        label: 'Foundation',
+      },
+      {
+        value: 'category=BAS_PR&',
+        label: 'Primer',
+      },
+      {
+        value: 'category=BAS_B&',
+        label: 'BB & CC',
       },
     ],
   },
   {
-    value: '/Face/Coverage',
-    label: 'Coverage',
+    value: '/Base/Color',
+    label: 'Color',
     children: [
       {
-        value: 3,
-        label: 'High',
+        value: 'color=BAS_LT&',
+        label: '19호 이하',
       },
       {
-        value: 4,
-        label: 'Medium',
+        value: 'color=BAS_MD&',
+        label: '21호',
       },
       {
-        value: 5,
-        label: 'Low',
+        value: 'color=BAS_DK&',
+        label: '23호 이상',
+      },
+    ],
+  },
+  {
+    value: '/Base/SubColor',
+    label: 'SubColor',
+    children: [
+      {
+        value: 'subcolor=BAS_WM&',
+        label: 'Warm',
+      },
+      {
+        value: 'subcolor=BAS_NT&',
+        label: 'Neutral',
+      },
+      {
+        value: 'subcolor=BAS_CL&',
+        label: 'Cool',
       },
     ],
   },
 ];
 
-const skinNode = [
+const cheekNode = [
   {
-    value: '/Skin/SkinType',
-    label: 'SkinType',
+    value: '/Cheek/Category',
+    label: 'Category',
     children: [
       {
-        value: 6,
-        label: 'Dry',
+        value: 'category=CHK_B&',
+        label: 'Blusher',
       },
       {
-        value: 7,
-        label: 'Oily',
-      },
-    ],
-  },
-  {
-    value: '/Skin/Coverage',
-    label: 'Coverage',
-    children: [
-      {
-        value: 8,
-        label: 'High',
+        value: 'category=CHK_C&',
+        label: 'Contouring',
       },
       {
-        value: 9,
-        label: 'Medium',
-      },
-      {
-        value: 10,
-        label: 'Low',
+        value: 'category=CHK_H&',
+        label: 'Highlighter',
       },
     ],
   },
@@ -90,20 +110,20 @@ const lipNode = [
     label: 'Category',
     children: [
       {
-        value: 11,
+        value: 'category=LIP_S&',
         label: 'LipStick',
       },
       {
-        value: 12,
+        value: 'category=LIP_G&',
         label: 'LipGloss',
       },
       {
-        value: 13,
-        label: 'Tint',
+        value: 'category=LIP_B&',
+        label: 'LipBalm',
       },
       {
-        value: 14,
-        label: 'LipBalm',
+        value: 'category=LIP_T&',
+        label: 'Tint',
       },
     ],
   },
@@ -112,15 +132,15 @@ const lipNode = [
     label: 'Form',
     children: [
       {
-        value: 15,
+        value: 'form=LIP_M&',
         label: 'Matte',
       },
       {
-        value: 16,
+        value: 'form=LIP_G&',
         label: 'Glossy',
       },
       {
-        value: 17,
+        value: 'form=LIP_N&',
         label: 'None',
       },
     ],
@@ -143,18 +163,31 @@ class CheckBox extends React.Component {
     };
   }
 
-  onCheck(checked) {
-    const { findUrl } = this.props;
-    findUrl(checked);
-    this.setState({ checked });
-  }
-
   onClick(clicked) {
     this.setState({ clicked });
   }
 
   onExpand = (expanded) => {
     this.setState({ expanded });
+  }
+
+  onCheck(checked) {
+    const { findUrl } = this.props;
+    const { selected } = this.state;
+    let tmpUrl = '';
+    if (selected === 0) {
+      tmpUrl = 'lip/';
+    } else if (selected === 1) {
+      tmpUrl = 'base/';
+    } else { // (selected === 2)
+      tmpUrl = 'cheek/';
+    }
+
+    for (let i = 0; i < checked.length; i++) {
+      tmpUrl += checked[i];
+    }
+    findUrl(tmpUrl);
+    this.setState({ checked });
   }
 
   handleSelect = (sel) => {
@@ -166,24 +199,25 @@ class CheckBox extends React.Component {
 
   render() {
     const { checked, expanded, selected } = this.state;
-    let node = faceNode;
+    let node = lipNode;
     switch (selected) {
       case 0: {
-        node = faceNode;
+        node = lipNode;
         break;
       }
       case 1: {
-        node = skinNode;
+        node = baseNode;
         break;
       }
       case 2: {
-        node = lipNode;
+        node = cheekNode;
         break;
       }
       default: {
         node = null;
       }
     }
+
     return (
       <div className="clickable-labels">
         <Select
