@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CSS/Search.css';
 import { connect } from 'react-redux';
+import Popup from 'reactjs-popup';
 import { Slide } from 'react-slideshow-image';
 import * as actionCreators from '../store/actions/index';
 import ProductForm from '../Components/ProductForm';
@@ -12,6 +13,7 @@ import Header from '../Components/Header';
 import removeIcon from '../image/remove-icon.png';
 import myIcon from '../image/king.png';
 import helpImage from '../image/searchInit.png';
+import helpIcon from '../image/help.png';
 
 const slideImages = [
   Logo1,
@@ -36,8 +38,6 @@ class Search extends Component {
     this.state = {
       selection: 'lip',
       searched: null,
-      numDisplay: false,
-      searchInit: true,
     };
   }
 
@@ -55,6 +55,7 @@ class Search extends Component {
       localStorage.setItem('email', res.email)
     ));
     window.addEventListener('scroll', this.onScroll);
+    this.props.onGetProduct('lip/all');
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -105,15 +106,12 @@ class Search extends Component {
     onGetProduct(myQuery);
     this.setState({ numDisplay: true });
     this.setState({ searchInit: false });
-    console.log(myQuery);
   }
 
   render() {
     const {
       selection,
       searched,
-      numDisplay,
-      searchInit,
     } = this.state;
     const { searchResult, history } = this.props;
     const searchedProduct = searchResult.map((res) => (
@@ -142,8 +140,6 @@ class Search extends Component {
       checked.forEach((box) => { queryStr = queryStr.concat(box.id); });
       const { onGetProduct } = this.props;
       onGetProduct(queryStr);
-      this.setState({ numDisplay: true });
-      this.setState({ searchInit: false });
     };
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
@@ -188,6 +184,7 @@ class Search extends Component {
             <div className="Personal-Area">
               <div className="personal-image"><img src={myIcon} alt="init" width="30" /></div>
               <div className="personal-button"><button type="button" onClick={() => this.myStoreHandler()} id="personal-selection"> 나만의 상점  </button></div>
+              <div className="personal-image"><img src={myIcon} alt="init" width="30" /></div>
             </div>
             {lip}
             {base}
@@ -196,10 +193,11 @@ class Search extends Component {
             {/* {skincare} */}
           </div>
           <div className="ResultDiv">
-            <ul className="ResultNum">
-              {numDisplay && resultNum}
-              {searchInit && initImage}
-            </ul>
+            <Popup className="help-selection" trigger={<button id="help-selection" type="button"><img src={helpIcon} alt="help" width="30" id="help-selection" /></button>} modal>
+              {initImage}
+            </Popup>
+            &emsp;
+            {resultNum}
             <ul className="Result">
               {searchedProduct}
             </ul>
