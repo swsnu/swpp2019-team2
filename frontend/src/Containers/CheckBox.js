@@ -179,10 +179,8 @@ class CheckBox extends React.Component {
       tmpUrl = 'lip/';
     } else if (selected === 1) {
       tmpUrl = 'base/';
-    } else if (selected === 2) {
+    } else { // (selected === 2)
       tmpUrl = 'cheek/';
-    } else {
-      tmpUrl = 'not implemented';
     }
 
     for (let i = 0; i < checked.length; i++) {

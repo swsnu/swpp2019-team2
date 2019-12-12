@@ -68,7 +68,7 @@ const ItemDisplay = ({ combinations }) => {
     />
   );
 };
-
+List.displayName = 'CombiList';
 export default ItemDisplay;
 
 

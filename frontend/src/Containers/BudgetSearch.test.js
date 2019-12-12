@@ -12,6 +12,13 @@ import { history } from '../store/store';
 
 import * as actionCreators from '../store/actions/cosmos';
 
+const mockResult = [
+  [{ name: 'a1', price: 2500 }, { name: 'a2', price: 3500 }, { name: 'a3', price: 4500 }, { name: 'a4', price: 5500 }, { name: 'a5', price: 6500 }, { name: 'a6', price: 7500 }, { name: 'a7', price: 8500 }, { name: 'a8', price: 9500 }, { name: 'a9', price: 10500 }, { name: 'a10', price: 11500 }],
+  [{ name: 'b1', price: 2000 }, { name: 'b2', price: 4000 }, { name: 'b3', price: 6000 }, { name: 'b4', price: 8000 }, { name: 'b5', price: 10000 }, { name: 'b6', price: 12000 }, { name: 'b7', price: 14000 }, { name: 'b8', price: 16000 }, { name: 'b9', price: 18000 }, { name: 'b10', price: 20000 }],
+  [{ name: 'c1', price: 3700 }, { name: 'c2', price: 4400 }, { name: 'c3', price: 5100 }, { name: 'c4', price: 5800 }, { name: 'c5', price: 6500 }, { name: 'c6', price: 7200 }, { name: 'c7', price: 7900 }, { name: 'c8', price: 8600 }, { name: 'c9', price: 9300 }, { name: 'c10', price: 10000 }],
+  [{ name: 'd1', price: 12700 }, { name: 'd2', price: 17550 }, { name: 'd3', price: 22400 }, { name: 'd4', price: 27250 }, { name: 'd5', price: 32100 }, { name: 'd6', price: 36950 }, { name: 'd7', price: 41800 }, { name: 'd8', price: 46650 }, { name: 'd9', price: 51500 }, { name: 'd10', price: 56350 }],
+  [{ name: 'e1', price: 8400 }, { name: 'e2', price: 10800 }, { name: 'e3', price: 13200 }, { name: 'e4', price: 15600 }, { name: 'e5', price: 18000 }, { name: 'e6', price: 20400 }, { name: 'e7', price: 22800 }, { name: 'e8', price: 25200 }, { name: 'e9', price: 27600 }, { name: 'e10', price: 30000 }],
+];
 
 const stubStateC = {
   User: [{
@@ -56,6 +63,7 @@ const stubSeletedUserT = {
 
 const mockStore = getMockStore(stubSeletedUserT);
 const mockStore2 = getMockStore(stubStateC);
+
 describe('<BudgetSearch />', () => {
   let budgetsearch;
   let spyGetUser;
@@ -152,16 +160,20 @@ describe('<BudgetSearch />', () => {
     expect(redirect.length).toBe(0);
   });
   it('should call confirmhandler and alert', () => {
+    const mockConfirmHandler = jest.fn();
     const mockSwal = jest.fn();
     const component = mount(budgetsearch);
     const button = component.find('#combine-cosmetics-button');
-    button.prop('onClick')(mockSwal());
+    button.prop('onClick')(mockConfirmHandler(), mockSwal());
     expect(mockSwal).toHaveBeenCalledTimes(1);
   });
   it('should call confirmhandler and call handleClick', () => {
+    jest.useFakeTimers();
     const mockHandleChange = jest.fn();
+    const mockGetManyProducts = jest.fn();
+    const mockHandleClick = jest.fn();
     const mockSwal = jest.fn();
-    const component = shallow(<BudgetSearch.WrappedComponent user={[{ nick_name: 'name' }]} />);
+    const component = shallow(<BudgetSearch.WrappedComponent user={[{ nick_name: 'name' }]} onGetManyProducts={mockGetManyProducts} result={mockResult} />);
     const inputBar = component.find('#item_num');
     const wrapper = component.find('#select');
     wrapper.prop('onChange')({ value: 6 }, mockHandleChange());
@@ -171,8 +183,12 @@ describe('<BudgetSearch />', () => {
     expect(component.state().budgetRange).toEqual([30000, 35000]);
     for (let i = 2; i <= 5; i++) {
       inputBar.simulate('change', { target: { value: i } });
-      button.prop('onClick')(mockConfirmHandler());
+      // button.simulate('click');
+      button.prop('onClick')(mockConfirmHandler(), mockHandleClick());
+      setTimeout(() => { mockHandleClick(); }, 2000);
+      jest.runAllTimers();
       expect(mockConfirmHandler).toBeCalled();
+      expect(mockHandleClick).toBeCalled();
       resetButton.simulate('click');
     }
     wrapper.prop('onChange')({ value: 1 }, mockHandleChange());

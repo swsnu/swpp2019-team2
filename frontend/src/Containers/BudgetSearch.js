@@ -37,7 +37,6 @@ class BudgetSearch extends Component {
       itemNum: 2,
       budgetRange: null,
       initialized: true,
-
     };
   }
 
@@ -64,9 +63,7 @@ class BudgetSearch extends Component {
       swal('Please set the budget range');
     } else {
       onGetManyProducts(find1, find2, find3, find4, find5);
-      setTimeout(() => {
-        this.handleClick();
-      }, 2000);
+      setTimeout(() => { this.handleClick(); }, 2000);
     }
   }
 
@@ -210,7 +207,7 @@ class BudgetSearch extends Component {
   render() {
     const { history } = this.props;
     const {
-      itemNum, find1, find2, find3, find4, find5, show, combi,
+      itemNum, show, combi,
     } = this.state;
     const strNumItems = '<Choose Number of Items>';
     const strBudget = '<Choose Your Budget Range>';
@@ -266,13 +263,6 @@ class BudgetSearch extends Component {
                     </div>
                   )}
                 </div>
-              </div>
-              <div>
-                <h5>{find1}</h5>
-                <h5>{find2}</h5>
-                <h5>{find3}</h5>
-                <h5>{find4}</h5>
-                <h5>{find5}</h5>
               </div>
             </div>
             <div style={{ flex: 1, paddingRight: 20 }}>

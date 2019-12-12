@@ -10,8 +10,8 @@ const mockCombinations = [
 describe('<ItemDisplay />', () => {
   it('should render without error', () => {
     const component = mount(<ItemDisplay combinations={mockCombinations} />);
-    const wrapper = component.find('.ItemShow');
-    expect(wrapper.length).toBe(2);
+    const wrapper = component.find('CombiList');
+    expect(wrapper.length).toBe(1);
   });
 
   it('should render no result page when there is no result', () => {
