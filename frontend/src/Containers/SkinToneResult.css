@@ -1,13 +1,9 @@
 
-.result {
-    display: table;
-    align-content: center;
-    align-items: center;
+div.SkinToneResult > div.Content > div.resultbox > div.result,
+div.SkinToneResult > div.Content > div.resultbox > div.recommendation {
+    display: table-cell;
     width:400px;
     height:500px;
-    position: absolute;
-    top:35;
-    left:25%;
     background-color: white;
     margin: auto;
     border: medium lightgray solid;
@@ -16,21 +12,9 @@
 .result #colorbar {
     margin-bottom: 10px;
 }
+
 .MLresult {
     margin:auto;
-}
-.recommendation {
-    display: table;
-    align-content: center;
-    align-items: center;
-    margin:auto;
-    width:400px;
-    height:500px;
-    position: absolute;
-    top:35;
-    right:25%;
-    background-color: white;
-    border: medium lightgray solid;
 }
 
 .retry button {
@@ -46,4 +30,17 @@
 .retry button:active {
     color:white;
     background-color:#9b45a7;
+}
+
+div.SkinToneResult > div.Content {
+    padding-top:110px;
+}
+
+div.SkinToneResult > div.Content > div.resultbox {
+    display:table;
+    margin:0 auto 50px auto;
+}
+ 
+div.SkinToneResult > div.Content > div.resultbox > h2 {
+    display:table-caption;
 }

@@ -5,8 +5,8 @@ import { Slide } from 'react-slideshow-image';
 import * as actionCreators from '../store/actions/index';
 import ProductForm from '../Components/ProductForm';
 import DetailCategory from '../Components/DetailCategory';
-import Logo1 from '../image/slide1.jpg';
-import Logo2 from '../image/slide2.jpg';
+import Logo1 from '../image/slide1-1.jpg';
+import Logo2 from '../image/slide2-1.jpg';
 import Logo3 from '../image/slide3.jpg';
 import Header from '../Components/Header';
 import removeIcon from '../image/remove-icon.png';
@@ -70,7 +70,7 @@ class Search extends Component {
 
   onScroll = () => {
     if (window.scrollY > 300 && this.tick && this.state.searched) {
-      const size = window.screen.availHeight - 270;
+      const size = window.screen.availHeight - 400;
       if (size > document.querySelector('div.ResultDiv').offsetHeight) return;
       document.querySelector('div.Category').classList.add('fixed');
       const category = document.querySelectorAll('div.detail-category');

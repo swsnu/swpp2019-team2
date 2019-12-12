@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './SkinTone.css';
@@ -14,11 +15,9 @@ class SkinTone extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
       selectedFile: null,
       fileurl: '',
       flag: false,
-      render: false,
     };
     this.submitHandler = this.submitHandler.bind(this);
     this.fileinputHandler = this.fileinputHandler.bind(this);
@@ -89,7 +88,7 @@ class SkinTone extends Component {
       return (
         <div className="SkinTone">
           {redirect}
-          <Header history={history} selected={2} />
+          <Header history={history} selected={2} update={this.forceUpdate.bind(this)} />
           <div className="Content">
 
             <div className="Intro">
@@ -107,7 +106,9 @@ class SkinTone extends Component {
               </div>
               <div className="takephoto">
                 <Popup className="webcam-modal" trigger={<button id="webcammodal" type="button">사진이 없으신가요?</button>} modal>
-                  <div className="image_input">
+                  <div className="image_input" style={{ alignContent: 'center', alignItems: 'center' }}>
+                    <div style={{ paddingBottom: '30px', color: '#9b45a7' }}>!!! 주의사항 : 형광등 아래에 빛을 정면으로 받는 상태에서 찍으세요 !!!</div>
+                    <button id="photo-input" type="button" onClick={this.capture}>Take Photo</button>
                     <Webcam
                       audio={false}
                       height={540}
@@ -116,7 +117,6 @@ class SkinTone extends Component {
                       width={650}
                       mirrored
                     />
-                    <button id="photo-input" type="button" onClick={this.capture}>Take Photo</button>
                   </div>
                 </Popup>
               </div>
@@ -124,10 +124,13 @@ class SkinTone extends Component {
                 <Popup className="submit-modal" trigger={<button id="submitmodal" type="button">Submit</button>} modal>
                   <div className="image_input">
                     <h2 style={{ paddingBottom: '20px' }}>{inputImage}</h2>
-                    <div className="image_preview">
-                      <img src={fileurl} alt="Please upload a Selfie! :)" />
-                      <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
-                      <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+                    <div className="INPUT">
+                      <div style={{ padding: '40px', color: '#9b45a7' }}>!!! 주의사항 : 형광등 아래에 빛을 정면으로 받는 사진을 선택하세요 !!!</div>
+                      <div className="image_preview">
+                        <img src={fileurl} alt="Please Insert Selfie :)" />
+                        <input id="photo-input" type="file" name="file" accept="image/*" onChange={(event) => this.fileinputHandler(event)} />
+                        <button id="submit-button" type="submit" onClick={(event) => this.submitHandler(event)}>Submit</button>
+                      </div>
                     </div>
                   </div>
                 </Popup>
@@ -139,7 +142,6 @@ class SkinTone extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.cosmos.token != null,
   loading: state.cosmos.loading,
   error: state.cosmos.error,
   user: state.cosmos.User,
