@@ -54,15 +54,17 @@ const ItemDisplay = ({ combinations }) => {
       </div>
     );
   }
+
   return (
     <List
       className="CombinationList"
       width={980}
-      height={600}
+      height={480}
       rowCount={combinations.length}
       rowHeight={558}
       rowRenderer={ItemShow}
       list={combinations}
+      style={{ outline: 'none', backgroundColor: '#FCFCFC' }}
     />
   );
 };
@@ -71,6 +73,8 @@ export default ItemDisplay;
 
 
 /*
+
+
   return (
     <div>
   {combinations.map((c, index) => (<ItemShow className="ItemShow" combination={c} key={index} />))}

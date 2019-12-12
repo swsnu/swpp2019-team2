@@ -64,7 +64,9 @@ class BudgetSearch extends Component {
       swal('Please set the budget range');
     } else {
       onGetManyProducts(find1, find2, find3, find4, find5);
-      this.handleClick();
+      setTimeout(() => {
+        this.handleClick();
+      }, 2000);
     }
   }
 
