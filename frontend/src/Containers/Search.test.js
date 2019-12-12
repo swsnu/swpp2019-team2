@@ -170,7 +170,7 @@ describe('<Liplist />', () => {
     newInstance.setState({ selection: 'lip' });
     const button = component.find('.searchProduct').at(0);
     button.simulate('click');
-    expect(spygetLips).toHaveBeenCalledTimes(1);
+    expect(spygetLips).toHaveBeenCalledTimes(4);
   });
   it('should change visible category when clicked', () => {
     const component = mount(lipList);
@@ -179,21 +179,17 @@ describe('<Liplist />', () => {
     const button = component.find('button.Product#base');
     button.simulate('click');
     expect(newInstance.state).toEqual({
-      numDisplay: false,
       searched: null,
-      searchInit: true,
       selection: 'base',
     });
     button.simulate('click');
     expect(newInstance.state).toEqual({
-      numDisplay: false,
       // nickName: 'a',
       // preferBase: '19',
       // preferBrand: '라네즈',
       // preferColor: 'red',
       selection: 'base',
       searched: null,
-      searchInit: true,
     });
   });
 });
