@@ -263,3 +263,8 @@ div.Search div.Category > div.Personal-Area > div.personal-button > button {
     font-size:15px;
     background-color:#fbf8f8;
 }
+
+#init-image {
+    padding-top: 40px;
+    padding-left: 250px;
+}

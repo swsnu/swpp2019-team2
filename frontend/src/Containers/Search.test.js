@@ -179,17 +179,21 @@ describe('<Liplist />', () => {
     const button = component.find('button.Product#base');
     button.simulate('click');
     expect(newInstance.state).toEqual({
+      numDisplay: false,
       searched: null,
+      searchInit: true,
       selection: 'base',
     });
     button.simulate('click');
     expect(newInstance.state).toEqual({
+      numDisplay: false,
       // nickName: 'a',
       // preferBase: '19',
       // preferBrand: '라네즈',
       // preferColor: 'red',
       selection: 'base',
       searched: null,
+      searchInit: true,
     });
   });
 });
@@ -228,6 +232,53 @@ describe('<Liplist />', () => {
     button.simulate('click');
     const redirect = component.find('Redirect');
     expect(redirect.length).toBe(0);
+  });
+  it('should click mypage', () => {
+    const component = mount(lipList);
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+    expect(spygetLips).toHaveBeenCalledTimes(1);
+  });
+  it('should click mystore1', () => {
+    const component = mount(lipList);
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+    expect(spygetLips).toHaveBeenCalledTimes(1);
+  });
+  it('should click mystore2', () => {
+    localStorage.setItem('preferColor', 'pink');
+    const component = mount(lipList);
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+    expect(spygetLips).toHaveBeenCalledTimes(1);
+  });
+  it('should click mystore3', () => {
+    localStorage.setItem('preferColor', 'orange');
+    const component = mount(lipList);
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+    expect(spygetLips).toHaveBeenCalledTimes(1);
+  });
+  it('should click mystore4', () => {
+    localStorage.setItem('preferColor', 'purple');
+    const component = mount(lipList);
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+    expect(spygetLips).toHaveBeenCalledTimes(1);
+  });
+  it('should click mystore5', () => {
+    localStorage.removeItem('preferColor');
+    const component = mount(lipList);
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+    expect(spygetLips).toHaveBeenCalledTimes(1);
+  });
+  it('should click mystore6', () => {
+    localStorage.removeItem('preferBrand');
+    const component = mount(lipList);
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+    expect(spygetLips).toHaveBeenCalledTimes(1);
   });
   it('should call with proper query string & remove see', () => {
     const component = mount(lipList, { attachTo: document.body });
