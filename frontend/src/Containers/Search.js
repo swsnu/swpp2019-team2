@@ -10,6 +10,8 @@ import Logo2 from '../image/slide2-1.jpg';
 import Logo3 from '../image/slide3.jpg';
 import Header from '../Components/Header';
 import removeIcon from '../image/remove-icon.png';
+import myIcon from '../image/king.png';
+import helpImage from '../image/searchInit.png';
 
 const slideImages = [
   Logo1,
@@ -34,6 +36,8 @@ class Search extends Component {
     this.state = {
       selection: 'lip',
       searched: null,
+      numDisplay: false,
+      searchInit: true,
     };
   }
 
@@ -83,8 +87,34 @@ class Search extends Component {
     }
   }
 
+  myStoreHandler() {
+    let myQuery = 'lip/';
+    if (localStorage.getItem('preferColor') !== undefined && localStorage.getItem('preferColor') !== null) {
+      if (localStorage.getItem('preferColor') === 'red') myQuery = myQuery.concat('color=LIP_RD&');
+      else if (localStorage.getItem('preferColor') === 'pink') myQuery = myQuery.concat('color=LIP_PK&');
+      else if (localStorage.getItem('preferColor') === 'orange') myQuery = myQuery.concat('color=LIP_OR&');
+      else myQuery = myQuery.concat('color=LIP_PU&');
+    }
+    if (localStorage.getItem('preferBrand') !== undefined && localStorage.getItem('preferBrand') !== null) {
+      const brandList = localStorage.getItem('preferBrand').split(',');
+      for (let i = 0; i < brandList.length; i++) {
+        myQuery = myQuery.concat(`brand=${brandList[i]}&`);
+      }
+    }
+    const { onGetProduct } = this.props;
+    onGetProduct(myQuery);
+    this.setState({ numDisplay: true });
+    this.setState({ searchInit: false });
+    console.log(myQuery);
+  }
+
   render() {
-    const { selection, searched } = this.state;
+    const {
+      selection,
+      searched,
+      numDisplay,
+      searchInit,
+    } = this.state;
     const { searchResult, history } = this.props;
     const searchedProduct = searchResult.map((res) => (
       <ProductForm
@@ -93,7 +123,8 @@ class Search extends Component {
         info={res}
       />
     ));
-
+    const initImage = <img src={helpImage} alt="init" width="500" id="init-image" />;
+    const resultNum = `검색결과: 총 ${searchResult.length}건`;
     const click = (e) => {
       if (selection !== e.target.id) {
         if (e.target.id !== 'remove-all-selection') this.setState({ selection: e.target.id });
@@ -111,6 +142,8 @@ class Search extends Component {
       checked.forEach((box) => { queryStr = queryStr.concat(box.id); });
       const { onGetProduct } = this.props;
       onGetProduct(queryStr);
+      this.setState({ numDisplay: true });
+      this.setState({ searchInit: false });
     };
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
@@ -152,6 +185,10 @@ class Search extends Component {
               <div className="delete-image"><img src={removeIcon} alt="" /></div>
               <div className="delete-button"><button type="button" onClick={click} id="remove-all-selection"> Remove All Selection  </button></div>
             </div>
+            <div className="Personal-Area">
+              <div className="personal-image"><img src={myIcon} alt="init" width="30" /></div>
+              <div className="personal-button"><button type="button" onClick={() => this.myStoreHandler()} id="personal-selection"> 나만의 상점  </button></div>
+            </div>
             {lip}
             {base}
             {/* {eye}  */}
@@ -159,6 +196,10 @@ class Search extends Component {
             {/* {skincare} */}
           </div>
           <div className="ResultDiv">
+            <ul className="ResultNum">
+              {numDisplay && resultNum}
+              {searchInit && initImage}
+            </ul>
             <ul className="Result">
               {searchedProduct}
             </ul>

@@ -50,6 +50,7 @@ div.Content > div.Menu2 > div.selection_list > div:nth-child(1) > div {
 div.Content > div.Menu2 > div.button {
     margin: 0 25px 0 25px;
     border-top:1px solid #9a60bc;
+    
 }
 div.Content > div.Menu2 > div.button > button#modify-button{
     
