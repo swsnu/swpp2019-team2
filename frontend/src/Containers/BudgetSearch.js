@@ -32,11 +32,6 @@ class BudgetSearch extends Component {
       find4: '',
       find5: '',
       id: '',
-      list1: [{ name: 'a1', price: 2500 }, { name: 'a2', price: 3500 }, { name: 'a3', price: 4500 }, { name: 'a4', price: 5500 }, { name: 'a5', price: 6500 }, { name: 'a6', price: 7500 }, { name: 'a7', price: 8500 }, { name: 'a8', price: 9500 }, { name: 'a9', price: 10500 }, { name: 'a10', price: 11500 }],
-      list2: [{ name: 'b1', price: 2000 }, { name: 'b2', price: 4000 }, { name: 'b3', price: 6000 }, { name: 'b4', price: 8000 }, { name: 'b5', price: 10000 }, { name: 'b6', price: 12000 }, { name: 'b7', price: 14000 }, { name: 'b8', price: 16000 }, { name: 'b9', price: 18000 }, { name: 'b10', price: 20000 }],
-      list3: [{ name: 'c1', price: 3700 }, { name: 'c2', price: 4400 }, { name: 'c3', price: 5100 }, { name: 'c4', price: 5800 }, { name: 'c5', price: 6500 }, { name: 'c6', price: 7200 }, { name: 'c7', price: 7900 }, { name: 'c8', price: 8600 }, { name: 'c9', price: 9300 }, { name: 'c10', price: 10000 }],
-      list4: [{ name: 'd1', price: 12700 }, { name: 'd2', price: 17550 }, { name: 'd3', price: 22400 }, { name: 'd4', price: 27250 }, { name: 'd5', price: 32100 }, { name: 'd6', price: 36950 }, { name: 'd7', price: 41800 }, { name: 'd8', price: 46650 }, { name: 'd9', price: 51500 }, { name: 'd10', price: 56350 }],
-      list5: [{ name: 'e1', price: 8400 }, { name: 'e2', price: 10800 }, { name: 'e3', price: 13200 }, { name: 'e4', price: 15600 }, { name: 'e5', price: 18000 }, { name: 'e6', price: 20400 }, { name: 'e7', price: 22800 }, { name: 'e8', price: 25200 }, { name: 'e9', price: 27600 }, { name: 'e10', price: 30000 }],
       combi: [],
       show: false,
       itemNum: 2,
@@ -61,9 +56,14 @@ class BudgetSearch extends Component {
   }
 
   confirmHandler = () => {
-    if (this.state.budgetRange === null) {
+    const { onGetManyProducts } = this.props;
+    const {
+      find1, find2, find3, find4, find5, budgetRange,
+    } = this.state;
+    if (budgetRange === null) {
       swal('Please set the budget range');
     } else {
+      onGetManyProducts(find1, find2, find3, find4, find5);
       this.handleClick();
     }
   }
@@ -100,18 +100,19 @@ class BudgetSearch extends Component {
 
   handleClick() {
     const {
-      budgetRange, list1, list2, list3, list4, list5, itemNum, initialized,
+      budgetRange, itemNum, initialized,
     } = this.state;
+    const { result } = this.props;
     if (initialized === false) {
       swal('please reset before another search');
     } else {
       const minBudget = budgetRange[0];
       const maxBudget = budgetRange[1];
-      const tmp1 = list1;
-      const tmp2 = list2;
-      const tmp3 = list3;
-      const tmp4 = list4;
-      const tmp5 = list5;
+      const tmp1 = result[0];
+      const tmp2 = result[1];
+      const tmp3 = result[2];
+      const tmp4 = result[3];
+      const tmp5 = result[4];
       const answer = [];
       for (let i = 0; i < tmp1.length; i++) {
         const comb = [];
@@ -315,11 +316,15 @@ const mapStateToProps = (state) => ({
   loading: state.cosmos.loading,
   error: state.cosmos.error,
   user: state.cosmos.User,
+  result: state.cosmos.budgetResult,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   getUserInfo: () => dispatch(actionCreators.getUser()),
+  onGetManyProducts: (url1, url2, url3, url4, url5) => dispatch(
+    actionCreators.getManyProducts(url1, url2, url3, url4, url5),
+  ),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetSearch);

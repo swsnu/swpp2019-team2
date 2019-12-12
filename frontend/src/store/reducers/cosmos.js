@@ -10,6 +10,7 @@ const initialState = {
   error: null,
   loading: false,
   ML: null,
+  budgetResult: [[], [], [], [], []],
 };
 
 const authStart = (state) => updateObject(state, {
@@ -58,7 +59,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_USER: return { ...state, User: action.User };
     case actionTypes.GET_LOGIN: return { ...state, User: action.User };
     case actionTypes.GET_USER2: return { ...state, User2: action.User2 };
-
+    case actionTypes.GETMANYPRODUCTS: return { ...state, budgetResult: action.result };
     default:
       break;
   }

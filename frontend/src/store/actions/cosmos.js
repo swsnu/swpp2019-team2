@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import axios from 'axios';
 import { push } from 'connected-react-router';
 import * as actionTypes from './actionTypes';
@@ -6,6 +7,30 @@ import * as actionTypes from './actionTypes';
 export const getProducts_ = (result) => ({ type: actionTypes.GET_PRODUCT, result });
 export const getProducts = (searchQuery) => (dispatch) => axios.get(`/api/${searchQuery}`)
   .then((res) => dispatch(getProducts_(res.data)));
+
+export const getManyProducts_ = (result1, result2, result3, result4, result5) => (
+  { type: actionTypes.GETMANYPRODUCTS, result: [result1, result2, result3, result4, result5] }
+
+);
+export const getManyProducts = (url1, url2, url3, url4, url5) => {
+  return (dispatch) => {
+    axios.all([
+      axios.get(`/api/${url1}`).catch(() => { return { data: [] }; }),
+      axios.get(`/api/${url2}`).catch(() => { return { data: [] }; }),
+      axios.get(`/api/${url3}`).catch(() => { return { data: [] }; }),
+      axios.get(`/api/${url4}`).catch(() => { return { data: [] }; }),
+      axios.get(`/api/${url5}`).catch(() => { return { data: [] }; }),
+    ]).then(axios.spread((...responses) => {
+      dispatch(getManyProducts_(
+        responses[0].data,
+        responses[1].data,
+        responses[2].data,
+        responses[3].data,
+        responses[4].data,
+      ));
+    }));
+  };
+};
 
 export const getUser_ = (User) => ({ type: actionTypes.GET_USER, User });
 export const getUser = () => (dispatch) => axios.get('/api/signup/')
