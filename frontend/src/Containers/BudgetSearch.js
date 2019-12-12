@@ -209,8 +209,8 @@ class BudgetSearch extends Component {
     const {
       itemNum, show, combi,
     } = this.state;
-    const strNumItems = '<Choose Number of Items>';
-    const strBudget = '<Choose Your Budget Range>';
+    const strNumItems = 'Choose Number of Items';
+    const strBudget = 'Choose Your Budget Range';
     return (
       <div className="BudgetSearch">
         <Header history={history} selected={1} />
@@ -218,12 +218,36 @@ class BudgetSearch extends Component {
           <div style={{ display: 'flex' }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{
-                display: 'flex', flexDirection: 'column', margin: 20, backgroundColor: '#EAEAEA', borderRadius: 10, padding: 10,
+                display: 'flex', flexDirection: 'column', margin: 20, backgroundColor: '#efefef', borderRadius: 10, padding: 10,
               }}
               >
+                <button
+                  id="combine-cosmetics-button"
+                  type="submit"
+                  onClick={() => this.confirmHandler()}
+                  style={{
+                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3, color: 'black', fontWeight: 'bold', fontSize: 16,
+                  }}
+                >
+                  {' '}
+                  Combine Cosmetics
+                </button>
+                <button
+                  type="button"
+                  id="reset-result"
+                  onClick={() => this.handleReset()}
+                  style={{
+                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3, color: 'black', fontWeight: 'bold', fontSize: 16,
+                  }}
+                >
+                  {' '}
+                    Reset
+                  {' '}
+
+                </button>
                 <h4 style={{ display: 'flex', justifyContent: 'center' }}>{strBudget}</h4>
                 <div>
-                  <div style={{ width: 220 }}>
+                  <div style={{ width: 300 }}>
                     <Select
                       id="select"
                       isClearable
@@ -235,66 +259,37 @@ class BudgetSearch extends Component {
                 </div>
                 <div className="item_input" style={{ display: 'flex', flexDirection: 'column' }}>
                   <h4>{strNumItems}</h4>
-                  <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <input type="text" name="item_val" readOnly value={itemNum} style={{ width: 50 }} />
+                  <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 15 }}>
+                    <input type="text" name="item_val" readOnly value={itemNum} style={{ width: 'auto' }} />
                     <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} style={{ width: 100 }} />
                   </div>
                 </div>
                 <div>
-                  <div style={{ margin: 22, width: 180 }}>
+                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
                     <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
                   </div>
-                  <div style={{ margin: 22, width: 180 }}>
+                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
                     <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
                   </div>
                   {itemNum > 2 && (
-                    <div style={{ margin: 22, width: 180 }}>
+                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
                       <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
                     </div>
                   )}
                   {itemNum > 3 && (
-                    <div style={{ margin: 22, width: 180 }}>
+                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
                       <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
                     </div>
                   )}
                   {itemNum > 4 && (
-                    <div style={{ margin: 22, width: 180 }}>
+                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
                       <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
                     </div>
                   )}
                 </div>
               </div>
             </div>
-            <div style={{ flex: 1, paddingRight: 20 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-                <div>
-                  <button
-                    id="combine-cosmetics-button"
-                    type="submit"
-                    onClick={() => this.confirmHandler()}
-                    style={{
-                      widht: 80, height: 40, borderRadius: 8, borderWidth: 3,
-                    }}
-                  >
-                    Combine Cosmetics
-                  </button>
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    id="reset-result"
-                    onClick={() => this.handleReset()}
-                    style={{
-                      widht: 80, height: 40, borderRadius: 8, borderWidth: 3,
-                    }}
-                  >
-                    {' '}
-                    초기화
-                    {' '}
-
-                  </button>
-                </div>
-              </div>
+            <div style={{ flex: 1, paddingRight: 20, margin: 20 }}>
               {show && (<ItemDisplay combinations={combi} />)}
             </div>
           </div>

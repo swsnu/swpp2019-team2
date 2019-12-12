@@ -13,9 +13,9 @@ const ItemDisplay = ({ combinations }) => {
     const relativeWidth = 165 * (5 / combination.length);
     return (
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-around', backgroundColor: 'white' }}>
           {combination.map((item) => (
-            <div key={item.name + String(item.price)} style={{ backgroundColor: '#EEEFFF', borderRadius: 8, padding: 5 }}>
+            <div key={item.name + String(item.price)} style={{ backgroundColor: 'rgb(249, 236, 251)', borderRadius: 8, padding: 5 }}>
               <img height={relativeWidth} width={relativeWidth} src={item.img_url} alt="" />
               <p>
                 이름 :
@@ -36,13 +36,12 @@ const ItemDisplay = ({ combinations }) => {
             </div>
           ))}
         </div>
-        <p>
+        <p style={{ borderBottom: '3px lightgray solid', paddingBottom: 20 }}>
           총
           {' '}
           {sum}
           원
         </p>
-        <hr />
       </div>
     );
   };
@@ -59,7 +58,7 @@ const ItemDisplay = ({ combinations }) => {
     <List
       className="CombinationList"
       width={980}
-      height={480}
+      height={800}
       rowCount={combinations.length}
       rowHeight={558}
       rowRenderer={ItemShow}
