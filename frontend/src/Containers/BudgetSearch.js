@@ -8,6 +8,7 @@ import * as actionCreators from '../store/actions/index';
 import CheckBox from './CheckBox';
 import ItemDisplay from './ItemDisplay';
 import Header from '../Components/Header';
+import budgethelpImage from '../image/budgetsearch.png';
 
 const options = [
   { value: 0, label: '0원 ~ 5000원' }, // 삭제가능
@@ -102,6 +103,7 @@ class BudgetSearch extends Component {
       budgetRange, itemNum, initialized,
     } = this.state;
     const { result } = this.props;
+    console.log(result);
     if (initialized === false) {
       swal('please reset before another search');
     } else {
@@ -290,6 +292,7 @@ class BudgetSearch extends Component {
               </div>
             </div>
             <div style={{ flex: 1, paddingRight: 20, margin: 20 }}>
+              {!show && (<img src={budgethelpImage} alt="Budget Search 사용법" width="600px" />)}
               {show && (<ItemDisplay combinations={combi} />)}
             </div>
           </div>

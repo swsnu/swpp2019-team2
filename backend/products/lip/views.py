@@ -1,8 +1,9 @@
 """ TODO : DOCSTRING"""
 from urllib.parse import urlparse, parse_qs
-from django.http import JsonResponse, HttpResponseNotAllowed
+from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponse
 from .models import Lip, LipOption
 from .serializers import LipSerializer
+import random
 
 
 def search(request, option):
@@ -10,6 +11,14 @@ def search(request, option):
     if request.method == "GET":
         url = urlparse('?' + option)
         query = parse_qs(url.query)
+        if 'update' in query:
+            lip = Lip.objects.all()
+            for item in lip:
+                form = ['LIP_M', 'LIP_G', 'LIP_N']
+                index = random.randint(0,2)
+                item.form = form[index]
+                item.save()
+            return HttpResponse('update')
         if 'category' not in query and 'form' not in query:
             lip = Lip.objects.all()
         else:
