@@ -193,11 +193,12 @@ class Search extends Component {
             {/* {skincare} */}
           </div>
           <div className="ResultDiv">
-            <Popup className="help-selection" trigger={<button id="help-selection" type="button"><img src={helpIcon} alt="help" width="30" id="help-selection" /></button>} modal>
-              {initImage}
-            </Popup>
-            &emsp;
-            {resultNum}
+            <div className="info-result-div">
+              <Popup className="help-selection" trigger={<button id="help-selection" type="button"><img src={helpIcon} alt="help" width="30" id="help-selection" /></button>} modal>
+                {initImage}
+              </Popup>
+              <div id="result-num">{resultNum}</div>
+            </div>
             <ul className="Result">
               {searchedProduct}
             </ul>

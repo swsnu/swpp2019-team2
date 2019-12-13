@@ -152,6 +152,23 @@ div.Search div.ResultDiv {
     position: absolute;
     left: 25%;
 }
+div.Search div.ResultDiv > div.info-result-div {
+    position:relative;
+    
+}
+
+div.Search div.ResultDiv > div.info-result-div > button {
+    display:inline-block;
+
+}
+
+div.Search div.ResultDiv > div.info-result-div > div#result-num {
+    display:inline-block;
+    position:absolute;
+    top:5px;
+    margin-left:10px;
+}
+
 ul.Result {
     display:table;
 }
@@ -266,7 +283,7 @@ div.Search div.Category > div.Personal-Area > div.personal-button > button {
 
 #init-image {
     padding-top: 40px;
-    padding-left: 150px;
+    padding-left: 140px;
 }
 
 .ResultDiv button {
