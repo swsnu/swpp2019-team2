@@ -80,7 +80,7 @@ class BigCalendar extends Component {
     return (
       <div className="Calendar" style={{ display: 'flex', flexDirection: 'row' }}>
         <div style={{
-          display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: 100, marginRight: 20,
+          display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: 100, marginRight: 50,
         }}
         >
           <button id="button1" style={buttonStyle} onClick={() => this.setState({ selectedEvent: MAC })}>MAC</button>
