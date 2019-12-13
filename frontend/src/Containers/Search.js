@@ -14,6 +14,7 @@ import removeIcon from '../image/remove-icon.png';
 import myIcon from '../image/king.png';
 import helpImage from '../image/searchInit.png';
 import helpIcon from '../image/help.png';
+import Tooltip from 'react-tooltip-lite';
 
 const slideImages = [
   Logo1,
@@ -89,6 +90,10 @@ class Search extends Component {
   }
 
   myStoreHandler() {
+    if (!localStorage.getItem('token')) {
+      window.alert('로그인 후 이용해주세요');
+      return;
+    }
     let myQuery = 'lip/';
     if (localStorage.getItem('preferColor') !== undefined && localStorage.getItem('preferColor') !== null) {
       if (localStorage.getItem('preferColor') === 'red') myQuery = myQuery.concat('color=LIP_RD&');
@@ -101,6 +106,10 @@ class Search extends Component {
       for (let i = 0; i < brandList.length; i++) {
         myQuery = myQuery.concat(`brand=${brandList[i]}&`);
       }
+    }
+    if (myQuery === 'lip/') {
+      window.alert('마이페이지에서 설정 후 이용해주세요');
+      return;
     }
     const { onGetProduct } = this.props;
     onGetProduct(myQuery);
@@ -141,6 +150,7 @@ class Search extends Component {
       const { onGetProduct } = this.props;
       onGetProduct(queryStr);
     };
+
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
     /* const eye = <DetailCategory
@@ -183,7 +193,13 @@ class Search extends Component {
             </div>
             <div className="Personal-Area">
               <div className="personal-image"><img src={myIcon} alt="init" width="30" /></div>
-              <div className="personal-button"><button type="button" onClick={() => this.myStoreHandler()} id="personal-selection"> 나만의 상점  </button></div>
+              <div className="personal-button">
+              <div className="example-warper">
+              <Tooltip key="info-personal-tooltip" content={localStorage.getItem('token') ? '선호 설정에 따라 검색합니다' : '로그인이 필요합니다'}>
+                <button type="button" onClick={() => this.myStoreHandler()} id="personal-selection"> 나만의 상점  </button>
+              </Tooltip>
+                </div>
+                </div>
               <div className="personal-image"><img src={myIcon} alt="init" width="30" /></div>
             </div>
             {lip}
@@ -211,9 +227,6 @@ class Search extends Component {
 
 const mapStateToProps = (state) => ({
   searchResult: state.cosmos.result,
-  isAuthenticated: state.cosmos.token != null,
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
   userProfile: state.cosmos.User,
   userInfo: state.cosmos.User2,
 });
