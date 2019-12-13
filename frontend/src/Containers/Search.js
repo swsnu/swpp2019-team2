@@ -57,6 +57,13 @@ class Search extends Component {
     ));
     window.addEventListener('scroll', this.onScroll);
     this.props.onGetProduct('lip/all');
+    window.addEventListener('resize', () => {
+      if (document.querySelectorAll('div.Category.fixed > div.detail-category').length > 0) {
+        document.querySelectorAll('div.detail-category').forEach((cat) => {
+          cat.style.height = `${window.innerHeight - 375}px`;
+        });
+      }
+    })
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -75,12 +82,12 @@ class Search extends Component {
 
   onScroll = () => {
     if (window.scrollY > 300 && this.tick && this.state.searched) {
-      const size = window.screen.availHeight - 400;
+      const size = window.innerHeight - 150;
       if (size > document.querySelector('div.ResultDiv').offsetHeight) return;
       document.querySelector('div.Category').classList.add('fixed');
       const category = document.querySelectorAll('div.detail-category');
       category.forEach((cat) => {
-        cat.style.height = `${size}px`;
+        cat.style.height = `${size-225}px`;
       });
       this.tick = false;
     } else if (!this.tick && window.scrollY < 300) {
