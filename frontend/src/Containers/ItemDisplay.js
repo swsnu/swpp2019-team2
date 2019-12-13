@@ -16,7 +16,6 @@ const ItemShow = ({ combination }) => {
           <div key={item.name + String(item.price)} style={{ backgroundColor: 'rgb(249, 236, 251)', borderRadius: 8, padding: 5 }}>
             <img height={relativeWidth} width={relativeWidth} src={item.img_url} alt="" />
             <p>
-              이름 :
               {' '}
               {item.name}
             </p>
@@ -76,6 +75,4 @@ export default ItemDisplay;
       style={{ outline: 'none', backgroundColor: '#FCFCFC' }}
     />
   );
-
-  
 */

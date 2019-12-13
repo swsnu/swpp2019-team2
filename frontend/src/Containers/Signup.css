@@ -82,3 +82,8 @@ body {
     font : inherit;
     margin : auto;
 }
+
+div.MuiPaper-root.MuiPaper-elevation6.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-8.MuiGrid-grid-md-6 > h1,
+div.MuiPaper-root.MuiPaper-elevation6.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-8.MuiGrid-grid-md-6 > h2 {
+    text-align:center;
+}

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component } from 'react';
 import './BudgetSearch.css';
@@ -103,7 +104,6 @@ class BudgetSearch extends Component {
       budgetRange, itemNum, initialized,
     } = this.state;
     const { result } = this.props;
-    console.log(result);
     if (initialized === false) {
       swal('please reset before another search');
     } else {
@@ -114,7 +114,22 @@ class BudgetSearch extends Component {
       const tmp3 = result[2];
       const tmp4 = result[3];
       const tmp5 = result[4];
-      const answer = [];
+      tmp1.sort(function (a, b) {
+        return a.price < b.price ? -1 : 1;
+      });
+      tmp2.sort(function (a, b) {
+        return a.price < b.price ? -1 : 1;
+      });
+      tmp3.sort(function (a, b) {
+        return a.price < b.price ? -1 : 1;
+      });
+      tmp4.sort(function (a, b) {
+        return a.price < b.price ? -1 : 1;
+      });
+      tmp5.sort(function (a, b) {
+        return a.price < b.price ? -1 : 1;
+      });
+      let answer = [];
       for (let i = 0; i < tmp1.length; i++) {
         const comb = [];
         let sum = 0;
@@ -191,7 +206,9 @@ class BudgetSearch extends Component {
           }
         }
       }
-
+      if (answer.length > 50) {
+        answer = answer.slice(0, 50);
+      }
       this.setState({ combi: answer });
       this.setState({ show: true });
       if (answer.length !== 0) {
