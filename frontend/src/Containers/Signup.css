@@ -82,3 +82,7 @@ body {
     font : inherit;
     margin : auto;
 }
+
+div.Signup div.MuiGrid-root.MuiGrid-item {
+    text-align:right;
+}
