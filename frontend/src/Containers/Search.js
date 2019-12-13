@@ -74,7 +74,7 @@ class Search extends Component {
 
   onScroll = () => {
     if (window.scrollY > 300 && this.tick && this.state.searched) {
-      const size = window.screen.availHeight - 400;
+      const size = window.screen.availHeight - 480;
       if (size > document.querySelector('div.ResultDiv').offsetHeight) return;
       document.querySelector('div.Category').classList.add('fixed');
       const category = document.querySelectorAll('div.detail-category');
