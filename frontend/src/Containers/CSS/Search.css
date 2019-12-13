@@ -154,7 +154,15 @@ div.Search div.ResultDiv {
 }
 div.Search div.ResultDiv > div.info-result-div {
     position:relative;
-    
+}
+
+div.Search div.ResultDiv > div.info-result-div > div.help-selection-overlay > div.help-selection-content {
+    padding: 40px 50px 0 50px !important;
+    width:fit-content !important;
+}
+
+div.Search div.ResultDiv > div.info-result-div > div.help-selection-overlay > div.help-selection-content > img#init-image {
+    padding: 0 !important;
 }
 
 div.Search div.ResultDiv > div.info-result-div > button {
