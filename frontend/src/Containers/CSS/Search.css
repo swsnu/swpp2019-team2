@@ -154,7 +154,15 @@ div.Search div.ResultDiv {
 }
 div.Search div.ResultDiv > div.info-result-div {
     position:relative;
-    
+}
+
+div.Search div.ResultDiv > div.info-result-div > div.help-selection-overlay > div.help-selection-content {
+    padding: 40px 50px 0 50px !important;
+    width:fit-content !important;
+}
+
+div.Search div.ResultDiv > div.info-result-div > div.help-selection-overlay > div.help-selection-content > img#init-image {
+    padding: 0 !important;
 }
 
 div.Search div.ResultDiv > div.info-result-div > button {
@@ -262,10 +270,11 @@ div.Search div.Category > div.Delete-Area > div.delete-button {
     vertical-align:middle;
 }
 
-div.Search div.Category > div.Personal-Area > div.personal-button > button {
+div.Search div.Category > div.Personal-Area > div.personal-button button#personal-selection {
     width:100%;
     border:none;
     font-size:15px;
+    background-color:#fbf8f8;
 }
 
 div.Search div.Category > div.Delete-Area > div.delete-button > button {
