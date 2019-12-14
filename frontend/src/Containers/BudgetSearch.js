@@ -319,15 +319,10 @@ class BudgetSearch extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.cosmos.token != null,
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
-  user: state.cosmos.User,
   result: state.cosmos.budgetResult,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   getUserInfo: () => dispatch(actionCreators.getUser()),
   onGetManyProducts: (url1, url2, url3, url4, url5) => dispatch(

@@ -79,9 +79,7 @@ const WrappedRegistrationForm = Form.create()(RegistrationForm);
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
-  loading: state.cosmos.loading,
   error: state.cosmos.error,
-
 });
 
 const mapDispatchToProps = (dispatch) => ({

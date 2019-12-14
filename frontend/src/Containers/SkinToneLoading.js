@@ -51,8 +51,6 @@ class SkinToneLoading extends Component {
 }
 const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
