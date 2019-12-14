@@ -105,11 +105,12 @@ class Search extends Component {
       return;
     }
     let myQuery = 'lip/';
+    const trans = {
+      red: 'LIP_RD', pink: 'LIP_PK', orange: 'LIP_OR', purple: 'LIP_PU',
+    };
     if (localStorage.getItem('preferColor') !== undefined && localStorage.getItem('preferColor') !== null) {
-      if (localStorage.getItem('preferColor') === 'red') myQuery = myQuery.concat('color=LIP_RD&');
-      else if (localStorage.getItem('preferColor') === 'pink') myQuery = myQuery.concat('color=LIP_PK&');
-      else if (localStorage.getItem('preferColor') === 'orange') myQuery = myQuery.concat('color=LIP_OR&');
-      else myQuery = myQuery.concat('color=LIP_PU&');
+      const color = localStorage.getItem('preferColor');
+      myQuery.concat(trans[color]);
     }
     if (localStorage.getItem('preferBrand') !== undefined && localStorage.getItem('preferBrand') !== null) {
       const brandList = localStorage.getItem('preferBrand').split(',');

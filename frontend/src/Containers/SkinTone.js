@@ -147,7 +147,6 @@ class SkinTone extends Component {
 const mapDispatchToProps = (dispatch) => ({
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   send_picture: (img) => dispatch(actionCreators.sendImage(img)),
-  run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
   getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 

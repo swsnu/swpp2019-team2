@@ -95,4 +95,19 @@ describe('<SkinTone />', () => {
     localStorage.removeItem('token');
     const logoutComponent = mount(mypage);
   });
+  it('should call confirmHandler with no data in local Storage', () => {
+    const mockFn = jest.fn();
+    localStorage.setItem('token', 'testToken');
+    localStorage.setItem('preferColor', 'null');
+    localStorage.setItem('preferBase', 'null');
+    localStorage.setItem('preferBrand', 'null');
+    const component = mount(mypage);
+    const wrapper = component.find('#brand-input');
+    wrapper.at(0).simulate('click');
+    const wrapper2 = component.find('#modify-button');
+    const newInstance = component.find(MyPage.WrappedComponent).instance();
+    newInstance.setState({ preferBase: '21', preferColor: 'red' });
+    wrapper2.simulate('click');
+    expect(spyPutInfo2).toBeCalledTimes(1);
+  });
 });
