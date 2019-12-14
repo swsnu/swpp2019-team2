@@ -32,6 +32,7 @@ class SkinToneResult extends Component {
       redirect = <Redirect to="/login" />;
     }
     const src = `/media/output/colorbar${localStorage.getItem('nickname')}.png`;
+    // const colorbarSrc = `http://52.141.1.157:8000/media/output/colorbar${localStorage.getItem('nickname')}.png`;
     // const productUrl = '';
     const { ML, history } = this.props;
     const { result, rgbResult } = this.state;
