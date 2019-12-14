@@ -89,7 +89,7 @@ class Search extends Component {
       document.querySelector('div.Category').classList.add('fixed');
       const category = document.querySelectorAll('div.detail-category');
       category.forEach((cat) => {
-        cat.style.height = `${size-225}px`;
+        cat.style.height = `${size - 225}px`;
       });
       this.tick = false;
     } else if (!this.tick && window.scrollY < 300) {
