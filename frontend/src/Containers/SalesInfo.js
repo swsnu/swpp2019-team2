@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
 import BigCalendar from './BigCalendar';
