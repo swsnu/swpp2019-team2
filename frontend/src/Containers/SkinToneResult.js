@@ -32,11 +32,11 @@ class SkinToneResult extends Component {
       redirect = <Redirect to="/login" />;
     }
     const src = `/media/output/colorbar${localStorage.getItem('nickname')}.png`;
-    const productUrl = '';
+    // const productUrl = '';
     const { ML, history } = this.props;
     const { result, rgbResult } = this.state;
     const FoundationResult = (
-      <a target="_blank" rel="noopener noreferrer" className="productItem" href={productUrl}>
+      <a target="_blank" rel="noopener noreferrer" className="productItem" href={ML.product.product_url}>
         <section className="thumbnail">
           <img height="200" width="200" src={ML.product.img_url} alt="new" />
         </section>
