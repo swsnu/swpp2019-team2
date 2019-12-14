@@ -91,10 +91,7 @@ const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.cosmos.token != null,
-  loading: state.cosmos.loading,
   error: state.cosmos.error,
-  user: state.cosmos.User2,
-
 });
 
 const mapDispatchToProps = (dispatch) => ({

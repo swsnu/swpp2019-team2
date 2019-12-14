@@ -141,11 +141,7 @@ class SkinTone extends Component {
       );
     }
 }
-const mapStateToProps = (state) => ({
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
-  user: state.cosmos.User,
-});
+
 
 const mapDispatchToProps = (dispatch) => ({
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
@@ -154,4 +150,4 @@ const mapDispatchToProps = (dispatch) => ({
   getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SkinTone);
+export default connect(null, mapDispatchToProps)(SkinTone);

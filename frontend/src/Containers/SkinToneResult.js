@@ -83,8 +83,6 @@ class SkinToneResult extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
   ML: state.cosmos.ML,
 });
 
