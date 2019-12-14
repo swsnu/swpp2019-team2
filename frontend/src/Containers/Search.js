@@ -82,6 +82,7 @@ class Search extends Component {
       });
     }
   }
+
   onScroll = () => {
     if (window.scrollY > 300 && this.tick && this.state.searched) {
       const size = window.innerHeight - 150;

@@ -15,7 +15,8 @@ class RegistrationForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onTryAutoSignup();
+    const { onTryAutoSignup } = this.props;
+    onTryAutoSignup();
   }
 
   LoginHandler = () => {
@@ -44,12 +45,16 @@ class RegistrationForm extends React.Component {
   render() {
     let changePage = '';
     let aler = null;
-    if (this.props.error && this.state.signup) {
+    const { error, isAuthenticated } = this.props;
+    const {
+      signup, username, email, password,
+    } = this.state;
+    if (error && signup) {
       aler = alert('이미 존재하는 아이디(이메일)이거나 양식이 잘못되었습니다.');
       this.setState({ signup: false });
     }
 
-    if (this.props.isAuthenticated) {
+    if (isAuthenticated) {
       changePage = <Redirect to="/search" />;
     }
 
@@ -63,9 +68,9 @@ class RegistrationForm extends React.Component {
           usernameChange={(event) => this.setState({ username: event.target.value })}
           emailChange={(event) => this.setState({ email: event.target.value })}
           passwordChange={(event) => this.setState({ password: event.target.value })}
-          username={this.state.username}
-          email={this.state.email}
-          password={this.state.password}
+          username={username}
+          email={email}
+          password={password}
         />
         {aler}
         {changePage}

@@ -24,8 +24,9 @@ class SkinTone extends Component {
   }
 
   componentDidMount() {
-    this.props.onTryAutoSignup();
-    this.props.getUserInfo();
+    const { onTryAutoSignup, getUserInfo } = this.props;
+    onTryAutoSignup();
+    getUserInfo();
   }
 
     fileinputHandler = (event) => {

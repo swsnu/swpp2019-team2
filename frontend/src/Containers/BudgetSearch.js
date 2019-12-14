@@ -25,6 +25,8 @@ const options = [
 ];
 
 class BudgetSearch extends Component {
+  prevItemNum = 2;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +35,6 @@ class BudgetSearch extends Component {
       find3: '',
       find4: '',
       find5: '',
-      id: '',
       combi: [],
       show: false,
       itemNum: 2,
@@ -43,14 +44,15 @@ class BudgetSearch extends Component {
   }
 
   componentDidMount() {
-    this.props.onTryAutoSignup();
-    this.props.getUserInfo();
+    const { onTryAutoSignup, getUserInfo } = this.props;
+    onTryAutoSignup();
+    getUserInfo();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if ((this.state.show !== nextState.show) || (this.state.itemNum !== nextState.itemNum ))
-    return true;
-    else return false;
+    const { show, itemNum } = this.state;
+    if ((show !== nextState.show) || (itemNum !== nextState.itemNum)) return true;
+    return false;
   }
 
 
@@ -120,21 +122,11 @@ class BudgetSearch extends Component {
       const tmp3 = result[2];
       const tmp4 = result[3];
       const tmp5 = result[4];
-      tmp1.sort(function (a, b) {
-        return a.price < b.price ? -1 : 1;
-      });
-      tmp2.sort(function (a, b) {
-        return a.price < b.price ? -1 : 1;
-      });
-      tmp3.sort(function (a, b) {
-        return a.price < b.price ? -1 : 1;
-      });
-      tmp4.sort(function (a, b) {
-        return a.price < b.price ? -1 : 1;
-      });
-      tmp5.sort(function (a, b) {
-        return a.price < b.price ? -1 : 1;
-      });
+      tmp1.sort((a, b) => a.price - b.price);
+      tmp2.sort((a, b) => a.price - b.price);
+      tmp3.sort((a, b) => a.price - b.price);
+      tmp4.sort((a, b) => a.price - b.price);
+      tmp5.sort((a, b) => a.price - b.price);
       let answer = [];
       for (let i = 0; i < tmp1.length; i++) {
         const comb = [];
@@ -217,10 +209,12 @@ class BudgetSearch extends Component {
       }
       answer.forEach((res) => {
         let sum = 0;
-        res.forEach(i => sum += i.price);
+        res.forEach((i) => {
+          sum += i.price;
+        });
         res.push(sum);
       });
-      answer.sort((a,b) => a[itemNum] - b[itemNum]);
+      answer.sort((a, b) => a[itemNum] - b[itemNum]);
       this.prevItemNum = itemNum;
 
       this.setState({ combi: answer });
@@ -236,7 +230,7 @@ class BudgetSearch extends Component {
     this.setState({ show: false });
     this.setState({ initialized: true });
   }
-  prevItemNum = 2;
+
 
   render() {
     const { history } = this.props;
@@ -249,68 +243,71 @@ class BudgetSearch extends Component {
       <div className="BudgetSearch">
         <Header history={history} selected={1} />
         <div className="Content">
-            <div id="selection-area">
-              <div id="selection-box">
-                <button
-                  id="combine-cosmetics-button"
-                  type="submit"
-                  onClick={() => this.confirmHandler()}
-                >{` Combine Cosmetics`}</button>
-                <button
-                  type="button"
-                  id="reset-result"
-                  onClick={() => this.handleReset()}
-                >{` Reset `}
-                  </button>
-                <h4>{strBudget}</h4>
+          <div id="selection-area">
+            <div id="selection-box">
+              <button
+                id="combine-cosmetics-button"
+                type="submit"
+                onClick={() => this.confirmHandler()}
+              >
+                   Combine Cosmetics
+              </button>
+              <button
+                type="button"
+                id="reset-result"
+                onClick={() => this.handleReset()}
+              >
+                   Reset
+              </button>
+              <h4>{strBudget}</h4>
+              <div>
                 <div>
-                  <div >
-                    <Select
-                      id="select"
-                      isClearable
-                      placeholder="select budget..."
-                      options={options}
-                      onChange={(selected) => this.handleChange(selected)}
-                    />
-                  </div>
-                </div>
-                <div className="item_input">
-                  <h4>{strNumItems}</h4>
-                  <div id ="range-box">
-                    <h5 id="item_val">{itemNum}</h5>
-                    <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
-                  </div>
-                </div>
-                <div>
-                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                    <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
-                  </div>
-                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                    <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
-                  </div>
-                  {itemNum > 2 && (
-                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                      <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
-                    </div>
-                  )}
-                  {itemNum > 3 && (
-                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                      <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
-                    </div>
-                  )}
-                  {itemNum > 4 && (
-                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                      <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
-                    </div>
-                  )}
+                  <Select
+                    id="select"
+                    isClearable
+                    placeholder="select budget..."
+                    options={options}
+                    onChange={(selected) => this.handleChange(selected)}
+                  />
                 </div>
               </div>
-            </div>
-            <div id="result-area">
-              {!show && (<img src={budgethelpImage} id="how-to-budget-search" alt="Budget Search 사용법" width="600px" />)}
-              {show && (<ItemDisplay combinations={combi} itemNum={this.prevItemNum} />)}
+              <div className="item_input">
+                <h4>{strNumItems}</h4>
+                <div id="range-box">
+                  <h5 id="item_val">{itemNum}</h5>
+                  <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
+                </div>
+              </div>
+              <div>
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
+                </div>
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
+                </div>
+                {itemNum > 2 && (
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
+                </div>
+                )}
+                {itemNum > 3 && (
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
+                </div>
+                )}
+                {itemNum > 4 && (
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
+                </div>
+                )}
+              </div>
             </div>
           </div>
+          <div id="result-area">
+            {!show && (<img src={budgethelpImage} id="how-to-budget-search" alt="Budget Search 사용법" width="600px" />)}
+            {show && (<ItemDisplay combinations={combi} itemNum={this.prevItemNum} />)}
+          </div>
+        </div>
       </div>
     );
   }

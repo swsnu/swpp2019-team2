@@ -15,8 +15,9 @@ class SkinToneLoading extends Component {
   }
 
   componentDidMount() {
-    this.props.onTryAutoSignup();
-    setTimeout(this.props.run_analysis(localStorage.getItem('nickname')), 4000);
+    const { onTryAutoSignup, runAnalysis } = this.props;
+    onTryAutoSignup();
+    setTimeout(runAnalysis(localStorage.getItem('nickname')), 4000);
   }
 
 
@@ -27,9 +28,11 @@ class SkinToneLoading extends Component {
             border-color: red;
         `;
     let redirect = null;
-    if (!this.props.isAuthenticated) {
+    const { isAuthenticated } = this.props;
+    if (!isAuthenticated) {
       redirect = <Redirect to="/login" />;
     }
+    const { loading } = this.state;
     return (
       <div className="SkinToneLoading">
         {redirect}
@@ -41,7 +44,7 @@ class SkinToneLoading extends Component {
               sizeUnit="px"
               size={30}
               color="#BD10E0"
-              loading={this.state.loading}
+              loading={loading}
             />
           </div>
         </div>
@@ -56,6 +59,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
-  run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
+  runAnalysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SkinToneLoading);
