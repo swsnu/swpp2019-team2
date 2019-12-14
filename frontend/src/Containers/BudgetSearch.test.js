@@ -173,7 +173,11 @@ describe('<BudgetSearch />', () => {
     const mockGetManyProducts = jest.fn();
     const mockHandleClick = jest.fn();
     const mockSwal = jest.fn();
-    const component = shallow(<BudgetSearch.WrappedComponent user={[{ nick_name: 'name' }]} onGetManyProducts={mockGetManyProducts} result={mockResult} />);
+    const component = shallow(<BudgetSearch.WrappedComponent
+      user={[{ nick_name: 'name' }]}
+      onGetManyProducts={mockGetManyProducts}
+      result={mockResult}
+    />);
     const inputBar = component.find('#item_num');
     const wrapper = component.find('#select');
     wrapper.prop('onChange')({ value: 6 }, mockHandleChange());

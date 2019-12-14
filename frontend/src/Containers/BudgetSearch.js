@@ -65,10 +65,10 @@ class BudgetSearch extends Component {
     let change = fixed;
     if (fixed === -1) change = this.state.show;
     const str = 'div.BudgetSearch > div.Content > div#selection-area > div#selection-box';
-    if (change) {
+    if (change && (!document)) {
       document.querySelector('div.BudgetSearch > div.Content > div#selection-area').classList.add('fixed');
       document.querySelector(str).style.height = `${window.innerHeight - 180}px`;
-    } else {
+    } else if (!document) {
       document.querySelector('div.BudgetSearch > div.Content > div#selection-area').classList.remove('fixed');
       document.querySelector(str).style.height = '';
     }

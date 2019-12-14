@@ -140,6 +140,7 @@ describe('<Liplist />', () => {
     spyuserInfo2 = jest.spyOn(actions, 'getUser2')
       .mockImplementation(() => (dispatch) => {});
   });
+  afterEach(() => { jest.clearAllMocks(); });
   it('should click logout', () => {
     localStorage.setItem('token', 'test-token');
     localStorage.setItem('nickname', 'test_nickname');
@@ -155,7 +156,7 @@ describe('<Liplist />', () => {
     const button = component.find('#log-in-button');
     button.simulate('click');
     const wrapper = component.find('.spyLip');
-    expect(spyauthCheckState).toHaveBeenCalledTimes(3);
+    expect(spyauthCheckState).toHaveBeenCalledTimes(1);
   });
   it('should click mypage', () => {
     const component = mount(lipList);
@@ -170,7 +171,7 @@ describe('<Liplist />', () => {
     newInstance.setState({ selection: 'lip' });
     const button = component.find('.searchProduct').at(0);
     button.simulate('click');
-    expect(spygetLips).toHaveBeenCalledTimes(4);
+    expect(spygetLips).toHaveBeenCalledTimes(1);
   });
   it('should change visible category when clicked', () => {
     const component = mount(lipList);
@@ -256,7 +257,7 @@ describe('<Liplist />', () => {
     expect(spygetLips).toHaveBeenCalledTimes(1);
     localStorage.removeItem('preferBrand');
     button.simulate('click');
-    expect(spygetLips).toHaveBeenCalledTimes(1);
+    expect(spygetLips).toHaveBeenCalledTimes(2);
   });
   it('should call with proper query string & remove see', () => {
     const component = mount(lipList, { attachTo: document.body });

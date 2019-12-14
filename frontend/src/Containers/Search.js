@@ -110,7 +110,7 @@ class Search extends Component {
     };
     if (localStorage.getItem('preferColor') !== undefined && localStorage.getItem('preferColor') !== null) {
       const color = localStorage.getItem('preferColor');
-      myQuery.concat(trans[color]);
+      myQuery = myQuery.concat(trans[color]);
     }
     if (localStorage.getItem('preferBrand') !== undefined && localStorage.getItem('preferBrand') !== null) {
       const brandList = localStorage.getItem('preferBrand').split(',');
