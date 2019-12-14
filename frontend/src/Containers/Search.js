@@ -57,13 +57,7 @@ class Search extends Component {
     ));
     window.addEventListener('scroll', this.onScroll);
     this.props.onGetProduct('lip/all');
-    window.addEventListener('resize', () => {
-      if (document.querySelectorAll('div.Category.fixed > div.detail-category').length > 0) {
-        document.querySelectorAll('div.detail-category').forEach((cat) => {
-          cat.style.height = `${window.innerHeight - 375}px`;
-        });
-      }
-    })
+    window.addEventListener('resize', this.onResize);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -78,8 +72,16 @@ class Search extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
   }
 
+  onResize = () => {
+    if (document.querySelectorAll('div.Category.fixed > div.detail-category').length > 0) {
+      document.querySelectorAll('div.detail-category').forEach((cat) => {
+        cat.style.height = `${window.innerHeight - 375}px`;
+      });
+    }
+  }
   onScroll = () => {
     if (window.scrollY > 300 && this.tick && this.state.searched) {
       const size = window.innerHeight - 150;
