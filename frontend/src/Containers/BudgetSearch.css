@@ -71,12 +71,14 @@ div.BudgetSearch > div.Content > div#selection-area {
     width:20%;
 }
 
+
 div.BudgetSearch > div.Content > div#selection-area.fixed {
     top:125px;
     position:fixed;
 }
 div.BudgetSearch > div.Content > div#result-area {
     width:75%;
+    left:25%;
 }
 
 div.BudgetSearch > div.Content > div#selection-area h5#item_val {
@@ -120,8 +122,7 @@ div.BudgetSearch input#item_num {
   }
 
   div.BudgetSearch div.budget-result-container {
-      display:table;
-      margin-left:5%;
+      display:table;;
   }
 
 div.BudgetSearch div.budget-search-result {

@@ -47,12 +47,31 @@ class BudgetSearch extends Component {
     const { onTryAutoSignup, getUserInfo } = this.props;
     onTryAutoSignup();
     getUserInfo();
+    window.addEventListener('resize', () => this.fixBanner(-1));
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const { show, itemNum } = this.state;
+    if (show !== nextState.show) this.fixBanner(nextState.show);
     if ((show !== nextState.show) || (itemNum !== nextState.itemNum)) return true;
     return false;
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.fixBanner(-1));
+  }
+
+  fixBanner = (fixed) => {
+    let change = fixed;
+    if (fixed === -1) change = this.state.show;
+    const str = 'div.BudgetSearch > div.Content > div#selection-area > div#selection-box';
+    if (change) {
+      document.querySelector('div.BudgetSearch > div.Content > div#selection-area').classList.add('fixed');
+      document.querySelector(str).style.height = `${window.innerHeight - 180}px`;
+    } else {
+      document.querySelector('div.BudgetSearch > div.Content > div#selection-area').classList.remove('fixed');
+      document.querySelector(str).style.height = '';
+    }
   }
 
 
@@ -275,7 +294,7 @@ class BudgetSearch extends Component {
                 <h4>{strNumItems}</h4>
                 <div id="range-box">
                   <h5 id="item_val">{itemNum}</h5>
-                  <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
+                  <input type="range" id="item_num" min="2" max="4" value={itemNum} onChange={(event) => this.setItemNum(event)} />
                 </div>
               </div>
               <div>
