@@ -257,13 +257,6 @@ LEVEL 1. CORE STYLES
   =====
   */
   
-  body{
-    min-height: 100vh;
-    margin: 0;    
-    display: flex;
-    flex-direction: column;
-    background-color: #9b59b6;
-  }
   
   .page{
     margin: auto;  
@@ -462,13 +455,6 @@ LEVEL 1. CORE STYLES
   =====
   */
   
-  body{
-    min-height: 100vh;
-    margin: 0;    
-    display: flex;
-    flex-direction: column;
-    background-color: #9b59b6;
-  }
   
   .page{
     margin: auto;  

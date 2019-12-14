@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component } from 'react';
 import './BudgetSearch.css';
@@ -8,6 +9,7 @@ import * as actionCreators from '../store/actions/index';
 import CheckBox from './CheckBox';
 import ItemDisplay from './ItemDisplay';
 import Header from '../Components/Header';
+import budgethelpImage from '../image/budgetsearch.png';
 
 const options = [
   { value: 0, label: '0원 ~ 5000원' }, // 삭제가능
@@ -23,6 +25,8 @@ const options = [
 ];
 
 class BudgetSearch extends Component {
+  prevItemNum = 2;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +35,6 @@ class BudgetSearch extends Component {
       find3: '',
       find4: '',
       find5: '',
-      id: '',
       combi: [],
       show: false,
       itemNum: 2,
@@ -41,8 +44,34 @@ class BudgetSearch extends Component {
   }
 
   componentDidMount() {
-    this.props.onTryAutoSignup();
-    this.props.getUserInfo();
+    const { onTryAutoSignup, getUserInfo } = this.props;
+    onTryAutoSignup();
+    getUserInfo();
+    window.addEventListener('resize', () => this.fixBanner(-1));
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { show, itemNum } = this.state;
+    if (show !== nextState.show) this.fixBanner(nextState.show);
+    if ((show !== nextState.show) || (itemNum !== nextState.itemNum)) return true;
+    return false;
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.fixBanner(-1));
+  }
+
+  fixBanner = (fixed) => {
+    let change = fixed;
+    if (fixed === -1) change = this.state.show;
+    const str = 'div.BudgetSearch > div.Content > div#selection-area > div#selection-box';
+    if (change) {
+      document.querySelector('div.BudgetSearch > div.Content > div#selection-area').classList.add('fixed');
+      document.querySelector(str).style.height = `${window.innerHeight - 180}px`;
+    } else {
+      document.querySelector('div.BudgetSearch > div.Content > div#selection-area').classList.remove('fixed');
+      document.querySelector(str).style.height = '';
+    }
   }
 
 
@@ -112,7 +141,12 @@ class BudgetSearch extends Component {
       const tmp3 = result[2];
       const tmp4 = result[3];
       const tmp5 = result[4];
-      const answer = [];
+      tmp1.sort((a, b) => a.price - b.price);
+      tmp2.sort((a, b) => a.price - b.price);
+      tmp3.sort((a, b) => a.price - b.price);
+      tmp4.sort((a, b) => a.price - b.price);
+      tmp5.sort((a, b) => a.price - b.price);
+      let answer = [];
       for (let i = 0; i < tmp1.length; i++) {
         const comb = [];
         let sum = 0;
@@ -189,6 +223,18 @@ class BudgetSearch extends Component {
           }
         }
       }
+      if (answer.length > 50) {
+        answer = answer.slice(0, 50);
+      }
+      answer.forEach((res) => {
+        let sum = 0;
+        res.forEach((i) => {
+          sum += i.price;
+        });
+        res.push(sum);
+      });
+      answer.sort((a, b) => a[itemNum] - b[itemNum]);
+      this.prevItemNum = itemNum;
 
       this.setState({ combi: answer });
       this.setState({ show: true });
@@ -204,6 +250,7 @@ class BudgetSearch extends Component {
     this.setState({ initialized: true });
   }
 
+
   render() {
     const { history } = this.props;
     const {
@@ -215,83 +262,69 @@ class BudgetSearch extends Component {
       <div className="BudgetSearch">
         <Header history={history} selected={1} />
         <div className="Content">
-          <div style={{ display: 'flex' }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div style={{
-                display: 'flex', flexDirection: 'column', margin: 20, backgroundColor: '#efefef', borderRadius: 10, padding: 10,
-              }}
+          <div id="selection-area">
+            <div id="selection-box">
+              <button
+                id="combine-cosmetics-button"
+                type="submit"
+                onClick={() => this.confirmHandler()}
               >
-                <button
-                  id="combine-cosmetics-button"
-                  type="submit"
-                  onClick={() => this.confirmHandler()}
-                  style={{
-                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3, color: 'black', fontWeight: 'bold', fontSize: 16,
-                  }}
-                >
-                  {' '}
-                  Combine Cosmetics
-                </button>
-                <button
-                  type="button"
-                  id="reset-result"
-                  onClick={() => this.handleReset()}
-                  style={{
-                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3, color: 'black', fontWeight: 'bold', fontSize: 16,
-                  }}
-                >
-                  {' '}
-                    Reset
-                  {' '}
-
-                </button>
-                <h4 style={{ display: 'flex', justifyContent: 'center' }}>{strBudget}</h4>
+                   Combine Cosmetics
+              </button>
+              <button
+                type="button"
+                id="reset-result"
+                onClick={() => this.handleReset()}
+              >
+                   Reset
+              </button>
+              <h4>{strBudget}</h4>
+              <div>
                 <div>
-                  <div style={{ width: 300 }}>
-                    <Select
-                      id="select"
-                      isClearable
-                      placeholder="select budget..."
-                      options={options}
-                      onChange={(selected) => this.handleChange(selected)}
-                    />
-                  </div>
-                </div>
-                <div className="item_input" style={{ display: 'flex', flexDirection: 'column' }}>
-                  <h4>{strNumItems}</h4>
-                  <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 15 }}>
-                    <input type="text" name="item_val" readOnly value={itemNum} style={{ width: 'auto' }} />
-                    <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} style={{ width: 100 }} />
-                  </div>
-                </div>
-                <div>
-                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                    <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
-                  </div>
-                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                    <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
-                  </div>
-                  {itemNum > 2 && (
-                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                      <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
-                    </div>
-                  )}
-                  {itemNum > 3 && (
-                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                      <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
-                    </div>
-                  )}
-                  {itemNum > 4 && (
-                    <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                      <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
-                    </div>
-                  )}
+                  <Select
+                    id="select"
+                    isClearable
+                    placeholder="select budget..."
+                    options={options}
+                    onChange={(selected) => this.handleChange(selected)}
+                  />
                 </div>
               </div>
+              <div className="item_input">
+                <h4>{strNumItems}</h4>
+                <div id="range-box">
+                  <h5 id="item_val">{itemNum}</h5>
+                  <input type="range" id="item_num" min="2" max="4" value={itemNum} onChange={(event) => this.setItemNum(event)} />
+                </div>
+              </div>
+              <div>
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox1" findUrl={(url) => this.findFirst(url)} />
+                </div>
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
+                </div>
+                {itemNum > 2 && (
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
+                </div>
+                )}
+                {itemNum > 3 && (
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
+                </div>
+                )}
+                {itemNum > 4 && (
+                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                  <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
+                </div>
+                )}
+              </div>
             </div>
-            <div style={{ flex: 1, paddingRight: 20, margin: 20 }}>
-              {show && (<ItemDisplay combinations={combi} />)}
-            </div>
+          </div>
+          <div id="result-area">
+            {!show && (<img src={budgethelpImage} id="how-to-budget-search" alt="Budget Search 사용법" width="600px" />)}
+            {show && (<ItemDisplay combinations={combi} itemNum={this.prevItemNum} />)}
           </div>
         </div>
       </div>
@@ -299,15 +332,10 @@ class BudgetSearch extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.cosmos.token != null,
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
-  user: state.cosmos.User,
   result: state.cosmos.budgetResult,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  Logout: () => dispatch(actionCreators.logout()),
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   getUserInfo: () => dispatch(actionCreators.getUser()),
   onGetManyProducts: (url1, url2, url3, url4, url5) => dispatch(

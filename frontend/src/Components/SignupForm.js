@@ -101,6 +101,17 @@ export default function SignInSide(props) {
                   onChange={props.passwordChange}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password confirmation"
+                  label="Password Confirmation"
+                  type="password"
+                  id="password-confirmation-input"
+                />
+              </Grid>
             </Grid>
             <br />
             <br />

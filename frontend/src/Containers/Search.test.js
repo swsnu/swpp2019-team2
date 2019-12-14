@@ -202,6 +202,7 @@ describe('<Liplist />', () => {
   let spyauthCheckState;
   const mockStoreAuth = getMockStore(stubSeletedUserF);
   beforeEach(() => {
+    localStorage.clear();
     lipList = (
       <Provider store={mockStoreAuth}>
         <Router history={history}>
@@ -233,46 +234,27 @@ describe('<Liplist />', () => {
     const component = mount(lipList);
     const button = component.find('#personal-selection');
     button.simulate('click');
-    expect(spygetLips).toHaveBeenCalledTimes(1);
-  });
-  it('should click mystore1', () => {
-    const component = mount(lipList);
-    const button = component.find('#personal-selection');
+    expect(spygetLips).toHaveBeenCalledTimes(0);
+    localStorage.setItem('token', 'test-token');
     button.simulate('click');
-    expect(spygetLips).toHaveBeenCalledTimes(1);
+    expect(spygetLips).toHaveBeenCalledTimes(0);
   });
-  it('should click mystore2', () => {
+  it('should click mystore - lipcolor', () => {
     localStorage.setItem('preferColor', 'pink');
+    localStorage.setItem('token', 'test-token');
     const component = mount(lipList);
     const button = component.find('#personal-selection');
     button.simulate('click');
-    expect(spygetLips).toHaveBeenCalledTimes(1);
   });
-  it('should click mystore3', () => {
-    localStorage.setItem('preferColor', 'orange');
+  it('should click mystore - brand', () => {
+    localStorage.setItem('token', 'test-token');
+    localStorage.setItem('preferBrand', 'INGA');
     const component = mount(lipList);
     const button = component.find('#personal-selection');
+    localStorage.setItem('preferColor', 'pink');
     button.simulate('click');
     expect(spygetLips).toHaveBeenCalledTimes(1);
-  });
-  it('should click mystore4', () => {
-    localStorage.setItem('preferColor', 'purple');
-    const component = mount(lipList);
-    const button = component.find('#personal-selection');
-    button.simulate('click');
-    expect(spygetLips).toHaveBeenCalledTimes(1);
-  });
-  it('should click mystore5', () => {
-    localStorage.removeItem('preferColor');
-    const component = mount(lipList);
-    const button = component.find('#personal-selection');
-    button.simulate('click');
-    expect(spygetLips).toHaveBeenCalledTimes(1);
-  });
-  it('should click mystore6', () => {
     localStorage.removeItem('preferBrand');
-    const component = mount(lipList);
-    const button = component.find('#personal-selection');
     button.simulate('click');
     expect(spygetLips).toHaveBeenCalledTimes(1);
   });
@@ -341,5 +323,17 @@ describe('<Liplist />', () => {
     Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
     window.dispatchEvent(customEvent);
     newInstance.componentWillUnmount();
+    component.detach();
+  });
+  it('on resize event', () => {
+    const component = mount(lipList, { attachTo: document.body });
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    newInstance.componentDidMount();
+    newInstance.setState({ selection: 'lip', searched: 'lip' });
+    const customEvent = new Event('resize');
+    window.dispatchEvent(customEvent);
+    Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
+    const customEvent2 = new Event('scroll');
+    window.dispatchEvent(customEvent2);
   });
 });

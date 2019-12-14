@@ -137,7 +137,7 @@ export const CATEGORY_KOREAN = {
     form: {
       LIP_M: '매트',
       LIP_G: '글로시',
-      LIP_N: '정보없음',
+      LIP_N: '없음',
     },
   },
   base: {

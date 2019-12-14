@@ -3,6 +3,7 @@ import './CSS/Search.css';
 import { connect } from 'react-redux';
 import Popup from 'reactjs-popup';
 import { Slide } from 'react-slideshow-image';
+import Tooltip from 'react-tooltip-lite';
 import * as actionCreators from '../store/actions/index';
 import ProductForm from '../Components/ProductForm';
 import DetailCategory from '../Components/DetailCategory';
@@ -56,6 +57,7 @@ class Search extends Component {
     ));
     window.addEventListener('scroll', this.onScroll);
     this.props.onGetProduct('lip/all');
+    window.addEventListener('resize', this.onResize);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -70,16 +72,25 @@ class Search extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  onResize = () => {
+    if (document.querySelectorAll('div.Category.fixed > div.detail-category').length > 0) {
+      document.querySelectorAll('div.detail-category').forEach((cat) => {
+        cat.style.height = `${window.innerHeight - 375}px`;
+      });
+    }
   }
 
   onScroll = () => {
     if (window.scrollY > 300 && this.tick && this.state.searched) {
-      const size = window.screen.availHeight - 480;
+      const size = window.innerHeight - 150;
       if (size > document.querySelector('div.ResultDiv').offsetHeight) return;
       document.querySelector('div.Category').classList.add('fixed');
       const category = document.querySelectorAll('div.detail-category');
       category.forEach((cat) => {
-        cat.style.height = `${size}px`;
+        cat.style.height = `${size - 225}px`;
       });
       this.tick = false;
     } else if (!this.tick && window.scrollY < 300) {
@@ -89,18 +100,27 @@ class Search extends Component {
   }
 
   myStoreHandler() {
+    if (!localStorage.getItem('token')) {
+      window.alert('로그인 후 이용해주세요');
+      return;
+    }
     let myQuery = 'lip/';
+    const trans = {
+      red: 'LIP_RD', pink: 'LIP_PK', orange: 'LIP_OR', purple: 'LIP_PU',
+    };
     if (localStorage.getItem('preferColor') !== undefined && localStorage.getItem('preferColor') !== null) {
-      if (localStorage.getItem('preferColor') === 'red') myQuery = myQuery.concat('color=LIP_RD&');
-      else if (localStorage.getItem('preferColor') === 'pink') myQuery = myQuery.concat('color=LIP_PK&');
-      else if (localStorage.getItem('preferColor') === 'orange') myQuery = myQuery.concat('color=LIP_OR&');
-      else myQuery = myQuery.concat('color=LIP_PU&');
+      const color = localStorage.getItem('preferColor');
+      myQuery.concat(trans[color]);
     }
     if (localStorage.getItem('preferBrand') !== undefined && localStorage.getItem('preferBrand') !== null) {
       const brandList = localStorage.getItem('preferBrand').split(',');
       for (let i = 0; i < brandList.length; i++) {
         myQuery = myQuery.concat(`brand=${brandList[i]}&`);
       }
+    }
+    if (myQuery === 'lip/') {
+      window.alert('마이페이지에서 설정 후 이용해주세요');
+      return;
     }
     const { onGetProduct } = this.props;
     onGetProduct(myQuery);
@@ -141,6 +161,7 @@ class Search extends Component {
       const { onGetProduct } = this.props;
       onGetProduct(queryStr);
     };
+
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
     /* const eye = <DetailCategory
@@ -183,7 +204,13 @@ class Search extends Component {
             </div>
             <div className="Personal-Area">
               <div className="personal-image"><img src={myIcon} alt="init" width="30" /></div>
-              <div className="personal-button"><button type="button" onClick={() => this.myStoreHandler()} id="personal-selection"> 나만의 상점  </button></div>
+              <div className="personal-button">
+                <div className="example-warper">
+                  <Tooltip key="info-personal-tooltip" content={localStorage.getItem('token') ? '선호 설정에 따라 검색합니다' : '로그인이 필요합니다'}>
+                    <button type="button" onClick={() => this.myStoreHandler()} id="personal-selection"> 나만의 상점  </button>
+                  </Tooltip>
+                </div>
+              </div>
               <div className="personal-image"><img src={myIcon} alt="init" width="30" /></div>
             </div>
             {lip}
@@ -211,9 +238,6 @@ class Search extends Component {
 
 const mapStateToProps = (state) => ({
   searchResult: state.cosmos.result,
-  isAuthenticated: state.cosmos.token != null,
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
   userProfile: state.cosmos.User,
   userInfo: state.cosmos.User2,
 });

@@ -24,8 +24,9 @@ class SkinTone extends Component {
   }
 
   componentDidMount() {
-    this.props.onTryAutoSignup();
-    this.props.getUserInfo();
+    const { onTryAutoSignup, getUserInfo } = this.props;
+    onTryAutoSignup();
+    getUserInfo();
   }
 
     fileinputHandler = (event) => {
@@ -141,17 +142,12 @@ class SkinTone extends Component {
       );
     }
 }
-const mapStateToProps = (state) => ({
-  loading: state.cosmos.loading,
-  error: state.cosmos.error,
-  user: state.cosmos.User,
-});
+
 
 const mapDispatchToProps = (dispatch) => ({
   onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
   send_picture: (img) => dispatch(actionCreators.sendImage(img)),
-  run_analysis: (id) => dispatch(actionCreators.runAnalysis({ userID: id })),
   getUserInfo: () => dispatch(actionCreators.getUser()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SkinTone);
+export default connect(null, mapDispatchToProps)(SkinTone);

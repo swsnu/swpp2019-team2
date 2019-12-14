@@ -62,7 +62,8 @@ class FileUploadView(APIView):
         product_info = {
             'price': ml_object.product.price,
             'brand': ml_object.product.brand.name,
-            'img_url': ml_object.product.img_url}
+            'img_url': ml_object.product.img_url,
+            'product_url': ml_object.product.product_url}
         response_dict = {
             'id': ml_object.id,
             'user_id': ml_object.user_id,

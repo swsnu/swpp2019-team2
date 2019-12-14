@@ -4,7 +4,6 @@ import {
   Route, Switch, Redirect,
 } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
-import MainPage from './Containers/MainPage';
 import LogIn from './Containers/LogIn';
 import BudgetSearch from './Containers/BudgetSearch';
 import SkinTone from './Containers/SkinTone';
@@ -23,7 +22,6 @@ function App({ history }) {
           <Route path="/login" exact component={LogIn} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/mypage" exact component={MyPage} />
-          <Route path="/main" exact component={MainPage} />
           <Route path="/search" exact component={Search} />
           <Route path="/budget" exact component={BudgetSearch} />
           <Route path="/skintone/loading" exact component={SkinToneLoading} />
