@@ -47,6 +47,12 @@ class BudgetSearch extends Component {
     this.props.getUserInfo();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if ((this.state.show !== nextState.show) || (this.state.itemNum !== nextState.itemNum ))
+    return true;
+    else return false;
+  }
+
 
   /* set_budget = (event) => {
       this.setState({budget:event.target.value})
@@ -209,6 +215,14 @@ class BudgetSearch extends Component {
       if (answer.length > 50) {
         answer = answer.slice(0, 50);
       }
+      answer.forEach((res) => {
+        let sum = 0;
+        res.forEach(i => sum += i.price);
+        res.push(sum);
+      });
+      answer.sort((a,b) => a[itemNum] - b[itemNum]);
+      this.prevItemNum = itemNum;
+
       this.setState({ combi: answer });
       this.setState({ show: true });
       if (answer.length !== 0) {
@@ -222,6 +236,7 @@ class BudgetSearch extends Component {
     this.setState({ show: false });
     this.setState({ initialized: true });
   }
+  prevItemNum = 2;
 
   render() {
     const { history } = this.props;
@@ -293,7 +308,7 @@ class BudgetSearch extends Component {
             </div>
             <div id="result-area">
               {!show && (<img src={budgethelpImage} id="how-to-budget-search" alt="Budget Search 사용법" width="600px" />)}
-              {show && (<ItemDisplay combinations={combi} />)}
+              {show && (<ItemDisplay combinations={combi} itemNum={this.prevItemNum} />)}
             </div>
           </div>
       </div>
