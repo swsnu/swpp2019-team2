@@ -8,37 +8,22 @@ const ItemShow = ({ combination }) => {
   for (let i = 0; i < combination.length; i++) {
     sum += combination[i].price;
   }
-  const relativeWidth = 165 * (5 / combination.length);
+  console.log(combination);
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-around', backgroundColor: 'white' }}>
+    <div className="budget-search-result">
+      <div className="budget-result-product-container" >
         {combination.map((item) => (
-          <div key={item.name + String(item.price)} style={{ backgroundColor: 'rgb(249, 236, 251)', borderRadius: 8, padding: 5 }}>
-            <img height={relativeWidth} width={relativeWidth} src={item.img_url} alt="" />
-            <p>
-              {' '}
-              {item.name}
-            </p>
-            <p>
-              브랜드 :
-              {' '}
-              {item.brand}
-            </p>
-            <p>
-              가격:
-              {' '}
-              {item.price}
-              원
-            </p>
+          <div className="budget-product" key={item.name + String(item.price)}>
+            <a target="_blank" rel="noopener noreferrer" className="budgetProductItem" href={item.product_url}>
+            <img className="budget-product-image" src={item.img_url} alt="" />
+            <p className="budget-product-name">{` ${item.name}`}</p>
+            <p className="budget-product-info">{`브랜드 : ${item.brand}`}</p>
+            <p className="budget-product-info">{`${item.price} 원`}</p>
+            </a>
           </div>
         ))}
       </div>
-      <p style={{ borderBottom: '3px lightgray solid', paddingBottom: 20 }}>
-        총
-        {' '}
-        {sum}
-        원
-      </p>
+      <p className="budget-container-price" >{`총 ${sum} 원`}</p>
     </div>
   );
 };
@@ -53,7 +38,7 @@ const ItemDisplay = ({ combinations }) => {
   }
 
   return (
-    <div>
+    <div className="budget-result-container">
       {combinations.map((c, index) => (<ItemShow className="ItemShow" combination={c} key={index} />))}
     </div>
   );
@@ -61,18 +46,3 @@ const ItemDisplay = ({ combinations }) => {
 List.displayName = 'CombiList';
 export default ItemDisplay;
 
-
-/*
-  (
-    <List
-      className="CombinationList"
-      width={980}
-      height={800}
-      rowCount={combinations.length}
-      rowHeight={558}
-      rowRenderer={ItemShow}
-      list={combinations}
-      style={{ outline: 'none', backgroundColor: '#FCFCFC' }}
-    />
-  );
-*/

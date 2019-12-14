@@ -7,7 +7,7 @@ div.BudgetSearch ul{
 }
 
 div.BudgetSearch > div.Content {
-    padding-top:110px;
+    padding-top:120px;
 }
 .Budget_input {
     display: table;
@@ -28,4 +28,154 @@ div.BudgetSearch > div.Content {
 .BudgetSearch button:active {
     color:white;
     background-color:#bd97c2;
+}
+
+div.BudgetSearch > div.Content > div#selection-area > div#selection-box {
+    background-color:#efefef;
+    border-radius: 10px;
+    padding:15px 15px 15px 15px;
+    overflow-y:scroll;
+    -ms-overflow-style: none;
+}
+
+div.BudgetSearch > div.Content > div#selection-area > div#selection-box > button#combine-cosmetics-button, 
+div.BudgetSearch > div.Content > div#selection-area > div#selection-box > button#reset-result {
+    display:block;
+    width:80%;
+    margin:5px auto 5px auto;
+    height:40px;
+    border-radius: 8px;
+    border-width: 3px;
+    color:black;
+    font-weight: bold;
+    font-size:16px;
+
+}
+div.BudgetSearch > div.Content > div#selection-area > div#selection-box::-webkit-scrollbar {
+    display:none;
+}
+
+div.BudgetSearch > div.Content {
+    display:table;
+    margin-left:25px;
+    width:100%;
+}
+
+div.BudgetSearch > div.Content > div#selection-area,
+div.BudgetSearch > div.Content > div#result-area {
+    display:table-cell;
+    vertical-align:top;
+}
+
+div.BudgetSearch > div.Content > div#selection-area {
+    width:20%;
+}
+
+div.BudgetSearch > div.Content > div#selection-area.fixed {
+    top:125px;
+    position:fixed;
+}
+div.BudgetSearch > div.Content > div#result-area {
+    width:75%;
+}
+
+div.BudgetSearch > div.Content > div#selection-area h5#item_val {
+    display:inline;
+    padding:0 10px 0 10px;
+    font-size:15px;
+}
+
+div.BudgetSearch input#item_num {
+    width:50%;
+}
+
+div.BudgetSearch input#item_num {
+    -webkit-appearance: none;
+    width: 60%;
+    height: 10px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.9;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  div.BudgetSearch input#item_num::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background: #33c;
+    cursor: pointer;
+  }
+  
+  div.BudgetSearch input#item_num::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #33c;
+    cursor: pointer;
+  }
+
+  div.BudgetSearch div.budget-result-container {
+      display:table;
+      margin-left:5%;
+  }
+
+div.BudgetSearch div.budget-search-result {
+    display:table-cell;
+    float:left;
+    border-bottom:3px lightgray solid;
+    margin-bottom:20px;
+}
+
+div.BudgetSearch div.budget-search-result > div.budget-result-product-container {
+    display:flex;
+    justify-content: space-around;
+    /* background-color:white; */
+    margin: 0 10px 0 10px;
+    border-radius:8px;
+    background-color:#f2dcfa;
+    padding:3px;
+}
+
+div.BudgetSearch div.budget-search-result > div.budget-result-product-container > div.budget-product {
+    background-color:rgb(249,236,251);
+    border-radius:8px;
+    padding:3px;
+    margin:2px;
+    width:165px;
+    height:310px;
+    overflow-y:scroll;
+    -ms-overflow-style: none;
+}
+
+div.BudgetSearch div.budget-search-result > div.budget-result-product-container > div.budget-product::-webkit-scrollbar {
+    display:none;
+}
+/*
+div.BudgetSearch > div.Content > div#result-area > div.budget-result-container > div.budget-search-result > p.budget-container-price {
+    
+}*/
+
+div.BudgetSearch div.budget-search-result > div.budget-result-product-container > div.budget-product img.budget-product-image {
+    width:165px;
+    height:165px;
+}
+div.BudgetSearch div.budget-search-result > div.budget-result-product-container > div.budget-product p.budget-product-name {
+    font-size:17px;
+    font-weight:600;
+
+}
+
+div.BudgetSearch div.budget-search-result > div.budget-result-product-container > div.budget-product p.budget-product-info {
+    margin:0.3em;
+    
+}
+
+div.BudgetSearch div.budget-search-result > div.budget-result-product-container > div.budget-product > a {
+    text-decoration:none;
+    color:black;
 }

@@ -312,3 +312,10 @@ div.Search div.ResultDiv > div.info-result-div > div.help-selection-overlay > di
 div.Search div.ResultDiv > div.info-result-div > div.help-selection-overlay > div.help-selection-content > img#init-image {
     padding: 0 !important;
 }
+
+ul{
+    list-style: none;
+    padding-left:0px;
+    padding-bottom: 0px;
+    margin:0px;
+}

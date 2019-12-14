@@ -234,39 +234,22 @@ class BudgetSearch extends Component {
       <div className="BudgetSearch">
         <Header history={history} selected={1} />
         <div className="Content">
-          <div style={{ display: 'flex' }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div style={{
-                display: 'flex', flexDirection: 'column', margin: 20, backgroundColor: '#efefef', borderRadius: 10, padding: 10,
-              }}
-              >
+            <div id="selection-area">
+              <div id="selection-box">
                 <button
                   id="combine-cosmetics-button"
                   type="submit"
                   onClick={() => this.confirmHandler()}
-                  style={{
-                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3, color: 'black', fontWeight: 'bold', fontSize: 16,
-                  }}
-                >
-                  {' '}
-                  Combine Cosmetics
-                </button>
+                >{` Combine Cosmetics`}</button>
                 <button
                   type="button"
                   id="reset-result"
                   onClick={() => this.handleReset()}
-                  style={{
-                    widht: 80, height: 40, borderRadius: 8, borderWidth: 3, color: 'black', fontWeight: 'bold', fontSize: 16,
-                  }}
-                >
-                  {' '}
-                    Reset
-                  {' '}
-
-                </button>
-                <h4 style={{ display: 'flex', justifyContent: 'center' }}>{strBudget}</h4>
+                >{` Reset `}
+                  </button>
+                <h4>{strBudget}</h4>
                 <div>
-                  <div style={{ width: 300 }}>
+                  <div >
                     <Select
                       id="select"
                       isClearable
@@ -276,11 +259,11 @@ class BudgetSearch extends Component {
                     />
                   </div>
                 </div>
-                <div className="item_input" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div className="item_input">
                   <h4>{strNumItems}</h4>
-                  <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 15 }}>
-                    <input type="text" name="item_val" readOnly value={itemNum} style={{ width: 'auto' }} />
-                    <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} style={{ width: 100 }} />
+                  <div id ="range-box">
+                    <h5 id="item_val">{itemNum}</h5>
+                    <input type="range" id="item_num" min="2" max="5" value={itemNum} onChange={(event) => this.setItemNum(event)} />
                   </div>
                 </div>
                 <div>
@@ -308,12 +291,11 @@ class BudgetSearch extends Component {
                 </div>
               </div>
             </div>
-            <div style={{ flex: 1, paddingRight: 20, margin: 20 }}>
-              {!show && (<img src={budgethelpImage} alt="Budget Search 사용법" width="600px" />)}
+            <div id="result-area">
+              {!show && (<img src={budgethelpImage} id="how-to-budget-search" alt="Budget Search 사용법" width="600px" />)}
               {show && (<ItemDisplay combinations={combi} />)}
             </div>
           </div>
-        </div>
       </div>
     );
   }
