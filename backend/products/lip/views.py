@@ -1,9 +1,8 @@
 """ TODO : DOCSTRING"""
 from urllib.parse import urlparse, parse_qs
-from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponse
+from django.http import JsonResponse, HttpResponseNotAllowed
 from .models import Lip, LipOption
 from .serializers import LipSerializer
-import random
 
 
 def search(request, option):
