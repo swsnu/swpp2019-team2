@@ -43,20 +43,22 @@ class Search extends Component {
   }
 
   async componentDidMount() { // initialize state
-    const { onTryAutoSignup } = this.props;
+    const {
+      onTryAutoSignup, getUserProfile, getUserInfo, userProfile, userInfo, onGetProduct,
+    } = this.props;
     onTryAutoSignup();
-    await this.props.getUserProfile();
-    await this.props.getUserInfo();
-    this.props.userProfile.map((res) => ((
+    await getUserProfile();
+    await getUserInfo();
+    userProfile.map((res) => ((
       localStorage.setItem('preferColor', res.prefer_color),
       localStorage.setItem('preferBase', res.prefer_base),
       localStorage.setItem('preferBrand', res.prefer_brand)
     )));
-    this.props.userInfo.map((res) => (
+    userInfo.map((res) => (
       localStorage.setItem('email', res.email)
     ));
+    onGetProduct('lip/all');
     window.addEventListener('scroll', this.onScroll);
-    this.props.onGetProduct('lip/all');
     window.addEventListener('resize', this.onResize);
   }
 
@@ -104,13 +106,17 @@ class Search extends Component {
       window.alert('로그인 후 이용해주세요');
       return;
     }
-    let myQuery = 'lip/';
+    const { selection } = this.state;
+    let myQuery = '';
     const trans = {
-      red: 'LIP_RD', pink: 'LIP_PK', orange: 'LIP_OR', purple: 'LIP_PU',
+      red: 'LIP_RD', pink: 'LIP_PK', orange: 'LIP_OR', purple: 'LIP_PU', 19: 'BAS_LT', 21: 'BAS_MD', 23: 'BAS_DK',
     };
-    if (localStorage.getItem('preferColor') !== undefined && localStorage.getItem('preferColor') !== null) {
+    if (selection === 'lip' && localStorage.getItem('preferColor') !== undefined && localStorage.getItem('preferColor') !== null) {
       const color = localStorage.getItem('preferColor');
-      myQuery = myQuery.concat(trans[color]);
+      myQuery = myQuery.concat(`lip/color=${trans[color]}&`);
+    } else if (selection === 'base' && localStorage.getItem('preferBase') !== undefined && localStorage.getItem('preferBase') !== null) {
+      const color = localStorage.getItem('preferBase');
+      myQuery = myQuery.concat(`base/color=${trans[color]}&`);
     }
     if (localStorage.getItem('preferBrand') !== undefined && localStorage.getItem('preferBrand') !== null) {
       const brandList = localStorage.getItem('preferBrand').split(',');
@@ -118,14 +124,12 @@ class Search extends Component {
         myQuery = myQuery.concat(`brand=${brandList[i]}&`);
       }
     }
-    if (myQuery === 'lip/') {
+    if (myQuery === '') {
       window.alert('마이페이지에서 설정 후 이용해주세요');
       return;
     }
     const { onGetProduct } = this.props;
     onGetProduct(myQuery);
-    this.setState({ numDisplay: true });
-    this.setState({ searchInit: false });
   }
 
   render() {
@@ -164,11 +168,8 @@ class Search extends Component {
 
     const lip = <DetailCategory category="lip" selected={(selection === 'lip')} clickSearch={search} />;
     const base = <DetailCategory category="base" selected={(selection === 'base')} clickSearch={search} />;
-    /* const eye = <DetailCategory
-      category="eye" selected={(selection === 'eye')} clickSearch={search} />; */
     const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
-    /* const skincare = <DetailCategory
-      category="skincare" selected={(selection === 'skincare')} clickSearch={search} />; */
+
     return (
       <div className="Search">
         <Header history={history} selected={0} />
@@ -192,11 +193,7 @@ class Search extends Component {
             <ul className="Category">
               <div><button type="button" className="Product" onClick={click} id="lip">Lip</button></div>
               <div><button type="button" className="Product" onClick={click} id="base">Base</button></div>
-              {/* <button type="button"
-                className="Product" onClick={click} id="eye">Eye</button> */}
               <div><button type="button" className="Product" onClick={click} id="cheek">Cheek</button></div>
-              {/* <button type="button"
-                className="Product" onClick={click} id="skincare">Skin</button> */}
             </ul>
             <div className="Delete-Area">
               <div className="delete-image"><img src={removeIcon} alt="" /></div>
@@ -215,9 +212,7 @@ class Search extends Component {
             </div>
             {lip}
             {base}
-            {/* {eye}  */}
             {cheek}
-            {/* {skincare} */}
           </div>
           <div className="ResultDiv">
             <div className="info-result-div">

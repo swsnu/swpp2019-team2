@@ -247,6 +247,15 @@ describe('<Liplist />', () => {
     const button = component.find('#personal-selection');
     button.simulate('click');
   });
+  it('should click mystore - basecolor', () => {
+    localStorage.setItem('preferBase', '21');
+    localStorage.setItem('token', 'test-token');
+    const component = mount(lipList);
+    const baseBtn = component.find('button.Product#base');
+    baseBtn.simulate('click');
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+  });
   it('should click mystore - brand', () => {
     localStorage.setItem('token', 'test-token');
     localStorage.setItem('preferBrand', 'INGA');
