@@ -3,7 +3,6 @@ from products.base.models import Base, BaseOption
 from products.cheek.models import Cheek, CheekOption
 from brand.models import Brand
 import unittest
-from products.eye.models import CommonProduct
 from ml.models import ML
 
 class ItemTest(unittest.TestCase):
@@ -30,9 +29,6 @@ class ItemTest(unittest.TestCase):
         o = BaseOption(product=i, optionName="tmp_option")
         self.assertEqual(str(o), str(i) + " " + o.optionName)
 
-    def test_eye_class(self):
-        i = CommonProduct(name="tmp_name")
-        self.assertEqual(str(i), i.name)
         
     def test_cheek_class(self):
         i = Cheek(name="tmp_name")
