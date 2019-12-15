@@ -193,6 +193,8 @@ describe('<BudgetSearch />', () => {
       jest.runAllTimers();
       expect(mockConfirmHandler).toBeCalled();
       expect(mockHandleClick).toBeCalled();
+      button.prop('onClick')(mockConfirmHandler(), mockSwal());
+      expect(mockSwal).toBeCalled();
       resetButton.simulate('click');
     }
     wrapper.prop('onChange')({ value: 1 }, mockHandleChange());
