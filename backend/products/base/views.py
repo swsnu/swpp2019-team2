@@ -22,6 +22,10 @@ def search(request, option):
             )
         except KeyError:
             color_option = None
+
+        if 'brand' in query:
+            base = base.filter(brand__name__in=query['brand'])
+
         try:
             subcolor_option = query['subcolor']
             base = base.exclude(

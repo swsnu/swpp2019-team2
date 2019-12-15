@@ -12,6 +12,8 @@ def search(request, option):
         query = parse_qs(url.query)
         if 'category' not in query:
             cheek = Cheek.objects.all()
+            if 'brand' in query:
+                cheek = cheek.filter(brand__name__in=query['brand'])
         else:
             try:
                 color_option = query['color']

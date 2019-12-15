@@ -117,6 +117,8 @@ class Search extends Component {
     } else if (selection === 'base' && localStorage.getItem('preferBase') !== undefined && localStorage.getItem('preferBase') !== null) {
       const color = localStorage.getItem('preferBase');
       myQuery = myQuery.concat(`base/color=${trans[color]}&`);
+    } else if (selection === 'cheek') {
+      myQuery = myQuery.concat('cheek/');
     }
     if (localStorage.getItem('preferBrand') !== undefined && localStorage.getItem('preferBrand') !== null) {
       const brandList = localStorage.getItem('preferBrand').split(',');

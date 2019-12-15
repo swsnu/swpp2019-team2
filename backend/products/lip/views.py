@@ -22,6 +22,9 @@ def search(request, option):
             else:
                 lip = Lip.objects.filter(form__in=query['form'])
 
+        if 'brand' in query:
+            lip = lip.filter(brand__name__in=query['brand'])
+
         try:
             color_option = query['color']
             lip = lip.exclude(
