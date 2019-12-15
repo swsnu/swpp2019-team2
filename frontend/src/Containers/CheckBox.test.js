@@ -19,6 +19,8 @@ describe('<CheckBox />', () => {
     const mockHandleSelect = jest.fn();
     const component = shallow(<CheckBox findUrl={mockFind} />);
     const wrapper = component.find('Select');
+    wrapper.prop('onChange')(null, mockHandleSelect());
+    expect(component.state().selected).toBe(0);
     for (let i = 0; i < 3; i++) {
       wrapper.prop('onChange')({ value: i }, mockHandleSelect());
       expect(component.state().selected).toBe(i);

@@ -223,8 +223,15 @@ class BudgetSearch extends Component {
           }
         }
       }
+      // answer.sort(() => 0.5 - Math.random());
       if (answer.length > 50) {
-        answer = answer.slice(0, 50);
+        // answer = answer.slice(0, 50);
+        let chosen = [];
+        for (let j = 0; j < 50; j++) {
+          chosen.push(answer[Math.floor(Math.random() * answer.length)]);
+        }
+        chosen = [...new Set(chosen)];
+        answer = chosen;
       }
       answer.forEach((res) => {
         let sum = 0;
@@ -269,14 +276,14 @@ class BudgetSearch extends Component {
                 type="submit"
                 onClick={() => this.confirmHandler()}
               >
-                   Combine Cosmetics
+                Combine Cosmetics
               </button>
               <button
                 type="button"
                 id="reset-result"
                 onClick={() => this.handleReset()}
               >
-                   Reset
+                Reset
               </button>
               <h4>{strBudget}</h4>
               <div>
@@ -305,19 +312,19 @@ class BudgetSearch extends Component {
                   <CheckBox className="checkbox" id="checkbox2" findUrl={(url) => this.findSecond(url)} />
                 </div>
                 {itemNum > 2 && (
-                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                  <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
-                </div>
+                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                    <CheckBox className="checkbox" id="checkbox3" findUrl={(url) => this.findThird(url)} />
+                  </div>
                 )}
                 {itemNum > 3 && (
-                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                  <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
-                </div>
+                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                    <CheckBox className="checkbox" id="checkbox4" findUrl={(url) => this.findFourth(url)} />
+                  </div>
                 )}
                 {itemNum > 4 && (
-                <div style={{ margin: 'auto', width: 200, padding: 15 }}>
-                  <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
-                </div>
+                  <div style={{ margin: 'auto', width: 200, padding: 15 }}>
+                    <CheckBox className="checkbox" id="checkbox5" findUrl={(url) => this.findFifth(url)} />
+                  </div>
                 )}
               </div>
             </div>

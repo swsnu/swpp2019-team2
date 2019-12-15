@@ -194,7 +194,9 @@ class CheckBox extends React.Component {
     this.props.findUrl('');
     this.setState({ expanded: [] });
     this.setState({ checked: [] });
-    this.setState({ selected: sel.value });
+    if (sel !== null) {
+      this.setState({ selected: sel.value });
+    }
   }
 
   render() {
