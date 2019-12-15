@@ -31,8 +31,8 @@ class SkinToneResult extends Component {
       window.alert('로그인을 먼저 진행해주세요');
       redirect = <Redirect to="/login" />;
     }
-    const src = `/media/output/colorbar${localStorage.getItem('nickname')}.png`;
-    // const colorbarSrc = `http://52.141.1.157:8000/media/output/colorbar${localStorage.getItem('nickname')}.png`;
+    // const src = `/media/output/colorbar${localStorage.getItem('nickname')}.png`;
+    const colorbarSrc = `http://52.141.1.157:8000/media/output/colorbar${localStorage.getItem('nickname')}.png`;
     // const productUrl = '';
     const { ML, history } = this.props;
     const { result, rgbResult } = this.state;
@@ -62,7 +62,7 @@ class SkinToneResult extends Component {
             <h2>Result</h2>
             <div className="result">
               <h4>Skintone</h4>
-              <img id="colorbar" src={src} alt="ColorBar" width="300px" height="300px" margin="auto" />
+              <img id="colorbar" src={colorbarSrc} alt="ColorBar" width="300px" height="300px" margin="auto" />
               <div
                 className="MLresult"
                 style={{
