@@ -257,7 +257,14 @@ class BudgetSearch extends Component {
     const strNumItems = 'Choose Number of Items';
     const strBudget = 'Choose Your Budget Range';
     return (
-      <div className="BudgetSearch">
+      <div
+        className="BudgetSearch"
+        tabIndex="0"
+        role="button"
+        onKeyDown={(e) => {
+          if (e.keyCode === 13) this.confirmHandler();
+        }}
+      >
         <Header history={history} selected={1} />
         <div className="Content">
           <div id="selection-area">

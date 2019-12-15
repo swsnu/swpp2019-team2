@@ -173,7 +173,14 @@ class Search extends Component {
     const cheek = <DetailCategory category="cheek" selected={(selection === 'cheek')} clickSearch={search} />;
 
     return (
-      <div className="Search">
+      <div
+        className="Search"
+        tabIndex="0"
+        role="button"
+        onKeyDown={(e) => {
+          if (e.keyCode === 13) search();
+        }}
+      >
         <Header history={history} selected={0} />
         <div className="slide-container">
           <Slide {...properties}>
