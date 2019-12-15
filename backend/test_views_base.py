@@ -49,4 +49,9 @@ class BaseTestCase(TestCase):
         self.assertEqual(res[0]["color"][0]["color"], self.color1.color)
         self.assertEqual(res[0]["category"], 'P')
         
+        response = self.client.get('/api/base/brand=brand1')
+        self.assertEqual(response.status_code, 200)
+        res = json.loads(response.content)
+        self.assertEqual(len(res), 2)
+        
         

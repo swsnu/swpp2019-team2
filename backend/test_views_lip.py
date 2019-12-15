@@ -54,3 +54,8 @@ class LipTestCase(TestCase):
         res = json.loads(response.content)
         self.assertEqual(len(res), 1)
         
+        response = self.client.get('/api/lip/brand=brand1')
+        self.assertEqual(response.status_code, 200)
+        res = json.loads(response.content)
+        self.assertEqual(len(res), 2)
+        
