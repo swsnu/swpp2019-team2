@@ -42,7 +42,6 @@ label.color-selection-chip > span.color-circle {
     width: 25px;
     height:25px;
     border-radius: 60%;
-    opacity:100%;
     display:inline-block;
     position:relative;
 }
