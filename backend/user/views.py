@@ -79,7 +79,6 @@ def signin(request):  # Signin function
         user_info.prefer_color = edit_prefer_color
         user_info.prefer_base = edit_prefer_base
         user_info.prefer_brand = edit_prefer_brand
-        print(edit_prefer_brand)
         user_info.save()
         response = user_info.prefer_color
         return HttpResponse(response, status=200)
