@@ -5,6 +5,7 @@ from crawl.items import LipProduct, LipColor
 from brand.models import Brand as Brand_db
 from products.lip.models import Lip as Lip_db
 from .color_tag import cal_color_tag
+import random
 
 
 class MacLipSpider(scrapy.Spider):
@@ -52,6 +53,8 @@ class MacLipSpider(scrapy.Spider):
         for i, name in enumerate(product_name):
             url = host + product_url[i]
             int_price = self.parse_price(price[i])
+            index = random.randint(0, 2)
+            forms = ['LIP_M', 'LIP_G', 'LIP_N']
             yield LipProduct(
                 name=product_name[i],
                 price=int_price,
@@ -59,7 +62,8 @@ class MacLipSpider(scrapy.Spider):
                 category=category,
                 img_url=host + thumb_url[i],
                 crawled="lip",
-                product_url=host + product_url[i]
+                product_url=host + product_url[i],
+                form=forms[index]
             )
 
             yield scrapy.Request(
