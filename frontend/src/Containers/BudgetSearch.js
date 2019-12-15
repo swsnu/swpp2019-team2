@@ -227,6 +227,8 @@ class BudgetSearch extends Component {
       if (answer.length > 50) {
         // answer = answer.slice(0, 50);
         let chosen = [];
+        chosen.push(answer[0]);
+        chosen.push(answer[answer.length - 1]);
         for (let j = 0; j < 50; j++) {
           chosen.push(answer[Math.floor(Math.random() * answer.length)]);
         }
