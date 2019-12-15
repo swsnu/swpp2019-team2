@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """ scrapy spider for aritaum webpage """
+import random
 import scrapy
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -11,7 +12,6 @@ from brand.models import Brand as Brand_db
 from products.base.models import Base as Base_db
 from .spider_helper import translate_category
 from .color_tag import cal_color_tag
-import random
 
 
 class AritaumSpider(scrapy.Spider):

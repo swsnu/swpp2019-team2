@@ -38,7 +38,7 @@ class Search extends Component {
     super(props);
     this.state = {
       selection: 'lip',
-      searched: null,
+      searched: 'lip',
     };
   }
 

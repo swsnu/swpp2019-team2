@@ -180,7 +180,7 @@ describe('<Liplist />', () => {
     const button = component.find('button.Product#base');
     button.simulate('click');
     expect(newInstance.state).toEqual({
-      searched: null,
+      searched: 'lip',
       selection: 'base',
     });
     button.simulate('click');
@@ -190,7 +190,7 @@ describe('<Liplist />', () => {
       // preferBrand: '라네즈',
       // preferColor: 'red',
       selection: 'base',
-      searched: null,
+      searched: 'lip',
     });
   });
 });

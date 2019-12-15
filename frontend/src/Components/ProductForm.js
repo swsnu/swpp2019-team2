@@ -41,7 +41,6 @@ const ProductForm = (props) => {
   if (Object.prototype.hasOwnProperty.call(info, 'color')) {
     subcolor = getColorOptionList(info.color);
   }
-
   const optionalInfo = getOptionalInfo(info, selection);
   return (
     <li className="ProductContainer">

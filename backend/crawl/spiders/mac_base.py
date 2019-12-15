@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """ scrapy spider for aritaum webpage """
+import random
 import scrapy
 from crawl.items import BaseProduct, BaseColor
 from brand.models import Brand as Brand_db
 from products.base.models import Base as Base_db
 from .color_tag import cal_color_tag
-import random
 
 
 class MacLipSpider(scrapy.Spider):
@@ -79,15 +79,17 @@ class MacLipSpider(scrapy.Spider):
         if option == 'num':
             index = random.randint(0, 2)
             color = ['BAS_LT', 'BAS_MD', 'BAS_DK']
-            return color[index]
+            res = color[index]
+            return res
         if option <= 19:
             return 'BAS_LT'
         if option <= 22:
             return 'BAS_MD'
         if option > 22:
             return 'BAS_DK'
+        return None
 
-    def parse_option(self, option, hex):
+    def parse_option(self, option, hexa):
         ''' return parsed option value '''
         try:
             option_num = int(option[2:4])
@@ -102,10 +104,9 @@ class MacLipSpider(scrapy.Spider):
         if option.startswith('N'):
             sub_color = self.parse_subcolor(option_num)
             return ('BAS_NT', sub_color)
-        else:
-            sub_color = self.parse_subcolor(option_num)
-            color_tone = cal_color_tag("base", hex)
-            return (color_tone, sub_color)
+        sub_color = self.parse_subcolor(option_num)
+        color_tone = cal_color_tag("base", hexa)
+        return (color_tone, sub_color)
 
     def parse_color(self, response):
         ''' yield scrapy color object '''
