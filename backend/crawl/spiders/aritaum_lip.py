@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """ scrapy spider for aritaum webpage """
+import random
 import scrapy
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -10,7 +11,6 @@ from crawl.items import LipProduct, LipColor, Brand
 from brand.models import Brand as Brand_db
 from products.lip.models import Lip as Lip_db
 from .spider_helper import translate_category
-import random
 
 from .color_tag import cal_color_tag
 
@@ -97,7 +97,7 @@ class AritaumSpider(scrapy.Spider):
                 "div.product-thumb img").get_property("src")
             index = random.randint(0, 2)
             forms = ['LIP_M', 'LIP_G', 'LIP_N']
-        
+
             yield LipProduct(
                 name=product_name,
                 price=price,

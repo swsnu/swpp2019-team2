@@ -31,7 +31,6 @@ LC_LIST = [(251, 214, 184), (251, 210, 192), (251, 189, 168), (239, 161, 149)]
 LM_LIST = [(231, 208, 145), (215, 179, 125), (201, 149, 99), (179, 120, 85)]
 
 
-
 def two_point_length_by_cie(tuple1, tuple2):
     """ find color diff using CIELAB"""
     color1_rgb = sRGBColor(tuple1[0], tuple1[1], tuple1[1])
@@ -107,6 +106,7 @@ def min_cheek_len(hexa):
 # pylint: disable=pointless-string-statement
 # TODO : FIX
 def min_base_len(hexa):
+    """ find sub_color with minimum length in base model """
     face_total_list = LW_LIST + LC_LIST + LM_LIST
     tar_color = cal_similar_color(face_total_list, hexa)
     if (tar_color / 4) == 0:

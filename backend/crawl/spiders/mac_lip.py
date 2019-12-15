@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """ scrapy spider for aritaum webpage """
+import random
 import scrapy
 from crawl.items import LipProduct, LipColor
 from brand.models import Brand as Brand_db
 from products.lip.models import Lip as Lip_db
 from .color_tag import cal_color_tag
-import random
 
 
 class MacLipSpider(scrapy.Spider):
@@ -17,16 +17,12 @@ class MacLipSpider(scrapy.Spider):
         self.brand = Brand_db.objects.filter(name="MAC")[0]
 
     def start_requests(self):
-        urls = [{
-            'category': 'LIP_S',
-            'link': 'https://www.maccosmetics.co.kr/products/13854/Products/Makeup/Lips/Lipstick'
-        }, {
-            'category': 'LIP_G',
-            'link': 'https://www.maccosmetics.co.kr/products/13853/Products/Makeup/Lips/Lip-Gloss'
-        }, {
-            'category': 'LIP_S',
-            'link': 'https://www.maccosmetics.co.kr/products/13852/Products/Makeup/Lips/Lip-Pencil'
-        }]
+        urls = [{'category': 'LIP_S',
+                 'link': 'https://www.maccosmetics.co.kr/products/13854/Products/Makeup/Lips/Lipstick'},
+                {'category': 'LIP_G',
+                 'link': 'https://www.maccosmetics.co.kr/products/13853/Products/Makeup/Lips/Lip-Gloss'},
+                {'category': 'LIP_S',
+                 'link': 'https://www.maccosmetics.co.kr/products/13852/Products/Makeup/Lips/Lip-Pencil'}]
 
         for url in urls:
             yield scrapy.Request(
@@ -34,6 +30,7 @@ class MacLipSpider(scrapy.Spider):
                 meta={"category": url["category"]},
                 callback=self.parse
             )
+
     @staticmethod
     def parse_price(price):
         """ return int -price """

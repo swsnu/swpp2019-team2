@@ -30,6 +30,7 @@ class MacLipSpider(scrapy.Spider):
                 meta={"category": url["category"]},
                 callback=self.parse
             )
+
     @staticmethod
     def parse_price(price):
         """ return int -price """
@@ -45,7 +46,9 @@ class MacLipSpider(scrapy.Spider):
             'div.product__image-medium > a.product__image-medium-link > img.product__sku-image--rendered--medium::attr(src)').getall()
         host = 'https://www.maccosmetics.co.kr'
         category = response.meta['category']
-        thumb_url = ['//:0', '/media/export/cms/products/280x320/mac_sku_SGY801_280x320_1.jpg'] + thumb_url
+        thumb_url = [
+            '//:0',
+            '/media/export/cms/products/280x320/mac_sku_SGY801_280x320_1.jpg'] + thumb_url
         price = ['₩ 40,000'] + price
         price[4] = '₩ 24,000'
         for i, name in enumerate(product_name):
