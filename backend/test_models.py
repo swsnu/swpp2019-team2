@@ -3,8 +3,9 @@ from products.base.models import Base, BaseOption
 from products.cheek.models import Cheek, CheekOption
 from brand.models import Brand
 import unittest
-from products.eye.models import CommonProduct
 from ml.models import ML
+from user.models import Profile
+from django.contrib.auth.models import User
 
 class ItemTest(unittest.TestCase):
 
@@ -30,9 +31,6 @@ class ItemTest(unittest.TestCase):
         o = BaseOption(product=i, optionName="tmp_option")
         self.assertEqual(str(o), str(i) + " " + o.optionName)
 
-    def test_eye_class(self):
-        i = CommonProduct(name="tmp_name")
-        self.assertEqual(str(i), i.name)
         
     def test_cheek_class(self):
         i = Cheek(name="tmp_name")
@@ -47,3 +45,10 @@ class ItemTest(unittest.TestCase):
         i = ML(result='0,0,0')
         i.save()
         self.assertEqual('0,0,0', i.result)
+
+
+    def test_user_model(self):
+        new_user = User.objects.create_user(
+            username='test_name', email='test_mail', password='test_pw')
+        i = Profile(user=new_user)
+        self.assertEqual(str(i), new_user.username)

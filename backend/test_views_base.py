@@ -17,6 +17,8 @@ class BaseTestCase(TestCase):
             color="LT", sub_color="WM", color_hex="hex1", optionName="option1", product=self.product1)
         self.color2 = BaseOption.objects.create(
             color="MD", color_hex="hex2", optionName="option2", product=self.product1)
+        self.color3 = BaseOption.objects.create(
+            color="LT", sub_color="MD", color_hex="hex1", optionName="option1", product=self.product2)
 
     def test_bad_request(self):
         # not-allowed request 
@@ -48,5 +50,15 @@ class BaseTestCase(TestCase):
         res = json.loads(response.content)
         self.assertEqual(res[0]["color"][0]["color"], self.color1.color)
         self.assertEqual(res[0]["category"], 'P')
+        
+        response = self.client.get('/api/base/brand=brand1')
+        self.assertEqual(response.status_code, 200)
+        res = json.loads(response.content)
+        self.assertEqual(len(res), 2)
+        
+        response = self.client.get('/api/base/subcolor=WM')
+        self.assertEqual(response.status_code, 200)
+        res = json.loads(response.content)
+        self.assertEqual(len(res), 1)
         
         

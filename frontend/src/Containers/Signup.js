@@ -20,17 +20,23 @@ class RegistrationForm extends React.Component {
   }
 
   LoginHandler = () => {
-    const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    if (!this.state.email.match(regExp)) {
-      window.alert('이메일 형식이 올바르지 않습니다');
+    if (this.state.email && this.state.username && this.state.password && this.state.confirm) {
+      const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      if (!this.state.email.match(regExp)) {
+        window.alert('이메일 형식이 올바르지 않습니다');
+      } else if (this.state.password !== this.state.confirm) {
+        window.alert('패스워드가 일치하지 않습니다');
+      } else {
+        this.props.Signup(this.state.username, this.state.email, this.state.password);
+        this.props.onTryAutoSignup();
+        localStorage.setItem('username', this.state.username);
+        localStorage.setItem('password', this.state.password);
+        localStorage.setItem('nickname', this.state.username);
+        this.setState({ signup: true });
+        window.alert('회원가입이 완료되었습니다.');
+      }
     } else {
-      this.props.Signup(this.state.username, this.state.email, this.state.password);
-      this.props.onTryAutoSignup();
-      localStorage.setItem('username', this.state.username);
-      localStorage.setItem('password', this.state.password);
-      localStorage.setItem('nickname', this.state.username);
-      this.setState({ signup: true });
-      window.alert('회원가입이 완료되었습니다.');
+      window.alert('필수 항목을 모두 입력해주세요');
     }
   }
 
@@ -47,7 +53,7 @@ class RegistrationForm extends React.Component {
     let aler = null;
     const { error, isAuthenticated } = this.props;
     const {
-      signup, username, email, password,
+      signup, username, email, password, confirm,
     } = this.state;
     if (error && signup) {
       aler = alert('이미 존재하는 아이디(이메일)이거나 양식이 잘못되었습니다.');
@@ -68,9 +74,11 @@ class RegistrationForm extends React.Component {
           usernameChange={(event) => this.setState({ username: event.target.value })}
           emailChange={(event) => this.setState({ email: event.target.value })}
           passwordChange={(event) => this.setState({ password: event.target.value })}
+          confirmChange={(event) => this.setState({ confirm: event.target.value })}
           username={username}
           email={email}
           password={password}
+          confirm={confirm}
         />
         {aler}
         {changePage}

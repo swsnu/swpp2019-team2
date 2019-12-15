@@ -49,8 +49,22 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide(props) {
   const classes = useStyles();
 
+  const {
+    username, usernameChange, password, passwordChange,
+    check, verifiedChange, clickedSignin, clickedSign, clickedMain,
+  } = props;
+
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid
+      container
+      component="main"
+      className={classes.root}
+      onKeyDown={(e) => {
+        if (e.keyCode === 13) {
+          clickedSignin();
+        }
+      }}
+    >
       <CssBaseline />
       <Grid item xs={false} sm={4} md={6} className={classes.image} />
       <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
@@ -72,8 +86,8 @@ export default function SignInSide(props) {
               name="email"
               autoComplete="email"
               autoFocus
-              value={props.username}
-              onChange={props.usernameChange}
+              value={username}
+              onChange={usernameChange}
             />
             <TextField
               variant="outlined"
@@ -85,15 +99,15 @@ export default function SignInSide(props) {
               type="password"
               id="password-input"
               autoComplete="current-password"
-              value={props.password}
-              onChange={props.passwordChange}
+              value={password}
+              onChange={passwordChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               id="checkbox"
               label="Remember me"
-              defaultChecked={props.check}
-              onChange={props.verifiedChange}
+              defaultChecked={check}
+              onChange={verifiedChange}
             />
             <Button
               id="signin"
@@ -102,18 +116,18 @@ export default function SignInSide(props) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={props.clickedSignin}
+              onClick={clickedSignin}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs />
               <Grid item>
-                <Link id="signup" href="signup" variant="body1" onClick={props.clickedSign}>
+                <Link id="signup" href="signup" variant="body1" onClick={clickedSign}>
                   Don&apos;t have an account? Sign Up
                 </Link>
                 <br />
-                <Link id="main" href="search" variant="body1" onClick={props.clickedMain}>
+                <Link id="main" href="search" variant="body1" onClick={clickedMain}>
                   Back to main page
                 </Link>
               </Grid>

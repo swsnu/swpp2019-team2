@@ -45,9 +45,21 @@ const useStyleSignup = makeStyles((theme) => ({
 
 export default function SignInSide(props) {
   const classes = useStyleSignup();
-
+  const {
+    clickedSignup, username, usernameChange, email, emailChange, password,
+    passwordChange, confirm, confirmChange, clickedSignin, clickedBack,
+  } = props;
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid
+      container
+      component="main"
+      className={classes.root}
+      onKeyDown={(e) => {
+        if (e.keyCode === 13) {
+          clickedSignup();
+        }
+      }}
+    >
       <CssBaseline />
       <Grid item xs={false} sm={4} md={6} className={classes.image} />
       <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
@@ -70,8 +82,8 @@ export default function SignInSide(props) {
                   id="username-input"
                   label="Username"
                   autoFocus
-                  value={props.username}
-                  onChange={props.usernameChange}
+                  value={username}
+                  onChange={usernameChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -83,8 +95,8 @@ export default function SignInSide(props) {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  value={props.email}
-                  onChange={props.emailChange}
+                  value={email}
+                  onChange={emailChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,8 +109,8 @@ export default function SignInSide(props) {
                   type="password"
                   id="password-input"
                   autoComplete="current-password"
-                  value={props.password}
-                  onChange={props.passwordChange}
+                  value={password}
+                  onChange={passwordChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -110,6 +122,8 @@ export default function SignInSide(props) {
                   label="Password Confirmation"
                   type="password"
                   id="password-confirmation-input"
+                  value={confirm}
+                  onChange={confirmChange}
                 />
               </Grid>
             </Grid>
@@ -121,19 +135,19 @@ export default function SignInSide(props) {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={props.clickedSignup}
+              onClick={clickedSignup}
             >
               Sign Up
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <br />
-                <Link id="signin" href="login" variant="body2" onClick={props.clickedSignin}>
+                <Link id="signin" href="login" variant="body2" onClick={clickedSignin}>
                   Already have an account? Sign in
                 </Link>
                 <br />
                 <br />
-                <Link id="main" href="search" variant="body2" onClick={props.clickedBack}>
+                <Link id="main" href="search" variant="body2" onClick={clickedBack}>
                   Back to main page
                 </Link>
               </Grid>

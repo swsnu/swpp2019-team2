@@ -24,7 +24,7 @@ const optionsBase = [
 ];
 
 const optionsBrand = [
-  { value: '16 brand', label: <img src="https://cdn.aritaum.com/UPLOAD/UPLOAD_IMAGE/BRD_LOGO/201809/IMG1537CQS506876427.jpg" width="50px" height="30px" alt="description 1" /> },
+  { value: 'MAC', label: <img src="https://www.maccosmetics.co.kr/media/dev/global/site-logo.png" width="50px" height="30px" alt="description 1" /> },
   { value: 'SEPbeauty', label: <img src="https://cdn.aritaum.com/UPLOAD/UPLOAD_IMAGE/BRD_LOGO/201809/IMG1537wSD506679483.jpg" width="50px" height="30px" alt="description 2" /> },
   { value: 'wet N wild', label: <img src="https://cdn.aritaum.com/UPLOAD/UPLOAD_IMAGE/BRD_LOGO/201902/IMG1549oOb615704527.jpg" width="50px" height="30px" alt="description 3" /> },
   { value: 'REVLON', label: <img src="https://cdn.aritaum.com/UPLOAD/UPLOAD_IMAGE/BRD_LOGO/201902/IMG1549EyB615657222.jpg" width="50px" height="30px" alt="description 4" /> },
@@ -65,6 +65,7 @@ const optionsBrand = [
   { value: 'gesgep', label: <img src="https://cdn.aritaum.com/UPLOAD/UPLOAD_IMAGE/BRD_LOGO/201809/IMG1537wWa506770821.jpg" width="50px" height="30px" alt="description 39" /> },
   { value: 'CARMEX', label: <img src="https://cdn.aritaum.com/UPLOAD/UPLOAD_IMAGE/BRD_LOGO/201911/IMG1574NBX932526152.jpg" width="50px" height="30px" alt="description 40" /> },
   { value: 'PUPA', label: <img src="https://cdn.aritaum.com/UPLOAD/UPLOAD_IMAGE/BRD_LOGO/201902/IMG1549mLI869055029.jpg" width="50px" height="30px" alt="description 41" /> },
+  { value: '16 brand', label: <img src="https://cdn.aritaum.com/UPLOAD/UPLOAD_IMAGE/BRD_LOGO/201809/IMG1537CQS506876427.jpg" width="50px" height="30px" alt="description 42" /> },
 ];
 
 const customStyles = {

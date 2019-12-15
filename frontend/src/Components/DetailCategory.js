@@ -16,7 +16,7 @@ class DetailCategory extends React.Component {
             const subkeyId = `${key}=${colorData[colorKey][0]}&`;
             const subColors = colorData[colorKey][1].map((hex) => {
               const style = { backgroundColor: hex };
-              const colorId = `sub_color=${hex.replace('#', '')}&`;
+              const colorId = `sub_color=${hex.replace('#', '')}_${colorData[colorKey][0]}&`;
               const onClickColor = (e) => {
                 if (e.target.checked) {
                   e.target.nextElementSibling.firstChild.classList.add('on');

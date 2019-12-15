@@ -53,3 +53,7 @@ class BaseTestCase(TestCase):
         res = json.loads(response.content)
         self.assertEqual(len(res), 3)
 
+        response = self.client.get('/api/cheek/brand=brand1')
+        self.assertEqual(response.status_code, 200)
+        res = json.loads(response.content)
+        self.assertEqual(len(res), 3)

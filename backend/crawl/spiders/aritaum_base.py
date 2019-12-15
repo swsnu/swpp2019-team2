@@ -10,6 +10,8 @@ from crawl.items import Brand, BaseProduct, BaseColor
 from brand.models import Brand as Brand_db
 from products.base.models import Base as Base_db
 from .spider_helper import translate_category
+from .color_tag import cal_color_tag
+import random
 
 
 class AritaumSpider(scrapy.Spider):
@@ -76,14 +78,14 @@ class AritaumSpider(scrapy.Spider):
     def check_color(name):
         """ check color name and return value"""
         if any(x in name for x in ['11', '13', '19']):
-            color = "BAS_LT"
-        elif '21' in name:
-            color = "BAS_MD"
-        elif '23' in name:
-            color = "BAS_DK"
-        else:
-            color = None
-        return color
+            return "BAS_LT"
+        if '21' in name:
+            return "BAS_MD"
+        if '23' in name:
+            return "BAS_DK"
+        index = random.randint(0, 2)
+        color = ['BAS_LT', 'BAS_MD', 'BAS_DK']
+        return color[index]
 
     def parse_product(self, response):
         """ parse product information from page """
@@ -109,7 +111,6 @@ class AritaumSpider(scrapy.Spider):
             brand = Brand_db.objects.filter(name=brand_name)
             thumb_url = item.find_element_by_css_selector(
                 "div.product-thumb img").get_property("src")
-            # case로 나누기
             yield BaseProduct(
                 name=product_name,
                 price=price,
@@ -145,12 +146,14 @@ class AritaumSpider(scrapy.Spider):
                     color_hex = self.save_color_by_rgb(color_rgb)
                     product = Base_db.objects.filter(name=product_name)[0]
                     color = self.check_color(color_name)
+                    sub_color = cal_color_tag("base", color_hex)
                     yield BaseColor(
                         color_hex=color_hex,
                         optionName=color_name,
                         product=product,
                         crawled="base_option",
-                        color=color
+                        color=color,
+                        sub_color=sub_color
                     )
 
         yield scrapy.Request(
@@ -169,12 +172,14 @@ class AritaumSpider(scrapy.Spider):
         color_hex = self.getcolors(img, url)
         product = Base_db.objects.filter(name=name)[0]
         color = self.check_color(response.meta["color"])
+        sub_color = cal_color_tag("base", color_hex)
         yield BaseColor(
             color_hex=color_hex,
             optionName=response.meta["color"],
             product=product,
             crawled="base_option",
-            color=color
+            color=color,
+            sub_color=sub_color
         )
 
     @staticmethod

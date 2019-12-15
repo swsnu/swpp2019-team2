@@ -64,21 +64,19 @@ class BudgetSearch extends Component {
   fixBanner = (fixed) => {
     let change = fixed;
     if (fixed === -1) change = this.state.show;
-    const str = 'div.BudgetSearch > div.Content > div#selection-area > div#selection-box';
-    if (change && (!document)) {
-      document.querySelector('div.BudgetSearch > div.Content > div#selection-area').classList.add('fixed');
-      document.querySelector(str).style.height = `${window.innerHeight - 180}px`;
-    } else if (!document) {
-      document.querySelector('div.BudgetSearch > div.Content > div#selection-area').classList.remove('fixed');
-      document.querySelector(str).style.height = '';
+    const selectionBox = 'div.BudgetSearch > div.Content > div#selection-area > div#selection-box';
+    const selectionArea = 'div.BudgetSearch > div.Content > div#selection-area';
+    if (document.querySelector(selectionArea)) {
+      if (change) {
+        document.querySelector(selectionArea).classList.add('fixed');
+        document.querySelector(selectionBox).style.height = `${window.innerHeight - 180}px`;
+      } else {
+        document.querySelector(selectionArea).classList.remove('fixed');
+        document.querySelector(selectionBox).style.height = '';
+      }
     }
   }
 
-
-  /* set_budget = (event) => {
-      this.setState({budget:event.target.value})
-      this.setState({flag_budget:true})
-  } */
   setItemNum = (event) => {
     this.setState({ itemNum: parseInt(event.target.value, 10) });
   }
@@ -268,7 +266,14 @@ class BudgetSearch extends Component {
     const strNumItems = 'Choose Number of Items';
     const strBudget = 'Choose Your Budget Range';
     return (
-      <div className="BudgetSearch">
+      <div
+        className="BudgetSearch"
+        tabIndex="0"
+        role="button"
+        onKeyDown={(e) => {
+          if (e.keyCode === 13) this.confirmHandler();
+        }}
+      >
         <Header history={history} selected={1} />
         <div className="Content">
           <div id="selection-area">

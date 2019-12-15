@@ -247,6 +247,15 @@ describe('<Liplist />', () => {
     const button = component.find('#personal-selection');
     button.simulate('click');
   });
+  it('should click mystore - basecolor', () => {
+    localStorage.setItem('preferBase', '21');
+    localStorage.setItem('token', 'test-token');
+    const component = mount(lipList);
+    const baseBtn = component.find('button.Product#base');
+    baseBtn.simulate('click');
+    const button = component.find('#personal-selection');
+    button.simulate('click');
+  });
   it('should click mystore - brand', () => {
     localStorage.setItem('token', 'test-token');
     localStorage.setItem('preferBrand', 'INGA');
@@ -336,5 +345,14 @@ describe('<Liplist />', () => {
     Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
     const customEvent2 = new Event('scroll');
     window.dispatchEvent(customEvent2);
+    component.detach();
+  });
+  it('test componentshouldupdate', () => {
+    const component = mount(lipList);
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    // newInstance.setProps({ searchResult: [] });
+    newInstance.setState({ selection: 'lip' });
+    const update = newInstance.shouldComponentUpdate({ searchResult: [{ name: 'tmpName' }] }, {});
+    expect(update).toBe(true);
   });
 });

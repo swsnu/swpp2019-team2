@@ -10,7 +10,7 @@ from crawl.items import LipProduct, LipColor, Brand
 from brand.models import Brand as Brand_db
 from products.lip.models import Lip as Lip_db
 from .spider_helper import translate_category
-
+import random
 
 from .color_tag import cal_color_tag
 
@@ -95,7 +95,9 @@ class AritaumSpider(scrapy.Spider):
             brand = Brand_db.objects.filter(name=brand_name)
             thumb_url = item.find_element_by_css_selector(
                 "div.product-thumb img").get_property("src")
-
+            index = random.randint(0, 2)
+            forms = ['LIP_M', 'LIP_G', 'LIP_N']
+        
             yield LipProduct(
                 name=product_name,
                 price=price,
@@ -103,7 +105,8 @@ class AritaumSpider(scrapy.Spider):
                 category=category,
                 img_url=thumb_url,
                 crawled="lip",
-                product_url=product_url
+                product_url=product_url,
+                form=forms[index]
             )
 
             color_range = item.find_elements_by_class_name(

@@ -4,6 +4,8 @@ import scrapy
 from crawl.items import BaseProduct, BaseColor
 from brand.models import Brand as Brand_db
 from products.base.models import Base as Base_db
+from .color_tag import cal_color_tag
+import random
 
 
 class MacLipSpider(scrapy.Spider):
@@ -74,24 +76,36 @@ class MacLipSpider(scrapy.Spider):
     @staticmethod
     def parse_subcolor(option):
         ''' return parsed option value '''
+        if option == 'num':
+            index = random.randint(0, 2)
+            color = ['BAS_LT', 'BAS_MD', 'BAS_DK']
+            return color[index]
         if option <= 19:
             return 'BAS_LT'
         if option <= 22:
             return 'BAS_MD'
-        return 'BAS_DK'
+        if option > 22:
+            return 'BAS_DK'
 
-    def parse_option(self, option):
+    def parse_option(self, option, hex):
         ''' return parsed option value '''
+        try:
+            option_num = int(option[2:4])
+        except ValueError:
+            option_num = 'num'
         if option.startswith('NC'):
-            sub_color = self.parse_subcolor(int(option[2:4]))
+            sub_color = self.parse_subcolor(option_num)
             return ('BAS_CL', sub_color)
         if option.startswith('NW'):
-            sub_color = self.parse_subcolor(int(option[2:4]))
+            sub_color = self.parse_subcolor(option_num)
             return ('BAS_WM', sub_color)
         if option.startswith('N'):
-            sub_color = self.parse_subcolor(int(option[1:3]))
+            sub_color = self.parse_subcolor(option_num)
             return ('BAS_NT', sub_color)
-        return (None, None)
+        else:
+            sub_color = self.parse_subcolor(option_num)
+            color_tone = cal_color_tag("base", hex)
+            return (color_tone, sub_color)
 
     def parse_color(self, response):
         ''' yield scrapy color object '''
@@ -106,7 +120,7 @@ class MacLipSpider(scrapy.Spider):
         for i, hexa in enumerate(rgb):
             color_hex = self.parse_hex(hexa)
             color_name = name[i]
-            color = self.parse_option(color_name)
+            color = self.parse_option(color_name, color_hex)
             yield BaseColor(
                 color_hex=color_hex,
                 optionName=color_name,

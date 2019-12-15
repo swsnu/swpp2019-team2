@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'products',
     'products.lip',
     'products.base',
-    'products.eye',
     'products.cheek',
     'ml',
 ]

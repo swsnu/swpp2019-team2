@@ -6,7 +6,8 @@ import * as actionTypes from './actionTypes';
 
 export const getProducts_ = (result) => ({ type: actionTypes.GET_PRODUCT, result });
 export const getProducts = (searchQuery) => (dispatch) => axios.get(`/api/${searchQuery}`)
-  .then((res) => dispatch(getProducts_(res.data)));
+  // eslint-disable-next-line no-console
+  .then((res) => dispatch(getProducts_(res.data))).catch((err) => console.log(err.response));
 
 export const getManyProducts_ = (result1, result2, result3, result4, result5) => (
   { type: actionTypes.GETMANYPRODUCTS, result: [result1, result2, result3, result4, result5] }

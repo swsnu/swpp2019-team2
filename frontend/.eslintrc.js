@@ -35,5 +35,6 @@ module.exports = {
     "jsx-a11y/no-noninteractive-element-interactions":1,
     "react/no-unused-state":1,
     "no-param-reassign": [2, { "props": false }],
+    "no-alert":0,
   },
 };

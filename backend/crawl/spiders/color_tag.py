@@ -28,10 +28,8 @@ LW_LIST = [(252, 237, 218), (252, 233, 200), (243, 212, 185), (233, 192, 155)]
 LC_LIST = [(251, 214, 184), (251, 210, 192), (251, 189, 168), (239, 161, 149)]
 
 # MEDIUM_SKIN
-M_LIST = [(231, 208, 145), (215, 179, 125), (201, 149, 99), (179, 120, 85)]
+LM_LIST = [(231, 208, 145), (215, 179, 125), (201, 149, 99), (179, 120, 85)]
 
-# DARK_SKIN
-D_LIST = [(150, 103, 61), (135, 74, 35), (74, 37, 11), (55, 29, 9)]
 
 
 def two_point_length_by_cie(tuple1, tuple2):
@@ -107,32 +105,17 @@ def min_cheek_len(hexa):
 
 
 # pylint: disable=pointless-string-statement
-''' # TODO : FIX
-def min_base_len(tuple1):
-    min_face = -1
-    tar_face = -1
-    face_total_list = LW_LIST + LC_LIST + M_LIST + D_LIST
-    i = -1
-    for val in face_total_list:
-        i += 1
-        if min_face == -1:
-            min_face = two_point_length(tuple1, val)
-            tar_face = 0
-            continue
-        temp = two_point_length(tuple1, val)
-        if temp < min_face:
-            min_face = temp
-            tar_face = i
-    if min_face != -1:
-        if (tar_face / 4) == 0:
-            return ('LW', webcolors.rgb_to_hex(face_total_list[tar_face]))
-        if (tar_face / 4) == 1:
-            return ('LC', webcolors.rgb_to_hex(face_total_list[tar_face]))
-        if (tar_face / 4) == 2:
-            return ('ME', webcolors.rgb_to_hex(face_total_list[tar_face]))
-        if (tar_face / 4) == 3:
-            return ('DA', webcolors.rgb_to_hex(face_total_list[tar_face]))
-    return (None, None) '''
+# TODO : FIX
+def min_base_len(hexa):
+    face_total_list = LW_LIST + LC_LIST + LM_LIST
+    tar_color = cal_similar_color(face_total_list, hexa)
+    if (tar_color / 4) == 0:
+        return 'BAS_WM'
+    if (tar_color / 4) == 1:
+        return 'BAS_CL'
+    if (tar_color / 4) == 2:
+        return 'BAS_NT'
+    return (None, None)
 
 
 def cal_color_tag(title, hexa):
@@ -142,6 +125,8 @@ def cal_color_tag(title, hexa):
         result = min_lip_len(item_rgb)
     elif title == 'cheek':
         result = min_cheek_len(item_rgb)
+    elif title == 'base':
+        result = min_base_len(item_rgb)
     else:
         result = -1
     return result

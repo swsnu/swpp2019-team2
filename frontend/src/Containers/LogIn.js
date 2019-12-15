@@ -12,13 +12,13 @@ class NormalLoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sigin: false,
       check: false,
     };
   }
 
   componentDidMount() {
-    this.props.onTryAutoSignup();
+    const { onTryAutoSignup } = this.props;
+    onTryAutoSignup();
     if (localStorage.getItem('storeuser')) {
       this.setState({ username: localStorage.getItem('username') });
       this.setState({ password: localStorage.getItem('password') });
@@ -58,12 +58,16 @@ class NormalLoginForm extends Component {
       render() {
         let changePage = '';
         let aler = null;
-        if (this.props.error != null && this.state.signin) {
+        const { error, isAuthenticated } = this.props;
+        const {
+          check, username, password, signin,
+        } = this.state;
+        if (error != null && signin) {
           aler = alert('아이디(비밀번호)가 틀렸거나 존재하지 않는 계정입니다.');
           this.setState({ signin: false });
         }
 
-        if (this.props.isAuthenticated) {
+        if (isAuthenticated) {
           changePage = <Redirect to="/search" />;
         }
 
@@ -76,9 +80,9 @@ class NormalLoginForm extends Component {
               usernameChange={(event) => this.setState({ username: event.target.value })}
               passwordChange={(event) => this.setState({ password: event.target.value })}
               verifiedChange={() => this.verifiedChange()}
-              check={this.state.check}
-              username={this.state.username}
-              password={this.state.password}
+              check={check}
+              username={username}
+              password={password}
             />
             {aler}
             {changePage}
