@@ -134,14 +134,14 @@ class BigCalendar extends Component {
     const { selectedEvent } = this.state;
     return (
       <div className="Calendar" style={{ display: 'flex', flexDirection: 'row' }}>
-        <div>
+        <div className="selectbrand" style={{ marginLeft: 60, marginTop: 150, marginRight: 60 }}>
           <Select
             id="select-brand"
             placeholder="select brand..."
             options={options}
             onChange={(selected) => this.handleChange(selected)}
             styles={customStyles}
-            maxMenuHeight={500}
+            maxMenuHeight={300}
           />
         </div>
 
