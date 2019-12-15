@@ -345,5 +345,14 @@ describe('<Liplist />', () => {
     Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
     const customEvent2 = new Event('scroll');
     window.dispatchEvent(customEvent2);
+    component.detach();
+  });
+  it('test componentshouldupdate', () => {
+    const component = mount(lipList);
+    const newInstance = component.find(Search.WrappedComponent).instance();
+    // newInstance.setProps({ searchResult: [] });
+    newInstance.setState({ selection: 'lip' });
+    const update = newInstance.shouldComponentUpdate({ searchResult: [{ name: 'tmpName' }] }, {});
+    expect(update).toBe(true);
   });
 });
